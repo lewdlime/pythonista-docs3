@@ -1,0 +1,341 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>scene_drawing — Drawing Functions for the scene module &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-scene_drawing">
+<span id="scene-drawing-drawing-functions-for-the-scene-module"></span><h1><a class="reference internal" href="#module-scene_drawing" title="scene_drawing: Drawing Functions for the scene module"><tt class="xref py py-mod docutils literal"><span class="pre">scene_drawing</span></tt></a> &#8212; Drawing Functions for the scene module<a class="headerlink" href="#module-scene_drawing" title="Permalink to this headline">¶</a></h1>
+<p>The functions in this module can be used within the <tt class="xref py py-meth docutils literal"><span class="pre">scene.Scene.draw()</span></tt> method when using the classic render loop mode of the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module.</p>
+<div class="section" id="setting-global-state">
+<h2>Setting Global State<a class="headerlink" href="#setting-global-state" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scene_drawing.blend_mode">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">blend_mode</tt><big>(</big><em>mode</em><big>)</big><a class="headerlink" href="#scene_drawing.blend_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the blend mode for following drawing operations. <cite>mode</cite> can be <cite>BLEND_NORMAL</cite>,
+<cite>BLEND_ADD</cite> or <cite>BLEND_MULTIPLY</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.fill">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">fill</tt><big>(</big><em>r=0</em>, <em>g=0</em>, <em>b=0</em>, <em>a=1</em><big>)</big><a class="headerlink" href="#scene_drawing.fill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current stroke color.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.no_fill">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">no_fill</tt><big>(</big><big>)</big><a class="headerlink" href="#scene_drawing.no_fill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disables filling rectangles and ellipses. Combined with <a class="reference internal" href="#scene_drawing.stroke_weight" title="scene_drawing.stroke_weight"><tt class="xref py py-func docutils literal"><span class="pre">stroke_weight()</span></tt></a>
+and <a class="reference internal" href="#scene_drawing.stroke" title="scene_drawing.stroke"><tt class="xref py py-func docutils literal"><span class="pre">stroke()</span></tt></a> (to set the color), this allows you to draw shape
+outlines. Alternatively, you can set a transparent fill color with
+<tt class="docutils literal"><span class="pre">fill(0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0)</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.no_stroke">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">no_stroke</tt><big>(</big><big>)</big><a class="headerlink" href="#scene_drawing.no_stroke" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disables the drawing of borders around rectangles and ellipses.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.no_tint">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">no_tint</tt><big>(</big><big>)</big><a class="headerlink" href="#scene_drawing.no_tint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disables tinting images. Equivalent to <cite>tint(1, 1, 1, 1)</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.stroke">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">stroke</tt><big>(</big><em>r</em>, <em>g</em>, <em>b</em><span class="optional">[</span>, <em>a</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene_drawing.stroke" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current stroke color.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.stroke_weight">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">stroke_weight</tt><big>(</big><em>line_width</em><big>)</big><a class="headerlink" href="#scene_drawing.stroke_weight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current stroke weight (line width) for the <a class="reference internal" href="#scene_drawing.rect" title="scene_drawing.rect"><tt class="xref py py-func docutils literal"><span class="pre">rect()</span></tt></a> and <a class="reference internal" href="#scene_drawing.ellipse" title="scene_drawing.ellipse"><tt class="xref py py-func docutils literal"><span class="pre">ellipse()</span></tt></a> functions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.use_shader">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">use_shader</tt><big>(</big><em>shader</em><big>)</big><a class="headerlink" href="#scene_drawing.use_shader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the given <a class="reference internal" href="scene.html#scene.Shader" title="scene.Shader"><tt class="xref py py-class docutils literal"><span class="pre">scene.Shader</span></tt></a> for subsequent drawing.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="drawing">
+<h2>Drawing<a class="headerlink" href="#drawing" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scene_drawing.background">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">background</tt><big>(</big><em>r=0</em>, <em>g=0</em>, <em>b=0</em><big>)</big><a class="headerlink" href="#scene_drawing.background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the background of the current scene with a solid color.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.ellipse">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">ellipse</tt><big>(</big><em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><big>)</big><a class="headerlink" href="#scene_drawing.ellipse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw an ellipse in a rectangle with the current settings for
+fill color, stroke color and stroke width.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.image">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">image</tt><big>(</big><em>name</em>, <em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><span class="optional">[</span>, <em>from_x</em>, <em>from_y</em>, <em>from_w</em>, <em>from_h</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene_drawing.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a named image into a rectangle.</p>
+<p>The <cite>name</cite> parameter can be a built-in image name or an image identifier that is returned from <a class="reference internal" href="#scene_drawing.render_text" title="scene_drawing.render_text"><tt class="xref py py-func docutils literal"><span class="pre">render_text()</span></tt></a> or <a class="reference internal" href="#scene_drawing.load_pil_image" title="scene_drawing.load_pil_image"><tt class="xref py py-func docutils literal"><span class="pre">load_pil_image()</span></tt></a>.</p>
+<p>If the w(idth) and h(eight) parameters are omitted, the image is drawn at the full size with the origin at (x, y). Using the optional <cite>from_x</cite>, <cite>from_y</cite>, <cite>from_w</cite>, and <cite>from_h</cite> parameters, you can draw a rectangular portion of the image instead of the whole image.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.image_quad">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">image_quad</tt><big>(</big><em>name</em>, <em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em>, <em>x3</em>, <em>y3</em>, <em>x4</em>, <em>y4</em><span class="optional">[</span>, <em>from_x1</em>, <em>from_y1</em>, <em>from_x2</em>, <em>from_y2</em>, <em>from_x3</em>, <em>from_y3</em>, <em>from_x4</em>, <em>from_y4</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene_drawing.image_quad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a named image into a quad.</p>
+<p>The <cite>name</cite> parameter can be a built-in image name or an image identifier that is returned from <a class="reference internal" href="#scene_drawing.render_text" title="scene_drawing.render_text"><tt class="xref py py-func docutils literal"><span class="pre">render_text()</span></tt></a> or <a class="reference internal" href="#scene_drawing.load_pil_image" title="scene_drawing.load_pil_image"><tt class="xref py py-func docutils literal"><span class="pre">load_pil_image()</span></tt></a>.</p>
+<p>The corners of the quad that the image is drawn into is given by the first set of xn/yn values. The <cite>from_xn</cite>/<cite>from_yn</cite> values can optionally be used to draw a quadrangular portion of the image instead of the whole image.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.line">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">line</tt><big>(</big><em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em><big>)</big><a class="headerlink" href="#scene_drawing.line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a straight line between two points with the current <a class="reference internal" href="#scene_drawing.stroke" title="scene_drawing.stroke"><tt class="xref py py-func docutils literal"><span class="pre">stroke()</span></tt></a> color and <a class="reference internal" href="#scene_drawing.stroke_weight" title="scene_drawing.stroke_weight"><tt class="xref py py-func docutils literal"><span class="pre">stroke_weight()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.rect">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">rect</tt><big>(</big><em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><big>)</big><a class="headerlink" href="#scene_drawing.rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a rectangle with the current settings for
+fill color, stroke color and stroke width.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.text">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">text</tt><big>(</big><em>txt</em>, <em>font_name='Helvetica'</em>, <em>font_size=16.0</em>, <em>x=0.0</em>, <em>y=0.0</em>, <em>alignment=5</em><big>)</big><a class="headerlink" href="#scene_drawing.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a string at a given point with a given font.
+The alignment parameter has 9 possible values that correspond to the positions
+on a numeric keypad (with 1 in the bottom lefthand corner). The default (5) centers
+the text on the point.</p>
+<p>The color of the text can be set by calling the <a class="reference internal" href="#scene_drawing.tint" title="scene_drawing.tint"><tt class="xref py py-func docutils literal"><span class="pre">tint()</span></tt></a> function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.tint">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">tint</tt><big>(</big><em>r=1</em>, <em>g=1</em>, <em>b=1</em>, <em>a=1</em><big>)</big><a class="headerlink" href="#scene_drawing.tint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current tint color that is used for drawing images and text.</p>
+<p>A white tint color is the default and causes images to be drawn in their
+natural colors. Setting a white color (<cite>r</cite> = <cite>g</cite> = <cite>b</cite> = 1.0) with an alpha
+value &lt; 1.0 makes the image translucent.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.triangle_strip">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">triangle_strip</tt><big>(</big><em>points</em><span class="optional">[</span>, <em>tex_coords</em>, <em>image_name</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene_drawing.triangle_strip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a triangle strip with the given points (a list of 2-tuples), using the current fill color or an image. If an image is used, the <cite>tex_coords</cite> list should be a list of UV coordinates (of the same length as <cite>points</cite>).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="coordinate-transformation">
+<h2>Coordinate Transformation<a class="headerlink" href="#coordinate-transformation" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scene_drawing.translate">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">translate</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#scene_drawing.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates the current transformation matrix.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.pop_matrix">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">pop_matrix</tt><big>(</big><big>)</big><a class="headerlink" href="#scene_drawing.pop_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the transformation matrix before the last call of <a class="reference internal" href="#scene_drawing.push_matrix" title="scene_drawing.push_matrix"><tt class="xref py py-func docutils literal"><span class="pre">push_matrix()</span></tt></a>.
+This is usually used in combination with <a class="reference internal" href="#scene_drawing.rotate" title="scene_drawing.rotate"><tt class="xref py py-func docutils literal"><span class="pre">rotate()</span></tt></a>, <a class="reference internal" href="#scene_drawing.translate" title="scene_drawing.translate"><tt class="xref py py-func docutils literal"><span class="pre">translate()</span></tt></a> and <a class="reference internal" href="#scene_drawing.scale" title="scene_drawing.scale"><tt class="xref py py-func docutils literal"><span class="pre">scale()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.push_matrix">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">push_matrix</tt><big>(</big><big>)</big><a class="headerlink" href="#scene_drawing.push_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pushes the current transformation matrix on the stack.
+This is usually used in combination with <a class="reference internal" href="#scene_drawing.rotate" title="scene_drawing.rotate"><tt class="xref py py-func docutils literal"><span class="pre">rotate()</span></tt></a>, <a class="reference internal" href="#scene_drawing.translate" title="scene_drawing.translate"><tt class="xref py py-func docutils literal"><span class="pre">translate()</span></tt></a> and <a class="reference internal" href="#scene_drawing.scale" title="scene_drawing.scale"><tt class="xref py py-func docutils literal"><span class="pre">scale()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.rotate">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">rotate</tt><big>(</big><em>deg</em><big>)</big><a class="headerlink" href="#scene_drawing.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotate the current transformation matrix. The angle is in degrees.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.scale">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">scale</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#scene_drawing.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale the current transformation matrix</p>
+</dd></dl>
+
+</div>
+<div class="section" id="loading-images">
+<h2>Loading Images<a class="headerlink" href="#loading-images" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scene_drawing.load_image">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">load_image</tt><big>(</big><em>image_name</em><big>)</big><a class="headerlink" href="#scene_drawing.load_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the named image. This can be used to improve performance, e.g. by loading all
+images that are about to be used in the <tt class="xref py py-meth docutils literal"><span class="pre">setup()</span></tt> method of your <tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.load_image_file">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">load_image_file</tt><big>(</big><em>image_path</em><big>)</big><a class="headerlink" href="#scene_drawing.load_image_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the image at the given file path and return a name that can be used with the <a class="reference internal" href="#scene_drawing.image" title="scene_drawing.image"><tt class="xref py py-func docutils literal"><span class="pre">image()</span></tt></a> drawing function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.load_pil_image">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">load_pil_image</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#scene_drawing.load_pil_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> <a class="reference internal" href="Image.html#module-Image" title="Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> into a scene and returns a name that can be
+used with the <a class="reference internal" href="#scene_drawing.image" title="scene_drawing.image"><tt class="xref py py-func docutils literal"><span class="pre">image()</span></tt></a> drawing function.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only images using the &#8216;RGBA&#8217; mode are supported at the moment.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.render_text">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">render_text</tt><big>(</big><em>txt</em>, <em>font_name='Helvetica'</em>, <em>font_size=16.0</em><big>)</big><a class="headerlink" href="#scene_drawing.render_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render a string of text as an image name (that can be used with the <a class="reference internal" href="#scene_drawing.image" title="scene_drawing.image"><tt class="xref py py-func docutils literal"><span class="pre">image()</span></tt></a> function).
+Returns a tuple of the name and a <tt class="xref py py-class docutils literal"><span class="pre">Size</span></tt> object.</p>
+<p>This can be used to determine the size of a string before drawing it, or to repeatedly
+draw the same text slightly more efficiently.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene_drawing.unload_image">
+<tt class="descclassname">scene_drawing.</tt><tt class="descname">unload_image</tt><big>(</big><em>image_name</em><big>)</big><a class="headerlink" href="#scene_drawing.unload_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an image from the scene cache. This is meant to be used with image names returned from <a class="reference internal" href="#scene_drawing.load_pil_image" title="scene_drawing.load_pil_image"><tt class="xref py py-func docutils literal"><span class="pre">load_pil_image()</span></tt></a> that are no longer needed.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

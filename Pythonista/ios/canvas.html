@@ -1,0 +1,589 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>canvas — Vector Graphics &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-canvas">
+<span id="canvas-vector-graphics"></span><h1><a class="reference internal" href="#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> &#8212; Vector Graphics<a class="headerlink" href="#module-canvas" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> module contains functions for creating non-interactive, 2D vector graphics on iOS. It is suitable for drawing simple graphs/diagrams or line art.</p>
+<p>All functions work on a single canvas that is shown in the output area of Pythonista. Images created this way can be exported to the device&#8217;s photo library or copied to the clipboard, though it is currently not possible to do this programmatically.</p>
+<p>The coordinate system has its origin in the bottom-left corner, coordinates are floats. Colors are generally represented as RGB(A) with components in the range 0.0 - 1.0.</p>
+<p>Minimal example that draws a red circle:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#Draw a red circle filling the entire canvas</span>
+<span class="kn">import</span> <span class="nn">canvas</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">h</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">set_fill_color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">fill_ellipse</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-the-canvas">
+<h2>Configuring the Canvas<a class="headerlink" href="#configuring-the-canvas" title="Permalink to this headline">¶</a></h2>
+<p>The following functions can be used to configure the overall drawing behavior
+of the canvas. You typically begin any drawing by calling <a class="reference internal" href="#canvas.set_size" title="canvas.set_size"><tt class="xref py py-func docutils literal"><span class="pre">set_size()</span></tt></a>.</p>
+<p>If you want to improve the performance of your drawing, you might want to add
+a call to <a class="reference internal" href="#canvas.begin_updates" title="canvas.begin_updates"><tt class="xref py py-func docutils literal"><span class="pre">begin_updates()</span></tt></a> before you start drawing, balanced by a call to
+<a class="reference internal" href="#canvas.end_updates" title="canvas.end_updates"><tt class="xref py py-func docutils literal"><span class="pre">end_updates()</span></tt></a> at the end. This will basically avoid showing intermediate
+results, which speeds things up, but it might also often be helpful to see
+these intermediate results while working on your drawing code.</p>
+<dl class="function">
+<dt id="canvas.clear">
+<tt class="descclassname">canvas.</tt><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the canvas. You can also clear the canvas with the <a class="reference internal" href="#canvas.set_size" title="canvas.set_size"><tt class="xref py py-func docutils literal"><span class="pre">set_size()</span></tt></a>
+function, which also resets all graphics state (e.g. transformations, fill
+color, etc.).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.get_size">
+<tt class="descclassname">canvas.</tt><tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.get_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the size of the canvas as a tuple of width and height.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.set_size">
+<tt class="descclassname">canvas.</tt><tt class="descname">set_size</tt><big>(</big><em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#canvas.set_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the size of the canvas (min. 16x16, max. 2048x2048) and reset
+all graphics state (e.g. transformations, fill color, etc.).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.begin_updates">
+<tt class="descclassname">canvas.</tt><tt class="descname">begin_updates</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.begin_updates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begins a group of drawing operations. Results will not be visible until
+<a class="reference internal" href="#canvas.end_updates" title="canvas.end_updates"><tt class="xref py py-func docutils literal"><span class="pre">end_updates()</span></tt></a> is called. This can significantly improve performance.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.end_updates">
+<tt class="descclassname">canvas.</tt><tt class="descname">end_updates</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.end_updates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forces all buffered drawing to be displayed on the screen</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_updates" title="canvas.begin_updates"><tt class="xref py py-func docutils literal"><span class="pre">begin_updates()</span></tt></a>)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="setting-drawing-parameters">
+<h2>Setting Drawing Parameters<a class="headerlink" href="#setting-drawing-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Using these functions affects any drawing operations that <cite>follow</cite>. For example,
+calling <a class="reference internal" href="#canvas.set_fill_color" title="canvas.set_fill_color"><tt class="xref py py-func docutils literal"><span class="pre">set_fill_color()</span></tt></a> with a red color will make any following
+call to <a class="reference internal" href="#canvas.fill_rect" title="canvas.fill_rect"><tt class="xref py py-func docutils literal"><span class="pre">fill_rect()</span></tt></a> draw a red rectangle, until you set a different color.</p>
+<dl class="function">
+<dt id="canvas.set_aa_enabled">
+<tt class="descclassname">canvas.</tt><tt class="descname">set_aa_enabled</tt><big>(</big><em>flag</em><big>)</big><a class="headerlink" href="#canvas.set_aa_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables or disables antialiasing.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.set_alpha">
+<tt class="descclassname">canvas.</tt><tt class="descname">set_alpha</tt><big>(</big><em>alpha</em><big>)</big><a class="headerlink" href="#canvas.set_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the global alpha value.</p>
+<p>(see also <a class="reference internal" href="#canvas.set_blend_mode" title="canvas.set_blend_mode"><tt class="xref py py-func docutils literal"><span class="pre">set_blend_mode()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.set_blend_mode">
+<tt class="descclassname">canvas.</tt><tt class="descname">set_blend_mode</tt><big>(</big><em>mode</em><big>)</big><a class="headerlink" href="#canvas.set_blend_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the active blend mode. Can be one of the constants listed under
+<a class="reference internal" href="#blend-modes">Blend Modes</a>.</p>
+<p>(see also <a class="reference internal" href="#canvas.set_alpha" title="canvas.set_alpha"><tt class="xref py py-func docutils literal"><span class="pre">set_alpha()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.set_fill_color">
+<tt class="descclassname">canvas.</tt><tt class="descname">set_fill_color</tt><big>(</big><em>r</em>, <em>g</em>, <em>b</em><span class="optional">[</span>, <em>a</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#canvas.set_fill_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the fill color.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.set_line_width">
+<tt class="descclassname">canvas.</tt><tt class="descname">set_line_width</tt><big>(</big><em>width</em><big>)</big><a class="headerlink" href="#canvas.set_line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the line width.</p>
+<p>(see also <a class="reference internal" href="#canvas.set_stroke_color" title="canvas.set_stroke_color"><tt class="xref py py-func docutils literal"><span class="pre">set_stroke_color()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.set_stroke_color">
+<tt class="descclassname">canvas.</tt><tt class="descname">set_stroke_color</tt><big>(</big><em>r</em>, <em>g</em>, <em>b</em><span class="optional">[</span>, <em>a</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#canvas.set_stroke_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the active stroke color.</p>
+<p>(see also <a class="reference internal" href="#canvas.set_line_width" title="canvas.set_line_width"><tt class="xref py py-func docutils literal"><span class="pre">set_line_width()</span></tt></a>)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="vector-drawing-functions">
+<h2>Vector Drawing Functions<a class="headerlink" href="#vector-drawing-functions" title="Permalink to this headline">¶</a></h2>
+<p>The following functions are used for drawing vector paths and shapes.</p>
+<p>The canvas always has a <cite>current path</cite> that can be manipulated with the
+<cite>add_...</cite> functions. You can construct arbitrarily complex paths using
+<a class="reference internal" href="#canvas.add_line" title="canvas.add_line"><tt class="xref py py-func docutils literal"><span class="pre">add_line()</span></tt></a>, <a class="reference internal" href="#canvas.add_curve" title="canvas.add_curve"><tt class="xref py py-func docutils literal"><span class="pre">add_curve()</span></tt></a>, etc. and then fill or stroke the path
+with <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a> or <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a>. If you intend to fill a path,
+you might want to close it first with <a class="reference internal" href="#canvas.close_path" title="canvas.close_path"><tt class="xref py py-func docutils literal"><span class="pre">close_path()</span></tt></a>.</p>
+<p>Filling or drawing a path has the side effect of clearing the current path.</p>
+<p>The following example draws a star shape with some configurable parameters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#Draw a star</span>
+<span class="kn">import</span> <span class="nn">canvas</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">pi</span>
+
+<span class="k">def</span> <span class="nf">draw_star</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">inner_r</span><span class="p">,</span> <span class="n">outer_r</span><span class="p">,</span> <span class="n">jags</span><span class="p">):</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">inner_r</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">jags</span> <span class="o">*</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">jags</span><span class="p">)</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">inner_r</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">outer_r</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">close_path</span><span class="p">()</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">set_line_width</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">draw_path</span><span class="p">()</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">h</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">jags</span> <span class="o">=</span> <span class="mi">7</span> <span class="c">#Number of jags</span>
+<span class="n">inner_r</span> <span class="o">=</span> <span class="mi">120</span> <span class="c">#Inner radius</span>
+<span class="n">outer_r</span> <span class="o">=</span> <span class="mi">250</span> <span class="c">#Outer radius</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="n">draw_star</span><span class="p">(</span><span class="n">w</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">inner_r</span><span class="p">,</span> <span class="n">outer_r</span><span class="p">,</span> <span class="n">jags</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt id="canvas.add_curve">
+<tt class="descclassname">canvas.</tt><tt class="descname">add_curve</tt><big>(</big><em>cp1x</em>, <em>cp1y</em>, <em>cp2x</em>, <em>cp2y</em>, <em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#canvas.add_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a cubic bezier curve to (x, y) to the current path, with the control points (cp1x, cp1y) and (cp2x, cp2y).</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>, <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a>, <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.add_ellipse">
+<tt class="descclassname">canvas.</tt><tt class="descname">add_ellipse</tt><big>(</big><em>x</em>, <em>y</em>, <em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#canvas.add_ellipse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an ellipse to the current path.</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>, <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a>, <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.add_line">
+<tt class="descclassname">canvas.</tt><tt class="descname">add_line</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#canvas.add_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a straight line to the current path.</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>, <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a>, <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a>, <a class="reference internal" href="#canvas.move_to" title="canvas.move_to"><tt class="xref py py-func docutils literal"><span class="pre">move_to()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.add_quad_curve">
+<tt class="descclassname">canvas.</tt><tt class="descname">add_quad_curve</tt><big>(</big><em>cpx</em>, <em>cpy</em>, <em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#canvas.add_quad_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a quadratic bezier curve to (x, y) to the current path with (cpx, cpy) as the control point.</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>, <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a>, <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.add_rect">
+<tt class="descclassname">canvas.</tt><tt class="descname">add_rect</tt><big>(</big><em>x</em>, <em>y</em>, <em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#canvas.add_rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a rectangle to the current path.</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>, <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a>, <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.begin_path">
+<tt class="descclassname">canvas.</tt><tt class="descname">begin_path</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.begin_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begins a new path. Use <a class="reference internal" href="#canvas.add_line" title="canvas.add_line"><tt class="xref py py-func docutils literal"><span class="pre">add_line()</span></tt></a>, <a class="reference internal" href="#canvas.add_rect" title="canvas.add_rect"><tt class="xref py py-func docutils literal"><span class="pre">add_rect()</span></tt></a>, etc. to add shapes to this path and <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a> or <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a> to make it visible.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.clip">
+<tt class="descclassname">canvas.</tt><tt class="descname">clip</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.clip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clips subsequent drawing to the current path.</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.close_path">
+<tt class="descclassname">canvas.</tt><tt class="descname">close_path</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.close_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the current path.</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>, <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a>, <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.draw_ellipse">
+<tt class="descclassname">canvas.</tt><tt class="descname">draw_ellipse</tt><big>(</big><em>x</em>, <em>y</em>, <em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#canvas.draw_ellipse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws an ellipse in a rectangle</p>
+<p>(see also <a class="reference internal" href="#canvas.set_stroke_color" title="canvas.set_stroke_color"><tt class="xref py py-func docutils literal"><span class="pre">set_stroke_color()</span></tt></a>, <a class="reference internal" href="#canvas.set_line_width" title="canvas.set_line_width"><tt class="xref py py-func docutils literal"><span class="pre">set_line_width()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.draw_line">
+<tt class="descclassname">canvas.</tt><tt class="descname">draw_line</tt><big>(</big><em>x1</em>, <em>y1</em>, <em>x2</em>, <em>y2</em><big>)</big><a class="headerlink" href="#canvas.draw_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a line between two points</p>
+<p>(see also <a class="reference internal" href="#canvas.set_stroke_color" title="canvas.set_stroke_color"><tt class="xref py py-func docutils literal"><span class="pre">set_stroke_color()</span></tt></a>, <a class="reference internal" href="#canvas.set_line_width" title="canvas.set_line_width"><tt class="xref py py-func docutils literal"><span class="pre">set_line_width()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.draw_path">
+<tt class="descclassname">canvas.</tt><tt class="descname">draw_path</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.draw_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the outline of the current path with the active line width and color.</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>, <a class="reference internal" href="#canvas.fill_path" title="canvas.fill_path"><tt class="xref py py-func docutils literal"><span class="pre">fill_path()</span></tt></a>, <a class="reference internal" href="#canvas.set_stroke_color" title="canvas.set_stroke_color"><tt class="xref py py-func docutils literal"><span class="pre">set_stroke_color()</span></tt></a>, <a class="reference internal" href="#canvas.set_line_width" title="canvas.set_line_width"><tt class="xref py py-func docutils literal"><span class="pre">set_line_width()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.draw_rect">
+<tt class="descclassname">canvas.</tt><tt class="descname">draw_rect</tt><big>(</big><em>x</em>, <em>y</em>, <em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#canvas.draw_rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the outline of a rectangle</p>
+<p>(see also <a class="reference internal" href="#canvas.set_stroke_color" title="canvas.set_stroke_color"><tt class="xref py py-func docutils literal"><span class="pre">set_stroke_color()</span></tt></a>, <a class="reference internal" href="#canvas.set_line_width" title="canvas.set_line_width"><tt class="xref py py-func docutils literal"><span class="pre">set_line_width()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.fill_ellipse">
+<tt class="descclassname">canvas.</tt><tt class="descname">fill_ellipse</tt><big>(</big><em>x</em>, <em>y</em>, <em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#canvas.fill_ellipse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills an ellipse in a rectangle</p>
+<p>(see also <a class="reference internal" href="#canvas.draw_ellipse" title="canvas.draw_ellipse"><tt class="xref py py-func docutils literal"><span class="pre">draw_ellipse()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.fill_path">
+<tt class="descclassname">canvas.</tt><tt class="descname">fill_path</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.fill_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills the current path with the active fill color.</p>
+<p>(see also <a class="reference internal" href="#canvas.begin_path" title="canvas.begin_path"><tt class="xref py py-func docutils literal"><span class="pre">begin_path()</span></tt></a>, <a class="reference internal" href="#canvas.draw_path" title="canvas.draw_path"><tt class="xref py py-func docutils literal"><span class="pre">draw_path()</span></tt></a>, <a class="reference internal" href="#canvas.set_fill_color" title="canvas.set_fill_color"><tt class="xref py py-func docutils literal"><span class="pre">set_fill_color()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.fill_pixel">
+<tt class="descclassname">canvas.</tt><tt class="descname">fill_pixel</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#canvas.fill_pixel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills a pixel with the current fill color</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.fill_rect">
+<tt class="descclassname">canvas.</tt><tt class="descname">fill_rect</tt><big>(</big><em>x</em>, <em>y</em>, <em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#canvas.fill_rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills a rectangle</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.move_to">
+<tt class="descclassname">canvas.</tt><tt class="descname">move_to</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#canvas.move_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves the &#8220;pen&#8221; to a given point.</p>
+<p>(see also <a class="reference internal" href="#canvas.add_line" title="canvas.add_line"><tt class="xref py py-func docutils literal"><span class="pre">add_line()</span></tt></a>)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="transforms">
+<h2>Transforms<a class="headerlink" href="#transforms" title="Permalink to this headline">¶</a></h2>
+<p>Using the following transformation functions, you can manipulate the
+<cite>current transformation matrix (CTM)</cite> of your canvas. This can for example
+be used to draw rotated or scaled shapes. When you transform the canvas,
+you&#8217;re essentially changing the coordinate system which affects all drawing
+that follows this change.</p>
+<p>It is often useful to be apply a transformation only temporarily. This can
+be done with the <a class="reference internal" href="#canvas.save_gstate" title="canvas.save_gstate"><tt class="xref py py-func docutils literal"><span class="pre">save_gstate()</span></tt></a> and <a class="reference internal" href="#canvas.restore_gstate" title="canvas.restore_gstate"><tt class="xref py py-func docutils literal"><span class="pre">restore_gstate()</span></tt></a> functions.
+<a class="reference internal" href="#canvas.save_gstate" title="canvas.save_gstate"><tt class="xref py py-func docutils literal"><span class="pre">save_gstate()</span></tt></a> takes a snapshot of the current transformation (and other
+graphics state parameters, such as fill color) and puts it on a stack. Calling
+<a class="reference internal" href="#canvas.restore_gstate" title="canvas.restore_gstate"><tt class="xref py py-func docutils literal"><span class="pre">restore_gstate()</span></tt></a> afterwards restores the last state that was put on the
+stack.</p>
+<p>In case you want to completely <cite>reset</cite> any transformations, but you didn&#8217;t save
+the graphics state, you can use the <a class="reference internal" href="#canvas.set_size" title="canvas.set_size"><tt class="xref py py-func docutils literal"><span class="pre">set_size()</span></tt></a> function.</p>
+<p>The following example draws a clock face with rotated labels:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Draw a clock face</span>
+<span class="kn">import</span> <span class="nn">canvas</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="mi">600</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">set_fill_color</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">fill_ellipse</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">set_fill_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">fill_ellipse</span><span class="p">(</span><span class="mi">290</span><span class="p">,</span> <span class="mi">290</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">save_gstate</span><span class="p">()</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mf">12.0</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">set_fill_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">fnt</span> <span class="o">=</span> <span class="s">&#39;Helvetica-Bold&#39;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="mi">12</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">get_text_size</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">fnt</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">draw_text</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="n">w</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="n">fnt</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">restore_gstate</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt id="canvas.restore_gstate">
+<tt class="descclassname">canvas.</tt><tt class="descname">restore_gstate</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.restore_gstate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current graphics state to the state most recently saved with <a class="reference internal" href="#canvas.save_gstate" title="canvas.save_gstate"><tt class="xref py py-func docutils literal"><span class="pre">save_gstate()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.rotate">
+<tt class="descclassname">canvas.</tt><tt class="descname">rotate</tt><big>(</big><em>angle</em><big>)</big><a class="headerlink" href="#canvas.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotates the current transformation matrix.</p>
+<p>(see also <a class="reference internal" href="#canvas.save_gstate" title="canvas.save_gstate"><tt class="xref py py-func docutils literal"><span class="pre">save_gstate()</span></tt></a>, <a class="reference internal" href="#canvas.restore_gstate" title="canvas.restore_gstate"><tt class="xref py py-func docutils literal"><span class="pre">restore_gstate()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.save_gstate">
+<tt class="descclassname">canvas.</tt><tt class="descname">save_gstate</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.save_gstate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pushes a copy of the current graphics state (transformation, selected colors etc.) onto the graphics state stack.</p>
+<p>(see also <a class="reference internal" href="#canvas.restore_gstate" title="canvas.restore_gstate"><tt class="xref py py-func docutils literal"><span class="pre">restore_gstate()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.scale">
+<tt class="descclassname">canvas.</tt><tt class="descname">scale</tt><big>(</big><em>sx</em>, <em>sy</em><big>)</big><a class="headerlink" href="#canvas.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales the current transformation matrix.</p>
+<p>(see also <a class="reference internal" href="#canvas.save_gstate" title="canvas.save_gstate"><tt class="xref py py-func docutils literal"><span class="pre">save_gstate()</span></tt></a>, <a class="reference internal" href="#canvas.restore_gstate" title="canvas.restore_gstate"><tt class="xref py py-func docutils literal"><span class="pre">restore_gstate()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.translate">
+<tt class="descclassname">canvas.</tt><tt class="descname">translate</tt><big>(</big><em>tx</em>, <em>ty</em><big>)</big><a class="headerlink" href="#canvas.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translates the current transformation matrix.</p>
+<p>(see also <a class="reference internal" href="#canvas.save_gstate" title="canvas.save_gstate"><tt class="xref py py-func docutils literal"><span class="pre">save_gstate()</span></tt></a>, <a class="reference internal" href="#canvas.restore_gstate" title="canvas.restore_gstate"><tt class="xref py py-func docutils literal"><span class="pre">restore_gstate()</span></tt></a>)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="drawing-bitmap-images">
+<h2>Drawing Bitmap Images<a class="headerlink" href="#drawing-bitmap-images" title="Permalink to this headline">¶</a></h2>
+<p>Although it is primarily designed for vector graphics, the <a class="reference internal" href="#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> module
+also has some functions for drawing bitmap images, similar to the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a>
+module. You can draw named images or the current contents of the clipboard.</p>
+<dl class="function">
+<dt id="canvas.draw_image">
+<tt class="descclassname">canvas.</tt><tt class="descname">draw_image</tt><big>(</big><em>image_name</em>, <em>x</em>, <em>y</em><span class="optional">[</span>, <em>width</em>, <em>height</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#canvas.draw_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the image with the given name in a rectangle. If width and height
+are omitted, the image is drawn at its natural size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.draw_clipboard">
+<tt class="descclassname">canvas.</tt><tt class="descname">draw_clipboard</tt><big>(</big><em>x</em>, <em>y</em>, <em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#canvas.draw_clipboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw the image in the clipboard in a given rectangle.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.get_clipboard_size">
+<tt class="descclassname">canvas.</tt><tt class="descname">get_clipboard_size</tt><big>(</big><big>)</big><a class="headerlink" href="#canvas.get_clipboard_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the size of the image in the clipboard as a tuple of width and
+height, in points.
+On a retina screen, one point corresponds to two pixels. Returns (0,0)
+if the clipboard is empty.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.get_image_size">
+<tt class="descclassname">canvas.</tt><tt class="descname">get_image_size</tt><big>(</big><em>image_name</em><big>)</big><a class="headerlink" href="#canvas.get_image_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size of the image with the given name as a tuple of width
+and height, in points.
+On a retina screen, one point corresponds to two pixels. Returns (0, 0) if
+no image with this name exists.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="drawing-text">
+<h2>Drawing Text<a class="headerlink" href="#drawing-text" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> module has two simple functions for drawing and measuring
+text.</p>
+<p>The color of the text that is drawn with <a class="reference internal" href="#canvas.draw_text" title="canvas.draw_text"><tt class="xref py py-func docutils literal"><span class="pre">draw_text()</span></tt></a> is determined by
+previous calls to <a class="reference internal" href="#canvas.set_fill_color" title="canvas.set_fill_color"><tt class="xref py py-func docutils literal"><span class="pre">set_fill_color()</span></tt></a>.</p>
+<dl class="function">
+<dt id="canvas.draw_text">
+<tt class="descclassname">canvas.</tt><tt class="descname">draw_text</tt><big>(</big><em>text</em>, <em>x</em>, <em>y</em>, <em>font_name='Helvetica'</em>, <em>font_size=16.0</em><big>)</big><a class="headerlink" href="#canvas.draw_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a single line of text at a given point. The point represents the origin
+of the line, i.e. its lower-left corner.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="canvas.get_text_size">
+<tt class="descclassname">canvas.</tt><tt class="descname">get_text_size</tt><big>(</big><em>text</em>, <em>font_name='Helvetica'</em>, <em>font_size=16.0</em><big>)</big><a class="headerlink" href="#canvas.get_text_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the size of a line of text as it was drawn by the draw_text()
+function as a tuple of (width, height).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="blend-modes">
+<h2>Blend Modes<a class="headerlink" href="#blend-modes" title="Permalink to this headline">¶</a></h2>
+<p>The following blend modes can be used with <a class="reference internal" href="#canvas.set_blend_mode" title="canvas.set_blend_mode"><tt class="xref py py-func docutils literal"><span class="pre">set_blend_mode()</span></tt></a>:</p>
+<dl class="data">
+<dt id="canvas.BLEND_NORMAL">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_NORMAL</tt><a class="headerlink" href="#canvas.BLEND_NORMAL" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_MULTIPLY">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_MULTIPLY</tt><a class="headerlink" href="#canvas.BLEND_MULTIPLY" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_DIFFERENCE">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_DIFFERENCE</tt><a class="headerlink" href="#canvas.BLEND_DIFFERENCE" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_SCREEN">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_SCREEN</tt><a class="headerlink" href="#canvas.BLEND_SCREEN" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_OVERLAY">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_OVERLAY</tt><a class="headerlink" href="#canvas.BLEND_OVERLAY" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_DARKEN">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_DARKEN</tt><a class="headerlink" href="#canvas.BLEND_DARKEN" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_LIGHTEN">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_LIGHTEN</tt><a class="headerlink" href="#canvas.BLEND_LIGHTEN" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_COLOR_DODGE">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_COLOR_DODGE</tt><a class="headerlink" href="#canvas.BLEND_COLOR_DODGE" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_COLOR_BURN">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_COLOR_BURN</tt><a class="headerlink" href="#canvas.BLEND_COLOR_BURN" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_SOFT_LIGHT">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_SOFT_LIGHT</tt><a class="headerlink" href="#canvas.BLEND_SOFT_LIGHT" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_HARD_LIGHT">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_HARD_LIGHT</tt><a class="headerlink" href="#canvas.BLEND_HARD_LIGHT" title="Permalink to this definition">¶</a></dt>
+<dt>
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_DIFFERENCE</tt></dt>
+<dt id="canvas.BLEND_EXCLUSION">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_EXCLUSION</tt><a class="headerlink" href="#canvas.BLEND_EXCLUSION" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_HUE">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_HUE</tt><a class="headerlink" href="#canvas.BLEND_HUE" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_SATURATION">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_SATURATION</tt><a class="headerlink" href="#canvas.BLEND_SATURATION" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_COLOR">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_COLOR</tt><a class="headerlink" href="#canvas.BLEND_COLOR" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_LUMINOSITY">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_LUMINOSITY</tt><a class="headerlink" href="#canvas.BLEND_LUMINOSITY" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_CLEAR">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_CLEAR</tt><a class="headerlink" href="#canvas.BLEND_CLEAR" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_COPY">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_COPY</tt><a class="headerlink" href="#canvas.BLEND_COPY" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_SOURCE_IN">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_SOURCE_IN</tt><a class="headerlink" href="#canvas.BLEND_SOURCE_IN" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_SOURCE_OUT">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_SOURCE_OUT</tt><a class="headerlink" href="#canvas.BLEND_SOURCE_OUT" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_SOURCE_ATOP">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_SOURCE_ATOP</tt><a class="headerlink" href="#canvas.BLEND_SOURCE_ATOP" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_DESTINATION_OVER">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_DESTINATION_OVER</tt><a class="headerlink" href="#canvas.BLEND_DESTINATION_OVER" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_DESTINATION_ATOP">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_DESTINATION_ATOP</tt><a class="headerlink" href="#canvas.BLEND_DESTINATION_ATOP" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_XOR">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_XOR</tt><a class="headerlink" href="#canvas.BLEND_XOR" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_PLUS_DARKER">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_PLUS_DARKER</tt><a class="headerlink" href="#canvas.BLEND_PLUS_DARKER" title="Permalink to this definition">¶</a></dt>
+<dt id="canvas.BLEND_PLUS_LIGHTER">
+<tt class="descclassname">canvas.</tt><tt class="descname">BLEND_PLUS_LIGHTER</tt><a class="headerlink" href="#canvas.BLEND_PLUS_LIGHTER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,19 @@
+language: python
+python:
+- '2.7'
+install: pip install -r requirements.txt
+script:
+- mkdir _build
+- doc2dash -fv --name 'Pythonista3' -d _build -i icon.png -j -I index.html Pythonista3
+- cp icon@2x.png _build/Pythonista3.docset
+- cd _build && tar --exclude='.DS_Store' -cvzf Pythonista3.tgz Pythonista3.docset
+deploy:
+  provider: releases
+  api_key:
+    secure: MowpOKFnuaYoEHWlS7wf6qqC2d81FgcB1vesWdy1KtH0EaF/GIVByjh7qqzaZeHQ71KTvS6thBVjHLK32lHl4eILxLBEYW4swFrI8USLY0m1xkthCMgZGzldfb3kGh1JC+ybacPg3jZlvu9bfjXLmURmr8VHRGt0lwuY9xnKilpTD4/BU7t4w7xaAl5aRR5qy4C13+Zf08nB/tupz2/zqADo/ir0Kkc4jyeJn2r/3PaLBPHWPGy4rEbWeAlCF3Bn5aLlFU9CCSllQ1JELkbDGlSrL4f8G9f6hdqz6w/bRsMXRmTXSn9xW7q78QykyXzGjjUlcLOui2qkxNUZjdP4FIQCfPRmlwKtoBfn4NHjgc0W8lG7bhdI2K8BP42OKiqymokm+HI1IHke3HKn/YLNDFT7mpm1+5iWp4lT2wZbEzRYaK9GIFCU7ehegj5B6Owv3KjdHgKXPhRi6pt/v1OkeLSaTnMO0RLsLvveWngQmtv/vZNRlLKV+kulPjlBRj3jfchjeIfU8Ot1zd7TCMIu7l3mNlXTAtQS0i4DeAsBQS13ZuzKzbt6PwXV31Ffkod51+qSJ5cM5hjDOF16cP15v0lbyCfiYuSYcP+uF2tIE81Ejc3W1v1G6Y73cdU90LjUVSKk7mpcY3UNGQFID3ESmqpqAXimSNfA7cK+h4jhCrk=
+  file:
+  - _build/Pythonista3.docset
+  - _build/Pythonista3.tgz
+  skip_cleanup: true
+  on:
+    tags: true

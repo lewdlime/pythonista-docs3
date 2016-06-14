@@ -1,0 +1,421 @@
+
+:mod:`canvas` --- Vector Graphics
+=================================
+
+.. module:: canvas
+   :synopsis: Provides drawing functions on iOS
+.. sectionauthor:: Ole Zorn
+
+Introduction
+------------
+
+The :mod:`canvas` module contains functions for creating non-interactive, 2D vector graphics on iOS. It is suitable for drawing simple graphs/diagrams or line art.
+
+All functions work on a single canvas that is shown in the output area of Pythonista. Images created this way can be exported to the device's photo library or copied to the clipboard, though it is currently not possible to do this programmatically.
+
+The coordinate system has its origin in the bottom-left corner, coordinates are floats. Colors are generally represented as RGB(A) with components in the range 0.0 - 1.0.
+
+Minimal example that draws a red circle::
+
+    #Draw a red circle filling the entire canvas
+    import canvas
+    w = h = 512
+    canvas.set_size(w, h)
+    canvas.set_fill_color(1, 0, 0)
+    canvas.fill_ellipse(0, 0, w, h)
+
+Configuring the Canvas
+----------------------
+
+The following functions can be used to configure the overall drawing behavior
+of the canvas. You typically begin any drawing by calling :func:`set_size`.
+
+If you want to improve the performance of your drawing, you might want to add
+a call to :func:`begin_updates` before you start drawing, balanced by a call to
+:func:`end_updates` at the end. This will basically avoid showing intermediate
+results, which speeds things up, but it might also often be helpful to see
+these intermediate results while working on your drawing code.
+
+.. function:: clear()
+   
+   Clears the canvas. You can also clear the canvas with the :func:`set_size`
+   function, which also resets all graphics state (e.g. transformations, fill
+   color, etc.).
+
+.. function:: get_size()
+
+   Return the size of the canvas as a tuple of width and height.
+
+.. function:: set_size(width, height)
+
+   Set the size of the canvas (min. 16x16, max. 2048x2048) and reset 
+   all graphics state (e.g. transformations, fill color, etc.).
+
+.. function:: begin_updates()
+
+   Begins a group of drawing operations. Results will not be visible until
+   :func:`end_updates` is called. This can significantly improve performance.
+
+.. function:: end_updates()
+
+   Forces all buffered drawing to be displayed on the screen
+
+   (see also :func:`begin_updates`)
+
+
+Setting Drawing Parameters
+--------------------------
+
+Using these functions affects any drawing operations that `follow`. For example,
+calling :func:`set_fill_color` with a red color will make any following
+call to :func:`fill_rect` draw a red rectangle, until you set a different color.
+
+.. function:: set_aa_enabled(flag)
+
+   Enables or disables antialiasing.
+
+
+.. function:: set_alpha(alpha)
+   
+   Sets the global alpha value.
+   
+   (see also :func:`set_blend_mode`)
+
+
+.. function:: set_blend_mode(mode)
+
+   Sets the active blend mode. Can be one of the constants listed under
+   `Blend Modes`_.
+   
+   (see also :func:`set_alpha`)
+
+
+.. function:: set_fill_color(r, g, b, [a])
+   
+   Sets the fill color.
+
+
+.. function:: set_line_width(width)
+
+   Sets the line width.
+   
+   (see also :func:`set_stroke_color`)
+
+
+.. function:: set_stroke_color(r, g, b, [a])
+
+   Sets the active stroke color.
+   
+   (see also :func:`set_line_width`)
+
+
+Vector Drawing Functions
+------------------------
+
+The following functions are used for drawing vector paths and shapes.
+
+The canvas always has a `current path` that can be manipulated with the
+`add_...` functions. You can construct arbitrarily complex paths using
+:func:`add_line`, :func:`add_curve`, etc. and then fill or stroke the path
+with :func:`fill_path` or :func:`draw_path`. If you intend to fill a path,
+you might want to close it first with :func:`close_path`.
+
+Filling or drawing a path has the side effect of clearing the current path.
+
+The following example draws a star shape with some configurable parameters::
+
+    #Draw a star
+    import canvas
+    from math import sin, cos, pi
+
+    def draw_star(x, y, inner_r, outer_r, jags):
+        canvas.move_to(w / 2, h / 2 + inner_r)
+        for i in xrange(jags * 2):
+            angle = (2 * pi / jags) * i / 2
+            r = inner_r if i % 2 == 0 else outer_r
+            x = w / 2 + r * sin(angle)
+            y = h / 2 + r * cos(angle)
+            canvas.add_line(x, y)
+        canvas.close_path()
+        canvas.set_line_width(3)
+        canvas.draw_path()
+
+    w = h = 600
+    jags = 7 #Number of jags
+    inner_r = 120 #Inner radius
+    outer_r = 250 #Outer radius
+    canvas.set_size(w, h)
+    draw_star(w/2, h/2, inner_r, outer_r, jags)
+
+
+.. function:: add_curve(cp1x, cp1y, cp2x, cp2y, x, y)
+
+   Adds a cubic bezier curve to (x, y) to the current path, with the control points (cp1x, cp1y) and (cp2x, cp2y).
+   
+   (see also :func:`begin_path`, :func:`draw_path`, :func:`fill_path`)
+
+
+.. function:: add_ellipse(x, y, width, height)
+
+   Adds an ellipse to the current path.
+   
+   (see also :func:`begin_path`, :func:`draw_path`, :func:`fill_path`)
+
+
+.. function:: add_line(x, y)
+   
+   Adds a straight line to the current path.
+   
+   (see also :func:`begin_path`, :func:`draw_path`, :func:`fill_path`, :func:`move_to`)
+
+
+.. function:: add_quad_curve(cpx, cpy, x, y)
+   
+   Adds a quadratic bezier curve to (x, y) to the current path with (cpx, cpy) as the control point.
+   
+   (see also :func:`begin_path`, :func:`draw_path`, :func:`fill_path`)
+
+
+.. function:: add_rect(x, y, width, height)
+   
+   Adds a rectangle to the current path.
+   
+   (see also :func:`begin_path`, :func:`draw_path`, :func:`fill_path`)
+
+
+.. function:: begin_path()
+   
+   Begins a new path. Use :func:`add_line`, :func:`add_rect`, etc. to add shapes to this path and :func:`draw_path` or :func:`fill_path` to make it visible.
+
+
+.. function:: clip()
+   
+   Clips subsequent drawing to the current path.
+   
+   (see also :func:`begin_path`)
+   
+
+.. function:: close_path()
+   
+   Closes the current path.
+   
+   (see also :func:`begin_path`, :func:`draw_path`, :func:`fill_path`)
+
+
+.. function:: draw_ellipse(x, y, width, height)
+
+   Draws an ellipse in a rectangle
+   
+   (see also :func:`set_stroke_color`, :func:`set_line_width`)
+
+
+.. function:: draw_line(x1, y1, x2, y2)
+   
+   Draws a line between two points
+   
+   (see also :func:`set_stroke_color`, :func:`set_line_width`)
+   
+
+.. function:: draw_path()
+   
+   Draws the outline of the current path with the active line width and color.
+   
+   (see also :func:`begin_path`, :func:`fill_path`, :func:`set_stroke_color`, :func:`set_line_width`)
+
+
+.. function:: draw_rect(x, y, width, height)
+
+   Draws the outline of a rectangle
+
+   (see also :func:`set_stroke_color`, :func:`set_line_width`)
+   
+
+.. function:: fill_ellipse(x, y, width, height)
+
+   Fills an ellipse in a rectangle
+   
+   (see also :func:`draw_ellipse`)
+
+
+.. function:: fill_path()
+   
+   Fills the current path with the active fill color.
+   
+   (see also :func:`begin_path`, :func:`draw_path`, :func:`set_fill_color`)
+
+
+.. function:: fill_pixel(x, y)
+
+   Fills a pixel with the current fill color
+
+
+.. function:: fill_rect(x, y, width, height)
+
+   Fills a rectangle
+
+
+.. function:: move_to(x, y)
+   
+   Moves the "pen" to a given point.
+   
+   (see also :func:`add_line`)
+   
+
+Transforms
+----------
+
+Using the following transformation functions, you can manipulate the
+`current transformation matrix (CTM)` of your canvas. This can for example
+be used to draw rotated or scaled shapes. When you transform the canvas,
+you're essentially changing the coordinate system which affects all drawing
+that follows this change.
+
+It is often useful to be apply a transformation only temporarily. This can
+be done with the :func:`save_gstate` and :func:`restore_gstate` functions.
+:func:`save_gstate` takes a snapshot of the current transformation (and other
+graphics state parameters, such as fill color) and puts it on a stack. Calling
+:func:`restore_gstate` afterwards restores the last state that was put on the
+stack.
+
+In case you want to completely `reset` any transformations, but you didn't save
+the graphics state, you can use the :func:`set_size` function.
+
+The following example draws a clock face with rotated labels::
+
+    # Draw a clock face
+    import canvas
+    from math import pi
+
+    canvas.set_size(600, 600)
+    canvas.set_fill_color(0.7, 0.7, 0.7)
+    canvas.fill_ellipse(0, 0, 600, 600)
+    canvas.set_fill_color(0, 0, 0)
+    canvas.fill_ellipse(290, 290, 20, 20)
+
+    for i in xrange(12):
+        canvas.save_gstate()
+        canvas.translate(300, 300)
+        canvas.rotate(-2 * pi / 12.0 * i)
+        canvas.set_fill_color(0, 0, 0)
+        s = 40
+        fnt = 'Helvetica-Bold'
+        n = str(12 if i == 0 else i)
+        w, h = canvas.get_text_size(n, fnt, s)
+        canvas.draw_text(n, -w/2, 240, fnt, s)
+        canvas.restore_gstate()
+
+.. function:: restore_gstate()
+   
+   Sets the current graphics state to the state most recently saved with :func:`save_gstate`.
+
+
+.. function:: rotate(angle)
+
+   Rotates the current transformation matrix.
+   
+   (see also :func:`save_gstate`, :func:`restore_gstate`)
+
+
+.. function:: save_gstate()
+
+   Pushes a copy of the current graphics state (transformation, selected colors etc.) onto the graphics state stack.
+   
+   (see also :func:`restore_gstate`)
+   
+
+.. function:: scale(sx, sy)
+   
+   Scales the current transformation matrix.
+   
+   (see also :func:`save_gstate`, :func:`restore_gstate`)
+
+
+.. function:: translate(tx, ty)
+   
+   Translates the current transformation matrix.
+
+   (see also :func:`save_gstate`, :func:`restore_gstate`)
+
+
+Drawing Bitmap Images
+---------------------
+
+Although it is primarily designed for vector graphics, the :mod:`canvas` module
+also has some functions for drawing bitmap images, similar to the :mod:`scene`
+module. You can draw named images or the current contents of the clipboard.
+
+.. function:: draw_image(image_name, x, y, [width, height])
+
+   Draws the image with the given name in a rectangle. If width and height
+   are omitted, the image is drawn at its natural size.
+   
+.. function:: draw_clipboard(x, y, width, height)
+
+   Draw the image in the clipboard in a given rectangle.
+
+.. function:: get_clipboard_size()
+
+   Return the size of the image in the clipboard as a tuple of width and 
+   height, in points.
+   On a retina screen, one point corresponds to two pixels. Returns (0,0) 
+   if the clipboard is empty.
+
+.. function:: get_image_size(image_name)
+
+   Returns the size of the image with the given name as a tuple of width 
+   and height, in points.
+   On a retina screen, one point corresponds to two pixels. Returns (0, 0) if 
+   no image with this name exists.
+
+Drawing Text
+------------
+
+The :mod:`canvas` module has two simple functions for drawing and measuring
+text.
+
+The color of the text that is drawn with :func:`draw_text` is determined by
+previous calls to :func:`set_fill_color`.
+
+.. function:: draw_text(text, x, y, font_name='Helvetica', font_size=16.0)
+
+   Draw a single line of text at a given point. The point represents the origin
+   of the line, i.e. its lower-left corner.
+
+.. function:: get_text_size(text, font_name='Helvetica', font_size=16.0)
+
+   Get the size of a line of text as it was drawn by the draw_text() 
+   function as a tuple of (width, height).
+
+
+Blend Modes
+-----------
+
+The following blend modes can be used with :func:`set_blend_mode`:
+
+.. data:: BLEND_NORMAL
+          BLEND_MULTIPLY
+          BLEND_DIFFERENCE
+          BLEND_SCREEN
+          BLEND_OVERLAY
+          BLEND_DARKEN
+          BLEND_LIGHTEN
+          BLEND_COLOR_DODGE
+          BLEND_COLOR_BURN
+          BLEND_SOFT_LIGHT
+          BLEND_HARD_LIGHT
+          BLEND_DIFFERENCE
+          BLEND_EXCLUSION
+          BLEND_HUE
+          BLEND_SATURATION
+          BLEND_COLOR
+          BLEND_LUMINOSITY
+          BLEND_CLEAR
+          BLEND_COPY
+          BLEND_SOURCE_IN
+          BLEND_SOURCE_OUT
+          BLEND_SOURCE_ATOP
+          BLEND_DESTINATION_OVER
+          BLEND_DESTINATION_ATOP
+          BLEND_XOR
+          BLEND_PLUS_DARKER
+          BLEND_PLUS_LIGHTER

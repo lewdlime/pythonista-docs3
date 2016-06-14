@@ -1,0 +1,219 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Index &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+
+   <h1 id="index">Index &ndash; K</h1>
+
+<table style="width: 100%" class="indextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="library/webbrowser.html#index-2">KDEDIR</a></dt>
+    <dt><a href="ios/ImageFilter.html#ImageFilter.Kernel">Kernel() (in module ImageFilter)</a></dt>
+    <dt><a href="library/select.html#select.kevent">kevent() (in module select)</a></dt>
+    <dt><a href="reference/expressions.html#index-13">key</a></dt>
+    <dd><dl>
+      <dt><a href="library/http.cookies.html#http.cookies.Morsel.key">(http.cookies.Morsel attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="glossary.html#term-key-function">key function</a></dt>
+    <dt><a href="reference/expressions.html#index-13">key/datum pair</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_ASCII">KEYBOARD_ASCII (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_DECIMAL_PAD">KEYBOARD_DECIMAL_PAD (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_DEFAULT">KEYBOARD_DEFAULT (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_EMAIL">KEYBOARD_EMAIL (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_NAME_PHONE_PAD">KEYBOARD_NAME_PHONE_PAD (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_NUMBER_PAD">KEYBOARD_NUMBER_PAD (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_NUMBERS">KEYBOARD_NUMBERS (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_PHONE_PAD">KEYBOARD_PHONE_PAD (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_TWITTER">KEYBOARD_TWITTER (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.TextField.keyboard_type">keyboard_type (ui.TextField attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/ui.html#ui.TextView.keyboard_type">(ui.TextView attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_URL">KEYBOARD_URL (in module ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.KEYBOARD_WEB_SEARCH">KEYBOARD_WEB_SEARCH (in module ui)</a></dt>
+    <dt><a href="library/exceptions.html#KeyboardInterrupt">KeyboardInterrupt</a></dt>
+    <dd><dl>
+      <dt><a href="c-api/exceptions.html#index-1">(built-in exception)</a>, <a href="c-api/exceptions.html#index-2">[1]</a></dt>
+  </dl></dd>
+</dl></td>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="ios/keychain.html#module-keychain">keychain (module)</a></dt>
+    <dt><a href="library/exceptions.html#KeyError">KeyError</a></dt>
+    <dt><a href="library/weakref.html#weakref.WeakKeyDictionary.keyrefs">keyrefs() (weakref.WeakKeyDictionary method)</a></dt>
+    <dt><a href="library/stdtypes.html#dict.keys">keys() (dict method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/email.message.html#email.message.Message.keys">(email.message.Message method)</a></dt>
+      <dt><a href="library/mailbox.html#mailbox.Mailbox.keys">(mailbox.Mailbox method)</a></dt>
+      <dt><a href="library/sqlite3.html#sqlite3.Row.keys">(sqlite3.Row method)</a></dt>
+      <dt><a href="library/types.html#types.MappingProxyType.keys">(types.MappingProxyType method)</a></dt>
+      <dt><a href="library/xml.etree.elementtree.html#xml.etree.ElementTree.Element.keys">(xml.etree.ElementTree.Element method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/collections.abc.html#collections.abc.KeysView">KeysView (class in collections.abc)</a></dt>
+    <dd><dl>
+      <dt><a href="library/typing.html#typing.KeysView">(class in typing)</a></dt>
+  </dl></dd>
+    <dt><a href="reference/lexical_analysis.html#index-13">keyword</a></dt>
+    <dd><dl>
+      <dt><a href="reference/compound_stmts.html#index-30">async</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-30">await</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-3">elif</a>, <a href="reference/compound_stmts.html#index-3">[1]</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-3">else</a>, <a href="reference/compound_stmts.html#index-3">[1]</a>, <a href="reference/compound_stmts.html#index-4">[2]</a>, <a href="reference/compound_stmts.html#index-4">[3]</a>, <a href="reference/compound_stmts.html#index-6">[4]</a>, <a href="reference/compound_stmts.html#index-6">[5]</a>, <a href="reference/compound_stmts.html#index-13">[6]</a>, <a href="reference/simple_stmts.html#index-28">[7]</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-10">except</a>, <a href="reference/compound_stmts.html#index-11">[1]</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-10">finally</a>, <a href="reference/compound_stmts.html#index-14">[1]</a>, <a href="reference/simple_stmts.html#index-22">[2]</a>, <a href="reference/simple_stmts.html#index-29">[3]</a>, <a href="reference/simple_stmts.html#index-30">[4]</a></dt>
+      <dt><a href="reference/simple_stmts.html#index-31">from</a>, <a href="reference/simple_stmts.html#index-33">[1]</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-6">in</a>, <a href="reference/compound_stmts.html#index-6">[1]</a></dt>
+      <dt><a href="reference/expressions.html#index-16">yield</a></dt>
+  </dl></dd>
+    <dt><a href="library/keyword.html#module-keyword">keyword (module)</a></dt>
+    <dt><a href="glossary.html#term-keyword-argument">keyword argument</a></dt>
+    <dt><a href="library/functools.html#functools.partial.keywords">keywords (functools.partial attribute)</a></dt>
+    <dt><a href="library/asyncio-subprocess.html#asyncio.asyncio.subprocess.Process.kill">kill() (asyncio.asyncio.subprocess.Process method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/asyncio-protocol.html#asyncio.BaseSubprocessTransport.kill">(asyncio.BaseSubprocessTransport method)</a></dt>
+      <dt><a href="library/os.html#os.kill">(in module os)</a></dt>
+      <dt><a href="library/subprocess.html#subprocess.Popen.kill">(subprocess.Popen method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/os.html#os.killpg">killpg() (in module os)</a></dt>
+    <dt><a href="ios/contacts.html#contacts.Person.kind">kind (contacts.Person attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="library/inspect.html#inspect.Parameter.kind">(inspect.Parameter attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/mimetypes.html#mimetypes.knownfiles">knownfiles (in module mimetypes)</a></dt>
+    <dt><a href="library/select.html#select.kqueue">kqueue() (in module select)</a></dt>
+    <dt><a href="library/selectors.html#selectors.KqueueSelector">KqueueSelector (class in selectors)</a></dt>
+    <dt><a href="library/crypto.html#index-1">Kuchling, Andrew</a></dt>
+    <dt><a href="library/inspect.html#inspect.BoundArguments.kwargs">kwargs (inspect.BoundArguments attribute)</a></dt>
+    <dt><a href="library/keyword.html#keyword.kwlist">kwlist (in module keyword)</a></dt>
+</dl></td>
+</tr></table>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 11, 2016.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

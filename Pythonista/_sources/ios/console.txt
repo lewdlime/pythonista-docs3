@@ -1,0 +1,119 @@
+
+:mod:`console` --- Utilities for Console Output and Various System Services
+===========================================================================
+
+.. module:: console
+   :synopsis: Utilities for Console Output and Various System Services
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`console` module provides functions to control the text output area and keyboard input in Pythonista.
+
+There are also several functions for presenting simple modal dialogs, and to access system services like the "Open in..." menu and QuickLook.
+
+.. function:: clear()
+
+   Clears the console output
+
+.. function:: set_font([name, size])
+
+   Sets the font and font size for following output. Call with no parameters to reset to default.
+
+
+.. function:: set_color(r, g, b)
+   
+   Sets the RGB color for following output. The components are floats between 0.0 and 1.0.
+
+
+.. function:: secure_input([prompt])
+   
+   This function is similar to the built-in `raw_input` function, but the user's input is hidden,
+   so that it's suitable to request passwords and other sensitive information.
+
+.. function:: show_image(image_path)
+
+    Show an image, loaded from a file, in the console output area.
+
+.. function:: alert(title, [message, button1, button2, button3, hide_cancel_button=False])
+
+   Show an alert dialog with up to three custom buttons. The selected button is returned as an integer
+   (button1 => 1 ...). Unless `hide_cancel_button` is `True`, all alert dialogs contain a 'Cancel' button that sends a `KeyboardInterrupt`.
+
+.. function:: input_alert(title, [message, input, ok_button_title, hide_cancel_button=False])
+   
+   Show a dialog with a single text field. The text field can be pre-filled with the `input` parameter.
+   The text that was entered by the user is returned. The 'Cancel' button sends a `KeyboardInterrupt`.
+   
+.. function:: password_alert(title, [message, password, ok_button_title, hide_cancel_button=False])
+   
+   Show a dialog with a password entry text field. The password field can be pre-filled with the `password`
+   parameter. The password that was entered by the user is returned.
+   The 'Cancel' button sends a `KeyboardInterrupt` (which will usually stop the script).
+
+   
+.. function:: login_alert(title, [message, login, password, ok_button_title])
+   
+   Show a dialog with two text fields, one for a login, one for a password. The text fields can be pre-filled 
+   with the `login` and `password` parameters. Returns a tuple of the entered text as `(login, password)`.
+   The 'Cancel' button sends a `KeyboardInterrupt` (which will usually stop the script).
+
+.. function:: show_activity()
+
+   Show the animated "network activity indicator" in the status bar.
+   
+   The spinner is automatically hidden when a script ends. Calling this function
+   when the spinner is already visible has no effect.
+
+.. function:: hide_activity()
+
+   Hide the animated "network activity indicator" in the status bar.
+   
+   The spinner is automatically hidden when a script ends. Calling this function
+   when the spinner is not visible has no effect.
+
+.. function:: hud_alert(message, [icon, duration])
+
+   Show a HUD-style alert with the given `message`. The `icon` can be either ``'success'`` (the default, a checkmark symbol), or ``'error'`` (a cross symbol).
+   
+   The `duration` parameter determines how long the alert is shown on screen. It can be between 0.25 and 5.0 seconds. The default is 1.8 seconds. The function blocks until the alert is dismissed.
+
+.. function:: write_link(title, link_url)
+
+   Print a tappable link to the console with the given title and URL. Depending on the URL, it is either
+   opened in the built-in browser (for http, https and file URLs), or opened in a different app (if possible).
+   
+   If a custom text color is set via :func:`set_color`, the color of the link text is the same as that, otherwise,
+   a default link color is used.
+
+.. function:: hide_output()
+
+   Hide the console output area with a sliding animation.
+
+.. function:: quicklook(file_path)
+
+   Show a full-screen preview of the local file(s) at the given path. It is possible to pass a sequence of paths (e.g. a list), in order to preview multiple files at once. The function returns when the preview is dismissed.
+   
+   Many common file formats are supported:
+   
+   * iWork documents
+   * Microsoft Office documents (Office ‘97 and newer)
+   * Rich Text Format (RTF) documents
+   * PDF files
+   * Images
+   * Text files whose uniform type identifier (UTI) conforms to the public.text type
+   * Comma-separated value (csv) files
+
+.. function:: open_in(file_path)
+
+   Show the iOS "Open in..." menu for the specified file.
+   
+   If an application was selected in the menu, its bundle identifier will be returned (for example ``'com.getdropbox.Dropbox'``). If the menu was cancelled, or no application is installed that can open the file, the return value is `None`.
+
+.. function:: set_idle_timer_disabled(flag)
+
+    Disable or enable the idle timer (which puts the device to sleep after a certain period of inactivity).
+
+.. function:: is_in_background()
+
+    Return `True` if the app is currently running in the background, `False` otherwise.
+    

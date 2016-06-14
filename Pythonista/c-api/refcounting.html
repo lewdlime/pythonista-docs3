@@ -1,0 +1,212 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reference Counting &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="Python/C API Reference Manual" href="index.html" />
+    <link rel="next" title="Exception Handling" href="exceptions.html" />
+    <link rel="prev" title="The Very High Level Layer" href="veryhigh.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="exceptions.html" title="Exception Handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="veryhigh.html" title="The Very High Level Layer"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Python/C API Reference Manual</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="reference-counting">
+<span id="countingrefs"></span><h1>Reference Counting<a class="headerlink" href="#reference-counting" title="Permalink to this headline">¶</a></h1>
+<p>The macros in this section are used for managing reference counts of Python
+objects.</p>
+<dl class="function">
+<dt id="Py_INCREF">
+void <tt class="descname">Py_INCREF</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><big>)</big><a class="headerlink" href="#Py_INCREF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count for object <em>o</em>.  The object must not be <em>NULL</em>; if
+you aren&#8217;t sure that it isn&#8217;t <em>NULL</em>, use <a class="reference internal" href="#Py_XINCREF" title="Py_XINCREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_XINCREF()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Py_XINCREF">
+void <tt class="descname">Py_XINCREF</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><big>)</big><a class="headerlink" href="#Py_XINCREF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the reference count for object <em>o</em>.  The object may be <em>NULL</em>, in
+which case the macro has no effect.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Py_DECREF">
+void <tt class="descname">Py_DECREF</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><big>)</big><a class="headerlink" href="#Py_DECREF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count for object <em>o</em>.  The object must not be <em>NULL</em>; if
+you aren&#8217;t sure that it isn&#8217;t <em>NULL</em>, use <a class="reference internal" href="#Py_XDECREF" title="Py_XDECREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_XDECREF()</span></tt></a>.  If the reference
+count reaches zero, the object&#8217;s type&#8217;s deallocation function (which must not be
+<em>NULL</em>) is invoked.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The deallocation function can cause arbitrary Python code to be invoked (e.g.
+when a class instance with a <a class="reference internal" href="../reference/datamodel.html#object.__del__" title="object.__del__"><tt class="xref py py-meth docutils literal"><span class="pre">__del__()</span></tt></a> method is deallocated).  While
+exceptions in such code are not propagated, the executed code has free access to
+all Python global variables.  This means that any object that is reachable from
+a global variable should be in a consistent state before <a class="reference internal" href="#Py_DECREF" title="Py_DECREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_DECREF()</span></tt></a> is
+invoked.  For example, code to delete an object from a list should copy a
+reference to the deleted object in a temporary variable, update the list data
+structure, and then call <a class="reference internal" href="#Py_DECREF" title="Py_DECREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_DECREF()</span></tt></a> for the temporary variable.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="Py_XDECREF">
+void <tt class="descname">Py_XDECREF</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><big>)</big><a class="headerlink" href="#Py_XDECREF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count for object <em>o</em>.  The object may be <em>NULL</em>, in
+which case the macro has no effect; otherwise the effect is the same as for
+<a class="reference internal" href="#Py_DECREF" title="Py_DECREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_DECREF()</span></tt></a>, and the same warning applies.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Py_CLEAR">
+void <tt class="descname">Py_CLEAR</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*o</em><big>)</big><a class="headerlink" href="#Py_CLEAR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the reference count for object <em>o</em>.  The object may be <em>NULL</em>, in
+which case the macro has no effect; otherwise the effect is the same as for
+<a class="reference internal" href="#Py_DECREF" title="Py_DECREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_DECREF()</span></tt></a>, except that the argument is also set to <em>NULL</em>.  The warning
+for <a class="reference internal" href="#Py_DECREF" title="Py_DECREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_DECREF()</span></tt></a> does not apply with respect to the object passed because
+the macro carefully uses a temporary variable and sets the argument to <em>NULL</em>
+before decrementing its reference count.</p>
+<p>It is a good idea to use this macro whenever decrementing the value of a
+variable that might be traversed during garbage collection.</p>
+</dd></dl>
+
+<p>The following functions are for runtime dynamic embedding of Python:
+<tt class="docutils literal"><span class="pre">Py_IncRef(PyObject</span> <span class="pre">*o)</span></tt>, <tt class="docutils literal"><span class="pre">Py_DecRef(PyObject</span> <span class="pre">*o)</span></tt>. They are
+simply exported function versions of <a class="reference internal" href="#Py_XINCREF" title="Py_XINCREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_XINCREF()</span></tt></a> and
+<a class="reference internal" href="#Py_XDECREF" title="Py_XDECREF"><tt class="xref c c-func docutils literal"><span class="pre">Py_XDECREF()</span></tt></a>, respectively.</p>
+<p>The following functions or macros are only for use within the interpreter core:
+<tt class="xref c c-func docutils literal"><span class="pre">_Py_Dealloc()</span></tt>, <tt class="xref c c-func docutils literal"><span class="pre">_Py_ForgetReference()</span></tt>, <tt class="xref c c-func docutils literal"><span class="pre">_Py_NewReference()</span></tt>,
+as well as the global variable <tt class="xref c c-data docutils literal"><span class="pre">_Py_RefTotal</span></tt>.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,164 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ImageColor Module &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ImageColor">
+<span id="the-imagecolor-module"></span><h1>The ImageColor Module<a class="headerlink" href="#module-ImageColor" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-ImageColor" title="ImageColor"><tt class="xref py py-mod docutils literal"><span class="pre">ImageColor</span></tt></a> module contains colour tables and converters from CSS3-style colour specifiers to RGB tuples. This module is used by <a class="reference internal" href="Image.html#Image.new" title="Image.new"><tt class="xref py py-func docutils literal"><span class="pre">Image.new()</span></tt></a> and the <a class="reference internal" href="ImageDraw.html#module-ImageDraw" title="ImageDraw"><tt class="xref py py-mod docutils literal"><span class="pre">ImageDraw</span></tt></a> module, among others.</p>
+<div class="section" id="colour-names">
+<h2>Colour Names<a class="headerlink" href="#colour-names" title="Permalink to this headline">¶</a></h2>
+<p>The ImageColor module supports the following string formats:</p>
+<ul class="simple">
+<li>Hexadecimal color specifiers, given as “#rgb” or “#rrggbb”. For example, “#ff0000” specifies pure red.</li>
+<li>RGB functions, given as “rgb(red, green, blue)” where the colour values are integers in the range 0 to 255. Alternatively, the color values can be given as three percentages (0% to 100%). For example, “rgb(255,0,0)” and “rgb(100%,0%,0%)” both specify pure red.</li>
+<li>Hue-Saturation-Lightness (HSL) functions, given as “hsl(hue, saturation%, lightness%)” where hue is the colour given as an angle between 0 and 360 (red=0, green=120, blue=240), saturation is a value between 0% and 100% (gray=0%, full color=100%), and lightness is a value between 0% and 100% (black=0%, normal=50%, white=100%). For example, “hsl(0,100%,50%)” is pure red.</li>
+<li>Common HTML colour names. The ImageColor module provides some 140 standard colour names, based on the colors supported by the X Window system and most web browsers. Colour names are case insensitive. For example, “red” and “Red” both specify pure red.</li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ImageColor.getrgb">
+<tt class="descclassname">ImageColor.</tt><tt class="descname">getrgb</tt><big>(</big><em>color</em><big>)</big><a class="headerlink" href="#ImageColor.getrgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>(New in 1.1.4) Convert a colour string to an RGB tuple. If the string cannot be parsed, this function raises a ValueError exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageColor.getcolor">
+<tt class="descclassname">ImageColor.</tt><tt class="descname">getcolor</tt><big>(</big><em>color</em>, <em>mode</em><big>)</big><a class="headerlink" href="#ImageColor.getcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>(New in 1.1.4) Same as <a class="reference internal" href="#ImageColor.getrgb" title="ImageColor.getrgb"><tt class="xref py py-func docutils literal"><span class="pre">getrgb()</span></tt></a>, but converts the RGB value to a greyscale value if the mode is not color or a palette image. If the string cannot be parsed, this function raises a ValueError exception.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,649 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BeautifulSoup 4 Reference &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-bs4">
+<span id="beautifulsoup-4-reference"></span><h1>BeautifulSoup 4 Reference<a class="headerlink" href="#module-bs4" title="Permalink to this headline">¶</a></h1>
+<p>Beautiful Soup
+Elixir and Tonic
+&#8220;The Screen-Scraper&#8217;s Friend&#8221;
+<a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/">http://www.crummy.com/software/BeautifulSoup/</a></p>
+<p>Beautiful Soup uses a pluggable XML or HTML parser to parse a
+(possibly invalid) document into a tree representation. Beautiful Soup
+provides provides methods and Pythonic idioms that make it easy to
+navigate, search, and modify the parse tree.</p>
+<p>Beautiful Soup works with Python 2.6 and up. It works better if lxml
+and/or html5lib is installed.</p>
+<p>For more than you ever wanted to know about Beautiful Soup, see the
+documentation:
+<a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/">http://www.crummy.com/software/BeautifulSoup/bs4/doc/</a></p>
+<div class="section" id="beautifulsoup">
+<h2>BeautifulSoup<a class="headerlink" href="#beautifulsoup" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bs4.BeautifulSoup">
+<em class="property">class </em><tt class="descclassname">bs4.</tt><tt class="descname">BeautifulSoup</tt><big>(</big><em>markup=''</em>, <em>features=None</em>, <em>builder=None</em>, <em>parse_only=None</em>, <em>from_encoding=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.BeautifulSoup" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class defines the basic interface called by the tree builders.</p>
+<dl class="docutils">
+<dt>These methods will be called by the parser:</dt>
+<dd>reset()
+feed(markup)</dd>
+<dt>The tree builder may call these methods from its feed() implementation:</dt>
+<dd>handle_starttag(name, attrs) # See note about return value
+handle_endtag(name)
+handle_data(data) # Appends to the current data node
+endData(containerClass=NavigableString) # Ends the current data node</dd>
+</dl>
+<p>No matter how complicated the underlying parser is, you should be
+able to build a tree using &#8216;start tag&#8217; events, &#8216;end tag&#8217; events,
+&#8216;data&#8217; events, and &#8220;done with data&#8221; events.</p>
+<p>If you encounter an empty-element tag (aka a self-closing tag,
+like HTML&#8217;s &lt;br&gt; tag), call handle_starttag and then
+handle_endtag.</p>
+<dl class="method">
+<dt id="bs4.BeautifulSoup.decode">
+<tt class="descname">decode</tt><big>(</big><em>pretty_print=False</em>, <em>eventual_encoding='utf-8'</em>, <em>formatter='minimal'</em><big>)</big><a class="headerlink" href="#bs4.BeautifulSoup.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string or Unicode representation of this document.
+To get Unicode, pass None for encoding.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.BeautifulSoup.handle_starttag">
+<tt class="descname">handle_starttag</tt><big>(</big><em>name</em>, <em>namespace</em>, <em>nsprefix</em>, <em>attrs</em><big>)</big><a class="headerlink" href="#bs4.BeautifulSoup.handle_starttag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a start tag on to the stack.</p>
+<p>If this method returns None, the tag was rejected by the
+SoupStrainer. You should proceed as if the tag had not occured
+in the document. For instance, if this was a self-closing tag,
+don&#8217;t call handle_endtag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.BeautifulSoup.new_string">
+<tt class="descname">new_string</tt><big>(</big><em>s</em>, <em>subclass=&lt;class 'bs4.element.NavigableString'&gt;</em><big>)</big><a class="headerlink" href="#bs4.BeautifulSoup.new_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new NavigableString associated with this soup.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.BeautifulSoup.new_tag">
+<tt class="descname">new_tag</tt><big>(</big><em>name</em>, <em>namespace=None</em>, <em>nsprefix=None</em>, <em>**attrs</em><big>)</big><a class="headerlink" href="#bs4.BeautifulSoup.new_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new tag associated with this soup.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.BeautifulSoup.object_was_parsed">
+<tt class="descname">object_was_parsed</tt><big>(</big><em>o</em>, <em>parent=None</em>, <em>most_recent_element=None</em><big>)</big><a class="headerlink" href="#bs4.BeautifulSoup.object_was_parsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an object to the parse tree.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pageelement">
+<h2>PageElement<a class="headerlink" href="#pageelement" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bs4.PageElement">
+<em class="property">class </em><tt class="descclassname">bs4.</tt><tt class="descname">PageElement</tt><a class="headerlink" href="#bs4.PageElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains the navigational information for some part of the page
+(either a tag or a piece of text)</p>
+<dl class="method">
+<dt id="bs4.PageElement.append">
+<tt class="descname">append</tt><big>(</big><em>tag</em><big>)</big><a class="headerlink" href="#bs4.PageElement.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends the given tag to the contents of this tag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.extract">
+<tt class="descname">extract</tt><big>(</big><big>)</big><a class="headerlink" href="#bs4.PageElement.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destructively rips this element out of the tree.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.fetchNextSiblings">
+<tt class="descname">fetchNextSiblings</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.fetchNextSiblings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the siblings of this Tag that match the given
+criteria and appear after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.fetchParents">
+<tt class="descname">fetchParents</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.fetchParents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parents of this Tag that match the given
+criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.fetchPrevious">
+<tt class="descname">fetchPrevious</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.fetchPrevious" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all items that match the given criteria and appear
+before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.fetchPreviousSiblings">
+<tt class="descname">fetchPreviousSiblings</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.fetchPreviousSiblings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the siblings of this Tag that match the given
+criteria and appear before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findAllNext">
+<tt class="descname">findAllNext</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findAllNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all items that match the given criteria and appear
+after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findAllPrevious">
+<tt class="descname">findAllPrevious</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findAllPrevious" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all items that match the given criteria and appear
+before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findNext">
+<tt class="descname">findNext</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first item that matches the given criteria and
+appears after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findNextSibling">
+<tt class="descname">findNextSibling</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findNextSibling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the closest sibling to this Tag that matches the
+given criteria and appears after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findNextSiblings">
+<tt class="descname">findNextSiblings</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findNextSiblings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the siblings of this Tag that match the given
+criteria and appear after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findParent">
+<tt class="descname">findParent</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findParent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the closest parent of this Tag that matches the given
+criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findParents">
+<tt class="descname">findParents</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findParents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parents of this Tag that match the given
+criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findPrevious">
+<tt class="descname">findPrevious</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findPrevious" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first item that matches the given criteria and
+appears before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findPreviousSibling">
+<tt class="descname">findPreviousSibling</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findPreviousSibling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the closest sibling to this Tag that matches the
+given criteria and appears before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.findPreviousSiblings">
+<tt class="descname">findPreviousSiblings</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.findPreviousSiblings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the siblings of this Tag that match the given
+criteria and appear before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_all_next">
+<tt class="descname">find_all_next</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_all_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all items that match the given criteria and appear
+after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_all_previous">
+<tt class="descname">find_all_previous</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_all_previous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all items that match the given criteria and appear
+before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_next">
+<tt class="descname">find_next</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first item that matches the given criteria and
+appears after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_next_sibling">
+<tt class="descname">find_next_sibling</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_next_sibling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the closest sibling to this Tag that matches the
+given criteria and appears after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_next_siblings">
+<tt class="descname">find_next_siblings</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_next_siblings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the siblings of this Tag that match the given
+criteria and appear after this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_parent">
+<tt class="descname">find_parent</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the closest parent of this Tag that matches the given
+criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_parents">
+<tt class="descname">find_parents</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_parents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parents of this Tag that match the given
+criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_previous">
+<tt class="descname">find_previous</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_previous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first item that matches the given criteria and
+appears before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_previous_sibling">
+<tt class="descname">find_previous_sibling</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_previous_sibling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the closest sibling to this Tag that matches the
+given criteria and appears before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.find_previous_siblings">
+<tt class="descname">find_previous_siblings</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.PageElement.find_previous_siblings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the siblings of this Tag that match the given
+criteria and appear before this Tag in the document.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.format_string">
+<tt class="descname">format_string</tt><big>(</big><em>s</em>, <em>formatter='minimal'</em><big>)</big><a class="headerlink" href="#bs4.PageElement.format_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format the given string using the given formatter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.insert_after">
+<tt class="descname">insert_after</tt><big>(</big><em>successor</em><big>)</big><a class="headerlink" href="#bs4.PageElement.insert_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the given element the immediate successor of this one.</p>
+<p>The two elements will have the same parent, and the given element
+will be immediately after this one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.insert_before">
+<tt class="descname">insert_before</tt><big>(</big><em>predecessor</em><big>)</big><a class="headerlink" href="#bs4.PageElement.insert_before" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the given element the immediate predecessor of this one.</p>
+<p>The two elements will have the same parent, and the given element
+will be immediately before this one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.PageElement.setup">
+<tt class="descname">setup</tt><big>(</big><em>parent=None</em>, <em>previous_element=None</em><big>)</big><a class="headerlink" href="#bs4.PageElement.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the initial relations between this element and
+other elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tag">
+<h2>Tag<a class="headerlink" href="#tag" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bs4.Tag">
+<em class="property">class </em><tt class="descclassname">bs4.</tt><tt class="descname">Tag</tt><big>(</big><em>parser=None</em>, <em>builder=None</em>, <em>name=None</em>, <em>namespace=None</em>, <em>prefix=None</em>, <em>attrs=None</em>, <em>parent=None</em>, <em>previous=None</em><big>)</big><a class="headerlink" href="#bs4.Tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a found HTML tag with its attributes and contents.</p>
+<dl class="method">
+<dt id="bs4.Tag.clear">
+<tt class="descname">clear</tt><big>(</big><em>decompose=False</em><big>)</big><a class="headerlink" href="#bs4.Tag.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract all children. If decompose is True, decompose instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.decode">
+<tt class="descname">decode</tt><big>(</big><em>indent_level=None</em>, <em>eventual_encoding='utf-8'</em>, <em>formatter='minimal'</em><big>)</big><a class="headerlink" href="#bs4.Tag.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Unicode representation of this tag and its contents.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eventual_encoding</strong> &#8211; The tag is destined to be
+encoded into this encoding. This method is _not_
+responsible for performing that encoding. This information
+is passed in so that it can be substituted in if the
+document contains a &lt;META&gt; tag that mentions the document&#8217;s
+encoding.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.decode_contents">
+<tt class="descname">decode_contents</tt><big>(</big><em>indent_level=None</em>, <em>eventual_encoding='utf-8'</em>, <em>formatter='minimal'</em><big>)</big><a class="headerlink" href="#bs4.Tag.decode_contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the contents of this tag as a Unicode string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eventual_encoding</strong> &#8211; The tag is destined to be
+encoded into this encoding. This method is _not_
+responsible for performing that encoding. This information
+is passed in so that it can be substituted in if the
+document contains a &lt;META&gt; tag that mentions the document&#8217;s
+encoding.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.decompose">
+<tt class="descname">decompose</tt><big>(</big><big>)</big><a class="headerlink" href="#bs4.Tag.decompose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively destroys the contents of this tree.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.encode_contents">
+<tt class="descname">encode_contents</tt><big>(</big><em>indent_level=None</em>, <em>encoding='utf-8'</em>, <em>formatter='minimal'</em><big>)</big><a class="headerlink" href="#bs4.Tag.encode_contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the contents of this tag as a bytestring.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.find">
+<tt class="descname">find</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>recursive=True</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.Tag.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return only the first child of this Tag matching the given
+criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.findAll">
+<tt class="descname">findAll</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>recursive=True</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.Tag.findAll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts a list of Tag objects that match the given
+criteria.  You can specify the name of the Tag and any
+attributes you want the Tag to have.</p>
+<p>The value of a key-value pair in the &#8216;attrs&#8217; map can be a
+string, a list of strings, a regular expression object, or a
+callable that takes a string and returns whether or not the
+string matches for some custom definition of &#8216;matches&#8217;. The
+same is true of the tag name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.findChild">
+<tt class="descname">findChild</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>recursive=True</em>, <em>text=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.Tag.findChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return only the first child of this Tag matching the given
+criteria.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.findChildren">
+<tt class="descname">findChildren</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>recursive=True</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.Tag.findChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts a list of Tag objects that match the given
+criteria.  You can specify the name of the Tag and any
+attributes you want the Tag to have.</p>
+<p>The value of a key-value pair in the &#8216;attrs&#8217; map can be a
+string, a list of strings, a regular expression object, or a
+callable that takes a string and returns whether or not the
+string matches for some custom definition of &#8216;matches&#8217;. The
+same is true of the tag name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.find_all">
+<tt class="descname">find_all</tt><big>(</big><em>name=None</em>, <em>attrs={}</em>, <em>recursive=True</em>, <em>text=None</em>, <em>limit=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bs4.Tag.find_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts a list of Tag objects that match the given
+criteria.  You can specify the name of the Tag and any
+attributes you want the Tag to have.</p>
+<p>The value of a key-value pair in the &#8216;attrs&#8217; map can be a
+string, a list of strings, a regular expression object, or a
+callable that takes a string and returns whether or not the
+string matches for some custom definition of &#8216;matches&#8217;. The
+same is true of the tag name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.get">
+<tt class="descname">get</tt><big>(</big><em>key</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#bs4.Tag.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the &#8216;key&#8217; attribute for the tag, or
+the value given for &#8216;default&#8217; if it doesn&#8217;t have that
+attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.getText">
+<tt class="descname">getText</tt><big>(</big><em>separator=u''</em>, <em>strip=False</em>, <em>types=(&lt;class 'bs4.element.NavigableString'&gt;</em>, <em>&lt;class 'bs4.element.CData'&gt;)</em><big>)</big><a class="headerlink" href="#bs4.Tag.getText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all child strings, concatenated using the given separator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.get_text">
+<tt class="descname">get_text</tt><big>(</big><em>separator=u''</em>, <em>strip=False</em>, <em>types=(&lt;class 'bs4.element.NavigableString'&gt;</em>, <em>&lt;class 'bs4.element.CData'&gt;)</em><big>)</big><a class="headerlink" href="#bs4.Tag.get_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all child strings, concatenated using the given separator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.has_key">
+<tt class="descname">has_key</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#bs4.Tag.has_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>This was kind of misleading because has_key() (attributes)
+was different from __in__ (contents). has_key() is gone in
+Python 3, anyway.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.index">
+<tt class="descname">index</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#bs4.Tag.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the index of a child by identity, not value. Avoids issues with
+tag.contents.index(element) getting the index of equal elements.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bs4.Tag.isSelfClosing">
+<tt class="descname">isSelfClosing</tt><a class="headerlink" href="#bs4.Tag.isSelfClosing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this tag an empty-element tag? (aka a self-closing tag)</p>
+<p>A tag that has contents is never an empty-element tag.</p>
+<p>A tag that has no contents may or may not be an empty-element
+tag. It depends on the builder used to create the tag. If the
+builder has a designated list of empty-element tags, then only
+a tag whose name shows up in that list is considered an
+empty-element tag.</p>
+<p>If the builder has no designated list of empty-element tags,
+then any tag with no contents is an empty-element tag.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bs4.Tag.is_empty_element">
+<tt class="descname">is_empty_element</tt><a class="headerlink" href="#bs4.Tag.is_empty_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this tag an empty-element tag? (aka a self-closing tag)</p>
+<p>A tag that has contents is never an empty-element tag.</p>
+<p>A tag that has no contents may or may not be an empty-element
+tag. It depends on the builder used to create the tag. If the
+builder has a designated list of empty-element tags, then only
+a tag whose name shows up in that list is considered an
+empty-element tag.</p>
+<p>If the builder has no designated list of empty-element tags,
+then any tag with no contents is an empty-element tag.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bs4.Tag.select">
+<tt class="descname">select</tt><big>(</big><em>selector</em>, <em>_candidate_generator=None</em><big>)</big><a class="headerlink" href="#bs4.Tag.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a CSS selection operation on the current element.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bs4.Tag.string">
+<tt class="descname">string</tt><a class="headerlink" href="#bs4.Tag.string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property to get the single string within this tag.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Return :</th><td class="field-body">If this tag has a single string child, return value
+is that string. If this tag has no children, or more than one
+child, return value is None. If this tag has one child tag,
+return value is the &#8216;string&#8217; attribute of the child tag,
+recursively.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bs4.Tag.strings">
+<tt class="descname">strings</tt><a class="headerlink" href="#bs4.Tag.strings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield all strings of certain classes, possibly stripping them.</p>
+<p>By default, yields only NavigableString and CData objects. So
+no comments, processing instructions, etc.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bs4.Tag.text">
+<tt class="descname">text</tt><a class="headerlink" href="#bs4.Tag.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all child strings, concatenated using the given separator.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

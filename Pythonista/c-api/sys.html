@@ -1,0 +1,386 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Operating System Utilities &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="Utilities" href="utilities.html" />
+    <link rel="next" title="Importing Modules" href="import.html" />
+    <link rel="prev" title="Utilities" href="utilities.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="import.html" title="Importing Modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="utilities.html" title="Utilities"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Python/C API Reference Manual</a> &raquo;</li>
+          <li><a href="utilities.html" accesskey="U">Utilities</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="operating-system-utilities">
+<span id="os"></span><h1>Operating System Utilities<a class="headerlink" href="#operating-system-utilities" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="Py_FdIsInteractive">
+int <tt class="descname">Py_FdIsInteractive</tt><big>(</big>FILE<em>&nbsp;*fp</em>, const char<em>&nbsp;*filename</em><big>)</big><a class="headerlink" href="#Py_FdIsInteractive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true (nonzero) if the standard I/O file <em>fp</em> with name <em>filename</em> is
+deemed interactive.  This is the case for files for which <tt class="docutils literal"><span class="pre">isatty(fileno(fp))</span></tt>
+is true.  If the global flag <tt class="xref c c-data docutils literal"><span class="pre">Py_InteractiveFlag</span></tt> is true, this function
+also returns true if the <em>filename</em> pointer is <em>NULL</em> or if the name is equal to
+one of the strings <tt class="docutils literal"><span class="pre">'&lt;stdin&gt;'</span></tt> or <tt class="docutils literal"><span class="pre">'???'</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyOS_AfterFork">
+void <tt class="descname">PyOS_AfterFork</tt><big>(</big><big>)</big><a class="headerlink" href="#PyOS_AfterFork" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to update some internal state after a process fork; this should be
+called in the new process if the Python interpreter will continue to be used.
+If a new executable is loaded into the new process, this function does not need
+to be called.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyOS_CheckStack">
+int <tt class="descname">PyOS_CheckStack</tt><big>(</big><big>)</big><a class="headerlink" href="#PyOS_CheckStack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true when the interpreter runs out of stack space.  This is a reliable
+check, but is only available when <tt class="xref py py-const docutils literal"><span class="pre">USE_STACKCHECK</span></tt> is defined (currently
+on Windows using the Microsoft Visual C++ compiler).  <tt class="xref py py-const docutils literal"><span class="pre">USE_STACKCHECK</span></tt>
+will be defined automatically; you should never change the definition in your
+own code.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyOS_getsig">
+PyOS_sighandler_t <tt class="descname">PyOS_getsig</tt><big>(</big>int<em>&nbsp;i</em><big>)</big><a class="headerlink" href="#PyOS_getsig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current signal handler for signal <em>i</em>.  This is a thin wrapper around
+either <tt class="xref c c-func docutils literal"><span class="pre">sigaction()</span></tt> or <tt class="xref c c-func docutils literal"><span class="pre">signal()</span></tt>.  Do not call those functions
+directly! <tt class="xref c c-type docutils literal"><span class="pre">PyOS_sighandler_t</span></tt> is a typedef alias for <tt class="xref c c-type docutils literal"><span class="pre">void</span>
+<span class="pre">(*)(int)</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyOS_setsig">
+PyOS_sighandler_t <tt class="descname">PyOS_setsig</tt><big>(</big>int<em>&nbsp;i</em>, PyOS_sighandler_t<em>&nbsp;h</em><big>)</big><a class="headerlink" href="#PyOS_setsig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the signal handler for signal <em>i</em> to be <em>h</em>; return the old signal handler.
+This is a thin wrapper around either <tt class="xref c c-func docutils literal"><span class="pre">sigaction()</span></tt> or <tt class="xref c c-func docutils literal"><span class="pre">signal()</span></tt>.  Do
+not call those functions directly!  <tt class="xref c c-type docutils literal"><span class="pre">PyOS_sighandler_t</span></tt> is a typedef
+alias for <tt class="xref c c-type docutils literal"><span class="pre">void</span> <span class="pre">(*)(int)</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Py_DecodeLocale">
+wchar_t* <tt class="descname">Py_DecodeLocale</tt><big>(</big>const char*<em>&nbsp;arg</em>, size_t<em>&nbsp;*size</em><big>)</big><a class="headerlink" href="#Py_DecodeLocale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode a byte string from the locale encoding with the <a class="reference internal" href="../library/codecs.html#surrogateescape"><em>surrogateescape
+error handler</em></a>: undecodable bytes are decoded as
+characters in range U+DC80..U+DCFF. If a byte sequence can be decoded as a
+surrogate character, escape the bytes using the surrogateescape error
+handler instead of decoding them.</p>
+<p>Return a pointer to a newly allocated wide character string, use
+<a class="reference internal" href="memory.html#PyMem_RawFree" title="PyMem_RawFree"><tt class="xref c c-func docutils literal"><span class="pre">PyMem_RawFree()</span></tt></a> to free the memory. If size is not <tt class="docutils literal"><span class="pre">NULL</span></tt>, write
+the number of wide characters excluding the null character into <tt class="docutils literal"><span class="pre">*size</span></tt></p>
+<p>Return <tt class="docutils literal"><span class="pre">NULL</span></tt> on decoding error or memory allocation error. If <em>size</em> is
+not <tt class="docutils literal"><span class="pre">NULL</span></tt>, <tt class="docutils literal"><span class="pre">*size</span></tt> is set to <tt class="docutils literal"><span class="pre">(size_t)-1</span></tt> on memory error or set to
+<tt class="docutils literal"><span class="pre">(size_t)-2</span></tt> on decoding error.</p>
+<p>Decoding errors should never happen, unless there is a bug in the C
+library.</p>
+<p>Use the <a class="reference internal" href="#Py_EncodeLocale" title="Py_EncodeLocale"><tt class="xref c c-func docutils literal"><span class="pre">Py_EncodeLocale()</span></tt></a> function to encode the character string
+back to a byte string.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="unicode.html#PyUnicode_DecodeFSDefaultAndSize" title="PyUnicode_DecodeFSDefaultAndSize"><tt class="xref c c-func docutils literal"><span class="pre">PyUnicode_DecodeFSDefaultAndSize()</span></tt></a> and
+<a class="reference internal" href="unicode.html#PyUnicode_DecodeLocaleAndSize" title="PyUnicode_DecodeLocaleAndSize"><tt class="xref c c-func docutils literal"><span class="pre">PyUnicode_DecodeLocaleAndSize()</span></tt></a> functions.</p>
+</div>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.5.</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Py_EncodeLocale">
+char* <tt class="descname">Py_EncodeLocale</tt><big>(</big>const wchar_t<em>&nbsp;*text</em>, size_t<em>&nbsp;*error_pos</em><big>)</big><a class="headerlink" href="#Py_EncodeLocale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode a wide character string to the locale encoding with the
+<a class="reference internal" href="../library/codecs.html#surrogateescape"><em>surrogateescape error handler</em></a>: surrogate characters
+in the range U+DC80..U+DCFF are converted to bytes 0x80..0xFF.</p>
+<p>Return a pointer to a newly allocated byte string, use <a class="reference internal" href="memory.html#PyMem_Free" title="PyMem_Free"><tt class="xref c c-func docutils literal"><span class="pre">PyMem_Free()</span></tt></a>
+to free the memory. Return <tt class="docutils literal"><span class="pre">NULL</span></tt> on encoding error or memory allocation
+error</p>
+<p>If error_pos is not <tt class="docutils literal"><span class="pre">NULL</span></tt>, <tt class="docutils literal"><span class="pre">*error_pos</span></tt> is set to the index of the
+invalid character on encoding error, or set to <tt class="docutils literal"><span class="pre">(size_t)-1</span></tt> otherwise.</p>
+<p>Use the <a class="reference internal" href="#Py_DecodeLocale" title="Py_DecodeLocale"><tt class="xref c c-func docutils literal"><span class="pre">Py_DecodeLocale()</span></tt></a> function to decode the bytes string back
+to a wide character string.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="unicode.html#PyUnicode_EncodeFSDefault" title="PyUnicode_EncodeFSDefault"><tt class="xref c c-func docutils literal"><span class="pre">PyUnicode_EncodeFSDefault()</span></tt></a> and
+<a class="reference internal" href="unicode.html#PyUnicode_EncodeLocale" title="PyUnicode_EncodeLocale"><tt class="xref c c-func docutils literal"><span class="pre">PyUnicode_EncodeLocale()</span></tt></a> functions.</p>
+</div>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.5.</span></p>
+</dd></dl>
+
+</div>
+<div class="section" id="system-functions">
+<span id="systemfunctions"></span><h1>System Functions<a class="headerlink" href="#system-functions" title="Permalink to this headline">¶</a></h1>
+<p>These are utility functions that make functionality from the <a class="reference internal" href="../library/sys.html#module-sys" title="sys: Access system-specific parameters and functions."><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> module
+accessible to C code.  They all work with the current interpreter thread&#8217;s
+<a class="reference internal" href="../library/sys.html#module-sys" title="sys: Access system-specific parameters and functions."><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> module&#8217;s dict, which is contained in the internal thread state structure.</p>
+<dl class="function">
+<dt id="PySys_GetObject">
+<a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a> *<tt class="descname">PySys_GetObject</tt><big>(</big>const char<em>&nbsp;*name</em><big>)</big><a class="headerlink" href="#PySys_GetObject" title="Permalink to this definition">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p>Return the object <em>name</em> from the <a class="reference internal" href="../library/sys.html#module-sys" title="sys: Access system-specific parameters and functions."><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> module or <em>NULL</em> if it does
+not exist, without setting an exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_SetObject">
+int <tt class="descname">PySys_SetObject</tt><big>(</big>const char<em>&nbsp;*name</em>, <a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*v</em><big>)</big><a class="headerlink" href="#PySys_SetObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set <em>name</em> in the <a class="reference internal" href="../library/sys.html#module-sys" title="sys: Access system-specific parameters and functions."><tt class="xref py py-mod docutils literal"><span class="pre">sys</span></tt></a> module to <em>v</em> unless <em>v</em> is <em>NULL</em>, in which
+case <em>name</em> is deleted from the sys module. Returns <tt class="docutils literal"><span class="pre">0</span></tt> on success, <tt class="docutils literal"><span class="pre">-1</span></tt>
+on error.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_ResetWarnOptions">
+void <tt class="descname">PySys_ResetWarnOptions</tt><big>(</big><big>)</big><a class="headerlink" href="#PySys_ResetWarnOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset <a class="reference internal" href="../library/sys.html#sys.warnoptions" title="sys.warnoptions"><tt class="xref py py-data docutils literal"><span class="pre">sys.warnoptions</span></tt></a> to an empty list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_AddWarnOption">
+void <tt class="descname">PySys_AddWarnOption</tt><big>(</big>wchar_t<em>&nbsp;*s</em><big>)</big><a class="headerlink" href="#PySys_AddWarnOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append <em>s</em> to <a class="reference internal" href="../library/sys.html#sys.warnoptions" title="sys.warnoptions"><tt class="xref py py-data docutils literal"><span class="pre">sys.warnoptions</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_AddWarnOptionUnicode">
+void <tt class="descname">PySys_AddWarnOptionUnicode</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*unicode</em><big>)</big><a class="headerlink" href="#PySys_AddWarnOptionUnicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append <em>unicode</em> to <a class="reference internal" href="../library/sys.html#sys.warnoptions" title="sys.warnoptions"><tt class="xref py py-data docutils literal"><span class="pre">sys.warnoptions</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_SetPath">
+void <tt class="descname">PySys_SetPath</tt><big>(</big>wchar_t<em>&nbsp;*path</em><big>)</big><a class="headerlink" href="#PySys_SetPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set <a class="reference internal" href="../library/sys.html#sys.path" title="sys.path"><tt class="xref py py-data docutils literal"><span class="pre">sys.path</span></tt></a> to a list object of paths found in <em>path</em> which should
+be a list of paths separated with the platform&#8217;s search path delimiter
+(<tt class="docutils literal"><span class="pre">:</span></tt> on Unix, <tt class="docutils literal"><span class="pre">;</span></tt> on Windows).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_WriteStdout">
+void <tt class="descname">PySys_WriteStdout</tt><big>(</big>const char<em>&nbsp;*format</em>, ...<big>)</big><a class="headerlink" href="#PySys_WriteStdout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the output string described by <em>format</em> to <a class="reference internal" href="../library/sys.html#sys.stdout" title="sys.stdout"><tt class="xref py py-data docutils literal"><span class="pre">sys.stdout</span></tt></a>.  No
+exceptions are raised, even if truncation occurs (see below).</p>
+<p><em>format</em> should limit the total size of the formatted output string to
+1000 bytes or less &#8211; after 1000 bytes, the output string is truncated.
+In particular, this means that no unrestricted &#8220;%s&#8221; formats should occur;
+these should be limited using &#8220;%.&lt;N&gt;s&#8221; where &lt;N&gt; is a decimal number
+calculated so that &lt;N&gt; plus the maximum size of other formatted text does not
+exceed 1000 bytes.  Also watch out for &#8220;%f&#8221;, which can print hundreds of
+digits for very large numbers.</p>
+<p>If a problem occurs, or <a class="reference internal" href="../library/sys.html#sys.stdout" title="sys.stdout"><tt class="xref py py-data docutils literal"><span class="pre">sys.stdout</span></tt></a> is unset, the formatted message
+is written to the real (C level) <em>stdout</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_WriteStderr">
+void <tt class="descname">PySys_WriteStderr</tt><big>(</big>const char<em>&nbsp;*format</em>, ...<big>)</big><a class="headerlink" href="#PySys_WriteStderr" title="Permalink to this definition">¶</a></dt>
+<dd><p>As <a class="reference internal" href="#PySys_WriteStdout" title="PySys_WriteStdout"><tt class="xref c c-func docutils literal"><span class="pre">PySys_WriteStdout()</span></tt></a>, but write to <a class="reference internal" href="../library/sys.html#sys.stderr" title="sys.stderr"><tt class="xref py py-data docutils literal"><span class="pre">sys.stderr</span></tt></a> or <em>stderr</em>
+instead.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_FormatStdout">
+void <tt class="descname">PySys_FormatStdout</tt><big>(</big>const char<em>&nbsp;*format</em>, ...<big>)</big><a class="headerlink" href="#PySys_FormatStdout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function similar to PySys_WriteStdout() but format the message using
+<a class="reference internal" href="unicode.html#PyUnicode_FromFormatV" title="PyUnicode_FromFormatV"><tt class="xref c c-func docutils literal"><span class="pre">PyUnicode_FromFormatV()</span></tt></a> and don&#8217;t truncate the message to an
+arbitrary length.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.2.</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_FormatStderr">
+void <tt class="descname">PySys_FormatStderr</tt><big>(</big>const char<em>&nbsp;*format</em>, ...<big>)</big><a class="headerlink" href="#PySys_FormatStderr" title="Permalink to this definition">¶</a></dt>
+<dd><p>As <a class="reference internal" href="#PySys_FormatStdout" title="PySys_FormatStdout"><tt class="xref c c-func docutils literal"><span class="pre">PySys_FormatStdout()</span></tt></a>, but write to <a class="reference internal" href="../library/sys.html#sys.stderr" title="sys.stderr"><tt class="xref py py-data docutils literal"><span class="pre">sys.stderr</span></tt></a> or <em>stderr</em>
+instead.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.2.</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_AddXOption">
+void <tt class="descname">PySys_AddXOption</tt><big>(</big>const wchar_t<em>&nbsp;*s</em><big>)</big><a class="headerlink" href="#PySys_AddXOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse <em>s</em> as a set of <a class="reference internal" href="../using/cmdline.html#cmdoption-X"><em class="xref std std-option">-X</em></a> options and add them to the current
+options mapping as returned by <a class="reference internal" href="#PySys_GetXOptions" title="PySys_GetXOptions"><tt class="xref c c-func docutils literal"><span class="pre">PySys_GetXOptions()</span></tt></a>.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.2.</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PySys_GetXOptions">
+<a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a> *<tt class="descname">PySys_GetXOptions</tt><big>(</big><big>)</big><a class="headerlink" href="#PySys_GetXOptions" title="Permalink to this definition">¶</a></dt>
+<dd><em class="refcount">Return value: Borrowed reference.</em><p>Return the current dictionary of <a class="reference internal" href="../using/cmdline.html#cmdoption-X"><em class="xref std std-option">-X</em></a> options, similarly to
+<a class="reference internal" href="../library/sys.html#sys._xoptions" title="sys._xoptions"><tt class="xref py py-data docutils literal"><span class="pre">sys._xoptions</span></tt></a>.  On error, <em>NULL</em> is returned and an exception is
+set.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.2.</span></p>
+</dd></dl>
+
+</div>
+<div class="section" id="process-control">
+<span id="processcontrol"></span><h1>Process Control<a class="headerlink" href="#process-control" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="Py_FatalError">
+void <tt class="descname">Py_FatalError</tt><big>(</big>const char<em>&nbsp;*message</em><big>)</big><a class="headerlink" href="#Py_FatalError" title="Permalink to this definition">¶</a></dt>
+<dd><p id="index-0">Print a fatal error message and kill the process.  No cleanup is performed.
+This function should only be invoked when a condition is detected that would
+make it dangerous to continue using the Python interpreter; e.g., when the
+object administration appears to be corrupted.  On Unix, the standard C library
+function <tt class="xref c c-func docutils literal"><span class="pre">abort()</span></tt> is called which will attempt to produce a <tt class="file docutils literal"><span class="pre">core</span></tt>
+file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Py_Exit">
+void <tt class="descname">Py_Exit</tt><big>(</big>int<em>&nbsp;status</em><big>)</big><a class="headerlink" href="#Py_Exit" title="Permalink to this definition">¶</a></dt>
+<dd><p id="index-1">Exit the current process.  This calls <a class="reference internal" href="init.html#Py_Finalize" title="Py_Finalize"><tt class="xref c c-func docutils literal"><span class="pre">Py_Finalize()</span></tt></a> and then calls the
+standard C library function <tt class="docutils literal"><span class="pre">exit(status)</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Py_AtExit">
+int <tt class="descname">Py_AtExit</tt><big>(</big>void (*func)<em>&nbsp;()</em><big>)</big><a class="headerlink" href="#Py_AtExit" title="Permalink to this definition">¶</a></dt>
+<dd><p id="index-2">Register a cleanup function to be called by <a class="reference internal" href="init.html#Py_Finalize" title="Py_Finalize"><tt class="xref c c-func docutils literal"><span class="pre">Py_Finalize()</span></tt></a>.  The cleanup
+function will be called with no arguments and should return no value.  At most
+32 cleanup functions can be registered.  When the registration is successful,
+<a class="reference internal" href="#Py_AtExit" title="Py_AtExit"><tt class="xref c c-func docutils literal"><span class="pre">Py_AtExit()</span></tt></a> returns <tt class="docutils literal"><span class="pre">0</span></tt>; on failure, it returns <tt class="docutils literal"><span class="pre">-1</span></tt>.  The cleanup
+function registered last is called first. Each cleanup function will be called
+at most once.  Since Python&#8217;s internal finalization will have completed before
+the cleanup function, no Python APIs should be called by <em>func</em>.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

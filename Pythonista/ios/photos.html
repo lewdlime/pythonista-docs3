@@ -1,0 +1,561 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>photos — Photo Library Access on iOS &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-photos">
+<span id="photos-photo-library-access-on-ios"></span><h1><a class="reference internal" href="#module-photos" title="photos: Provides access to the photo library on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">photos</span></tt></a> &#8212; Photo Library Access on iOS<a class="headerlink" href="#module-photos" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-photos" title="photos: Provides access to the photo library on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">photos</span></tt></a> module allows you to access media that is stored in the iOS photo library.</p>
+<p>You can also add new images to the library, modify existing content in-place, and delete items.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The first time you use any of the functions that access your photos, a system-provided permission dialog will be shown. If you deny access, most functions will act as if your photo library was empty. If you change your mind later, you can allow access to your photos from the <cite>Privacy</cite> section in the Settings app. The permission dialog in the app will only be shown once.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>To start working with media in your photo library, you usually need at least one <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> object. You can fetch all assets from the library using the <a class="reference internal" href="#photos.get_assets" title="photos.get_assets"><tt class="xref py py-func docutils literal"><span class="pre">get_assets()</span></tt></a> function, as shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Get the last photo, and show it in the console</span>
+
+<span class="kn">import</span> <span class="nn">photos</span>
+<span class="n">all_assets</span> <span class="o">=</span> <span class="n">photos</span><span class="o">.</span><span class="n">get_assets</span><span class="p">()</span>
+<span class="n">last_asset</span> <span class="o">=</span> <span class="n">all_assets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">last_asset</span><span class="o">.</span><span class="n">get_image</span><span class="p">()</span>
+<span class="n">img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Assets only contain metadata, so to get an actual image, you&#8217;ll have to use the <a class="reference internal" href="#photos.Asset.get_image" title="photos.Asset.get_image"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.get_image()</span></tt></a> function, as shown in the example above. The image is returned as a <tt class="xref py py-class docutils literal"><span class="pre">PIL.Image</span></tt> object. If you want a <a class="reference internal" href="ui.html#ui.Image" title="ui.Image"><tt class="xref py py-class docutils literal"><span class="pre">ui.Image</span></tt></a> instead, use <a class="reference internal" href="#photos.Asset.get_ui_image" title="photos.Asset.get_ui_image"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.get_ui_image()</span></tt></a>.</p>
+<p>Assets are organized in collections, which are represented as <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> objects. Collections can be regular albums or smart albums that automatically contain assets with certain properties.</p>
+<p>One of those smart albums is the &#8220;screenshots&#8221; album, and you can retrieve it easily using the <a class="reference internal" href="#photos.get_screenshots_album" title="photos.get_screenshots_album"><tt class="xref py py-func docutils literal"><span class="pre">get_screenshots_album()</span></tt></a> function. The following snippet shows how to retrieve the oldest screenshot and delete it from the library (after showing a confirmation dialog):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Get the oldest screenshot image, and delete it from the library</span>
+
+<span class="kn">import</span> <span class="nn">photos</span>
+<span class="n">album</span> <span class="o">=</span> <span class="n">photos</span><span class="o">.</span><span class="n">get_screenshots_album</span><span class="p">()</span>
+<span class="n">screenshots</span> <span class="o">=</span> <span class="n">album</span><span class="o">.</span><span class="n">assets</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">screenshots</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;You have no screenshots in your library.&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">oldest</span> <span class="o">=</span> <span class="n">screenshots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">oldest</span><span class="o">.</span><span class="n">can_delete</span><span class="p">:</span>
+        <span class="c"># This will automatically show a confirmation dialog:</span>
+        <span class="n">oldest</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Oldest screenshot is not deletable&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also modify the content of a photo in the library by replacing it with an edited image.</p>
+<p>The following snippet fetches the last asset in the &#8220;recently added&#8221; album, converts it to grayscale, and then replaces the image. The edit can be reverted in the Photos app, or using the <a class="reference internal" href="#photos.Asset.revert" title="photos.Asset.revert"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.revert()</span></tt></a> method.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Get the last photo, and convert it to grayscale, saving the edit in-place</span>
+
+<span class="kn">import</span> <span class="nn">photos</span>
+<span class="n">album</span> <span class="o">=</span> <span class="n">photos</span><span class="o">.</span><span class="n">get_recently_added_album</span><span class="p">()</span>
+<span class="n">last</span> <span class="o">=</span> <span class="n">album</span><span class="o">.</span><span class="n">assets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">last</span><span class="o">.</span><span class="n">can_edit_content</span><span class="p">:</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="n">get_image</span><span class="p">()</span>
+    <span class="n">grayscale_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&#39;L&#39;</span><span class="p">)</span>
+    <span class="n">grayscale_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;.edit.jpg&#39;</span><span class="p">,</span> <span class="n">quality</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">last</span><span class="o">.</span><span class="n">edit_content</span><span class="p">(</span><span class="s">&#39;.edit.jpg&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;The asset is not editable&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The previous examples all fetched assets by index, but you can also just show a dialog to let the user pick an asset from a grid of thumbnails. The <a class="reference internal" href="#photos.pick_asset" title="photos.pick_asset"><tt class="xref py py-func docutils literal"><span class="pre">pick_asset()</span></tt></a> function takes a list of assets (or an <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a>) and returns the asset that was selected. It also allows multiple selection. If you call it without parameters, the &#8220;Recently Added&#8221; album is shown.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Show an image picker dialog (allowing multiple selection) and print the result</span>
+
+<span class="kn">import</span> <span class="nn">photos</span>
+<span class="n">assets</span> <span class="o">=</span> <span class="n">photos</span><span class="o">.</span><span class="n">pick_asset</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&#39;Pick some assets&#39;</span><span class="p">,</span> <span class="n">multi</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">assets</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="photos.capture_image">
+<tt class="descclassname">photos.</tt><tt class="descname">capture_image</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.capture_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a standard camera interface and return the captured image (a <tt class="xref py py-class docutils literal"><span class="pre">PIL.Image</span></tt> object).</p>
+<p>If the device has no camera or if the camera interface is cancelled, <cite>None</cite> is returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_assets">
+<tt class="descclassname">photos.</tt><tt class="descname">get_assets</tt><big>(</big><em>media_type='image'</em>, <em>include_hidden=False</em><big>)</big><a class="headerlink" href="#photos.get_assets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch and return a list of all assets in the library with the given media type (<tt class="docutils literal"><span class="pre">'image'</span></tt> or <tt class="docutils literal"><span class="pre">'video'</span></tt>). By default, assets that are marked as hidden are excluded.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_asset_with_local_id">
+<tt class="descclassname">photos.</tt><tt class="descname">get_asset_with_local_id</tt><big>(</big><em>local_id</em><big>)</big><a class="headerlink" href="#photos.get_asset_with_local_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch and return the asset with the given local identifier (the <a class="reference internal" href="#photos.Asset.local_id" title="photos.Asset.local_id"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.local_id</span></tt></a> attribute) from the library. If no asset with this identifier exists, an <cite>IOError</cite> is raised.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_albums">
+<tt class="descclassname">photos.</tt><tt class="descname">get_albums</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.get_albums" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all regular albums in the photo library. The return value is a list of <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> objects.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_smart_albums">
+<tt class="descclassname">photos.</tt><tt class="descname">get_smart_albums</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.get_smart_albums" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all smart albums in the photo library. The return value is a list of <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> objects.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_moments">
+<tt class="descclassname">photos.</tt><tt class="descname">get_moments</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.get_moments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all &#8220;moments&#8221; in the photo library. Moments are collections of assets that are automatically grouped by date/location. The return value is a list of <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> objects.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_favorites_album">
+<tt class="descclassname">photos.</tt><tt class="descname">get_favorites_album</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.get_favorites_album" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the smart album that contains all assets that are marked as favorites. The return value is an <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_recently_added_album">
+<tt class="descclassname">photos.</tt><tt class="descname">get_recently_added_album</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.get_recently_added_album" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the smart album that contains all assets that were recently added to the library. The return value is an <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_selfies_album">
+<tt class="descclassname">photos.</tt><tt class="descname">get_selfies_album</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.get_selfies_album" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the smart album that contains all assets that were taken with the front camera. The return value is an <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.get_screenshots_album">
+<tt class="descclassname">photos.</tt><tt class="descname">get_screenshots_album</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.get_screenshots_album" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the smart album that contains all assets that were created with the screenshot function. The return value is an <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.batch_delete">
+<tt class="descclassname">photos.</tt><tt class="descname">batch_delete</tt><big>(</big><em>assets</em><big>)</big><a class="headerlink" href="#photos.batch_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete multiple assets from the photo library. <cite>assets</cite> must be a sequence of <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> objects. If one or more of the assets are not deletable, an <cite>IOError</cite> is raised, and no assets will be deleted. You can check if an asset can be deleted using the <a class="reference internal" href="#photos.Asset.can_delete" title="photos.Asset.can_delete"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.can_delete</span></tt></a> attribute.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.batch_revert">
+<tt class="descclassname">photos.</tt><tt class="descname">batch_revert</tt><big>(</big><em>assets</em><big>)</big><a class="headerlink" href="#photos.batch_revert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revert multiple assets to their original state (removing all edits). If one or more of the assets are not editable, an <cite>IOError</cite> is raised, and no assets are reverted. You can check if an asset is editable using the <a class="reference internal" href="#photos.Asset.can_edit_content" title="photos.Asset.can_edit_content"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.can_edit_content</span></tt></a> attribute.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.create_album">
+<tt class="descclassname">photos.</tt><tt class="descname">create_album</tt><big>(</big><em>title</em><big>)</big><a class="headerlink" href="#photos.create_album" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return a new album in the photo library, using the given title. The return value is an <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> object that represents the new album.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.create_image_asset">
+<tt class="descclassname">photos.</tt><tt class="descname">create_image_asset</tt><big>(</big><em>image_path</em><big>)</big><a class="headerlink" href="#photos.create_image_asset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return a new image asset using the given image file (e.g. a JPEG or PNG image). The return value is an <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> object that represents the added image.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="photos.pick_asset">
+<tt class="descclassname">photos.</tt><tt class="descname">pick_asset</tt><big>(</big><em>assets=None</em>, <em>title=''</em>, <em>multi=False</em><big>)</big><a class="headerlink" href="#photos.pick_asset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show dialog with a grid of thumbnails for the given assets. <cite>assets</cite> can either be a sequence/list of <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> objects, or a single <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a>.</p>
+<p>If <cite>multi</cite> is <cite>True</cite>, the user can select multiple assets. Otherwise, the dialog is dismissed after one asset has been selected. The return value is either a single <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> object (if <cite>multi</cite> is <cite>False</cite>), or a list of <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> objects (if <cite>multi</cite> is True). If the asset picker is cancelled, <cite>None</cite> is returned.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="asset-class">
+<h2>Asset Class<a class="headerlink" href="#asset-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="photos.Asset">
+<em class="property">class </em><tt class="descclassname">photos.</tt><tt class="descname">Asset</tt><a class="headerlink" href="#photos.Asset" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> class represents a single media item in the photo library, i.e. an image or a video. <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> objects cannot be initialized directly &#8211; you have to fetch them from the library using <a class="reference internal" href="#photos.get_assets" title="photos.get_assets"><tt class="xref py py-func docutils literal"><span class="pre">get_assets()</span></tt></a> or by accessing the <a class="reference internal" href="#photos.AssetCollection.assets" title="photos.AssetCollection.assets"><tt class="xref py py-data docutils literal"><span class="pre">AssetCollection.assets</span></tt></a> property of an album or smart album.</p>
+<p>An <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> object only contains metadata. To get actual image data, use the <a class="reference internal" href="#photos.Asset.get_image" title="photos.Asset.get_image"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.get_image()</span></tt></a> and <a class="reference internal" href="#photos.Asset.get_image_data" title="photos.Asset.get_image_data"><tt class="xref py py-meth docutils literal"><span class="pre">get_image_data()</span></tt></a> methods.</p>
+<p>To add a new image asset to the photo library, use the <a class="reference internal" href="#photos.create_image_asset" title="photos.create_image_asset"><tt class="xref py py-func docutils literal"><span class="pre">create_image_asset()</span></tt></a> function, providing the path to an image file that you&#8217;ve saved to disk previously.</p>
+</dd></dl>
+
+<div class="section" id="asset-methods">
+<h3>Asset Methods<a class="headerlink" href="#asset-methods" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="photos.Asset.get_image">
+<tt class="descclassname">Asset.</tt><tt class="descname">get_image</tt><big>(</big><em>original=False</em><big>)</big><a class="headerlink" href="#photos.Asset.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the asset&#8217;s image data, and return it as a <tt class="xref py py-class docutils literal"><span class="pre">PIL.Image</span></tt> object.</p>
+<p>By default, the most recent version of the image is returned; pass <cite>original=True</cite> to get the image without any adjustments/edits.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photos.Asset.get_image_data">
+<tt class="descclassname">Asset.</tt><tt class="descname">get_image_data</tt><big>(</big><em>original=False</em><big>)</big><a class="headerlink" href="#photos.Asset.get_image_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the asset&#8217;s image data, and return it as a <a class="reference internal" href="../library/io.html#io.BytesIO" title="io.BytesIO"><tt class="xref py py-class docutils literal"><span class="pre">io.BytesIO</span></tt></a> object. You can use <a class="reference internal" href="../library/io.html#io.BytesIO.getvalue" title="io.BytesIO.getvalue"><tt class="xref py py-meth docutils literal"><span class="pre">io.BytesIO.getvalue()</span></tt></a> to get the image data as a byte string.</p>
+<p>By default, the most recent version of the image is returned; pass <cite>original=True</cite> to get the image without any adjustments/edits.</p>
+<p>If you only need the image for saving it as a file, this is more efficient than <a class="reference internal" href="#photos.Asset.get_image" title="photos.Asset.get_image"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.get_image()</span></tt></a>. The returned <a class="reference internal" href="../library/io.html#io.BytesIO" title="io.BytesIO"><tt class="xref py py-class docutils literal"><span class="pre">io.BytesIO</span></tt></a> has an additional <cite>uti</cite> attribute that can be used to determine the file type of the image data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photos.Asset.get_ui_image">
+<tt class="descclassname">Asset.</tt><tt class="descname">get_ui_image</tt><big>(</big><em>size=None</em>, <em>crop=False</em><big>)</big><a class="headerlink" href="#photos.Asset.get_ui_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the asset&#8217;s image data, and return it as a <a class="reference internal" href="ui.html#ui.Image" title="ui.Image"><tt class="xref py py-class docutils literal"><span class="pre">ui.Image</span></tt></a> object, e.g. to display it in a user interface. By passing a <cite>size</cite> (a pair of width/height), a smaller version of the image can be requested (passing <cite>None</cite> requests the largest version available).</p>
+<p>The <cite>crop</cite> parameter determines the resizing behavior when the aspect ratio of the image doesn&#8217;t match the <cite>size</cite> parameter. Pass <cite>True</cite> to get an image with the exact size given &#8211; this can be useful for generating thumbnail images, for example.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photos.Asset.edit_content">
+<tt class="descclassname">Asset.</tt><tt class="descname">edit_content</tt><big>(</big><em>jpeg_path</em><big>)</big><a class="headerlink" href="#photos.Asset.edit_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the asset&#8217;s image content with the given JPEG file.</p>
+<p>If the asset is not editable, an <cite>IOError</cite> will be raised. You can check if an asset is editable using the <a class="reference internal" href="#photos.Asset.can_edit_content" title="photos.Asset.can_edit_content"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.can_edit_content</span></tt></a> attribute.</p>
+<p>Note that the image file <em>must</em> be in JPEG format. Other image formats are not supported for editing content (though you can create new assets from PNG/GIF files using <a class="reference internal" href="#photos.create_image_asset" title="photos.create_image_asset"><tt class="xref py py-func docutils literal"><span class="pre">create_image_asset()</span></tt></a>).</p>
+<p>The system will show a dialog to confirm the edit.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photos.Asset.delete">
+<tt class="descclassname">Asset.</tt><tt class="descname">delete</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.Asset.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the asset from the photo library.</p>
+<p>If the asset is not deletable, an <cite>IOError</cite> will be raised. You can check if an asset is deletable using the <a class="reference internal" href="#photos.Asset.can_delete" title="photos.Asset.can_delete"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.can_delete</span></tt></a> attribute.</p>
+<p>The system will show a dialog to confirm the deletion.</p>
+<p>If you want to delete multiple assets without showing a confirmation dialog for each one, use the <a class="reference internal" href="#photos.batch_delete" title="photos.batch_delete"><tt class="xref py py-func docutils literal"><span class="pre">batch_delete()</span></tt></a> function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photos.Asset.revert">
+<tt class="descclassname">Asset.</tt><tt class="descname">revert</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.Asset.revert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revert the asset to its original state.</p>
+<p>If the asset is not editable, an <cite>IOError</cite> will be raised. You can check if an asset is editable using the <a class="reference internal" href="#photos.Asset.can_edit_content" title="photos.Asset.can_edit_content"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.can_edit_content</span></tt></a> attribute.</p>
+<p>The system will show a dialog to confirm the edit.</p>
+<p>If you want to revert multiple assets without showing a confirmation dialog for each one, use the <a class="reference internal" href="#photos.batch_revert" title="photos.batch_revert"><tt class="xref py py-func docutils literal"><span class="pre">batch_revert()</span></tt></a> function.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="asset-properties">
+<h3>Asset Properties<a class="headerlink" href="#asset-properties" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="photos.Asset.local_id">
+<tt class="descclassname">Asset.</tt><tt class="descname">local_id</tt><a class="headerlink" href="#photos.Asset.local_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, string) A unique identifier of this asset on the current device.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.pixel_width">
+<tt class="descclassname">Asset.</tt><tt class="descname">pixel_width</tt><a class="headerlink" href="#photos.Asset.pixel_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, number) The width of the asset in pixels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.pixel_height">
+<tt class="descclassname">Asset.</tt><tt class="descname">pixel_height</tt><a class="headerlink" href="#photos.Asset.pixel_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, number) The height of the asset in pixels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.media_type">
+<tt class="descclassname">Asset.</tt><tt class="descname">media_type</tt><a class="headerlink" href="#photos.Asset.media_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, string) The asset&#8217;s media type (<tt class="docutils literal"><span class="pre">'image'</span></tt> or <tt class="docutils literal"><span class="pre">'video'</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.media_subtypes">
+<tt class="descclassname">Asset.</tt><tt class="descname">media_subtypes</tt><a class="headerlink" href="#photos.Asset.media_subtypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, list of strings) The asset&#8217;s media subtypes (e.g. <tt class="docutils literal"><span class="pre">'photo_screenshot'</span></tt>, <tt class="docutils literal"><span class="pre">'photo_hdr'</span></tt>...).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.creation_date">
+<tt class="descclassname">Asset.</tt><tt class="descname">creation_date</tt><a class="headerlink" href="#photos.Asset.creation_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-write, datetime) The asset&#8217;s creation date. Only writable if <a class="reference internal" href="#photos.Asset.can_edit_properties" title="photos.Asset.can_edit_properties"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.can_edit_properties</span></tt></a> is <cite>True</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.modification_date">
+<tt class="descclassname">Asset.</tt><tt class="descname">modification_date</tt><a class="headerlink" href="#photos.Asset.modification_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-write, datetime) The asset&#8217;s modification date.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.hidden">
+<tt class="descclassname">Asset.</tt><tt class="descname">hidden</tt><a class="headerlink" href="#photos.Asset.hidden" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-write, boolean) Whether the asset is hidden in the library. Only writable if <a class="reference internal" href="#photos.Asset.can_edit_properties" title="photos.Asset.can_edit_properties"><tt class="xref py py-attr docutils literal"><span class="pre">can_edit_properties</span></tt></a> is <cite>True</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.favorite">
+<tt class="descclassname">Asset.</tt><tt class="descname">favorite</tt><a class="headerlink" href="#photos.Asset.favorite" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-write, boolean) Whether the asset is marked as a favorite. Only writable if <a class="reference internal" href="#photos.Asset.can_edit_properties" title="photos.Asset.can_edit_properties"><tt class="xref py py-attr docutils literal"><span class="pre">can_edit_properties</span></tt></a> is <cite>True</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.duration">
+<tt class="descclassname">Asset.</tt><tt class="descname">duration</tt><a class="headerlink" href="#photos.Asset.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, number) The duration of a video asset in seconds (always zero for still images).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.location">
+<tt class="descclassname">Asset.</tt><tt class="descname">location</tt><a class="headerlink" href="#photos.Asset.location" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-write, dict) The geo-location where the photo/video was taken, as a <cite>dict</cite> with at least <tt class="docutils literal"><span class="pre">'latitude'</span></tt> and <tt class="docutils literal"><span class="pre">'longitude'</span></tt> keys (and optionally <tt class="docutils literal"><span class="pre">'altitude'</span></tt>). Only writable if <a class="reference internal" href="#photos.Asset.can_edit_properties" title="photos.Asset.can_edit_properties"><tt class="xref py py-attr docutils literal"><span class="pre">can_edit_properties</span></tt></a> is <cite>True</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.can_edit_content">
+<tt class="descclassname">Asset.</tt><tt class="descname">can_edit_content</tt><a class="headerlink" href="#photos.Asset.can_edit_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, boolean) Whether the asset&#8217;s content can be modified (e.g. using <a class="reference internal" href="#photos.Asset.revert" title="photos.Asset.revert"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.revert()</span></tt></a> or <a class="reference internal" href="#photos.Asset.edit_content" title="photos.Asset.edit_content"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.edit_content()</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.can_edit_properties">
+<tt class="descclassname">Asset.</tt><tt class="descname">can_edit_properties</tt><a class="headerlink" href="#photos.Asset.can_edit_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, boolean) Whether the asset&#8217;s metadata can be modified (<a class="reference internal" href="#photos.Asset.favorite" title="photos.Asset.favorite"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.favorite</span></tt></a>, <a class="reference internal" href="#photos.Asset.hidden" title="photos.Asset.hidden"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.hidden</span></tt></a>, <a class="reference internal" href="#photos.Asset.creation_date" title="photos.Asset.creation_date"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.creation_date</span></tt></a>, <a class="reference internal" href="#photos.Asset.location" title="photos.Asset.location"><tt class="xref py py-attr docutils literal"><span class="pre">Asset.location</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.Asset.can_delete">
+<tt class="descclassname">Asset.</tt><tt class="descname">can_delete</tt><a class="headerlink" href="#photos.Asset.can_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, boolean) Whether the asset can be deleted using <a class="reference internal" href="#photos.Asset.delete" title="photos.Asset.delete"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.delete()</span></tt></a>.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="assetcollection-class">
+<h2>AssetCollection Class<a class="headerlink" href="#assetcollection-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="photos.AssetCollection">
+<em class="property">class </em><tt class="descclassname">photos.</tt><tt class="descname">AssetCollection</tt><a class="headerlink" href="#photos.AssetCollection" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> objects represent a collection in the photo library, i.e. an album or smart album. &#8220;Moments&#8221; (photos that are automatically grouped by date/location) are also represented as <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> objects.</p>
+<p>You cannot initialize an <a class="reference internal" href="#photos.AssetCollection" title="photos.AssetCollection"><tt class="xref py py-class docutils literal"><span class="pre">AssetCollection</span></tt></a> directly. Instead, use the <a class="reference internal" href="#photos.get_albums" title="photos.get_albums"><tt class="xref py py-func docutils literal"><span class="pre">get_albums()</span></tt></a>, <a class="reference internal" href="#photos.get_smart_albums" title="photos.get_smart_albums"><tt class="xref py py-func docutils literal"><span class="pre">get_smart_albums()</span></tt></a>, and <a class="reference internal" href="#photos.get_moments" title="photos.get_moments"><tt class="xref py py-func docutils literal"><span class="pre">get_moments()</span></tt></a> functions to fetch collections from the photo library. You can also access some special smart albums conveniently, for example via <a class="reference internal" href="#photos.get_screenshots_album" title="photos.get_screenshots_album"><tt class="xref py py-func docutils literal"><span class="pre">get_screenshots_album()</span></tt></a>, <a class="reference internal" href="#photos.get_recently_added_album" title="photos.get_recently_added_album"><tt class="xref py py-func docutils literal"><span class="pre">get_recently_added_album()</span></tt></a>, or <a class="reference internal" href="#photos.get_selfies_album" title="photos.get_selfies_album"><tt class="xref py py-func docutils literal"><span class="pre">get_selfies_album()</span></tt></a>.</p>
+<p>To create a new album in the photo library, use the <a class="reference internal" href="#photos.create_album" title="photos.create_album"><tt class="xref py py-func docutils literal"><span class="pre">create_album()</span></tt></a> function. You can then add assets to it using <a class="reference internal" href="#photos.AssetCollection.add_assets" title="photos.AssetCollection.add_assets"><tt class="xref py py-meth docutils literal"><span class="pre">AssetCollection.add_assets()</span></tt></a> (or remove them using <tt class="xref py py-meth docutils literal"><span class="pre">AssetCollection.remove_assets()</span></tt>).</p>
+</dd></dl>
+
+<div class="section" id="assetcollection-methods">
+<h3>AssetCollection Methods<a class="headerlink" href="#assetcollection-methods" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="photos.AssetCollection.delete">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">delete</tt><big>(</big><big>)</big><a class="headerlink" href="#photos.AssetCollection.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the asset collection from the photo library. The contained assets are not deleted.</p>
+<p>If the asset collection is not deletable, an <cite>IOError</cite> will be raised. You can check if an asset collection is deletable using the <a class="reference internal" href="#photos.AssetCollection.can_delete" title="photos.AssetCollection.can_delete"><tt class="xref py py-attr docutils literal"><span class="pre">AssetCollection.can_delete</span></tt></a> attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="photos.AssetCollection.add_assets">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">add_assets</tt><big>(</big><em>assets</em><big>)</big><a class="headerlink" href="#photos.AssetCollection.add_assets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a list of <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> objects to the album represented by this object.</p>
+<p>Not all asset collections allow adding assets. You can check this using the <a class="reference internal" href="#photos.AssetCollection.can_add_assets" title="photos.AssetCollection.can_add_assets"><tt class="xref py py-attr docutils literal"><span class="pre">AssetCollection.can_add_assets</span></tt></a> attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">add_assets</tt><big>(</big><em>assets</em><big>)</big></dt>
+<dd><p>Remove a list of <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> objects from the album represented by this object.</p>
+<p>Not all asset collections allow removing assets. You can check this using the <a class="reference internal" href="#photos.AssetCollection.can_remove_assets" title="photos.AssetCollection.can_remove_assets"><tt class="xref py py-attr docutils literal"><span class="pre">AssetCollection.can_remove_assets</span></tt></a> attribute.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="assetcollection-properties">
+<h3>AssetCollection Properties<a class="headerlink" href="#assetcollection-properties" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="photos.AssetCollection.assets">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">assets</tt><a class="headerlink" href="#photos.AssetCollection.assets" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, list of <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> objects) The assets that the collection contains. Note that modifying the list directly has no effect on the collection in the photo library. Use <a class="reference internal" href="#photos.AssetCollection.add_assets" title="photos.AssetCollection.add_assets"><tt class="xref py py-meth docutils literal"><span class="pre">AssetCollection.add_assets()</span></tt></a> and <tt class="xref py py-meth docutils literal"><span class="pre">AssetCollection.remove_assets()</span></tt> to add or remove assets.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.local_id">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">local_id</tt><a class="headerlink" href="#photos.AssetCollection.local_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, string) A unique identifier of this asset collection on the current device.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.title">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">title</tt><a class="headerlink" href="#photos.AssetCollection.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-write, string) The (potentially localized) title of the asset collection. Only writable if <a class="reference internal" href="#photos.AssetCollection.can_rename" title="photos.AssetCollection.can_rename"><tt class="xref py py-attr docutils literal"><span class="pre">AssetCollection.can_rename</span></tt></a> is <cite>True</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.type">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">type</tt><a class="headerlink" href="#photos.AssetCollection.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, string) The type of the asset collection (<tt class="docutils literal"><span class="pre">'album'</span></tt>, <tt class="docutils literal"><span class="pre">'smart_album'</span></tt> or <tt class="docutils literal"><span class="pre">'moment'</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.subtype">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">subtype</tt><a class="headerlink" href="#photos.AssetCollection.subtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, string) The subtype of the asset collection (e.g. <tt class="docutils literal"><span class="pre">'favorites'</span></tt>, <tt class="docutils literal"><span class="pre">'recently_added'</span></tt>...).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.start_date">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">start_date</tt><a class="headerlink" href="#photos.AssetCollection.start_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, datetime) The earliest creation date among all assets in the asset collection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.end_date">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">end_date</tt><a class="headerlink" href="#photos.AssetCollection.end_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, datetime) The latest creation date among all assets in the asset collection.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.can_delete">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">can_delete</tt><a class="headerlink" href="#photos.AssetCollection.can_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, boolean) Whether the asset collection can be deleted.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.can_add_assets">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">can_add_assets</tt><a class="headerlink" href="#photos.AssetCollection.can_add_assets" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, boolean) Whether the asset collection allows adding assets using <a class="reference internal" href="#photos.AssetCollection.add_assets" title="photos.AssetCollection.add_assets"><tt class="xref py py-meth docutils literal"><span class="pre">AssetCollection.add_assets()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.can_remove_assets">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">can_remove_assets</tt><a class="headerlink" href="#photos.AssetCollection.can_remove_assets" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, boolean) Whether the asset collection allows adding assets using <tt class="xref py py-meth docutils literal"><span class="pre">AssetCollection.remove_assets()</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="photos.AssetCollection.can_rename">
+<tt class="descclassname">AssetCollection.</tt><tt class="descname">can_rename</tt><a class="headerlink" href="#photos.AssetCollection.can_rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>(read-only, boolean) Whether the asset collection&#8217;s <a class="reference internal" href="#photos.AssetCollection.title" title="photos.AssetCollection.title"><tt class="xref py py-attr docutils literal"><span class="pre">title</span></tt></a> attribute can be changed.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="deprecated-functions">
+<h2>Deprecated Functions<a class="headerlink" href="#deprecated-functions" title="Permalink to this headline">¶</a></h2>
+<p>The following functions are still available for backwards compatibility, but using them in new code is not recommended.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">get_count()</span></tt> &#8211; Return the number of images in the camera roll.</li>
+<li><tt class="docutils literal"><span class="pre">get_image(image_index=-1,</span> <span class="pre">original=True,</span> <span class="pre">raw_data=False)</span></tt> &#8211; Return one of the images in the camera roll. Use <a class="reference internal" href="#photos.get_assets" title="photos.get_assets"><tt class="xref py py-func docutils literal"><span class="pre">get_assets()</span></tt></a> instead.</li>
+<li><tt class="docutils literal"><span class="pre">get_metadata(image_index=-1)</span></tt> &#8211; Return EXIF and other metadata of an image in the camera roll as a dictionary. Use the metadata properties of <a class="reference internal" href="#photos.Asset" title="photos.Asset"><tt class="xref py py-class docutils literal"><span class="pre">Asset</span></tt></a> instead.</li>
+<li><tt class="docutils literal"><span class="pre">get_thumbnail(image_index=-1)</span></tt> &#8211; Return a small thumbnail image of an image in the camera roll. The thumbnail will have equal width and height, regardless of the aspect ratio of the original image. Use <a class="reference internal" href="#photos.Asset.get_ui_image" title="photos.Asset.get_ui_image"><tt class="xref py py-meth docutils literal"><span class="pre">Asset.get_ui_image()</span></tt></a> instead.</li>
+<li><tt class="docutils literal"><span class="pre">pick_image(show_albums=False,</span> <span class="pre">include_metadata=False,</span> <span class="pre">original=True,</span> <span class="pre">raw_data=False,</span> <span class="pre">multi=False)</span></tt> &#8211;  Show a standard image picker UI and return the image that was picked. Use <a class="reference internal" href="#photos.pick_asset" title="photos.pick_asset"><tt class="xref py py-func docutils literal"><span class="pre">pick_asset()</span></tt></a> instead.</li>
+<li><tt class="docutils literal"><span class="pre">save_image(image)</span></tt> &#8211; Save a <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> image or <a class="reference internal" href="ui.html#ui.Image" title="ui.Image"><tt class="xref py py-class docutils literal"><span class="pre">ui.Image</span></tt></a> to the camera roll. Use <a class="reference internal" href="#photos.create_image_asset" title="photos.create_image_asset"><tt class="xref py py-func docutils literal"><span class="pre">create_image_asset()</span></tt></a> instead.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 01, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

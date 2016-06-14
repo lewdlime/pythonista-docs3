@@ -1,0 +1,226 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>33.7. pty — Pseudo-terminal utilities &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="33. Unix Specific Services" href="unix.html" />
+    <link rel="next" title="33.8. fcntl — The fcntl and ioctl system calls" href="fcntl.html" />
+    <link rel="prev" title="33.6. tty — Terminal control functions" href="tty.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="fcntl.html" title="33.8. fcntl — The fcntl and ioctl system calls"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tty.html" title="33.6. tty — Terminal control functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="unix.html" accesskey="U">33. Unix Specific Services</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pty">
+<span id="pty-pseudo-terminal-utilities"></span><h1>33.7. <a class="reference internal" href="#module-pty" title="pty: Pseudo-Terminal Handling for Linux. (Linux)"><tt class="xref py py-mod docutils literal"><span class="pre">pty</span></tt></a> &#8212; Pseudo-terminal utilities<a class="headerlink" href="#module-pty" title="Permalink to this headline">¶</a></h1>
+<p><em>Platforms: </em>Linux</p>
+<p>The <a class="reference internal" href="#module-pty" title="pty: Pseudo-Terminal Handling for Linux. (Linux)"><tt class="xref py py-mod docutils literal"><span class="pre">pty</span></tt></a> module defines operations for handling the pseudo-terminal
+concept: starting another process and being able to write to and read from its
+controlling terminal programmatically.</p>
+<p>Because pseudo-terminal handling is highly platform dependent, there is code to
+do it only for Linux. (The Linux code is supposed to work on other platforms,
+but hasn&#8217;t been tested yet.)</p>
+<p>The <a class="reference internal" href="#module-pty" title="pty: Pseudo-Terminal Handling for Linux. (Linux)"><tt class="xref py py-mod docutils literal"><span class="pre">pty</span></tt></a> module defines the following functions:</p>
+<dl class="function">
+<dt id="pty.fork">
+<tt class="descclassname">pty.</tt><tt class="descname">fork</tt><big>(</big><big>)</big><a class="headerlink" href="#pty.fork" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fork. Connect the child&#8217;s controlling terminal to a pseudo-terminal. Return
+value is <tt class="docutils literal"><span class="pre">(pid,</span> <span class="pre">fd)</span></tt>. Note that the child  gets <em>pid</em> 0, and the <em>fd</em> is
+<em>invalid</em>. The parent&#8217;s return value is the <em>pid</em> of the child, and <em>fd</em> is a
+file descriptor connected to the child&#8217;s controlling terminal (and also to the
+child&#8217;s standard input and output).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pty.openpty">
+<tt class="descclassname">pty.</tt><tt class="descname">openpty</tt><big>(</big><big>)</big><a class="headerlink" href="#pty.openpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a new pseudo-terminal pair, using <a class="reference internal" href="os.html#os.openpty" title="os.openpty"><tt class="xref py py-func docutils literal"><span class="pre">os.openpty()</span></tt></a> if possible, or
+emulation code for generic Unix systems. Return a pair of file descriptors
+<tt class="docutils literal"><span class="pre">(master,</span> <span class="pre">slave)</span></tt>, for the master and the slave end, respectively.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pty.spawn">
+<tt class="descclassname">pty.</tt><tt class="descname">spawn</tt><big>(</big><em>argv</em><span class="optional">[</span>, <em>master_read</em><span class="optional">[</span>, <em>stdin_read</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pty.spawn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spawn a process, and connect its controlling terminal with the current
+process&#8217;s standard io. This is often used to baffle programs which insist on
+reading from the controlling terminal.</p>
+<p>The functions <em>master_read</em> and <em>stdin_read</em> should be functions which read from
+a file descriptor. The defaults try to read 1024 bytes each time they are
+called.</p>
+<p class="versionchanged">
+<span class="versionmodified">Changed in version 3.4: </span><a class="reference internal" href="#pty.spawn" title="pty.spawn"><tt class="xref py py-func docutils literal"><span class="pre">spawn()</span></tt></a> now returns the status value from <a class="reference internal" href="os.html#os.waitpid" title="os.waitpid"><tt class="xref py py-func docutils literal"><span class="pre">os.waitpid()</span></tt></a>
+on the child process.</p>
+</dd></dl>
+
+<div class="section" id="example">
+<h2>33.7.1. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>The following program acts like the Unix command <em class="manpage">script(1)</em>, using a
+pseudo-terminal to record all input and output of a terminal session in a
+&#8220;typescript&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pty</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;append&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-p&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">&#39;use_python&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;typescript&#39;</span><span class="p">)</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="n">shell</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">use_python</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;SHELL&#39;</span><span class="p">,</span> <span class="s">&#39;sh&#39;</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">filename</span>
+<span class="n">mode</span> <span class="o">=</span> <span class="s">&#39;ab&#39;</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">append</span> <span class="k">else</span> <span class="s">&#39;wb&#39;</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span> <span class="k">as</span> <span class="n">script</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">fd</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+        <span class="n">script</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Script started, file is&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">script</span><span class="o">.</span><span class="n">write</span><span class="p">((</span><span class="s">&#39;Script started on </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">())</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+    <span class="n">pty</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="n">read</span><span class="p">)</span>
+
+    <span class="n">script</span><span class="o">.</span><span class="n">write</span><span class="p">((</span><span class="s">&#39;Script done on </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">time</span><span class="o">.</span><span class="n">asctime</span><span class="p">())</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Script done, file is&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

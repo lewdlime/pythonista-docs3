@@ -1,0 +1,707 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.5.1. Base Event Loop &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="18.5. asyncio – Asynchronous I/O, event loop, coroutines and tasks" href="asyncio.html" />
+    <link rel="next" title="18.5.2. Event loops" href="asyncio-eventloops.html" />
+    <link rel="prev" title="18.5. asyncio – Asynchronous I/O, event loop, coroutines and tasks" href="asyncio.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asyncio-eventloops.html" title="18.5.2. Event loops"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="asyncio.html" title="18.5. asyncio – Asynchronous I/O, event loop, coroutines and tasks"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="ipc.html" >18. Interprocess Communication and Networking</a> &raquo;</li>
+          <li><a href="asyncio.html" accesskey="U">18.5. <tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">asyncio</span></tt> &#8211; Asynchronous I/O, event loop, coroutines and tasks</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="base-event-loop">
+<span id="asyncio-event-loop"></span><h1>18.5.1. Base Event Loop<a class="headerlink" href="#base-event-loop" title="Permalink to this headline">¶</a></h1>
+<p>The event loop is the central execution device provided by <a class="reference internal" href="asyncio.html#module-asyncio" title="asyncio: Asynchronous I/O, event loop, coroutines and tasks."><tt class="xref py py-mod docutils literal"><span class="pre">asyncio</span></tt></a>.
+It provides multiple facilities, including:</p>
+<ul class="simple">
+<li>Registering, executing and cancelling delayed calls (timeouts).</li>
+<li>Creating client and server <a class="reference internal" href="asyncio-protocol.html#asyncio-transport"><em>transports</em></a> for various
+kinds of communication.</li>
+<li>Launching subprocesses and the associated <a class="reference internal" href="asyncio-protocol.html#asyncio-transport"><em>transports</em></a> for communication with an external program.</li>
+<li>Delegating costly function calls to a pool of threads.</li>
+</ul>
+<dl class="class">
+<dt id="asyncio.BaseEventLoop">
+<em class="property">class </em><tt class="descclassname">asyncio.</tt><tt class="descname">BaseEventLoop</tt><a class="headerlink" href="#asyncio.BaseEventLoop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class of event loops.</p>
+<p>This class is <a class="reference internal" href="asyncio-dev.html#asyncio-multithreading"><em>not thread safe</em></a>.</p>
+</dd></dl>
+
+<div class="section" id="run-an-event-loop">
+<h2>18.5.1.1. Run an event loop<a class="headerlink" href="#run-an-event-loop" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.run_forever">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">run_forever</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.run_forever" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run until <a class="reference internal" href="#asyncio.BaseEventLoop.stop" title="asyncio.BaseEventLoop.stop"><tt class="xref py py-meth docutils literal"><span class="pre">stop()</span></tt></a> is called.  If <a class="reference internal" href="#asyncio.BaseEventLoop.stop" title="asyncio.BaseEventLoop.stop"><tt class="xref py py-meth docutils literal"><span class="pre">stop()</span></tt></a> is called before
+<a class="reference internal" href="#asyncio.BaseEventLoop.run_forever" title="asyncio.BaseEventLoop.run_forever"><tt class="xref py py-meth docutils literal"><span class="pre">run_forever()</span></tt></a> is called, this polls the I/O selector once
+with a timeout of zero, runs all callbacks scheduled in response to
+I/O events (and those that were already scheduled), and then exits.
+If <a class="reference internal" href="#asyncio.BaseEventLoop.stop" title="asyncio.BaseEventLoop.stop"><tt class="xref py py-meth docutils literal"><span class="pre">stop()</span></tt></a> is called while <a class="reference internal" href="#asyncio.BaseEventLoop.run_forever" title="asyncio.BaseEventLoop.run_forever"><tt class="xref py py-meth docutils literal"><span class="pre">run_forever()</span></tt></a> is running,
+this will run the current batch of callbacks and then exit.  Note
+that callbacks scheduled by callbacks will not run in that case;
+they will run the next time <a class="reference internal" href="#asyncio.BaseEventLoop.run_forever" title="asyncio.BaseEventLoop.run_forever"><tt class="xref py py-meth docutils literal"><span class="pre">run_forever()</span></tt></a> is called.</p>
+<p class="versionchanged">
+<span class="versionmodified">Changed in version 3.5.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.run_until_complete">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">run_until_complete</tt><big>(</big><em>future</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.run_until_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run until the <a class="reference internal" href="asyncio-task.html#asyncio.Future" title="asyncio.Future"><tt class="xref py py-class docutils literal"><span class="pre">Future</span></tt></a> is done.</p>
+<p>If the argument is a <a class="reference internal" href="asyncio-task.html#coroutine"><em>coroutine object</em></a>, it is wrapped by
+<a class="reference internal" href="asyncio-task.html#asyncio.ensure_future" title="asyncio.ensure_future"><tt class="xref py py-func docutils literal"><span class="pre">ensure_future()</span></tt></a>.</p>
+<p>Return the Future&#8217;s result, or raise its exception.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.is_running">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">is_running</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.is_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns running status of event loop.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.stop">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop running the event loop.</p>
+<p>This causes <a class="reference internal" href="#asyncio.BaseEventLoop.run_forever" title="asyncio.BaseEventLoop.run_forever"><tt class="xref py py-meth docutils literal"><span class="pre">run_forever()</span></tt></a> to exit at the next suitable
+opportunity (see there for more details).</p>
+<p class="versionchanged">
+<span class="versionmodified">Changed in version 3.5.1.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.is_closed">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">is_closed</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.is_closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the event loop was closed.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.4.2.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.close">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the event loop. The loop must not be running.  Pending
+callbacks will be lost.</p>
+<p>This clears the queues and shuts down the executor, but does not wait for
+the executor to finish.</p>
+<p>This is idempotent and irreversible. No other methods should be called after
+this one.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="calls">
+<span id="asyncio-pass-keywords"></span><h2>18.5.1.2. Calls<a class="headerlink" href="#calls" title="Permalink to this headline">¶</a></h2>
+<p>Most <a class="reference internal" href="asyncio.html#module-asyncio" title="asyncio: Asynchronous I/O, event loop, coroutines and tasks."><tt class="xref py py-mod docutils literal"><span class="pre">asyncio</span></tt></a> functions don&#8217;t accept keywords. If you want to pass
+keywords to your callback, use <a class="reference internal" href="functools.html#functools.partial" title="functools.partial"><tt class="xref py py-func docutils literal"><span class="pre">functools.partial()</span></tt></a>. For example,
+<tt class="docutils literal"><span class="pre">loop.call_soon(functools.partial(print,</span> <span class="pre">&quot;Hello&quot;,</span> <span class="pre">flush=True))</span></tt> will call
+<tt class="docutils literal"><span class="pre">print(&quot;Hello&quot;,</span> <span class="pre">flush=True)</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference internal" href="functools.html#functools.partial" title="functools.partial"><tt class="xref py py-func docutils literal"><span class="pre">functools.partial()</span></tt></a> is better than <tt class="docutils literal"><span class="pre">lambda</span></tt> functions, because
+<a class="reference internal" href="asyncio.html#module-asyncio" title="asyncio: Asynchronous I/O, event loop, coroutines and tasks."><tt class="xref py py-mod docutils literal"><span class="pre">asyncio</span></tt></a> can inspect <a class="reference internal" href="functools.html#functools.partial" title="functools.partial"><tt class="xref py py-func docutils literal"><span class="pre">functools.partial()</span></tt></a> object to display
+parameters in debug mode, whereas <tt class="docutils literal"><span class="pre">lambda</span></tt> functions have a poor
+representation.</p>
+</div>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.call_soon">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">call_soon</tt><big>(</big><em>callback</em>, <em>*args</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.call_soon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arrange for a callback to be called as soon as possible.  The callback is
+called after <a class="reference internal" href="#asyncio.BaseEventLoop.call_soon" title="asyncio.BaseEventLoop.call_soon"><tt class="xref py py-meth docutils literal"><span class="pre">call_soon()</span></tt></a> returns, when control returns to the event
+loop.</p>
+<p>This operates as a FIFO queue, callbacks are called in the order in
+which they are registered.  Each callback will be called exactly once.</p>
+<p>Any positional arguments after the callback will be passed to the
+callback when it is called.</p>
+<p>An instance of <a class="reference internal" href="#asyncio.Handle" title="asyncio.Handle"><tt class="xref py py-class docutils literal"><span class="pre">asyncio.Handle</span></tt></a> is returned, which can be
+used to cancel the callback.</p>
+<p><a class="reference internal" href="#asyncio-pass-keywords"><em>Use functools.partial to pass keywords to the callback</em></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.call_soon_threadsafe">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">call_soon_threadsafe</tt><big>(</big><em>callback</em>, <em>*args</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.call_soon_threadsafe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#asyncio.BaseEventLoop.call_soon" title="asyncio.BaseEventLoop.call_soon"><tt class="xref py py-meth docutils literal"><span class="pre">call_soon()</span></tt></a>, but thread safe.</p>
+<p>See the <a class="reference internal" href="asyncio-dev.html#asyncio-multithreading"><em>concurrency and multithreading</em></a>
+section of the documentation.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="delayed-calls">
+<span id="asyncio-delayed-calls"></span><h2>18.5.1.3. Delayed calls<a class="headerlink" href="#delayed-calls" title="Permalink to this headline">¶</a></h2>
+<p>The event loop has its own internal clock for computing timeouts.
+Which clock is used depends on the (platform-specific) event loop
+implementation; ideally it is a monotonic clock.  This will generally be
+a different clock than <a class="reference internal" href="time.html#time.time" title="time.time"><tt class="xref py py-func docutils literal"><span class="pre">time.time()</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Timeouts (relative <em>delay</em> or absolute <em>when</em>) should not exceed one day.</p>
+</div>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.call_later">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">call_later</tt><big>(</big><em>delay</em>, <em>callback</em>, <em>*args</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.call_later" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arrange for the <em>callback</em> to be called after the given <em>delay</em>
+seconds (either an int or float).</p>
+<p>An instance of <a class="reference internal" href="#asyncio.Handle" title="asyncio.Handle"><tt class="xref py py-class docutils literal"><span class="pre">asyncio.Handle</span></tt></a> is returned, which can be
+used to cancel the callback.</p>
+<p><em>callback</em> will be called exactly once per call to <a class="reference internal" href="#asyncio.BaseEventLoop.call_later" title="asyncio.BaseEventLoop.call_later"><tt class="xref py py-meth docutils literal"><span class="pre">call_later()</span></tt></a>.
+If two callbacks are scheduled for exactly the same time, it is
+undefined which will be called first.</p>
+<p>The optional positional <em>args</em> will be passed to the callback when it
+is called. If you want the callback to be called with some named
+arguments, use a closure or <a class="reference internal" href="functools.html#functools.partial" title="functools.partial"><tt class="xref py py-func docutils literal"><span class="pre">functools.partial()</span></tt></a>.</p>
+<p><a class="reference internal" href="#asyncio-pass-keywords"><em>Use functools.partial to pass keywords to the callback</em></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.call_at">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">call_at</tt><big>(</big><em>when</em>, <em>callback</em>, <em>*args</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.call_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arrange for the <em>callback</em> to be called at the given absolute timestamp
+<em>when</em> (an int or float), using the same time reference as
+<a class="reference internal" href="#asyncio.BaseEventLoop.time" title="asyncio.BaseEventLoop.time"><tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.time()</span></tt></a>.</p>
+<p>This method&#8217;s behavior is the same as <a class="reference internal" href="#asyncio.BaseEventLoop.call_later" title="asyncio.BaseEventLoop.call_later"><tt class="xref py py-meth docutils literal"><span class="pre">call_later()</span></tt></a>.</p>
+<p>An instance of <a class="reference internal" href="#asyncio.Handle" title="asyncio.Handle"><tt class="xref py py-class docutils literal"><span class="pre">asyncio.Handle</span></tt></a> is returned, which can be
+used to cancel the callback.</p>
+<p><a class="reference internal" href="#asyncio-pass-keywords"><em>Use functools.partial to pass keywords to the callback</em></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.time">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">time</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current time, as a <a class="reference internal" href="functions.html#float" title="float"><tt class="xref py py-class docutils literal"><span class="pre">float</span></tt></a> value, according to the
+event loop&#8217;s internal clock.</p>
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <tt class="xref py py-func docutils literal"><span class="pre">asyncio.sleep()</span></tt> function.</p>
+</div>
+</div>
+<div class="section" id="tasks">
+<h2>18.5.1.4. Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.create_task">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">create_task</tt><big>(</big><em>coro</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.create_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schedule the execution of a <a class="reference internal" href="asyncio-task.html#coroutine"><em>coroutine object</em></a>: wrap it in
+a future. Return a <a class="reference internal" href="asyncio-task.html#asyncio.Task" title="asyncio.Task"><tt class="xref py py-class docutils literal"><span class="pre">Task</span></tt></a> object.</p>
+<p>Third-party event loops can use their own subclass of <a class="reference internal" href="asyncio-task.html#asyncio.Task" title="asyncio.Task"><tt class="xref py py-class docutils literal"><span class="pre">Task</span></tt></a> for
+interoperability. In this case, the result type is a subclass of
+<a class="reference internal" href="asyncio-task.html#asyncio.Task" title="asyncio.Task"><tt class="xref py py-class docutils literal"><span class="pre">Task</span></tt></a>.</p>
+<p>This method was added in Python 3.4.2. Use the <a class="reference internal" href="asyncio-task.html#asyncio.async" title="asyncio.async"><tt class="xref py py-func docutils literal"><span class="pre">async()</span></tt></a> function to
+support also older Python versions.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.4.2.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.set_task_factory">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">set_task_factory</tt><big>(</big><em>factory</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.set_task_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a task factory that will be used by
+<a class="reference internal" href="#asyncio.BaseEventLoop.create_task" title="asyncio.BaseEventLoop.create_task"><tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.create_task()</span></tt></a>.</p>
+<p>If <em>factory</em> is <tt class="xref docutils literal"><span class="pre">None</span></tt> the default task factory will be set.</p>
+<p>If <em>factory</em> is a <em>callable</em>, it should have a signature matching
+<tt class="docutils literal"><span class="pre">(loop,</span> <span class="pre">coro)</span></tt>, where <em>loop</em> will be a reference to the active
+event loop, <em>coro</em> will be a coroutine object.  The callable
+must return an <a class="reference internal" href="asyncio-task.html#asyncio.Future" title="asyncio.Future"><tt class="xref py py-class docutils literal"><span class="pre">asyncio.Future</span></tt></a> compatible object.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.4.4.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.get_task_factory">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">get_task_factory</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.get_task_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a task factory, or <tt class="xref docutils literal"><span class="pre">None</span></tt> if the default one is in use.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.4.4.</span></p>
+</dd></dl>
+
+</div>
+<div class="section" id="creating-connections">
+<h2>18.5.1.5. Creating connections<a class="headerlink" href="#creating-connections" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="creating-listening-connections">
+<h2>18.5.1.6. Creating listening connections<a class="headerlink" href="#creating-listening-connections" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="watch-file-descriptors">
+<h2>18.5.1.7. Watch file descriptors<a class="headerlink" href="#watch-file-descriptors" title="Permalink to this headline">¶</a></h2>
+<p>On Windows with <a class="reference internal" href="asyncio-eventloops.html#asyncio.SelectorEventLoop" title="asyncio.SelectorEventLoop"><tt class="xref py py-class docutils literal"><span class="pre">SelectorEventLoop</span></tt></a>, only socket handles are supported
+(ex: pipe file descriptors are not supported).</p>
+<p>On Windows with <a class="reference internal" href="asyncio-eventloops.html#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><tt class="xref py py-class docutils literal"><span class="pre">ProactorEventLoop</span></tt></a>, these methods are not supported.</p>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.add_reader">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">add_reader</tt><big>(</big><em>fd</em>, <em>callback</em>, <em>*args</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.add_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start watching the file descriptor for read availability and then call the
+<em>callback</em> with specified arguments.</p>
+<p><a class="reference internal" href="#asyncio-pass-keywords"><em>Use functools.partial to pass keywords to the callback</em></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.remove_reader">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">remove_reader</tt><big>(</big><em>fd</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.remove_reader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop watching the file descriptor for read availability.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.add_writer">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">add_writer</tt><big>(</big><em>fd</em>, <em>callback</em>, <em>*args</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.add_writer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start watching the file descriptor for write availability and then call the
+<em>callback</em> with specified arguments.</p>
+<p><a class="reference internal" href="#asyncio-pass-keywords"><em>Use functools.partial to pass keywords to the callback</em></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.remove_writer">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">remove_writer</tt><big>(</big><em>fd</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.remove_writer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop watching the file descriptor for write availability.</p>
+</dd></dl>
+
+<p>The <a class="reference internal" href="#asyncio-watch-read-event"><em>watch a file descriptor for read events</em></a>
+example uses the low-level <a class="reference internal" href="#asyncio.BaseEventLoop.add_reader" title="asyncio.BaseEventLoop.add_reader"><tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.add_reader()</span></tt></a> method to register
+the file descriptor of a socket.</p>
+</div>
+<div class="section" id="low-level-socket-operations">
+<h2>18.5.1.8. Low-level socket operations<a class="headerlink" href="#low-level-socket-operations" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="resolve-host-name">
+<h2>18.5.1.9. Resolve host name<a class="headerlink" href="#resolve-host-name" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="connect-pipes">
+<h2>18.5.1.10. Connect pipes<a class="headerlink" href="#connect-pipes" title="Permalink to this headline">¶</a></h2>
+<p>On Windows with <a class="reference internal" href="asyncio-eventloops.html#asyncio.SelectorEventLoop" title="asyncio.SelectorEventLoop"><tt class="xref py py-class docutils literal"><span class="pre">SelectorEventLoop</span></tt></a>, these methods are not supported.
+Use <a class="reference internal" href="asyncio-eventloops.html#asyncio.ProactorEventLoop" title="asyncio.ProactorEventLoop"><tt class="xref py py-class docutils literal"><span class="pre">ProactorEventLoop</span></tt></a> to support pipes on Windows.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.subprocess_exec()</span></tt> and
+<tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.subprocess_shell()</span></tt> methods.</p>
+</div>
+</div>
+<div class="section" id="unix-signals">
+<h2>18.5.1.11. UNIX signals<a class="headerlink" href="#unix-signals" title="Permalink to this headline">¶</a></h2>
+<p>Availability: UNIX only.</p>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.add_signal_handler">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">add_signal_handler</tt><big>(</big><em>signum</em>, <em>callback</em>, <em>*args</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.add_signal_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a handler for a signal.</p>
+<p>Raise <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><tt class="xref py py-exc docutils literal"><span class="pre">ValueError</span></tt></a> if the signal number is invalid or uncatchable.
+Raise <a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><tt class="xref py py-exc docutils literal"><span class="pre">RuntimeError</span></tt></a> if there is a problem setting up the handler.</p>
+<p><a class="reference internal" href="#asyncio-pass-keywords"><em>Use functools.partial to pass keywords to the callback</em></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.remove_signal_handler">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">remove_signal_handler</tt><big>(</big><em>sig</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.remove_signal_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a handler for a signal.</p>
+<p>Return <tt class="xref docutils literal"><span class="pre">True</span></tt> if a signal handler was removed, <tt class="xref docutils literal"><span class="pre">False</span></tt> if not.</p>
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="signal.html#module-signal" title="signal: Set handlers for asynchronous events."><tt class="xref py py-mod docutils literal"><span class="pre">signal</span></tt></a> module.</p>
+</div>
+</div>
+<div class="section" id="executor">
+<h2>18.5.1.12. Executor<a class="headerlink" href="#executor" title="Permalink to this headline">¶</a></h2>
+<p>Call a function in an <a class="reference internal" href="concurrent.futures.html#concurrent.futures.Executor" title="concurrent.futures.Executor"><tt class="xref py py-class docutils literal"><span class="pre">Executor</span></tt></a> (pool of threads or
+pool of processes). By default, an event loop uses a thread pool executor
+(<a class="reference internal" href="concurrent.futures.html#concurrent.futures.ThreadPoolExecutor" title="concurrent.futures.ThreadPoolExecutor"><tt class="xref py py-class docutils literal"><span class="pre">ThreadPoolExecutor</span></tt></a>).</p>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.set_default_executor">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">set_default_executor</tt><big>(</big><em>executor</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.set_default_executor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the default executor used by <tt class="xref py py-meth docutils literal"><span class="pre">run_in_executor()</span></tt>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="error-handling-api">
+<h2>18.5.1.13. Error Handling API<a class="headerlink" href="#error-handling-api" title="Permalink to this headline">¶</a></h2>
+<p>Allows to customize how exceptions are handled in the event loop.</p>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.set_exception_handler">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">set_exception_handler</tt><big>(</big><em>handler</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.set_exception_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set <em>handler</em> as the new event loop exception handler.</p>
+<p>If <em>handler</em> is <tt class="xref docutils literal"><span class="pre">None</span></tt>, the default exception handler will
+be set.</p>
+<p>If <em>handler</em> is a callable object, it should have a
+matching signature to <tt class="docutils literal"><span class="pre">(loop,</span> <span class="pre">context)</span></tt>, where <tt class="docutils literal"><span class="pre">loop</span></tt>
+will be a reference to the active event loop, <tt class="docutils literal"><span class="pre">context</span></tt>
+will be a <tt class="docutils literal"><span class="pre">dict</span></tt> object (see <a class="reference internal" href="#asyncio.BaseEventLoop.call_exception_handler" title="asyncio.BaseEventLoop.call_exception_handler"><tt class="xref py py-meth docutils literal"><span class="pre">call_exception_handler()</span></tt></a>
+documentation for details about context).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.default_exception_handler">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">default_exception_handler</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.default_exception_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default exception handler.</p>
+<p>This is called when an exception occurs and no exception
+handler is set, and can be called by a custom exception
+handler that wants to defer to the default behavior.</p>
+<p><em>context</em> parameter has the same meaning as in
+<a class="reference internal" href="#asyncio.BaseEventLoop.call_exception_handler" title="asyncio.BaseEventLoop.call_exception_handler"><tt class="xref py py-meth docutils literal"><span class="pre">call_exception_handler()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.call_exception_handler">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">call_exception_handler</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.call_exception_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the current event loop exception handler.</p>
+<p><em>context</em> is a <tt class="docutils literal"><span class="pre">dict</span></tt> object containing the following keys
+(new keys may be introduced later):</p>
+<ul class="simple">
+<li>&#8216;message&#8217;: Error message;</li>
+<li>&#8216;exception&#8217; (optional): Exception object;</li>
+<li>&#8216;future&#8217; (optional): <a class="reference internal" href="asyncio-task.html#asyncio.Future" title="asyncio.Future"><tt class="xref py py-class docutils literal"><span class="pre">asyncio.Future</span></tt></a> instance;</li>
+<li>&#8216;handle&#8217; (optional): <a class="reference internal" href="#asyncio.Handle" title="asyncio.Handle"><tt class="xref py py-class docutils literal"><span class="pre">asyncio.Handle</span></tt></a> instance;</li>
+<li>&#8216;protocol&#8217; (optional): <a class="reference internal" href="asyncio-protocol.html#asyncio-protocol"><em>Protocol</em></a> instance;</li>
+<li>&#8216;transport&#8217; (optional): <a class="reference internal" href="asyncio-protocol.html#asyncio-transport"><em>Transport</em></a> instance;</li>
+<li>&#8216;socket&#8217; (optional): <a class="reference internal" href="socket.html#socket.socket" title="socket.socket"><tt class="xref py py-class docutils literal"><span class="pre">socket.socket</span></tt></a> instance.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note: this method should not be overloaded in subclassed
+event loops.  For any custom exception handling, use
+<a class="reference internal" href="#asyncio.BaseEventLoop.set_exception_handler" title="asyncio.BaseEventLoop.set_exception_handler"><tt class="xref py py-meth docutils literal"><span class="pre">set_exception_handler()</span></tt></a> method.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="debug-mode">
+<h2>18.5.1.14. Debug mode<a class="headerlink" href="#debug-mode" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.get_debug">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">get_debug</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.get_debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the debug mode (<a class="reference internal" href="functions.html#bool" title="bool"><tt class="xref py py-class docutils literal"><span class="pre">bool</span></tt></a>) of the event loop.</p>
+<p>The default value is <tt class="xref docutils literal"><span class="pre">True</span></tt> if the environment variable
+<span class="target" id="index-0"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONASYNCIODEBUG"><tt class="xref std std-envvar docutils literal"><span class="pre">PYTHONASYNCIODEBUG</span></tt></a> is set to a non-empty string, <tt class="xref docutils literal"><span class="pre">False</span></tt>
+otherwise.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.4.2.</span></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.BaseEventLoop.set_debug">
+<tt class="descclassname">BaseEventLoop.</tt><tt class="descname">set_debug</tt><big>(</big><em>enabled: bool</em><big>)</big><a class="headerlink" href="#asyncio.BaseEventLoop.set_debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the debug mode of the event loop.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.4.2.</span></p>
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="asyncio-dev.html#asyncio-debug-mode"><em>debug mode of asyncio</em></a>.</p>
+</div>
+</div>
+<div class="section" id="server">
+<h2>18.5.1.15. Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asyncio.Server">
+<em class="property">class </em><tt class="descclassname">asyncio.</tt><tt class="descname">Server</tt><a class="headerlink" href="#asyncio.Server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server listening on sockets.</p>
+<p>Object created by the <tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.create_server()</span></tt> method and the
+<tt class="xref py py-func docutils literal"><span class="pre">start_server()</span></tt> function. Don&#8217;t instantiate the class directly.</p>
+<dl class="method">
+<dt id="asyncio.Server.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.Server.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop serving: close listening sockets and set the <a class="reference internal" href="#asyncio.Server.sockets" title="asyncio.Server.sockets"><tt class="xref py py-attr docutils literal"><span class="pre">sockets</span></tt></a>
+attribute to <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
+<p>The sockets that represent existing incoming client connections are
+leaved open.</p>
+<p>The server is closed asynchonously, use the <tt class="xref py py-meth docutils literal"><span class="pre">wait_closed()</span></tt> coroutine
+to wait until the server is closed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asyncio.Server.sockets">
+<tt class="descname">sockets</tt><a class="headerlink" href="#asyncio.Server.sockets" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of <a class="reference internal" href="socket.html#socket.socket" title="socket.socket"><tt class="xref py py-class docutils literal"><span class="pre">socket.socket</span></tt></a> objects the server is listening to, or
+<tt class="xref docutils literal"><span class="pre">None</span></tt> if the server is closed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="handle">
+<h2>18.5.1.16. Handle<a class="headerlink" href="#handle" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asyncio.Handle">
+<em class="property">class </em><tt class="descclassname">asyncio.</tt><tt class="descname">Handle</tt><a class="headerlink" href="#asyncio.Handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callback wrapper object returned by <a class="reference internal" href="#asyncio.BaseEventLoop.call_soon" title="asyncio.BaseEventLoop.call_soon"><tt class="xref py py-func docutils literal"><span class="pre">BaseEventLoop.call_soon()</span></tt></a>,
+<a class="reference internal" href="#asyncio.BaseEventLoop.call_soon_threadsafe" title="asyncio.BaseEventLoop.call_soon_threadsafe"><tt class="xref py py-func docutils literal"><span class="pre">BaseEventLoop.call_soon_threadsafe()</span></tt></a>, <a class="reference internal" href="#asyncio.BaseEventLoop.call_later" title="asyncio.BaseEventLoop.call_later"><tt class="xref py py-func docutils literal"><span class="pre">BaseEventLoop.call_later()</span></tt></a>,
+and <a class="reference internal" href="#asyncio.BaseEventLoop.call_at" title="asyncio.BaseEventLoop.call_at"><tt class="xref py py-func docutils literal"><span class="pre">BaseEventLoop.call_at()</span></tt></a>.</p>
+<dl class="method">
+<dt id="asyncio.Handle.cancel">
+<tt class="descname">cancel</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.Handle.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel the call.  If the callback is already canceled or executed,
+this method has no effect.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="event-loop-examples">
+<h2>18.5.1.17. Event loop examples<a class="headerlink" href="#event-loop-examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hello-world-with-call-soon">
+<span id="asyncio-hello-world-callback"></span><h3>18.5.1.17.1. Hello World with call_soon()<a class="headerlink" href="#hello-world-with-call-soon" title="Permalink to this headline">¶</a></h3>
+<p>Example using the <a class="reference internal" href="#asyncio.BaseEventLoop.call_soon" title="asyncio.BaseEventLoop.call_soon"><tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.call_soon()</span></tt></a> method to schedule a
+callback. The callback displays <tt class="docutils literal"><span class="pre">&quot;Hello</span> <span class="pre">World&quot;</span></tt> and then stops the event
+loop:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="k">def</span> <span class="nf">hello_world</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Hello World&#39;</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="c"># Schedule a call to hello_world()</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">call_soon</span><span class="p">(</span><span class="n">hello_world</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+
+<span class="c"># Blocking call interrupted by loop.stop()</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="asyncio-task.html#asyncio-hello-world-coroutine"><em>Hello World coroutine</em></a> example
+uses a <a class="reference internal" href="asyncio-task.html#coroutine"><em>coroutine</em></a>.</p>
+</div>
+</div>
+<div class="section" id="display-the-current-date-with-call-later">
+<span id="asyncio-date-callback"></span><h3>18.5.1.17.2. Display the current date with call_later()<a class="headerlink" href="#display-the-current-date-with-call-later" title="Permalink to this headline">¶</a></h3>
+<p>Example of callback displaying the current date every second. The callback uses
+the <a class="reference internal" href="#asyncio.BaseEventLoop.call_later" title="asyncio.BaseEventLoop.call_later"><tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.call_later()</span></tt></a> method to reschedule itself during 5
+seconds, and then stops the event loop:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">def</span> <span class="nf">display_date</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="n">loop</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">loop</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">end_time</span><span class="p">:</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">call_later</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">display_date</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="c"># Schedule the first call to display_date()</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="mf">5.0</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">call_soon</span><span class="p">(</span><span class="n">display_date</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+
+<span class="c"># Blocking call interrupted by loop.stop()</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="asyncio-task.html#asyncio-date-coroutine"><em>coroutine displaying the current date</em></a> example uses a <a class="reference internal" href="asyncio-task.html#coroutine"><em>coroutine</em></a>.</p>
+</div>
+</div>
+<div class="section" id="watch-a-file-descriptor-for-read-events">
+<span id="asyncio-watch-read-event"></span><h3>18.5.1.17.3. Watch a file descriptor for read events<a class="headerlink" href="#watch-a-file-descriptor-for-read-events" title="Permalink to this headline">¶</a></h3>
+<p>Wait until a file descriptor received some data using the
+<a class="reference internal" href="#asyncio.BaseEventLoop.add_reader" title="asyncio.BaseEventLoop.add_reader"><tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.add_reader()</span></tt></a> method and then close the event loop:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">socket</span> <span class="kn">import</span> <span class="n">socketpair</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">asyncio.windows_utils</span> <span class="kn">import</span> <span class="n">socketpair</span>
+
+<span class="c"># Create a pair of connected file descriptors</span>
+<span class="n">rsock</span><span class="p">,</span> <span class="n">wsock</span> <span class="o">=</span> <span class="n">socketpair</span><span class="p">()</span>
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">reader</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">rsock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Received:&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+    <span class="c"># We are done: unregister the file descriptor</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">remove_reader</span><span class="p">(</span><span class="n">rsock</span><span class="p">)</span>
+    <span class="c"># Stop the event loop</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="c"># Register the file descriptor for read event</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">add_reader</span><span class="p">(</span><span class="n">rsock</span><span class="p">,</span> <span class="n">reader</span><span class="p">)</span>
+
+<span class="c"># Simulate the reception of data from the network</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">call_soon</span><span class="p">(</span><span class="n">wsock</span><span class="o">.</span><span class="n">send</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+<span class="c"># Run the event loop</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+
+<span class="c"># We are done, close sockets and the event loop</span>
+<span class="n">rsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">wsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>The <a class="reference internal" href="asyncio-protocol.html#asyncio-register-socket"><em>register an open socket to wait for data using a protocol</em></a> example uses a low-level protocol created by the
+<tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.create_connection()</span></tt> method.</p>
+<p class="last">The <a class="reference internal" href="asyncio-stream.html#asyncio-register-socket-streams"><em>register an open socket to wait for data using streams</em></a> example uses high-level streams
+created by the <tt class="xref py py-func docutils literal"><span class="pre">open_connection()</span></tt> function in a coroutine.</p>
+</div>
+</div>
+<div class="section" id="set-signal-handlers-for-sigint-and-sigterm">
+<h3>18.5.1.17.4. Set signal handlers for SIGINT and SIGTERM<a class="headerlink" href="#set-signal-handlers-for-sigint-and-sigterm" title="Permalink to this headline">¶</a></h3>
+<p>Register handlers for signals <tt class="xref py py-data docutils literal"><span class="pre">SIGINT</span></tt> and <tt class="xref py py-data docutils literal"><span class="pre">SIGTERM</span></tt> using
+the <a class="reference internal" href="#asyncio.BaseEventLoop.add_signal_handler" title="asyncio.BaseEventLoop.add_signal_handler"><tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.add_signal_handler()</span></tt></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+
+<span class="k">def</span> <span class="nf">ask_exit</span><span class="p">(</span><span class="n">signame</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;got signal </span><span class="si">%s</span><span class="s">: exit&quot;</span> <span class="o">%</span> <span class="n">signame</span><span class="p">)</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">signame</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;SIGINT&#39;</span><span class="p">,</span> <span class="s">&#39;SIGTERM&#39;</span><span class="p">):</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">add_signal_handler</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">signame</span><span class="p">),</span>
+                            <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">ask_exit</span><span class="p">,</span> <span class="n">signame</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Event loop running forever, press Ctrl+C to interrupt.&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;pid </span><span class="si">%s</span><span class="s">: send SIGINT or SIGTERM to exit.&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This example only works on UNIX.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

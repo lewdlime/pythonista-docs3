@@ -1,0 +1,193 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>19.7. binhex — Encode and decode binhex4 files &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="19. Internet Data Handling" href="netdata.html" />
+    <link rel="next" title="19.8. binascii — Convert between binary and ASCII" href="binascii.html" />
+    <link rel="prev" title="19.6. base64 — Base16, Base32, Base64, Base85 Data Encodings" href="base64.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="binascii.html" title="19.8. binascii — Convert between binary and ASCII"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="base64.html" title="19.6. base64 — Base16, Base32, Base64, Base85 Data Encodings"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="netdata.html" accesskey="U">19. Internet Data Handling</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-binhex">
+<span id="binhex-encode-and-decode-binhex4-files"></span><h1>19.7. <a class="reference internal" href="#module-binhex" title="binhex: Encode and decode files in binhex4 format."><tt class="xref py py-mod docutils literal"><span class="pre">binhex</span></tt></a> &#8212; Encode and decode binhex4 files<a class="headerlink" href="#module-binhex" title="Permalink to this headline">¶</a></h1>
+<p>This module encodes and decodes files in binhex4 format, a format allowing
+representation of Macintosh files in ASCII. Only the data fork is handled.</p>
+<p>The <a class="reference internal" href="#module-binhex" title="binhex: Encode and decode files in binhex4 format."><tt class="xref py py-mod docutils literal"><span class="pre">binhex</span></tt></a> module defines the following functions:</p>
+<dl class="function">
+<dt id="binhex.binhex">
+<tt class="descclassname">binhex.</tt><tt class="descname">binhex</tt><big>(</big><em>input</em>, <em>output</em><big>)</big><a class="headerlink" href="#binhex.binhex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a binary file with filename <em>input</em> to binhex file <em>output</em>. The
+<em>output</em> parameter can either be a filename or a file-like object (any object
+supporting a <tt class="xref py py-meth docutils literal"><span class="pre">write()</span></tt> and <tt class="xref py py-meth docutils literal"><span class="pre">close()</span></tt> method).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="binhex.hexbin">
+<tt class="descclassname">binhex.</tt><tt class="descname">hexbin</tt><big>(</big><em>input</em>, <em>output</em><big>)</big><a class="headerlink" href="#binhex.hexbin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode a binhex file <em>input</em>. <em>input</em> may be a filename or a file-like object
+supporting <tt class="xref py py-meth docutils literal"><span class="pre">read()</span></tt> and <tt class="xref py py-meth docutils literal"><span class="pre">close()</span></tt> methods. The resulting file is written
+to a file named <em>output</em>, unless the argument is <tt class="xref docutils literal"><span class="pre">None</span></tt> in which case the
+output filename is read from the binhex file.</p>
+</dd></dl>
+
+<p>The following exception is also defined:</p>
+<dl class="exception">
+<dt id="binhex.Error">
+<em class="property">exception </em><tt class="descclassname">binhex.</tt><tt class="descname">Error</tt><a class="headerlink" href="#binhex.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception raised when something can&#8217;t be encoded using the binhex format (for
+example, a filename is too long to fit in the filename field), or when input is
+not properly encoded binhex data.</p>
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="binascii.html#module-binascii" title="binascii: Tools for converting between binary and various ASCII-encoded binary representations."><tt class="xref py py-mod docutils literal"><span class="pre">binascii</span></tt></a></dt>
+<dd>Support module containing ASCII-to-binary and binary-to-ASCII conversions.</dd>
+</dl>
+</div>
+<div class="section" id="notes">
+<span id="binhex-notes"></span><h2>19.7.1. Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<p>There is an alternative, more powerful interface to the coder and decoder, see
+the source for details.</p>
+<p>If you code or decode textfiles on non-Macintosh platforms they will still use
+the old Macintosh newline convention (carriage-return as end of line).</p>
+<p>As of this writing, <a class="reference internal" href="#binhex.hexbin" title="binhex.hexbin"><tt class="xref py py-func docutils literal"><span class="pre">hexbin()</span></tt></a> appears to not work in all cases.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

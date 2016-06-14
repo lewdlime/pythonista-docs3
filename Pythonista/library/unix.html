@@ -1,0 +1,195 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>33. Unix Specific Services &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="The Python Standard Library" href="index.html" />
+    <link rel="next" title="33.1. posix — The most common POSIX system calls" href="posix.html" />
+    <link rel="prev" title="32.1. formatter — Generic output formatting" href="formatter.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="posix.html" title="33.1. posix — The most common POSIX system calls"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="formatter.html" title="32.1. formatter — Generic output formatting"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">The Python Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="unix-specific-services">
+<span id="unix"></span><h1>33. Unix Specific Services<a class="headerlink" href="#unix-specific-services" title="Permalink to this headline">¶</a></h1>
+<p>The modules described in this chapter provide interfaces to features that are
+unique to the Unix operating system, or in some cases to some or many variants
+of it.  Here&#8217;s an overview:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="posix.html">33.1. <tt class="docutils literal"><span class="pre">posix</span></tt> &#8212; The most common POSIX system calls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="posix.html#large-file-support">33.1.1. Large File Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="posix.html#notable-module-contents">33.1.2. Notable Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pwd.html">33.2. <tt class="docutils literal"><span class="pre">pwd</span></tt> &#8212; The password database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grp.html">33.3. <tt class="docutils literal"><span class="pre">grp</span></tt> &#8212; The group database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crypt.html">33.4. <tt class="docutils literal"><span class="pre">crypt</span></tt> &#8212; Function to check Unix passwords</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="crypt.html#hashing-methods">33.4.1. Hashing Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crypt.html#module-attributes">33.4.2. Module Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crypt.html#module-functions">33.4.3. Module Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crypt.html#examples">33.4.4. Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="termios.html">33.5. <tt class="docutils literal"><span class="pre">termios</span></tt> &#8212; POSIX style tty control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="termios.html#example">33.5.1. Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tty.html">33.6. <tt class="docutils literal"><span class="pre">tty</span></tt> &#8212; Terminal control functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pty.html">33.7. <tt class="docutils literal"><span class="pre">pty</span></tt> &#8212; Pseudo-terminal utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pty.html#example">33.7.1. Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fcntl.html">33.8. <tt class="docutils literal"><span class="pre">fcntl</span></tt> &#8212; The <tt class="docutils literal"><span class="pre">fcntl</span></tt> and <tt class="docutils literal"><span class="pre">ioctl</span></tt> system calls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipes.html">33.9. <tt class="docutils literal"><span class="pre">pipes</span></tt> &#8212; Interface to shell pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipes.html#template-objects">33.9.1. Template Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="resource.html">33.10. <tt class="docutils literal"><span class="pre">resource</span></tt> &#8212; Resource usage information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="resource.html#resource-limits">33.10.1. Resource Limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resource.html#resource-usage">33.10.2. Resource Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="syslog.html">33.11. <tt class="docutils literal"><span class="pre">syslog</span></tt> &#8212; Unix syslog library routines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="syslog.html#examples">33.11.1. Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html#simple-example">33.11.1.1. Simple example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

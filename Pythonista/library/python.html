@@ -1,0 +1,226 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>28. Python Runtime Services &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="The Python Standard Library" href="index.html" />
+    <link rel="next" title="28.1. sys — System-specific parameters and functions" href="sys.html" />
+    <link rel="prev" title="27.3. zipapp — Manage executable python zip archives" href="zipapp.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sys.html" title="28.1. sys — System-specific parameters and functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="zipapp.html" title="27.3. zipapp — Manage executable python zip archives"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">The Python Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="python-runtime-services">
+<span id="python"></span><h1>28. Python Runtime Services<a class="headerlink" href="#python-runtime-services" title="Permalink to this headline">¶</a></h1>
+<p>The modules described in this chapter provide a wide range of services related
+to the Python interpreter and its interaction with its environment.  Here&#8217;s an
+overview:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">28.1. <tt class="docutils literal"><span class="pre">sys</span></tt> &#8212; System-specific parameters and functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysconfig.html">28.2. <tt class="docutils literal"><span class="pre">sysconfig</span></tt> &#8212; Provide access to Python&#8217;s configuration information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysconfig.html#configuration-variables">28.2.1. Configuration variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysconfig.html#installation-paths">28.2.2. Installation paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysconfig.html#other-functions">28.2.3. Other functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysconfig.html#using-sysconfig-as-a-script">28.2.4. Using <tt class="docutils literal"><span class="pre">sysconfig</span></tt> as a script</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="builtins.html">28.3. <tt class="docutils literal"><span class="pre">builtins</span></tt> &#8212; Built-in objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="__main__.html">28.4. <tt class="docutils literal"><span class="pre">__main__</span></tt> &#8212; Top-level script environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warnings.html">28.5. <tt class="docutils literal"><span class="pre">warnings</span></tt> &#8212; Warning control</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#warning-categories">28.5.1. Warning Categories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#the-warnings-filter">28.5.2. The Warnings Filter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html#default-warning-filters">28.5.2.1. Default Warning Filters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#temporarily-suppressing-warnings">28.5.3. Temporarily Suppressing Warnings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#testing-warnings">28.5.4. Testing Warnings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#updating-code-for-new-versions-of-python">28.5.5. Updating Code For New Versions of Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#available-functions">28.5.6. Available Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="warnings.html#available-context-managers">28.5.7. Available Context Managers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contextlib.html">28.6. <tt class="docutils literal"><span class="pre">contextlib</span></tt> &#8212; Utilities for <tt class="docutils literal"><span class="pre">with</span></tt>-statement contexts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contextlib.html#utilities">28.6.1. Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextlib.html#examples-and-recipes">28.6.2. Examples and Recipes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html#supporting-a-variable-number-of-context-managers">28.6.2.1. Supporting a variable number of context managers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html#simplifying-support-for-single-optional-context-managers">28.6.2.2. Simplifying support for single optional context managers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html#catching-exceptions-from-enter-methods">28.6.2.3. Catching exceptions from <tt class="docutils literal"><span class="pre">__enter__</span></tt> methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html#cleaning-up-in-an-enter-implementation">28.6.2.4. Cleaning up in an <tt class="docutils literal"><span class="pre">__enter__</span></tt> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html#replacing-any-use-of-try-finally-and-flag-variables">28.6.2.5. Replacing any use of <tt class="docutils literal"><span class="pre">try-finally</span></tt> and flag variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html#using-a-context-manager-as-a-function-decorator">28.6.2.6. Using a context manager as a function decorator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contextlib.html#single-use-reusable-and-reentrant-context-managers">28.6.3. Single use, reusable and reentrant context managers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html#reentrant-context-managers">28.6.3.1. Reentrant context managers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html#reusable-context-managers">28.6.3.2. Reusable context managers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="abc.html">28.7. <tt class="docutils literal"><span class="pre">abc</span></tt> &#8212; Abstract Base Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atexit.html">28.8. <tt class="docutils literal"><span class="pre">atexit</span></tt> &#8212; Exit handlers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="atexit.html#atexit-example">28.8.1. <tt class="docutils literal"><span class="pre">atexit</span></tt> Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="traceback.html">28.9. <tt class="docutils literal"><span class="pre">traceback</span></tt> &#8212; Print or retrieve a stack traceback</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="traceback.html#tracebackexception-objects">28.9.1. <tt class="docutils literal"><span class="pre">TracebackException</span></tt> Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traceback.html#stacksummary-objects">28.9.2. <tt class="docutils literal"><span class="pre">StackSummary</span></tt> Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traceback.html#framesummary-objects">28.9.3. <tt class="docutils literal"><span class="pre">FrameSummary</span></tt> Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="traceback.html#traceback-examples">28.9.4. Traceback Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="__future__.html">28.10. <tt class="docutils literal"><span class="pre">__future__</span></tt> &#8212; Future statement definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gc.html">28.11. <tt class="docutils literal"><span class="pre">gc</span></tt> &#8212; Garbage Collector interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspect.html">28.12. <tt class="docutils literal"><span class="pre">inspect</span></tt> &#8212; Inspect live objects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#types-and-members">28.12.1. Types and members</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#retrieving-source-code">28.12.2. Retrieving source code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#introspecting-callables-with-the-signature-object">28.12.3. Introspecting callables with the Signature object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#classes-and-functions">28.12.4. Classes and functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#the-interpreter-stack">28.12.5. The interpreter stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#fetching-attributes-statically">28.12.6. Fetching attributes statically</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#current-state-of-generators-and-coroutines">28.12.7. Current State of Generators and Coroutines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inspect.html#command-line-interface">28.12.8. Command Line Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="site.html">28.13. <tt class="docutils literal"><span class="pre">site</span></tt> &#8212; Site-specific configuration hook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="site.html#readline-configuration">28.13.1. Readline configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="site.html#module-contents">28.13.2. Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

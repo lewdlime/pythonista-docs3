@@ -1,0 +1,1538 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>scene — 2D Games and Animations &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-scene">
+<span id="scene-2d-games-and-animations"></span><h1><a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> &#8212; 2D Games and Animations<a class="headerlink" href="#module-scene" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module provides an easy way to create hardware-accelerated 2D graphics and animations, specifically games.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="#overview">Overview</a></dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#touches-and-simple-animations">Touches and Simple Animations</a></li>
+<li><a class="reference internal" href="#advanced-animation-and-motion-control">Advanced Animation and Motion Control</a></li>
+<li><a class="reference internal" href="#geometry">Geometry</a></li>
+<li><a class="reference internal" href="#colors">Colors</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><a class="reference internal" href="#classic-render-loop">Classic Render Loop</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#integration-with-the-ui-module">Integration with the ui Module</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#game-controllers">Game Controllers</a></p>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="#node-classes">Node Classes</a></dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#scene">Scene</a></li>
+<li><a class="reference internal" href="#node">Node</a></li>
+<li><a class="reference internal" href="#spritenode">SpriteNode</a></li>
+<li><a class="reference internal" href="#effectnode">EffectNode</a></li>
+<li><a class="reference internal" href="#labelnode">LabelNode</a></li>
+<li><a class="reference internal" href="#shapenode">ShapeNode</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="#other-classes">Other Classes</a></dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#action">Action</a></li>
+<li><a class="reference internal" href="#shader">Shader</a></li>
+<li><a class="reference internal" href="#texture">Texture</a></li>
+<li><a class="reference internal" href="#touch">Touch</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="#geometry-types">Geometry Types</a></dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#vector2">Vector2</a></li>
+<li><a class="reference internal" href="#point">Point</a></li>
+<li><a class="reference internal" href="#size">Size</a></li>
+<li><a class="reference internal" href="#rect">Rect</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><a class="reference internal" href="#functions">Functions</a></p>
+</li>
+<li><p class="first"><a class="reference internal" href="#constants">Constants</a></p>
+</li>
+</ul>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>For every <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a>-based project, you first have to create a subclass of <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> that is responsible for drawing your content, responding to touch events etc. To actually get a scene on screen, you instantiate your subclass, and pass it to the <a class="reference internal" href="#scene.run" title="scene.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> function. The <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> class provides various methods that you can override to customize its behavior, for example <a class="reference internal" href="#scene.Scene.setup" title="scene.Scene.setup"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.setup()</span></tt></a>, which is called just before your scene becomes visible on screen:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scene</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">MyScene</span> <span class="p">(</span><span class="n">Scene</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="s">&#39;green&#39;</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">MyScene</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>In the minimal example above, the <a class="reference internal" href="#scene.Scene.setup" title="scene.Scene.setup"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.setup()</span></tt></a> method simply sets the background color of the scene to green.</p>
+<p>To add actual content to your scene, you typically create <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> objects &#8211; there are a couple of different subclasses of <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> corresponding to different content, e.g. a <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> renders an image, a <a class="reference internal" href="#scene.LabelNode" title="scene.LabelNode"><tt class="xref py py-class docutils literal"><span class="pre">LabelNode</span></tt></a> text, etc. A <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> is also a subclass of <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a>, and nodes can contain other nodes (forming a tree or &#8220;scene graph&#8221;). This is often useful to move or rotate a group of objects as a single entity. All nodes have <tt class="xref py py-attr docutils literal"><span class="pre">position</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">rotation</span></tt>, <tt class="xref py py-attr docutils literal"><span class="pre">scale</span></tt>, and <tt class="xref py py-attr docutils literal"><span class="pre">alpha</span></tt> (opacity) attributes that determine how the node and its children are drawn. The default position is <tt class="docutils literal"><span class="pre">(0,</span> <span class="pre">0)</span></tt> which corresponds to the lower-left corner of the screen.</p>
+<p>In the following example, the <tt class="xref py py-meth docutils literal"><span class="pre">setup()</span></tt> method is extended to add a space ship at the center of the screen:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scene</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">MyScene</span> <span class="p">(</span><span class="n">Scene</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="s">&#39;midnightblue&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ship</span> <span class="o">=</span> <span class="n">SpriteNode</span><span class="p">(</span><span class="s">&#39;spc:PlayerShip1Orange&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="p">)</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">MyScene</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>A couple of things to note here:</p>
+<ul class="simple">
+<li>The string that was passed to the <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> initializer is the name of a built-in image. You can access built-in images in Pythonista using the [+] button at the top of the editor.</li>
+<li>For convenience, the objects representing sizes and positions in the <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module support a couple of standard operators &#8211; in this case, the scene&#8217;s size (which is set automatically before <tt class="xref py py-meth docutils literal"><span class="pre">setup()</span></tt> is called) is simply divided by two, resulting in the center of the screen. Sizes and points can be used interchangeably, so assigning a size to the <tt class="xref py py-attr docutils literal"><span class="pre">position</span></tt> attribute works. You could also use a simple tuple of two numbers.</li>
+<li>By default, the <tt class="xref py py-attr docutils literal"><span class="pre">position</span></tt> attribute of a <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> corresponds to its center. In some cases it may be more convenient to set the position of one of the sprite&#8217;s corners instead &#8211; you can use the <tt class="xref py py-attr docutils literal"><span class="pre">anchor_point</span></tt> attribute to change this behavior.</li>
+</ul>
+</div>
+<div class="section" id="touches-and-simple-animations">
+<h3>Touches and Simple Animations<a class="headerlink" href="#touches-and-simple-animations" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s extend this example once more to make it respond to touches. To do this, we simply override the <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a>&#8216;s <tt class="xref py py-meth docutils literal"><span class="pre">touch_began()</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scene</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">MyScene</span> <span class="p">(</span><span class="n">Scene</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="s">&#39;midnightblue&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ship</span> <span class="o">=</span> <span class="n">SpriteNode</span><span class="p">(</span><span class="s">&#39;spc:PlayerShip1Orange&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">touch_began</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">location</span>
+        <span class="n">move_action</span> <span class="o">=</span> <span class="n">Action</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="n">TIMING_SINODIAL</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="o">.</span><span class="n">run_action</span><span class="p">(</span><span class="n">move_action</span><span class="p">)</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">MyScene</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>This last example introduces the <a class="reference internal" href="#scene.Action" title="scene.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> class. Actions allow you to easily animate a <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a>&#8216;s attributes, in this case its position. The timing mode (<tt class="docutils literal"><span class="pre">TIMING_SINODIAL</span></tt>) specifies the type of interpolation between the start and end values. If you leave out this argument, you get the default (linear) interpolation which results in a more abrupt movement. There are a lot of other <a class="reference internal" href="#scene.Action" title="scene.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> factory methods for rotating or scaling nodes, changing their opacity (alpha), or even removing them from their parent node. You can also combine multiple Actions using <a class="reference internal" href="#scene.Action.group" title="scene.Action.group"><tt class="xref py py-meth docutils literal"><span class="pre">Action.group()</span></tt></a> and <a class="reference internal" href="#scene.Action.sequence" title="scene.Action.sequence"><tt class="xref py py-meth docutils literal"><span class="pre">Action.sequence()</span></tt></a>, or create an action that repeats another action using <a class="reference internal" href="#scene.Action.repeat" title="scene.Action.repeat"><tt class="xref py py-meth docutils literal"><span class="pre">Action.repeat()</span></tt></a>.</p>
+<p>Similar to <tt class="xref py py-meth docutils literal"><span class="pre">touch_began()</span></tt>, there are methods for detecting when a touch moves or ends &#8211; <tt class="xref py py-meth docutils literal"><span class="pre">touch_moved()</span></tt> and <tt class="xref py py-meth docutils literal"><span class="pre">touch_ended()</span></tt>.</p>
+</div>
+<div class="section" id="advanced-animation-and-motion-control">
+<h3>Advanced Animation and Motion Control<a class="headerlink" href="#advanced-animation-and-motion-control" title="Permalink to this headline">¶</a></h3>
+<p>While Actions provide an easy-to-use high-level API for animating a scene&#8217;s content, you can also animate changes on a frame-by-frame basis by overriding the <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a>&#8216;s <tt class="xref py py-meth docutils literal"><span class="pre">update()</span></tt> method. The following example demonstrates this by moving the space ship in response to the device&#8217;s orientation (using the <a class="reference internal" href="#scene.gravity" title="scene.gravity"><tt class="xref py py-func docutils literal"><span class="pre">gravity()</span></tt></a> function). By default, the <tt class="xref py py-meth docutils literal"><span class="pre">update()</span></tt> method is called 60 times per second, so the ship&#8217;s position is set directly, instead of relying on Action-based animations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scene</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sound</span>
+
+<span class="k">class</span> <span class="nc">MyScene</span> <span class="p">(</span><span class="n">Scene</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="s">&#39;midnightblue&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ship</span> <span class="o">=</span> <span class="n">SpriteNode</span><span class="p">(</span><span class="s">&#39;spc:PlayerShip1Orange&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">gravity</span><span class="p">()</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">pos</span> <span class="o">+=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">15</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span>
+        <span class="c"># Don&#39;t allow the ship to move beyond the screen bounds:</span>
+        <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">pos</span>
+
+    <span class="k">def</span> <span class="nf">touch_began</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="n">laser</span> <span class="o">=</span> <span class="n">SpriteNode</span><span class="p">(</span><span class="s">&#39;spc:LaserBlue9&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ship</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">z_position</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">laser</span><span class="o">.</span><span class="n">run_action</span><span class="p">(</span><span class="n">Action</span><span class="o">.</span><span class="n">sequence</span><span class="p">(</span><span class="n">Action</span><span class="o">.</span><span class="n">move_by</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">Action</span><span class="o">.</span><span class="n">remove</span><span class="p">()))</span>
+        <span class="n">sound</span><span class="o">.</span><span class="n">play_effect</span><span class="p">(</span><span class="s">&#39;arcade:Laser_1&#39;</span><span class="p">)</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">MyScene</span><span class="p">(),</span> <span class="n">PORTRAIT</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#scene.gravity" title="scene.gravity"><tt class="xref py py-func docutils literal"><span class="pre">gravity()</span></tt></a> function used here provides a very easy-to-use method of determining the device&#8217;s orientation. For more fine-grained control, you may want to use the <a class="reference internal" href="motion.html#module-motion" title="motion: Provides motion sensor data on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">motion</span></tt></a> module instead. In motion-controlled games, auto-rotation can be annoying, so this scene is restricted to portrait orientation using an additional argument to the <a class="reference internal" href="#scene.run" title="scene.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> function.</p>
+<p>As a bonus, the space ship now shoots a laser when you touch the screen. The <tt class="xref py py-attr docutils literal"><span class="pre">z_position</span></tt> attribute that is set when initializing the laser sprite determines the drawing order &#8211; it is set to -1 here so that the laser doesn&#8217;t appear on top of the ship. After the laser is added to the scene, it runs a sequence of two actions: The first one moves it by 1000 points upwards, and then it&#8217;s removed from the scene using the special <cite>remove</cite> action (which is not really an animation, but provided as an <a class="reference internal" href="#scene.Action" title="scene.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> so that it can be part of an animation sequence).</p>
+<p>This was just a very basic overview &#8211; there&#8217;s a lot more you can do with the <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module. The included <em>Examples</em> folder contains a couple of complete games that you can use to learn more advanced techniques.</p>
+</div>
+</div>
+<div class="section" id="geometry">
+<h2>Geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h2>
+<p>The coordinate system of a scene has its origin (0, 0) in the bottom-left corner.</p>
+<p>As briefly mentioned in the overview, the <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module provides a couple of convenient classes for representing 2D geometry, primarily <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a>, <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> and <a class="reference internal" href="#scene.Size" title="scene.Size"><tt class="xref py py-class docutils literal"><span class="pre">Size</span></tt></a>. The latter two are basically identical, but used in different contexts.</p>
+<p>These geometry objects are used for various <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> attributes, e.g. <a class="reference internal" href="#scene.Node.position" title="scene.Node.position"><tt class="xref py py-attr docutils literal"><span class="pre">Node.position</span></tt></a>, <a class="reference internal" href="#scene.SpriteNode.size" title="scene.SpriteNode.size"><tt class="xref py py-attr docutils literal"><span class="pre">SpriteNode.size</span></tt></a>, <a class="reference internal" href="#scene.Node.frame" title="scene.Node.frame"><tt class="xref py py-attr docutils literal"><span class="pre">Node.frame</span></tt></a> etc. When you assign a new value to these attributes, you don&#8217;t have to create a <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> or <a class="reference internal" href="#scene.Size" title="scene.Size"><tt class="xref py py-class docutils literal"><span class="pre">Size</span></tt></a> object explicitly though &#8211; any sequence of two numbers (e.g. a tuple or list) will do just as well.</p>
+<p>All of these classes behave like sequences, so you can e.g. access a <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a>&#8216;s x coordinate using <tt class="docutils literal"><span class="pre">point[0]</span></tt> (though it&#8217;s typically more convenient to use <tt class="docutils literal"><span class="pre">point.x</span></tt>).</p>
+<p>For <a class="reference internal" href="#scene.Vector2" title="scene.Vector2"><tt class="xref py py-class docutils literal"><span class="pre">Vector2</span></tt></a>, <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> and <a class="reference internal" href="#scene.Size" title="scene.Size"><tt class="xref py py-class docutils literal"><span class="pre">Size</span></tt></a>, a couple of math operators are supported for convenience:</p>
+<ul class="simple">
+<li>Multiplying a vector with a scalar (i.e. a number) multiplies both components with that number. The same goes for division. For example, <tt class="docutils literal"><span class="pre">Size(100,</span> <span class="pre">200)</span> <span class="pre">*</span> <span class="pre">0.5</span></tt> results in <tt class="docutils literal"><span class="pre">Size(50,</span> <span class="pre">100)</span></tt>.</li>
+<li>Multiplying a vector with another vector does component-wise multiplication, e.g. <tt class="docutils literal"><span class="pre">Point(100,</span> <span class="pre">100)</span> <span class="pre">*</span> <span class="pre">(2,</span> <span class="pre">3)</span></tt> results in <tt class="docutils literal"><span class="pre">Point(200,</span> <span class="pre">300)</span></tt>.</li>
+<li>Adding a vector to another vector behaves the same way, e.g. <tt class="docutils literal"><span class="pre">Point(100,</span> <span class="pre">100)</span> <span class="pre">+</span> <span class="pre">(20,</span> <span class="pre">50)</span></tt> results in <tt class="docutils literal"><span class="pre">Point(120,</span> <span class="pre">150)</span></tt>.</li>
+</ul>
+<p>For hit-testing purposes, you can check if a <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> lies within a <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a> using the <cite>in</cite> operator. To check if one rectangle intersects with another, you can use the <a class="reference internal" href="#scene.Rect.intersects" title="scene.Rect.intersects"><tt class="xref py py-meth docutils literal"><span class="pre">Rect.intersects()</span></tt></a> method (or <a class="reference internal" href="#scene.Rect.intersection" title="scene.Rect.intersection"><tt class="xref py py-meth docutils literal"><span class="pre">Rect.intersection()</span></tt></a> if you need to know exactly where the rectangles intersect).</p>
+</div>
+<div class="section" id="colors">
+<h2>Colors<a class="headerlink" href="#colors" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> attributes that represent a color, e.g. <a class="reference internal" href="#scene.SpriteNode.color" title="scene.SpriteNode.color"><tt class="xref py py-attr docutils literal"><span class="pre">SpriteNode.color</span></tt></a> or <a class="reference internal" href="#scene.Scene.background_color" title="scene.Scene.background_color"><tt class="xref py py-attr docutils literal"><span class="pre">Scene.background_color</span></tt></a> can be set in a variety of ways:</p>
+<ul class="simple">
+<li>As an HTML hex color string, e.g. <tt class="docutils literal"><span class="pre">'#ff0000'</span></tt> for red.</li>
+<li>As a CSS color name, e.g. <tt class="docutils literal"><span class="pre">'green'</span></tt>, <tt class="docutils literal"><span class="pre">'blue'</span></tt>, <tt class="docutils literal"><span class="pre">'magenta'</span></tt>...</li>
+<li>As a tuple of 3 or 4 numbers, corresponding to the red, green, blue, and alpha components in the range 0.0 - 1.0. The alpha component defaults to 1.0, i.e. fully opaque.</li>
+<li>As a single number between 0.0 and 1.0, representing a grayscale value (0.0 = black, 1.0 = white).</li>
+</ul>
+<p>Regardless of how you set a color attribute, reading it back will always result in a 4-tuple (r, g, b, a).</p>
+</div>
+<div class="section" id="classic-render-loop">
+<h2>Classic Render Loop<a class="headerlink" href="#classic-render-loop" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the node-based approach described above, the <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module also supports a classic rendering loop that was the primary interface in previous versions of Pythonista. In most cases, a node-based scene will result in significantly better performance, but the classic rendering loop may be easier to understand if you already know similar programming environments, e.g. Processing.</p>
+<p>To use this mode, you also have to create a subclass of <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a>, but instead of adding nodes to it, you simply override the <tt class="xref py py-meth docutils literal"><span class="pre">draw()</span></tt> method. This method is called for every frame (i.e. 60 times per second), and you can use module-level drawing functions to &#8220;paint&#8221; your content in every frame. Images and shapes that you draw to the screen in this way are not preserved from one frame to the next &#8211; in every call of the <tt class="xref py py-meth docutils literal"><span class="pre">draw()</span></tt> method, you basically start with a blank screen.</p>
+<p>Similar to classic OpenGL, you set up global state variables (like fill color and coordinate transformations) before calling the actual drawing functions. The following example draws a couple of rotated rectangles:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scene</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">MyScene</span> <span class="p">(</span><span class="n">Scene</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">background</span><span class="p">(</span><span class="s">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;red&#39;</span><span class="p">,</span> <span class="s">&#39;green&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;yellow&#39;</span><span class="p">]</span>
+        <span class="c"># Move to the center of the screen:</span>
+        <span class="n">translate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">w</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">h</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">:</span>
+            <span class="c"># Set the current fill color (this affects the drawing commands that follow)</span>
+            <span class="n">fill</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+            <span class="c"># Rotate the transformation matrix (this is cumulative):</span>
+            <span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">)</span>
+            <span class="c"># Note: The coordinates are relative to the center of the screen because of the previous `translate` command:</span>
+            <span class="n">rect</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">MyScene</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>If you&#8217;ve used a previous version of Pythonista, you may also be familiar with the <tt class="xref py py-class docutils literal"><span class="pre">Layer</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">Animation</span></tt> classes that were conceptually similar to <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> and <a class="reference internal" href="#scene.Action" title="scene.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a>. These classes are still available for backwards compatibility, but it is strongly recommended to use the new <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a>/<a class="reference internal" href="#scene.Action" title="scene.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> APIs instead because they provide significantly better performance.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The functions you can use for drawing in this mode are documented in the <a class="reference internal" href="scene_drawing.html#module-scene_drawing" title="scene_drawing: Drawing Functions for the scene module"><tt class="xref py py-mod docutils literal"><span class="pre">scene_drawing</span></tt></a> module, though you don&#8217;t have to import <a class="reference internal" href="scene_drawing.html#module-scene_drawing" title="scene_drawing: Drawing Functions for the scene module"><tt class="xref py py-mod docutils literal"><span class="pre">scene_drawing</span></tt></a> explicitly if you want to use them.</p>
+</div>
+</div>
+<div class="section" id="integration-with-the-ui-module">
+<h2>Integration with the ui Module<a class="headerlink" href="#integration-with-the-ui-module" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way to run a scene is to use the <a class="reference internal" href="#scene.run" title="scene.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> function, which presents the scene in full-screen. Sometimes this is not what you want, especially if the scene you&#8217;re building is not actually a game. For more flexibility, you can also create a <a class="reference internal" href="#scene.SceneView" title="scene.SceneView"><tt class="xref py py-class docutils literal"><span class="pre">SceneView</span></tt></a> explicitly, set its <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-attr docutils literal"><span class="pre">scene</span></tt></a> attribute to the scene you want to present, and then add it to a view hierarchy that you created using the <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a> module.</p>
+<p>You can also use this approach to add traditional UI elements (e.g. text fields) to your game. For this purpose, you don&#8217;t have to create a <a class="reference internal" href="#scene.SceneView" title="scene.SceneView"><tt class="xref py py-class docutils literal"><span class="pre">SceneView</span></tt></a> &#8211; you can simply use the view that was created automatically, using your <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a>&#8216;s <tt class="xref py py-attr docutils literal"><span class="pre">view</span></tt> attribute (this will only work if a scene is already being presented of course).</p>
+<p>The <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a> module can also be useful for rendering vector images (shapes, text etc.) that you want to use as textures. A <a class="reference internal" href="#scene.Texture" title="scene.Texture"><tt class="xref py py-class docutils literal"><span class="pre">Texture</span></tt></a> can be initialized from a <a class="reference internal" href="ui.html#ui.Image" title="ui.Image"><tt class="xref py py-class docutils literal"><span class="pre">ui.Image</span></tt></a> for this purpose, typically one that you create using an <a class="reference internal" href="ui.html#ui.ImageContext" title="ui.ImageContext"><tt class="xref py py-class docutils literal"><span class="pre">ui.ImageContext</span></tt></a>. The <a class="reference internal" href="#scene.ShapeNode" title="scene.ShapeNode"><tt class="xref py py-class docutils literal"><span class="pre">ShapeNode</span></tt></a> and <a class="reference internal" href="#scene.LabelNode" title="scene.LabelNode"><tt class="xref py py-class docutils literal"><span class="pre">LabelNode</span></tt></a> classes use this approach to render their content.</p>
+</div>
+<div class="section" id="game-controllers">
+<h2>Game Controllers<a class="headerlink" href="#game-controllers" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module has support for controlling games using MFi game controllers, like the <a class="reference external" href="https://steelseries.com/gaming-controllers/nimbus">Nimbus SteelSeries</a> gamepad.</p>
+<p>Supporting hardware controller input in your game is quite simple &#8211; you basically just have to override the <a class="reference internal" href="#scene.Scene.controller_changed" title="scene.Scene.controller_changed"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.controller_changed()</span></tt></a> method in your <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> subclass to respond to controller events (e.g. a button being pressed/released). The method gets two parameters: A <tt class="docutils literal"><span class="pre">key</span></tt>, which is a string that represents the element of the controller that changed (for example <tt class="docutils literal"><span class="pre">'button_a'</span></tt>), and the current value of the controller element. The type of the value depends on the type of controller element &#8211; for basic buttons, it&#8217;s a boolean, for pressure-sensitive triggers a floating-point value between 0.0 and 1.0, and for dpads and thumbsticks, it&#8217;s a <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> object (with x and y values in the range -1.0 to +1.0).</p>
+<p>In some cases, it can be more convenient to query the current state of the controller(s) in the <a class="reference internal" href="#scene.Scene.update" title="scene.Scene.update"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.update()</span></tt></a> method or elsewhere. To do this, you can use the module-level <a class="reference internal" href="#scene.get_controllers" title="scene.get_controllers"><tt class="xref py py-func docutils literal"><span class="pre">get_controllers()</span></tt></a> function. This will return a list of dictionaries that represent the current state of all buttons, the dpad, thumbsticks, etc. for every controller that is currently connected.</p>
+</div>
+<div class="section" id="node-classes">
+<h2>Node Classes<a class="headerlink" href="#node-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="scene">
+<h3>Scene<a class="headerlink" href="#scene" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Scene">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Scene</tt><a class="headerlink" href="#scene.Scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>A scene is the root node in a tree of nodes (<a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> objects). These nodes provide content that the scene animates and renders for display. To display a scene, you typically call the module-level <a class="reference internal" href="#scene.run" title="scene.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> function to present it in full-screen. You can also create a <a class="reference internal" href="#scene.SceneView" title="scene.SceneView"><tt class="xref py py-class docutils literal"><span class="pre">SceneView</span></tt></a> explicitly, if you want to display a scene within other UI content.</p>
+<p>A scene calculates the contents of a new frame by processing the following actions in order:</p>
+<ol class="arabic simple">
+<li>The scene calls its <a class="reference internal" href="#scene.Scene.update" title="scene.Scene.update"><tt class="xref py py-meth docutils literal"><span class="pre">update()</span></tt></a> method.</li>
+<li>The scene executes actions on its children.</li>
+<li>The scene calls its <a class="reference internal" href="#scene.Scene.did_evaluate_actions" title="scene.Scene.did_evaluate_actions"><tt class="xref py py-meth docutils literal"><span class="pre">did_evaluate_actions()</span></tt></a> method.</li>
+<li>The scene renders all of its nodes and updates the view to display the new contents.</li>
+</ol>
+<p>You typically create at least one subclass of <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> to handle touch events (by overriding <a class="reference internal" href="#scene.Scene.touch_began" title="scene.Scene.touch_began"><tt class="xref py py-meth docutils literal"><span class="pre">touch_began()</span></tt></a>, <a class="reference internal" href="#scene.Scene.touch_moved" title="scene.Scene.touch_moved"><tt class="xref py py-meth docutils literal"><span class="pre">touch_moved()</span></tt></a>, <a class="reference internal" href="#scene.Scene.touch_ended" title="scene.Scene.touch_ended"><tt class="xref py py-meth docutils literal"><span class="pre">touch_ended()</span></tt></a>) and any other interaction with your game&#8217;s content.</p>
+<p>Note that <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> is a subclass of <a class="reference internal" href="#scene.EffectNode" title="scene.EffectNode"><tt class="xref py py-class docutils literal"><span class="pre">EffectNode</span></tt></a>, so you can use a custom <a class="reference internal" href="#scene.Shader" title="scene.Shader"><tt class="xref py py-class docutils literal"><span class="pre">Shader</span></tt></a> for full-scene post-processing effects. Unlike a vanilla <a class="reference internal" href="#scene.EffectNode" title="scene.EffectNode"><tt class="xref py py-class docutils literal"><span class="pre">EffectNode</span></tt></a> however, a scene&#8217;s <tt class="xref py py-attr docutils literal"><span class="pre">effects_enabled</span></tt> attribute is set to <cite>False</cite> by default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.setup">
+<tt class="descclassname">Scene.</tt><tt class="descname">setup</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Scene.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>This gets called once, just before the scene is presented on screen. You can use this to set up
+your scene. The <a class="reference internal" href="#scene.Scene.size" title="scene.Scene.size"><tt class="xref py py-attr docutils literal"><span class="pre">size</span></tt></a> and <a class="reference internal" href="#scene.bounds" title="scene.bounds"><tt class="xref py py-attr docutils literal"><span class="pre">bounds</span></tt></a> attributes are already valid at this point, so you can use them to determine the layout of your content.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.touch_began">
+<tt class="descclassname">Scene.</tt><tt class="descname">touch_began</tt><big>(</big><em>touch</em><big>)</big><a class="headerlink" href="#scene.Scene.touch_began" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when a touch begins on the scene&#8217;s view. You typically don&#8217;t call this directly, but implement it as part of your <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> subclass.</p>
+<p>You can inspect the <cite>touch</cite> object&#8217;s <cite>location</cite> attribute to get the position of the touch in the scene&#8217;s coordinate system. To distinguish between simultaneous touches, you can use the touch&#8217;s <cite>touch_id</cite> attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.touch_moved">
+<tt class="descclassname">Scene.</tt><tt class="descname">touch_moved</tt><big>(</big><em>node</em>, <em>touch</em><big>)</big><a class="headerlink" href="#scene.Scene.touch_moved" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when a touch moves in the scene&#8217;s view. You typically don&#8217;t call this directly, but implement it as part of your <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> subclass.</p>
+<p>You can inspect the <cite>touch</cite> object&#8217;s <cite>location</cite> attribute to get the position of the touch in the scene&#8217;s coordinate system. To distinguish between simultaneous touches, you can use the touch&#8217;s <cite>touch_id</cite> attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.touch_ended">
+<tt class="descclassname">Scene.</tt><tt class="descname">touch_ended</tt><big>(</big><em>node</em>, <em>touch</em><big>)</big><a class="headerlink" href="#scene.Scene.touch_ended" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when a touch ends in the scene&#8217;s view. You typically don&#8217;t call this directly, but implement it as part of your <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> subclass.</p>
+<p>You can inspect the <cite>touch</cite> object&#8217;s <cite>location</cite> attribute to get the position of the touch in the scene&#8217;s coordinate system. To distinguish between simultaneous touches, you can use the touch&#8217;s <cite>touch_id</cite> attribute.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.did_change_size">
+<tt class="descclassname">Scene.</tt><tt class="descname">did_change_size</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Scene.did_change_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets called whenever the scene’s size changes, usually when the screen rotates. You typically override this to reposition your content. The <a class="reference internal" href="#scene.Scene.size" title="scene.Scene.size"><tt class="xref py py-attr docutils literal"><span class="pre">size</span></tt></a> attribute of the scene is already set to the new size when this is called.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.did_evaluate_actions">
+<tt class="descclassname">Scene.</tt><tt class="descname">did_evaluate_actions</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Scene.did_evaluate_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets called after a scene has finished processing the actions of its child nodes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.update">
+<tt class="descclassname">Scene.</tt><tt class="descname">update</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Scene.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs any scene-specific updates that need to occur before scene actions are evaluated.</p>
+<p>Do not call this method directly; it is called exactly once per frame, so long as the scene is presented in a view and is not paused. By default, this method does nothing. Your scene subclass should override this method and perform any necessary updates to the scene.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.pause">
+<tt class="descclassname">Scene.</tt><tt class="descname">pause</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Scene.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets called automatically when the home button is pressed while a scene is running. You can override this to save persistent state for example. The default implementation does nothing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.resume">
+<tt class="descclassname">Scene.</tt><tt class="descname">resume</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Scene.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets called automatically when a scene is resumed (after being sent to the background with the home button). The default implementation does nothing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.stop">
+<tt class="descclassname">Scene.</tt><tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Scene.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets called automatically when a scene is stopped (by tapping the &#8220;x&#8221; button). You can override this to save persistent state. The default implementation does nothing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.present_modal_scene">
+<tt class="descclassname">Scene.</tt><tt class="descname">present_modal_scene</tt><big>(</big><em>other_scene</em><big>)</big><a class="headerlink" href="#scene.Scene.present_modal_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Present another scene on top of this one. This can be useful for overlay menus etc. While the scene is being presented, it receives all touch events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.dismiss_modal_scene">
+<tt class="descclassname">Scene.</tt><tt class="descname">dismiss_modal_scene</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Scene.dismiss_modal_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close a scene that is being presented modally using <a class="reference internal" href="#scene.Scene.present_modal_scene" title="scene.Scene.present_modal_scene"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.present_modal_scene()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.controller_changed">
+<tt class="descclassname">Scene.</tt><tt class="descname">controller_changed</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#scene.Scene.controller_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets called automatically when the state of any connected game controller changes, for example, when a button is pressed/released, or when the direction of one of the thumbsticks or the dpad changes.</p>
+<p>The <tt class="docutils literal"><span class="pre">key</span></tt> parameter is a string that specifies the element of the controller that changed (for example <tt class="docutils literal"><span class="pre">'button_a'</span></tt>, <tt class="docutils literal"><span class="pre">'dpad'</span></tt>, <tt class="docutils literal"><span class="pre">'thumbstick_left'</span></tt>...), <tt class="docutils literal"><span class="pre">value</span></tt> contains the current value of that element. The type of <tt class="docutils literal"><span class="pre">value</span></tt> varies with the type of controller element. For directional input elements (dpads, thumbsticks), the value is a <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> object. For others, it&#8217;s either a float (when the element is pressure-sensitive) or a boolean.</p>
+</dd></dl>
+
+<div class="section" id="scene-attributes">
+<h4>Scene Attributes<a class="headerlink" href="#scene-attributes" title="Permalink to this headline">¶</a></h4>
+<dl class="attribute">
+<dt id="scene.bounds">
+<tt class="descclassname">scene.</tt><tt class="descname">bounds</tt><a class="headerlink" href="#scene.bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a> that has the origin (0, 0) and the size of the drawable area.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Scene.dt">
+<tt class="descclassname">Scene.</tt><tt class="descname">dt</tt><a class="headerlink" href="#scene.Scene.dt" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time (in seconds) that has passed since the last invocation of <a class="reference internal" href="#scene.Scene.update" title="scene.Scene.update"><tt class="xref py py-meth docutils literal"><span class="pre">update()</span></tt></a>. You can use this to calculate the progress of custom animations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Scene.size">
+<tt class="descclassname">Scene.</tt><tt class="descname">size</tt><a class="headerlink" href="#scene.Scene.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the entire drawable area.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Scene.t">
+<tt class="descclassname">Scene.</tt><tt class="descname">t</tt><a class="headerlink" href="#scene.Scene.t" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time (in seconds) that has passed since the scene was started. You can use this to calculate the progress of custom animations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Scene.touches">
+<tt class="descclassname">Scene.</tt><tt class="descname">touches</tt><a class="headerlink" href="#scene.Scene.touches" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of all touches that are currently active. The keys correspond to the <tt class="xref py py-attr docutils literal"><span class="pre">touch_id</span></tt> attribute of the <a class="reference internal" href="#scene.Touch" title="scene.Touch"><tt class="xref py py-class docutils literal"><span class="pre">Touch</span></tt></a> objects.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Scene.background_color">
+<tt class="descclassname">Scene.</tt><tt class="descname">background_color</tt><a class="headerlink" href="#scene.Scene.background_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background color of the scene.</p>
+<p>The default value is dark gray.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descclassname">Scene.</tt><tt class="descname">size</tt></dt>
+<dd><p>The dimensions of the scene in points (read-only). This corresponds to the size of the scene&#8217;s view.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Scene.view">
+<tt class="descclassname">Scene.</tt><tt class="descname">view</tt><a class="headerlink" href="#scene.Scene.view" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="xref py py-class docutils literal"><span class="pre">View</span></tt> that is currently presenting the scene. May be <cite>None</cite> if the scene is not currently being presented. (read-only)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Scene.presented_scene">
+<tt class="descclassname">Scene.</tt><tt class="descname">presented_scene</tt><a class="headerlink" href="#scene.Scene.presented_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>The scene that is currently being presented using <a class="reference internal" href="#scene.Scene.present_modal_scene" title="scene.Scene.present_modal_scene"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.present_modal_scene()</span></tt></a> (if any, <cite>None</cite> otherwise).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Scene.presenting_scene">
+<tt class="descclassname">Scene.</tt><tt class="descname">presenting_scene</tt><a class="headerlink" href="#scene.Scene.presenting_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>The presenting scene, if this scene is being presented by another scene (using <a class="reference internal" href="#scene.Scene.present_modal_scene" title="scene.Scene.present_modal_scene"><tt class="xref py py-meth docutils literal"><span class="pre">present_modal_scene()</span></tt></a>).</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="node">
+<h3>Node<a class="headerlink" href="#node" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Node">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Node</tt><big>(</big><span class="optional">[</span><em>position=(0</em>, <em>0)</em>, <em>z_position=0.0</em>, <em>scale=1.0</em>, <em>x_scale=1.0</em>, <em>y_scale=1.0</em>, <em>alpha=1.0</em>, <em>speed=1.0</em>, <em>parent=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> class is the fundamental building block of a scene. The basic <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> class doesn’t draw anything by itself &#8211; its primary role is to provide baseline behavior that its subclasses use. Nodes can also contain other nodes to modify them as a group. For drawing actual content, you will typically use one of <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a>&#8216;s subclasses:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> &#8211; A node that draws a textured sprite</li>
+<li><a class="reference internal" href="#scene.LabelNode" title="scene.LabelNode"><tt class="xref py py-class docutils literal"><span class="pre">LabelNode</span></tt></a> &#8211; A specialized <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> that renders a text string.</li>
+<li><a class="reference internal" href="#scene.ShapeNode" title="scene.ShapeNode"><tt class="xref py py-class docutils literal"><span class="pre">ShapeNode</span></tt></a> &#8211; A specialized <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> that renders a shape based on a bezier path (e.g. a circle or rounded rectangle).</li>
+<li><a class="reference internal" href="#scene.EffectNode" title="scene.EffectNode"><tt class="xref py py-class docutils literal"><span class="pre">EffectNode</span></tt></a> &#8211; A node that applies effects to its children using a custom shader.</li>
+</ul>
+<p>Nodes are organized hierarchically into node trees, similar to how views and subviews work. Most commonly, a node tree is defined with a <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> node as the root node and other content nodes as descendants. The scene node runs an animation loop that processes actions on the nodes, and then renders the contents of the node tree for display.</p>
+<p>Every node in a node tree provides a coordinate system to its children. After a child is added to the node tree, it is positioned inside its parent’s coordinate system by setting its position attribute. A node’s coordinate system can be scaled and rotated by changing its <a class="reference internal" href="#scene.Node.x_scale" title="scene.Node.x_scale"><tt class="xref py py-attr docutils literal"><span class="pre">x_scale</span></tt></a>, <a class="reference internal" href="#scene.Node.y_scale" title="scene.Node.y_scale"><tt class="xref py py-attr docutils literal"><span class="pre">y_scale</span></tt></a>, and <a class="reference internal" href="#scene.Node.rotation" title="scene.Node.rotation"><tt class="xref py py-attr docutils literal"><span class="pre">rotation</span></tt></a> attributes. When a node’s coordinate system is scaled or rotated, this transformation is applied both to the node’s own content and to that of its descendants.</p>
+<p>The <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> class does not perform any drawing of its own. However, many subclasses render visual content and so the <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> class understands some visual concepts:</p>
+<p>The <a class="reference internal" href="#scene.Node.frame" title="scene.Node.frame"><tt class="xref py py-attr docutils literal"><span class="pre">frame</span></tt></a> attribute provides the bounding rectangle for a node’s visual content, modified by the <tt class="xref py py-attr docutils literal"><span class="pre">scale</span></tt> and <a class="reference internal" href="#scene.Node.rotation" title="scene.Node.rotation"><tt class="xref py py-attr docutils literal"><span class="pre">rotation</span></tt></a> attributes. The frame is non-empty if the node’s class draws content. Each node subclass determines the size of this content differently. In some subclasses, the size of the node’s content is declared explicitly, such as in the <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> class. In other subclasses, the content size is calculated implicitly by the class using other object properties. For example, a <a class="reference internal" href="#scene.LabelNode" title="scene.LabelNode"><tt class="xref py py-class docutils literal"><span class="pre">LabelNode</span></tt></a> object determines its content size using the label’s text and font characteristics.</p>
+<p>A node’s <a class="reference internal" href="#scene.Node.bbox" title="scene.Node.bbox"><tt class="xref py py-attr docutils literal"><span class="pre">bbox</span></tt></a> is the largest rectangle that includes the frame of the node and the frames of all its descendants.</p>
+<p>Other attributes, such as the <a class="reference internal" href="#scene.Node.alpha" title="scene.Node.alpha"><tt class="xref py py-attr docutils literal"><span class="pre">alpha</span></tt></a> attribute, affect how the node and its descendants are drawn.</p>
+<p>Any node in the tree may run actions (<a class="reference internal" href="#scene.Action" title="scene.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> objects), which are used to animate the properties of a node, e.g. to move it to a new position smoothly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Node.add_child">
+<tt class="descclassname">Node.</tt><tt class="descname">add_child</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#scene.Node.add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a node to the end of the receiver’s list of child nodes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Node.remove_from_parent">
+<tt class="descclassname">Node.</tt><tt class="descname">remove_from_parent</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Node.remove_from_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the node from its parent node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Node.remove_action">
+<tt class="descclassname">Node.</tt><tt class="descname">remove_action</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#scene.Node.remove_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ends and removes a specific action, identified by its key, from the node. The key is an arbitrary string that was passed to the <a class="reference internal" href="#scene.Node.run_action" title="scene.Node.run_action"><tt class="xref py py-meth docutils literal"><span class="pre">Node.run_action()</span></tt></a> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Node.remove_all_actions">
+<tt class="descclassname">Node.</tt><tt class="descname">remove_all_actions</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.Node.remove_all_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ends and removes all actions from the node.</p>
+<p>When an action is removed from the node, any remaining animation the action would perform is skipped; however, previous changes are not reverted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Node.render_to_texture">
+<tt class="descclassname">Node.</tt><tt class="descname">render_to_texture</tt><big>(</big><span class="optional">[</span><em>crop_rect</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Node.render_to_texture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <a class="reference internal" href="#scene.Texture" title="scene.Texture"><tt class="xref py py-class docutils literal"><span class="pre">Texture</span></tt></a> object by rendering a snapshot of this node and its children.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Node.point_to_scene">
+<tt class="descclassname">Node.</tt><tt class="descname">point_to_scene</tt><big>(</big><em>point</em><big>)</big><a class="headerlink" href="#scene.Node.point_to_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a point from this node&#8217;s coordinate system to the coordinate system of its containing scene. If the node is not part of a scene, a <a class="reference internal" href="../library/exceptions.html#ValueError" title="ValueError"><tt class="xref py py-class docutils literal"><span class="pre">ValueError</span></tt></a> is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Node.point_from_scene">
+<tt class="descclassname">Node.</tt><tt class="descname">point_from_scene</tt><big>(</big><em>point</em><big>)</big><a class="headerlink" href="#scene.Node.point_from_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a point from the coordinate system of this node&#8217;s scene to the local coordinate system of the node. If the node is not part of a scene, a <a class="reference internal" href="../library/exceptions.html#ValueError" title="ValueError"><tt class="xref py py-class docutils literal"><span class="pre">ValueError</span></tt></a> is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Node.run_action">
+<tt class="descclassname">Node.</tt><tt class="descname">run_action</tt><big>(</big><em>action</em><span class="optional">[</span>, <em>key</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Node.run_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an action to the list of actions executed by the node.</p>
+<p>If an action using the same <cite>key</cite> (an arbitrary string) is already running, it is removed before the new action is added.</p>
+</dd></dl>
+
+<div class="section" id="node-attributes">
+<h4>Node Attributes<a class="headerlink" href="#node-attributes" title="Permalink to this headline">¶</a></h4>
+<dl class="attribute">
+<dt id="scene.Node.bbox">
+<tt class="descclassname">Node.</tt><tt class="descname">bbox</tt><a class="headerlink" href="#scene.Node.bbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a rectangle in the parent’s coordinate system that contains the content of the node and all of its descendants.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.alpha">
+<tt class="descclassname">Node.</tt><tt class="descname">alpha</tt><a class="headerlink" href="#scene.Node.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transparency value applied to the node’s contents.</p>
+<p>The <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> class does not perform drawing, but many of its subclasses do. When a node or any of its descendants are drawn, the alpha component of each pixel is multiplied by the node’s alpha property and then clamped to the range 0.0-1.0. This modified alpha value is used to blend the pixel into the framebuffer. Subclasses that render content define properties that determine the blending operations used in conjunction with the alpha value to blend pixels into the parent’s framebuffer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.frame">
+<tt class="descclassname">Node.</tt><tt class="descname">frame</tt><a class="headerlink" href="#scene.Node.frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>A rectangle in the parent’s coordinate system that contains the node’s content, ignoring the node’s children. (read-only)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.children">
+<tt class="descclassname">Node.</tt><tt class="descname">children</tt><a class="headerlink" href="#scene.Node.children" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of this node&#8217;s child nodes. Note that modifying this list has no effect &#8211; use <a class="reference internal" href="#scene.Node.add_child" title="scene.Node.add_child"><tt class="xref py py-meth docutils literal"><span class="pre">Node.add_child()</span></tt></a> and <a class="reference internal" href="#scene.Node.remove_from_parent" title="scene.Node.remove_from_parent"><tt class="xref py py-meth docutils literal"><span class="pre">Node.remove_from_parent()</span></tt></a> instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.parent">
+<tt class="descclassname">Node.</tt><tt class="descname">parent</tt><a class="headerlink" href="#scene.Node.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The node’s parent node. (read-only)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.paused">
+<tt class="descclassname">Node.</tt><tt class="descname">paused</tt><a class="headerlink" href="#scene.Node.paused" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Boolean value that determines whether actions on the node and its descendants are processed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.position">
+<tt class="descclassname">Node.</tt><tt class="descname">position</tt><a class="headerlink" href="#scene.Node.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position (x, y) of the node in its parent&#8217;s coordinate system.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.scene">
+<tt class="descclassname">Node.</tt><tt class="descname">scene</tt><a class="headerlink" href="#scene.Node.scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>The scene node that contains the node. (read-only)</p>
+<p>If the node is not embedded in a scene, the value is <cite>None</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.speed">
+<tt class="descclassname">Node.</tt><tt class="descname">speed</tt><a class="headerlink" href="#scene.Node.speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A speed modifier applied to all actions executed by a node and its descendants.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.x_scale">
+<tt class="descclassname">Node.</tt><tt class="descname">x_scale</tt><a class="headerlink" href="#scene.Node.x_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>A scaling factor that multiplies the width of a node and its children.</p>
+<p>The <a class="reference internal" href="#scene.Node.x_scale" title="scene.Node.x_scale"><tt class="xref py py-attr docutils literal"><span class="pre">x_scale</span></tt></a> attribute scales the width of the node and all of its descendants. The scale value affects how a node’s frame is calculated, its hit test area, how it is drawn, and other similar characteristics. The default value is 1.0.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.y_scale">
+<tt class="descclassname">Node.</tt><tt class="descname">y_scale</tt><a class="headerlink" href="#scene.Node.y_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>A scaling factor that multiplies the height of a node and its children.</p>
+<p>The <a class="reference internal" href="#scene.Node.y_scale" title="scene.Node.y_scale"><tt class="xref py py-attr docutils literal"><span class="pre">y_scale</span></tt></a> attribute scales the height of the node and all of its descendants. The scale value affects how a node’s frame is calculated, its hit test area, how it is drawn, and other similar characteristics. The default value is 1.0.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.z_position">
+<tt class="descclassname">Node.</tt><tt class="descname">z_position</tt><a class="headerlink" href="#scene.Node.z_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The z position of a node determines the order in which it&#8217;s drawn, relative to its siblings. The default value is 0.0; nodes with larger values are rendered in front of nodes with smaller values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Node.rotation">
+<tt class="descclassname">Node.</tt><tt class="descname">rotation</tt><a class="headerlink" href="#scene.Node.rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The node&#8217;s rotation about the z axis (in radians).</p>
+<p>The default value is 0.0, which indicates no rotation. A positive value indicates a counterclockwise rotation. When the coordinate system is rotated, it affects the node and its descendants.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="spritenode">
+<h3>SpriteNode<a class="headerlink" href="#spritenode" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.SpriteNode">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">SpriteNode</tt><big>(</big><span class="optional">[</span><em>texture</em>, <em>position=(0</em>, <em>0)</em>, <em>z_position=0.0</em>, <em>scale=1.0</em>, <em>x_scale=1.0</em>, <em>y_scale=1.0</em>, <em>alpha=1.0</em>, <em>speed=1.0</em>, <em>parent=None</em>, <em>size=None</em>, <em>color='white'</em>, <em>blend_mode=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.SpriteNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> is a node that draws a textured image, a colored square, or a textured image blended with a color. You can also provide a custom shader to create your own rendering effects.</p>
+<p>When initializing a <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a>, you can provide the texture as either a <a class="reference internal" href="#scene.Texture" title="scene.Texture"><tt class="xref py py-class docutils literal"><span class="pre">Texture</span></tt></a> object, or the name of a built-in image or image file (a string).</p>
+</dd></dl>
+
+<div class="section" id="spritenode-attributes">
+<h4>SpriteNode Attributes<a class="headerlink" href="#spritenode-attributes" title="Permalink to this headline">¶</a></h4>
+<dl class="attribute">
+<dt id="scene.SpriteNode.anchor_point">
+<tt class="descclassname">SpriteNode.</tt><tt class="descname">anchor_point</tt><a class="headerlink" href="#scene.SpriteNode.anchor_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the point in the sprite that corresponds to the node’s position.</p>
+<p>You specify the value for this property in the unit coordinate space. The default value is (0.5, 0.5), which means that the sprite is centered on its position.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SpriteNode.blend_mode">
+<tt class="descclassname">SpriteNode.</tt><tt class="descname">blend_mode</tt><a class="headerlink" href="#scene.SpriteNode.blend_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The blend mode used to draw the sprite into the parent’s framebuffer.</p>
+<p>The possible values for this property are listed in <a class="reference internal" href="#blend-modes">Blend Modes</a>. The default value is <a class="reference internal" href="#scene.BLEND_NORMAL" title="scene.BLEND_NORMAL"><tt class="xref py py-data docutils literal"><span class="pre">BLEND_NORMAL</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SpriteNode.color">
+<tt class="descclassname">SpriteNode.</tt><tt class="descname">color</tt><a class="headerlink" href="#scene.SpriteNode.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sprite’s color.</p>
+<p>If the <a class="reference internal" href="#scene.SpriteNode.texture" title="scene.SpriteNode.texture"><tt class="xref py py-attr docutils literal"><span class="pre">texture</span></tt></a> attribute is set, the image is tinted with the given color. If the <a class="reference internal" href="#scene.SpriteNode.texture" title="scene.SpriteNode.texture"><tt class="xref py py-attr docutils literal"><span class="pre">texture</span></tt></a> attribute is <cite>None</cite>, the color is used to draw a colored rectangle.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SpriteNode.shader">
+<tt class="descclassname">SpriteNode.</tt><tt class="descname">shader</tt><a class="headerlink" href="#scene.SpriteNode.shader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A property that determines whether the sprite is rendered using a custom shader.</p>
+<p>The default value is <cite>None</cite>, which means that the normal behavior for sprite rendering is performed. If a <a class="reference internal" href="#scene.Shader" title="scene.Shader"><tt class="xref py py-class docutils literal"><span class="pre">Shader</span></tt></a> is attached to this attribute, the custom shader is used to render the sprite.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SpriteNode.size">
+<tt class="descclassname">SpriteNode.</tt><tt class="descname">size</tt><a class="headerlink" href="#scene.SpriteNode.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dimensions of the sprite, in points (width, height). When setting the <a class="reference internal" href="#scene.SpriteNode.texture" title="scene.SpriteNode.texture"><tt class="xref py py-attr docutils literal"><span class="pre">texture</span></tt></a> attribute, the size is automatically set to the dimensions of the texture.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SpriteNode.texture">
+<tt class="descclassname">SpriteNode.</tt><tt class="descname">texture</tt><a class="headerlink" href="#scene.SpriteNode.texture" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scene.Texture" title="scene.Texture"><tt class="xref py py-class docutils literal"><span class="pre">Texture</span></tt></a> used to draw the sprite.</p>
+<p>If the value is <cite>None</cite>, the sprite is drawn as a colored rectangle using its <a class="reference internal" href="#scene.SpriteNode.color" title="scene.SpriteNode.color"><tt class="xref py py-attr docutils literal"><span class="pre">color</span></tt></a> attribute. Otherwise, the texture is used to draw the sprite.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="effectnode">
+<h3>EffectNode<a class="headerlink" href="#effectnode" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.EffectNode">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">EffectNode</tt><big>(</big><span class="optional">[</span><em>position=(0</em>, <em>0)</em>, <em>z_position=0.0</em>, <em>scale=1.0</em>, <em>x_scale=1.0</em>, <em>y_scale=1.0</em>, <em>alpha=1.0</em>, <em>speed=1.0</em>, <em>parent=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.EffectNode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>An <a class="reference internal" href="#scene.EffectNode" title="scene.EffectNode"><tt class="xref py py-class docutils literal"><span class="pre">EffectNode</span></tt></a> object can be used to apply post-processing effects.</p>
+<p>Each time a new frame is rendered using the effect node, the effect node follows these steps:</p>
+<ul class="simple">
+<li>The effect node draws its children into a private framebuffer.</li>
+<li>It blends the contents of its private framebuffer into its parent’s framebuffer, using one of the standard blend modes, similar to a <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a>. You can also use a custom <a class="reference internal" href="#scene.Shader" title="scene.Shader"><tt class="xref py py-class docutils literal"><span class="pre">Shader</span></tt></a> to render the result for more advanced post-processing effects.</li>
+</ul>
+<div class="section" id="effectnode-attributes">
+<h4>EffectNode Attributes<a class="headerlink" href="#effectnode-attributes" title="Permalink to this headline">¶</a></h4>
+<dl class="attribute">
+<dt id="scene.EffectNode.crop_rect">
+<tt class="descclassname">EffectNode.</tt><tt class="descname">crop_rect</tt><a class="headerlink" href="#scene.EffectNode.crop_rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>A rectangle in the effect node&#8217;s coordinate system that determines how much of its children the effect node renders.</p>
+<p>By default, an effect node automatically determines the size and position of its crop rect based on the accumulated frames of its children. In some cases, this may be inefficient, especially if the size of the children changes frequently, or if some of the children are off-screen.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.EffectNode.blend_mode">
+<tt class="descclassname">EffectNode.</tt><tt class="descname">blend_mode</tt><a class="headerlink" href="#scene.EffectNode.blend_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The blend mode used to draw the filtered image into the parent’s framebuffer.</p>
+<p>The possible values for this property are listed in <a class="reference internal" href="#blend-modes">Blend Modes</a>. The default value is <a class="reference internal" href="#scene.BLEND_NORMAL" title="scene.BLEND_NORMAL"><tt class="xref py py-data docutils literal"><span class="pre">BLEND_NORMAL</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.EffectNode.effects_enabled">
+<tt class="descclassname">EffectNode.</tt><tt class="descname">effects_enabled</tt><a class="headerlink" href="#scene.EffectNode.effects_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>When set to <cite>False</cite>, the effect node renders like a regular <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> (shader, blend mode, and crop rect are ignored). The default is <cite>True</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.EffectNode.shader">
+<tt class="descclassname">EffectNode.</tt><tt class="descname">shader</tt><a class="headerlink" href="#scene.EffectNode.shader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A custom shader that is called when the effect node is blended into the parent’s framebuffer.</p>
+<p>The default value is <cite>None</cite>, meaning that default blending behavior executes. If a shader is specified, it is called when the rasterized image is blended into the parent’s framebuffer.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="labelnode">
+<h3>LabelNode<a class="headerlink" href="#labelnode" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.LabelNode">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">LabelNode</tt><big>(</big><em>text</em>, <em>font=('Helvetica'</em>, <em>20)</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#scene.LabelNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#scene.LabelNode" title="scene.LabelNode"><tt class="xref py py-class docutils literal"><span class="pre">LabelNode</span></tt></a> is a specialized subclass of <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> that automatically generates a texture by rendering a string into an image, using the given font. When you set the <a class="reference internal" href="#scene.LabelNode.text" title="scene.LabelNode.text"><tt class="xref py py-attr docutils literal"><span class="pre">LabelNode.text</span></tt></a> or <a class="reference internal" href="#scene.LabelNode.font" title="scene.LabelNode.font"><tt class="xref py py-attr docutils literal"><span class="pre">LabelNode.font</span></tt></a> attributes, the texture is updated automatically.</p>
+<p>By default, the text is centered on the node&#8217;s <tt class="xref py py-attr docutils literal"><span class="pre">position</span></tt>. You can change this by adjusting the <tt class="xref py py-attr docutils literal"><span class="pre">Node.anchor_point</span></tt> attribute.</p>
+</dd></dl>
+
+<div class="section" id="labelnode-attributes">
+<h4>LabelNode Attributes<a class="headerlink" href="#labelnode-attributes" title="Permalink to this headline">¶</a></h4>
+<dl class="attribute">
+<dt id="scene.LabelNode.text">
+<tt class="descclassname">LabelNode.</tt><tt class="descname">text</tt><a class="headerlink" href="#scene.LabelNode.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The string value of the label.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.LabelNode.font">
+<tt class="descclassname">LabelNode.</tt><tt class="descname">font</tt><a class="headerlink" href="#scene.LabelNode.font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The font of the label, as a 2-tuple of font name and font size (in points).</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="shapenode">
+<h3>ShapeNode<a class="headerlink" href="#shapenode" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.ShapeNode">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">ShapeNode</tt><big>(</big><em>path=None</em>, <em>fill_color='white'</em>, <em>stroke_color='clear'</em>, <em>shadow=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#scene.ShapeNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#scene.ShapeNode" title="scene.ShapeNode"><tt class="xref py py-class docutils literal"><span class="pre">ShapeNode</span></tt></a> is a specialized subclass of <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> that renders a <a class="reference internal" href="ui.html#ui.Path" title="ui.Path"><tt class="xref py py-class docutils literal"><span class="pre">ui.Path</span></tt></a> (a vector shape).</p>
+<p>The shape has customizable fill and stroke colors, and can optionally be rendered with a drop shadow.</p>
+</dd></dl>
+
+<div class="section" id="shapenode-attributes">
+<h4>ShapeNode Attributes<a class="headerlink" href="#shapenode-attributes" title="Permalink to this headline">¶</a></h4>
+<dl class="attribute">
+<dt id="scene.ShapeNode.path">
+<tt class="descclassname">ShapeNode.</tt><tt class="descname">path</tt><a class="headerlink" href="#scene.ShapeNode.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="ui.html#ui.Path" title="ui.Path"><tt class="xref py py-class docutils literal"><span class="pre">ui.Path</span></tt></a> object that represents the shape to be rendered. The <a class="reference internal" href="ui.html#ui.Path.line_width" title="ui.Path.line_width"><tt class="xref py py-attr docutils literal"><span class="pre">ui.Path.line_width</span></tt></a> attribute determines the width of the shape&#8217;s outline (stroke).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.ShapeNode.fill_color">
+<tt class="descclassname">ShapeNode.</tt><tt class="descname">fill_color</tt><a class="headerlink" href="#scene.ShapeNode.fill_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color that is used to fill the shape.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.ShapeNode.stroke_color">
+<tt class="descclassname">ShapeNode.</tt><tt class="descname">stroke_color</tt><a class="headerlink" href="#scene.ShapeNode.stroke_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color that is used for the shape&#8217;s outline.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.ShapeNode.shadow">
+<tt class="descclassname">ShapeNode.</tt><tt class="descname">shadow</tt><a class="headerlink" href="#scene.ShapeNode.shadow" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 4-tuple of (color, x_offset, y_offset, radius) that specifies an optional drop shadow. If set to <cite>None</cite>, no drop shadow is rendered.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="other-classes">
+<h2>Other Classes<a class="headerlink" href="#other-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sceneview">
+<h3>SceneView<a class="headerlink" href="#sceneview" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.SceneView">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">SceneView</tt><a class="headerlink" href="#scene.SceneView" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#scene.SceneView" title="scene.SceneView"><tt class="xref py py-class docutils literal"><span class="pre">SceneView</span></tt></a> is a subclass of <a class="reference internal" href="ui.html#ui.View" title="ui.View"><tt class="xref py py-class docutils literal"><span class="pre">ui.View</span></tt></a> that draws a <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a>&#8216;s content and implements a rendering loop.</p>
+<p>Typically, you will not create a <a class="reference internal" href="#scene.SceneView" title="scene.SceneView"><tt class="xref py py-class docutils literal"><span class="pre">SceneView</span></tt></a> explicitly &#8211; calling the <a class="reference internal" href="#scene.run" title="scene.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> function does this automatically. If you need to modify the view&#8217;s attributes after running your scene this way, you can access its view using the <a class="reference internal" href="#scene.Scene.view" title="scene.Scene.view"><tt class="xref py py-attr docutils literal"><span class="pre">Scene.view</span></tt></a> attribute.</p>
+<p>For debugging purposes, a <a class="reference internal" href="#scene.SceneView" title="scene.SceneView"><tt class="xref py py-class docutils literal"><span class="pre">SceneView</span></tt></a> will show standard output and exceptions in a &#8220;status line&#8221; at the bottom, so you can use <cite>print</cite> statements during development, even if your scene covers the whole screen.</p>
+</dd></dl>
+
+<div class="section" id="sceneview-attributes">
+<h4>SceneView Attributes<a class="headerlink" href="#sceneview-attributes" title="Permalink to this headline">¶</a></h4>
+<dl class="attribute">
+<dt id="scene.SceneView.scene">
+<tt class="descclassname">SceneView.</tt><tt class="descname">scene</tt><a class="headerlink" href="#scene.SceneView.scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>The scene that is currently presented in the view. Without setting this attribute, the view will be empty.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SceneView.paused">
+<tt class="descclassname">SceneView.</tt><tt class="descname">paused</tt><a class="headerlink" href="#scene.SceneView.paused" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set this to <cite>True</cite> to pause the rendering loop.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SceneView.frame_interval">
+<tt class="descclassname">SceneView.</tt><tt class="descname">frame_interval</tt><a class="headerlink" href="#scene.SceneView.frame_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>By default, the rendering loop updates 60 times per second, which corresponds to a frame interval of 1. Setting this to a higher value reduces the update frequency, e.g. a value of 2 corresponds to 30 frames per second. If you don&#8217;t create a <a class="reference internal" href="#scene.SceneView" title="scene.SceneView"><tt class="xref py py-class docutils literal"><span class="pre">SceneView</span></tt></a> explicitly, you can also pass this value as an argument to the <a class="reference internal" href="#scene.run" title="scene.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> function.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SceneView.anti_alias">
+<tt class="descclassname">SceneView.</tt><tt class="descname">anti_alias</tt><a class="headerlink" href="#scene.SceneView.anti_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set this to <cite>True</cite> to enable 4x multisampling. This has a (sometimes significant) performance cost, and is disabled by default.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.SceneView.shows_fps">
+<tt class="descclassname">SceneView.</tt><tt class="descname">shows_fps</tt><a class="headerlink" href="#scene.SceneView.shows_fps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set to <cite>True</cite> to enable a debugging overlay that shows the current framerate.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="shader">
+<h3>Shader<a class="headerlink" href="#shader" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Shader">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Shader</tt><big>(</big><em>shader_src</em><big>)</big><a class="headerlink" href="#scene.Shader" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#scene.Shader" title="scene.Shader"><tt class="xref py py-class docutils literal"><span class="pre">Shader</span></tt></a> object represents a custom OpenGL fragment shader that can be used to modify the rendering behavior of <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> and <a class="reference internal" href="#scene.EffectNode" title="scene.EffectNode"><tt class="xref py py-class docutils literal"><span class="pre">EffectNode</span></tt></a> objects (via their respective <tt class="xref py py-attr docutils literal"><span class="pre">shader</span></tt> attributes).</p>
+<p>Shader programming is a complex topic, and a complete introduction is beyond the scope of this document, but the basic concept is really quite simple. A fragment shader is essentially a function/program that is executed directly on the GPU, and that is responsible for producing a color value for every pixel. Shaders are written in GLSL (GL Shading Language), which is very similar to C.</p>
+<p>The default shader of a <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> basically just uses its texture coordinate input (which is set automatically) to look up the corresponding color in its associated <a class="reference internal" href="#scene.Texture" title="scene.Texture"><tt class="xref py py-class docutils literal"><span class="pre">Texture</span></tt></a>. A simple custom shader might either adjust the resulting color value (for example, converting the colors to grayscale), or modify the texture coordinates to produce morphological effects.</p>
+<p>Shaders have two kinds of inputs: Varyings and uniforms. Essentially, a uniform has the same value for every pixel/fragment, while a varying is interpolated. An example for a varying would be the texture coordinates, which are obviously different for every pixel. An example for a uniform would be a sprite&#8217;s size or the current timestamp.</p>
+<p>A couple of varyings and uniforms are set automatically when a <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> or <a class="reference internal" href="#scene.EffectNode" title="scene.EffectNode"><tt class="xref py py-class docutils literal"><span class="pre">EffectNode</span></tt></a> with a custom shader is rendered:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">uniform</span> <span class="pre">float</span> <span class="pre">u_time</span></tt> &#8211; the current timestamp of the scene&#8217;s animation loop</li>
+<li><tt class="docutils literal"><span class="pre">uniform</span> <span class="pre">vec2</span> <span class="pre">u_sprite_size</span></tt> &#8211; The size of the sprite (in points)</li>
+<li><tt class="docutils literal"><span class="pre">uniform</span> <span class="pre">float</span> <span class="pre">u_scale</span></tt> &#8211; The scale factor of the screen (typically 2.0 for retina screens) &#8211; this can be used to convert <tt class="docutils literal"><span class="pre">u_sprite_size</span></tt> to actual screen pixels.</li>
+<li><tt class="docutils literal"><span class="pre">uniform</span> <span class="pre">sampler2D</span> <span class="pre">u_texture</span></tt> &#8211; The texture of the sprite (for an <a class="reference internal" href="#scene.EffectNode" title="scene.EffectNode"><tt class="xref py py-class docutils literal"><span class="pre">EffectNode</span></tt></a>, this texture contains the rendering of its children)</li>
+<li><tt class="docutils literal"><span class="pre">uniform</span> <span class="pre">vec4</span> <span class="pre">u_tint_color</span></tt> &#8211; The premultiplied color of the sprite (corresponding to the <a class="reference internal" href="#scene.SpriteNode.color" title="scene.SpriteNode.color"><tt class="xref py py-attr docutils literal"><span class="pre">SpriteNode.color</span></tt></a> attribute)</li>
+<li><tt class="docutils literal"><span class="pre">uniform</span> <span class="pre">vec4</span> <span class="pre">u_fill_color</span></tt> &#8211; If the sprite has no texture, this is used instead of <tt class="docutils literal"><span class="pre">u_tint_color</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">varying</span> <span class="pre">vec2</span> <span class="pre">v_tex_coord</span></tt> &#8211; The current texture (UV) coordinates</li>
+</ul>
+</dd></dl>
+
+<p>Even though these uniforms and varyings are set automatically, you have to declare them in your shader if you want to use them.</p>
+<p>You can also declare and set custom uniforms using the <a class="reference internal" href="#scene.Shader.set_uniform" title="scene.Shader.set_uniform"><tt class="xref py py-meth docutils literal"><span class="pre">Shader.set_uniform()</span></tt></a> method. Custom uniforms can be textures (<tt class="docutils literal"><span class="pre">sampler2D</span></tt>), floats, and 2-/3-/4-component vectors (<tt class="docutils literal"><span class="pre">vec2</span></tt>/<tt class="docutils literal"><span class="pre">vec3</span></tt>/<tt class="docutils literal"><span class="pre">vec4</span></tt>).</p>
+<p>The following example produces an interesting &#8216;ripple&#8217; effect on the Pythonista icon. It also demonstrates how you can modify shader behavior by setting uniforms &#8211; in this case, the center of the ripple effect is changed in response to touch events.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scene</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">ripple_shader</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">precision highp float;</span>
+<span class="s">varying vec2 v_tex_coord;</span>
+<span class="s">// These uniforms are set automatically:</span>
+<span class="s">uniform sampler2D u_texture;</span>
+<span class="s">uniform float u_time;</span>
+<span class="s">uniform vec2 u_sprite_size;</span>
+<span class="s">// This uniform is set in response to touch events:</span>
+<span class="s">uniform vec2 u_offset;</span>
+
+<span class="s">void main(void) {</span>
+<span class="s">    vec2 p = -1.0 + 2.0 * v_tex_coord + (u_offset / u_sprite_size * 2.0);</span>
+<span class="s">    float len = length(p);</span>
+<span class="s">    vec2 uv = v_tex_coord + (p/len) * 1.5 * cos(len*50.0 - u_time*10.0) * 0.03;</span>
+<span class="s">    gl_FragColor = texture2D(u_texture,uv);</span>
+<span class="s">}</span>
+<span class="s">&#39;&#39;&#39;</span>
+
+<span class="k">class</span> <span class="nc">MyScene</span> <span class="p">(</span><span class="n">Scene</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">SpriteNode</span><span class="p">(</span><span class="s">&#39;test:Pythonista&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">shader</span> <span class="o">=</span> <span class="n">Shader</span><span class="p">(</span><span class="n">ripple_shader</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">did_change_size</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">did_change_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="c"># Center the image:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">touch_began</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_ripple_center</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">touch_moved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_ripple_center</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">set_ripple_center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+            <span class="c"># Center the ripple effect on the touch location by setting the `u_offset` shader uniform:</span>
+            <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">location</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">shader</span><span class="o">.</span><span class="n">set_uniform</span><span class="p">(</span><span class="s">&#39;u_offset&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">))</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">MyScene</span><span class="p">())</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="scene.Shader.get_uniform">
+<tt class="descclassname">Shader.</tt><tt class="descname">get_uniform</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#scene.Shader.get_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current value of the uniform with the given name. Note that the uniform must be of type <tt class="docutils literal"><span class="pre">float</span></tt>, <tt class="docutils literal"><span class="pre">vec2</span></tt>, <tt class="docutils literal"><span class="pre">vec3</span></tt> or <tt class="docutils literal"><span class="pre">vec4</span></tt> (i.e. sampler/texture uniforms are not supported by this method). For invalid uniform names, <cite>None</cite> is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Shader.set_uniform">
+<tt class="descclassname">Shader.</tt><tt class="descname">set_uniform</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="headerlink" href="#scene.Shader.set_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the uniform with the given name to a new value. The value may be a single number for <tt class="docutils literal"><span class="pre">float</span></tt> or <tt class="docutils literal"><span class="pre">int</span></tt> uniforms, a sequence of numbers for uniforms of type <tt class="docutils literal"><span class="pre">vec2</span></tt>, <tt class="docutils literal"><span class="pre">vec3</span></tt> or <tt class="docutils literal"><span class="pre">vec4</span></tt>, or a <a class="reference internal" href="#scene.Texture" title="scene.Texture"><tt class="xref py py-class docutils literal"><span class="pre">Texture</span></tt></a> object for <tt class="docutils literal"><span class="pre">sampler2D</span></tt> uniforms. Other types of uniforms are not supported.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="action">
+<h3>Action<a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Action">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Action</tt><a class="headerlink" href="#scene.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <a class="reference internal" href="#scene.Action" title="scene.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> object is an animation that usually changes a <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a>&#8216;s attributes over time. It can be added to a node using its <a class="reference internal" href="#scene.Node.run_action" title="scene.Node.run_action"><tt class="xref py py-meth docutils literal"><span class="pre">Node.run_action()</span></tt></a> method.</p>
+<p>Different types of actions (for different <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> attributes) are created using different class methods, e.g. <a class="reference internal" href="#scene.Action.move_to" title="scene.Action.move_to"><tt class="xref py py-meth docutils literal"><span class="pre">Action.move_to()</span></tt></a>, <a class="reference internal" href="#scene.Action.rotate_by" title="scene.Action.rotate_by"><tt class="xref py py-meth docutils literal"><span class="pre">Action.rotate_by()</span></tt></a> etc.</p>
+<p>Once an action has been added to a <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a>, it cannot be changed anymore, but you can remove it (and stop the animation) using <a class="reference internal" href="#scene.Node.remove_action" title="scene.Node.remove_action"><tt class="xref py py-meth docutils literal"><span class="pre">Node.remove_action()</span></tt></a> or <a class="reference internal" href="#scene.Node.remove_all_actions" title="scene.Node.remove_all_actions"><tt class="xref py py-meth docutils literal"><span class="pre">Node.remove_all_actions()</span></tt></a>.</p>
+<p>Some actions modify the behavior of other actions:</p>
+<p>An <a class="reference internal" href="#scene.Action.sequence" title="scene.Action.sequence"><tt class="xref py py-meth docutils literal"><span class="pre">Action.sequence()</span></tt></a> has multiple child actions. Each action in the sequence begins after the previous action ends.</p>
+<p>An <a class="reference internal" href="#scene.Action.group" title="scene.Action.group"><tt class="xref py py-meth docutils literal"><span class="pre">Action.group()</span></tt></a> has multiple child actions. All actions stored in the group begin executing at the same time. The entire group finishes after all actions have finished. This is particularly useful in combination with <a class="reference internal" href="#scene.Action.sequence" title="scene.Action.sequence"><tt class="xref py py-meth docutils literal"><span class="pre">Action.sequence()</span></tt></a>.</p>
+<p>An <a class="reference internal" href="#scene.Action.repeat" title="scene.Action.repeat"><tt class="xref py py-meth docutils literal"><span class="pre">Action.repeat()</span></tt></a> action stores a single child action. When the child action completes, it is restarted.</p>
+<p>Groups, sequences, and repeating actions can be nested. The ability to combine actions together allows you to add very sophisticated behaviors to a node.</p>
+<p>The default duration of animated actions is 0.5 seconds.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.call">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">call</tt><big>(</big><em>func</em><span class="optional">[</span>, <em>duration</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a custom action that calls a function (or other callable object).</p>
+<p>If no <cite>duration</cite> parameter is passed, the function is called exactly once and must not take any parameters.</p>
+<p>If the duration parameter is used, the node that the action is executed on, and the current progress (between 0.0 and 1.0) are passed to the function, and it must have the following signature:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">custom_action</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">progress</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c"># do something with the node here...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.fade_by">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">fade_by</tt><big>(</big><em>alpha</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.fade_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that adjusts the alpha value of a node by a relative value.</p>
+<p>When the action executes, the <a class="reference internal" href="#scene.Node.alpha" title="scene.Node.alpha"><tt class="xref py py-attr docutils literal"><span class="pre">Node.alpha</span></tt></a> attribute animates to its new value.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.fade_to">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">fade_to</tt><big>(</big><em>alpha</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.fade_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that adjusts the alpha value of a node to a new value.</p>
+<p>When the action executes, the <a class="reference internal" href="#scene.Node.alpha" title="scene.Node.alpha"><tt class="xref py py-attr docutils literal"><span class="pre">Node.alpha</span></tt></a> attribute animates to its new value.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.group">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">group</tt><big>(</big><em>actions...</em><big>)</big><a class="headerlink" href="#scene.Action.group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that runs a collection of actions in parallel.</p>
+<p>When the action executes, the actions that comprise the group all start immediately and run in parallel. The duration of the group action is the longest duration among the collection of actions. If an action in the group has a duration less than the group’s duration, the action completes, then idles until the group completes the remaining actions. This matters most when creating a repeating action that repeats a group.</p>
+<p>You can pass the group&#8217;s actions as individual arguments or as a single sequence argument (e.g. a list).</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.move_by">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">move_by</tt><big>(</big><em>dx</em>, <em>dy</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.move_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that moves a node relative to its current position.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.move_to">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">move_to</tt><big>(</big><em>x</em>, <em>y</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.move_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that moves a node to a new position.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.repeat">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">repeat</tt><big>(</big><em>action</em>, <em>repeat_count</em><big>)</big><a class="headerlink" href="#scene.Action.repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that repeats another action a specified number of times. If <cite>repeat_count</cite> is &lt;=0, the action repeats forever (or until it is removed explicitly).</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.rotate_by">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">rotate_by</tt><big>(</big><em>radians</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.rotate_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that rotates the node by a relative value.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.rotate_to">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">rotate_to</tt><big>(</big><em>radians</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.rotate_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that rotates the node counterclockwise to an absolute angle.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.scale_by">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">scale_by</tt><big>(</big><em>scale</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.scale_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that changes the x and y scale values of a node by a relative value.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.scale_to">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">scale_to</tt><big>(</big><em>scale</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.scale_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that changes the x and y scale values of a node.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.scale_x_to">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">scale_x_to</tt><big>(</big><em>scale</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.scale_x_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that changes the x scale value of a node.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.scale_y_to">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">scale_y_to</tt><big>(</big><em>scale</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.scale_y_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that changes the y scale value of a node.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.set_uniform">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">set_uniform</tt><big>(</big><em>name</em>, <em>value</em><span class="optional">[</span>, <em>duration</em>, <em>timing_mode</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Action.set_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that animates the given shader uniform to a new value. Note that this action only has an effect on <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> and <a class="reference internal" href="#scene.EffectNode" title="scene.EffectNode"><tt class="xref py py-class docutils literal"><span class="pre">EffectNode</span></tt></a> objects. The value must be either a single number (for <tt class="docutils literal"><span class="pre">float</span></tt> uniforms) or a sequence of 2-4 numbers (for <tt class="docutils literal"><span class="pre">vec2</span></tt>, <tt class="docutils literal"><span class="pre">vec3</span></tt> and <tt class="docutils literal"><span class="pre">vec4</span></tt> uniforms).</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.sequence">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">sequence</tt><big>(</big><em>actions...</em><big>)</big><a class="headerlink" href="#scene.Action.sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that runs a collection of actions sequentially.</p>
+<p>When the action executes, the first action in the sequence starts and runs to completion. Subsequent actions in the sequence run in a similar fashion until all of the actions in the sequence have executed. The duration of the sequence action is the sum of the durations of the actions in the sequence.</p>
+<p>You can pass the sequence&#8217;s actions as individual arguments or as a single sequence argument (e.g. a list).</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="scene.Action.wait">
+<em class="property">classmethod </em><tt class="descclassname">Action.</tt><tt class="descname">wait</tt><big>(</big><em>wait_duration</em><big>)</big><a class="headerlink" href="#scene.Action.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an action that idles for a specified period of time.</p>
+<p>When the action executes, the action waits for the specified amount of time, then ends. This is typically used as part of a sequence of actions to insert a delay between two other actions.</p>
+</dd></dl>
+
+<div class="section" id="action-attributes">
+<h4>Action Attributes<a class="headerlink" href="#action-attributes" title="Permalink to this headline">¶</a></h4>
+<dl class="attribute">
+<dt id="scene.Action.duration">
+<tt class="descclassname">Action.</tt><tt class="descname">duration</tt><a class="headerlink" href="#scene.Action.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>The duration of the action, in seconds. For some types of actions (e.g. groups, sequences), the duration is ignored. Note that changing the duration (or any other attributes) of an action after it has been added to a <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> has no effect.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Action.timing_mode">
+<tt class="descclassname">Action.</tt><tt class="descname">timing_mode</tt><a class="headerlink" href="#scene.Action.timing_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timing mode used to execute an action.</p>
+<p>The possible values for this property are listed under <a class="reference internal" href="#timing-modes">Timing Modes</a>. The default value is <a class="reference internal" href="#scene.TIMING_LINEAR" title="scene.TIMING_LINEAR"><tt class="xref py py-data docutils literal"><span class="pre">TIMING_LINEAR</span></tt></a>.</p>
+<p>For some types of actions (e.g. groups, sequences), the timing mode is ignored. Note that changing the timing mode (or any other attributes) of an action after it has been added to a <a class="reference internal" href="#scene.Node" title="scene.Node"><tt class="xref py py-class docutils literal"><span class="pre">Node</span></tt></a> has no effect.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="texture">
+<h3>Texture<a class="headerlink" href="#texture" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Texture">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Texture</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#scene.Texture" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#scene.Texture" title="scene.Texture"><tt class="xref py py-class docutils literal"><span class="pre">Texture</span></tt></a> objects are used by <a class="reference internal" href="#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt></a> objects to render their content. A texture is an image that has been loaded into the GPU&#8217;s memory. Textures can be initialized using either the name of a built-in image (a string), or a <a class="reference internal" href="ui.html#ui.Image" title="ui.Image"><tt class="xref py py-class docutils literal"><span class="pre">ui.Image</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Texture.subtexture">
+<tt class="descclassname">Texture.</tt><tt class="descname">subtexture</tt><big>(</big><em>rect</em><big>)</big><a class="headerlink" href="#scene.Texture.subtexture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new texture from a rectangular area in an existing texture. The returned texture object shares the same texture data as the original texture object, meaning that only one copy of the texture data is kept in memory.</p>
+<p>The <cite>rect</cite> parameter describes the portion of the texture in unit coordinates, e.g. <tt class="docutils literal"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0.5,</span> <span class="pre">0.5)</span></tt> would create a texture from the bottom-left quadrant of the original texture.</p>
+<p>This method can be used for sprite sheets / texture atlasses.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Texture.filtering_mode">
+<tt class="descclassname">Texture.</tt><tt class="descname">filtering_mode</tt><a class="headerlink" href="#scene.Texture.filtering_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The filtering mode that is used for scaling the texture. Can be one of the constants listed under <a class="reference internal" href="#texture-filtering-modes">Texture Filtering Modes</a> (<a class="reference internal" href="#scene.FILTERING_LINEAR" title="scene.FILTERING_LINEAR"><tt class="xref py py-data docutils literal"><span class="pre">FILTERING_LINEAR</span></tt></a> by default).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Texture.size">
+<tt class="descclassname">Texture.</tt><tt class="descname">size</tt><a class="headerlink" href="#scene.Texture.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the texture in pixels. Note that this does not take the screen&#8217;s scale factor into account.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="touch">
+<h3>Touch<a class="headerlink" href="#touch" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Touch">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Touch</tt><big>(</big><em>x</em>, <em>y</em>, <em>prev_x</em>, <em>prev_y</em>, <em>touch_id</em><big>)</big><a class="headerlink" href="#scene.Touch" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Instances of this class are passed to the <a class="reference internal" href="#scene.Scene.touch_began" title="scene.Scene.touch_began"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.touch_began()</span></tt></a>, <a class="reference internal" href="#scene.Scene.touch_moved" title="scene.Scene.touch_moved"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.touch_moved()</span></tt></a> and <a class="reference internal" href="#scene.Scene.touch_ended" title="scene.Scene.touch_ended"><tt class="xref py py-meth docutils literal"><span class="pre">Scene.touch_ended()</span></tt></a> methods. <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> objects also have a <cite>touches</cite> attribute (a dictionary</div></blockquote>
+<p>that maps <cite>touch_id</cite> to <a class="reference internal" href="#scene.Touch" title="scene.Touch"><tt class="xref py py-class docutils literal"><span class="pre">Touch</span></tt></a> objects).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Touch.location">
+<tt class="descclassname">Touch.</tt><tt class="descname">location</tt><a class="headerlink" href="#scene.Touch.location" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current location of the touch as a <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Touch.prev_location">
+<tt class="descclassname">Touch.</tt><tt class="descname">prev_location</tt><a class="headerlink" href="#scene.Touch.prev_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>The previous location of the touch (before it moved) as a <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> object.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="geometry-types">
+<h2>Geometry Types<a class="headerlink" href="#geometry-types" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="vector2">
+<h3>Vector2<a class="headerlink" href="#vector2" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Vector2">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Vector2</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#scene.Vector2" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scene.Vector2" title="scene.Vector2"><tt class="xref py py-class docutils literal"><span class="pre">Vector2</span></tt></a> class is the base class for <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> and <a class="reference internal" href="#scene.Size" title="scene.Size"><tt class="xref py py-class docutils literal"><span class="pre">Size</span></tt></a>.</p>
+<p>Vectors (and subsequently points and sizes) support the addition (<cite>+</cite>), subtraction (<cite>-</cite>), multiplication (<cite>*</cite>) and division (<cite>/</cite>) operators. Addition and subtraction are supported for two vectors. Multiplication and division can also be applied to a vector and a scalar (number).</p>
+<p>Passing a vector to the built-in <a class="reference internal" href="../library/functions.html#abs" title="abs"><tt class="xref py py-func docutils literal"><span class="pre">abs()</span></tt></a> function calculates the length of a vector. This can be particularly useful in combination with subtraction, making it very easy to calculate the distance between two points, e.g. <tt class="docutils literal"><span class="pre">abs(p2</span> <span class="pre">-</span> <span class="pre">p1)</span></tt>.</p>
+<p>It is also possible to determine whether a point lies within a <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a>, using the <cite>in</cite> operator.</p>
+<p>In most ways, <a class="reference internal" href="#scene.Vector2" title="scene.Vector2"><tt class="xref py py-class docutils literal"><span class="pre">Vector2</span></tt></a> behaves like a sequence, similar to a 2-tuple. For example, you can alternatively access its <cite>x</cite> component using subscript notation (<tt class="docutils literal"><span class="pre">v[0]</span></tt>). Vectors also support iteration, argument unpacking, etc.</p>
+<p>Whenever a <a class="reference internal" href="#scene.Vector2" title="scene.Vector2"><tt class="xref py py-class docutils literal"><span class="pre">Vector2</span></tt></a>, <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> or <a class="reference internal" href="#scene.Size" title="scene.Size"><tt class="xref py py-class docutils literal"><span class="pre">Size</span></tt></a> object is used as an attribute in the <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module, you can alternatively provide any sequence of 4 numbers (e.g. a list or tuple).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="point">
+<h3>Point<a class="headerlink" href="#point" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Point">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Point</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#scene.Point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass of <a class="reference internal" href="#scene.Vector2" title="scene.Vector2"><tt class="xref py py-class docutils literal"><span class="pre">Vector2</span></tt></a>, used to represent positions. This class doesn&#8217;t provide any additional methods or attributes.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="size">
+<h3>Size<a class="headerlink" href="#size" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Size">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Size</tt><big>(</big><em>w</em>, <em>h</em><big>)</big><a class="headerlink" href="#scene.Size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass of <a class="reference internal" href="#scene.Vector2" title="scene.Vector2"><tt class="xref py py-class docutils literal"><span class="pre">Vector2</span></tt></a>, used to represent sizes. The only difference compared to <a class="reference internal" href="#scene.Vector2" title="scene.Vector2"><tt class="xref py py-class docutils literal"><span class="pre">Vector2</span></tt></a> is that the x and y components can alternatively be accessed using <tt class="xref py py-attr docutils literal"><span class="pre">Size.w</span></tt> (width), and <tt class="xref py py-attr docutils literal"><span class="pre">Size.h</span></tt> (height).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="rect">
+<h3>Rect<a class="headerlink" href="#rect" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scene.Rect">
+<em class="property">class </em><tt class="descclassname">scene.</tt><tt class="descname">Rect</tt><big>(</big><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em><big>)</big><a class="headerlink" href="#scene.Rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a> class is used for bounding boxes and other rectangle values, e.g. the <a class="reference internal" href="#scene.Node.frame" title="scene.Node.frame"><tt class="xref py py-attr docutils literal"><span class="pre">Node.frame</span></tt></a> attribute. A rectangle is represented as (x, y, w[idth], h[eight]), with (x, y) being its lower-left corner.</p>
+<p>In most ways, <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a> behaves like a sequence, similar to a 4-tuple. For example, you can alternatively access its <cite>x</cite> component using subscript notation (<tt class="docutils literal"><span class="pre">r[0]</span></tt>). Rectangles also support iteration, argument unpacking, etc.</p>
+<p>Whenever a <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a> object is used as an attribute in the <a class="reference internal" href="#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module, you can alternatively provide any sequence of 4 numbers (e.g. a list or tuple).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.x">
+<tt class="descclassname">Rect.</tt><tt class="descname">x</tt><a class="headerlink" href="#scene.Rect.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x component of the rectangle&#8217;s lower-left corner.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.y">
+<tt class="descclassname">Rect.</tt><tt class="descname">y</tt><a class="headerlink" href="#scene.Rect.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>The y component of the rectangle&#8217;s lower-left corner.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.w">
+<tt class="descclassname">Rect.</tt><tt class="descname">w</tt><a class="headerlink" href="#scene.Rect.w" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.width">
+<tt class="descclassname">Rect.</tt><tt class="descname">width</tt><a class="headerlink" href="#scene.Rect.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the rectangle.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.h">
+<tt class="descclassname">Rect.</tt><tt class="descname">h</tt><a class="headerlink" href="#scene.Rect.h" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.height">
+<tt class="descclassname">Rect.</tt><tt class="descname">height</tt><a class="headerlink" href="#scene.Rect.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>The height of the rectangle.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.origin">
+<tt class="descclassname">Rect.</tt><tt class="descname">origin</tt><a class="headerlink" href="#scene.Rect.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <tt class="docutils literal"><span class="pre">Point(rect.x,</span> <span class="pre">rect.y)</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.size">
+<tt class="descclassname">Rect.</tt><tt class="descname">size</tt><a class="headerlink" href="#scene.Rect.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <tt class="docutils literal"><span class="pre">Size(rect.w,</span> <span class="pre">rect.h)</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.min_x">
+<tt class="descclassname">Rect.</tt><tt class="descname">min_x</tt><a class="headerlink" href="#scene.Rect.min_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <tt class="docutils literal"><span class="pre">min(rect.x,</span> <span class="pre">rect.x</span> <span class="pre">+</span> <span class="pre">rect.w)</span></tt> (the x component of the left edge)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.max_x">
+<tt class="descclassname">Rect.</tt><tt class="descname">max_x</tt><a class="headerlink" href="#scene.Rect.max_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <tt class="docutils literal"><span class="pre">max(rect.x,</span> <span class="pre">rect.x</span> <span class="pre">+</span> <span class="pre">rect.w)</span></tt> (the x component of the right edge)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.min_y">
+<tt class="descclassname">Rect.</tt><tt class="descname">min_y</tt><a class="headerlink" href="#scene.Rect.min_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <tt class="docutils literal"><span class="pre">min(rect.y,</span> <span class="pre">rect.y</span> <span class="pre">+</span> <span class="pre">rect.h)</span></tt> (the y component of the bottom edge)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scene.Rect.max_y">
+<tt class="descclassname">Rect.</tt><tt class="descname">max_y</tt><a class="headerlink" href="#scene.Rect.max_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <tt class="docutils literal"><span class="pre">max(rect.y,</span> <span class="pre">rect.y</span> <span class="pre">+</span> <span class="pre">rect.h)</span></tt> (the y component of the top edge)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Rect.center">
+<tt class="descclassname">Rect.</tt><tt class="descname">center</tt><big>(</big><span class="optional">[</span><em>p</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Rect.center" title="Permalink to this definition">¶</a></dt>
+<dd><p>When called without arguments, return the center of the rectangle. When a <a class="reference internal" href="#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">Point</span></tt></a> is passed as an argument, the rectangle&#8217;s x and y values are adjusted, so that the new center of the rectangle is <cite>p</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Rect.contains_point">
+<tt class="descclassname">Rect.</tt><tt class="descname">contains_point</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#scene.Rect.contains_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if the given point lies within the bounds of the rectangle, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Rect.contains_rect">
+<tt class="descclassname">Rect.</tt><tt class="descname">contains_rect</tt><big>(</big><em>other_rect</em><big>)</big><a class="headerlink" href="#scene.Rect.contains_rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if the given rectangle lies entirely within the bounds of this rectangle, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Rect.intersects">
+<tt class="descclassname">Rect.</tt><tt class="descname">intersects</tt><big>(</big><em>other_rect</em><big>)</big><a class="headerlink" href="#scene.Rect.intersects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if this rectangle intersects with the other rectangle, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Rect.intersection">
+<tt class="descclassname">Rect.</tt><tt class="descname">intersection</tt><big>(</big><em>other_rect</em><big>)</big><a class="headerlink" href="#scene.Rect.intersection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a> that corresponds to the intersection of this rectangle with the other one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Rect.union">
+<tt class="descclassname">Rect.</tt><tt class="descname">union</tt><big>(</big><em>other_rect</em><big>)</big><a class="headerlink" href="#scene.Rect.union" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the smallest <a class="reference internal" href="#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">Rect</span></tt></a> that encloses both rectangles.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Rect.translate">
+<tt class="descclassname">Rect.</tt><tt class="descname">translate</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#scene.Rect.translate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <tt class="docutils literal"><span class="pre">Rect(r.x</span> <span class="pre">+</span> <span class="pre">x,</span> <span class="pre">r.y</span> <span class="pre">+</span> <span class="pre">y,</span> <span class="pre">r.w,</span> <span class="pre">r.h)</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Rect.inset">
+<tt class="descclassname">Rect.</tt><tt class="descname">inset</tt><big>(</big><em>top</em>, <em>left</em><span class="optional">[</span>, <em>bottom</em>, <em>right</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#scene.Rect.inset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a rectangle that is adjusted by the given edge insets. <cite>bottom</cite>/<cite>right</cite> are optional and default to the same value as <cite>top</cite>/<cite>left</cite>.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scene.gravity">
+<tt class="descclassname">scene.</tt><tt class="descname">gravity</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.gravity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current gravity vector (x, y, z) &#8211; each component value will be between 0.0 and 1.0. This can be used to determine the current orientation of the device, typically for motion-controlled games.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene.get_screen_size">
+<tt class="descclassname">scene.</tt><tt class="descname">get_screen_size</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.get_screen_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the screen size (in points) as a <a class="reference internal" href="#scene.Size" title="scene.Size"><tt class="xref py py-class docutils literal"><span class="pre">Size</span></tt></a> object. Note that the value is orientation-dependent &#8211; you may want to use <tt class="docutils literal"><span class="pre">min(get_screen_size())</span></tt> to get the smallest dimension in any orientation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene.get_screen_scale">
+<tt class="descclassname">scene.</tt><tt class="descname">get_screen_scale</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.get_screen_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the scale factor of the current device&#8217;s screen. For retina screens this will usually be 2.0 or 3.0, and 1.0 for non-retina screens.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene.get_image_path">
+<tt class="descclassname">scene.</tt><tt class="descname">get_image_path</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#scene.get_image_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the absolute path of the file that corresponds to a built-in image name.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene.run">
+<tt class="descclassname">scene.</tt><tt class="descname">run</tt><big>(</big><em>scene</em>, <em>orientation=DEFAULT_ORIENTATION</em>, <em>frame_interval=1</em>, <em>anti_alias=False</em>, <em>show_fps=False</em>, <em>multi_touch=True</em><big>)</big><a class="headerlink" href="#scene.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the given <a class="reference internal" href="#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object.
+By default, the scene runs in the current device orientation, set the parameter
+to <cite>PORTRAIT</cite> or <cite>LANDSCAPE</cite> to force a specific orientation (and to disallow auto-rotation).</p>
+<p>By default, the scene&#8217;s <tt class="xref py py-meth docutils literal"><span class="pre">update()</span></tt> method is called 60 times per second.
+Set the <cite>frame_interval</cite> parameter to 2 for 30fps, 3 for 20, etc.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scene.get_controllers">
+<tt class="descclassname">scene.</tt><tt class="descname">get_controllers</tt><big>(</big><big>)</big><a class="headerlink" href="#scene.get_controllers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current state of all connected MFi game controllers as a list of dicts (see also <a class="reference internal" href="#game-controllers">Game Controllers</a>).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="orientations">
+<h3>Orientations<a class="headerlink" href="#orientations" title="Permalink to this headline">¶</a></h3>
+<p>The following constants are used for the <cite>orientation</cite> parameter of the <a class="reference internal" href="#scene.run" title="scene.run"><tt class="xref py py-func docutils literal"><span class="pre">run()</span></tt></a> function.</p>
+<dl class="data">
+<dt id="scene.DEFAULT_ORIENTATION">
+<tt class="descclassname">scene.</tt><tt class="descname">DEFAULT_ORIENTATION</tt><a class="headerlink" href="#scene.DEFAULT_ORIENTATION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the scene in the current device orientation, allow auto-rotation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.PORTRAIT">
+<tt class="descclassname">scene.</tt><tt class="descname">PORTRAIT</tt><a class="headerlink" href="#scene.PORTRAIT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force portrait orientation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.LANDSCAPE">
+<tt class="descclassname">scene.</tt><tt class="descname">LANDSCAPE</tt><a class="headerlink" href="#scene.LANDSCAPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force landscape orientation.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="blend-modes">
+<h3>Blend Modes<a class="headerlink" href="#blend-modes" title="Permalink to this headline">¶</a></h3>
+<dl class="data">
+<dt id="scene.BLEND_NORMAL">
+<tt class="descclassname">scene.</tt><tt class="descname">BLEND_NORMAL</tt><a class="headerlink" href="#scene.BLEND_NORMAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source and destination colors are blended by multiplying the source alpha value.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.BLEND_ADD">
+<tt class="descclassname">scene.</tt><tt class="descname">BLEND_ADD</tt><a class="headerlink" href="#scene.BLEND_ADD" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source and destination colors are added together.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.BLEND_MULTIPLY">
+<tt class="descclassname">scene.</tt><tt class="descname">BLEND_MULTIPLY</tt><a class="headerlink" href="#scene.BLEND_MULTIPLY" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source color is multiplied by the destination color.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="texture-filtering-modes">
+<h2>Texture Filtering Modes<a class="headerlink" href="#texture-filtering-modes" title="Permalink to this headline">¶</a></h2>
+<p>The following constants can be used for the <a class="reference internal" href="#scene.Texture.filtering_mode" title="scene.Texture.filtering_mode"><tt class="xref py py-attr docutils literal"><span class="pre">Texture.filtering_mode</span></tt></a> attribute.</p>
+<dl class="data">
+<dt id="scene.FILTERING_LINEAR">
+<tt class="descclassname">scene.</tt><tt class="descname">FILTERING_LINEAR</tt><a class="headerlink" href="#scene.FILTERING_LINEAR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear interpolation, the default filtering mode</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.FILTERING_NEAREST">
+<tt class="descclassname">scene.</tt><tt class="descname">FILTERING_NEAREST</tt><a class="headerlink" href="#scene.FILTERING_NEAREST" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nearest-neighbor interpolation &#8211; this is the recommended mode for pixel art because it results in sharp edges when scaling up low-resolution artwork.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="timing-modes">
+<h2>Timing Modes<a class="headerlink" href="#timing-modes" title="Permalink to this headline">¶</a></h2>
+<p>The following constants can be used for the <tt class="xref py py-attr docutils literal"><span class="pre">timing_mode</span></tt> attribute of <a class="reference internal" href="#scene.Action" title="scene.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> objects to determine their interpolation function.</p>
+<dl class="data">
+<dt id="scene.TIMING_LINEAR">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_LINEAR</tt><a class="headerlink" href="#scene.TIMING_LINEAR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple linear interpolation (the default).</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_EASE_IN">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_EASE_IN</tt><a class="headerlink" href="#scene.TIMING_EASE_IN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ease-in interpolation</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_EASE_IN_2">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_EASE_IN_2</tt><a class="headerlink" href="#scene.TIMING_EASE_IN_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alternative ease-in interpolation (quadratic)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_EASE_OUT">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_EASE_OUT</tt><a class="headerlink" href="#scene.TIMING_EASE_OUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ease-out interpolation</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_EASE_OUT_2">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_EASE_OUT_2</tt><a class="headerlink" href="#scene.TIMING_EASE_OUT_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alternative ease-out interpolation (quadratic)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_EASE_IN_OUT">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_EASE_IN_OUT</tt><a class="headerlink" href="#scene.TIMING_EASE_IN_OUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ease-in-ease-out interpolation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_SINODIAL">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_SINODIAL</tt><a class="headerlink" href="#scene.TIMING_SINODIAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to <a class="reference internal" href="#scene.TIMING_EASE_IN_OUT" title="scene.TIMING_EASE_IN_OUT"><tt class="xref py py-data docutils literal"><span class="pre">TIMING_EASE_IN_OUT</span></tt></a>, but with slightly less pronounced easing phases.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_ELASTIC_IN">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_ELASTIC_IN</tt><a class="headerlink" href="#scene.TIMING_ELASTIC_IN" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;Rubberband&#8221; effect at the start of the animation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_ELASTIC_OUT">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_ELASTIC_OUT</tt><a class="headerlink" href="#scene.TIMING_ELASTIC_OUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;Rubberband&#8221; effect at the end of the animation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_ELASTIC_IN_OUT">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_ELASTIC_IN_OUT</tt><a class="headerlink" href="#scene.TIMING_ELASTIC_IN_OUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;Rubberband&#8221; effect at both ends of the animation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_BOUNCE_IN">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_BOUNCE_IN</tt><a class="headerlink" href="#scene.TIMING_BOUNCE_IN" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;Bouncing&#8221; effect at the start of the animation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_BOUNCE_OUT">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_BOUNCE_OUT</tt><a class="headerlink" href="#scene.TIMING_BOUNCE_OUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;Bouncing&#8221; effect at the end of the animation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_BOUNCE_IN_OUT">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_BOUNCE_IN_OUT</tt><a class="headerlink" href="#scene.TIMING_BOUNCE_IN_OUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;Bouncing&#8221; effect at both ends of the animation.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_EASE_BACK_IN">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_EASE_BACK_IN</tt><a class="headerlink" href="#scene.TIMING_EASE_BACK_IN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overshooting animation, eased at the start.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_EASE_BACK_OUT">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_EASE_BACK_OUT</tt><a class="headerlink" href="#scene.TIMING_EASE_BACK_OUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overshooting animation, eased at the end.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="scene.TIMING_EASE_BACK_IN_OUT">
+<tt class="descclassname">scene.</tt><tt class="descname">TIMING_EASE_BACK_IN_OUT</tt><a class="headerlink" href="#scene.TIMING_EASE_BACK_IN_OUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overshooting animation, eased at the start and end.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 20, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

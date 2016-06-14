@@ -1,0 +1,670 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>What’s New in Pythonista &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="what-s-new-in-pythonista">
+<h1>What&#8217;s New in Pythonista<a class="headerlink" href="#what-s-new-in-pythonista" title="Permalink to this headline">¶</a></h1>
+<p>This page contains detailed information about changes in new versions of the Pythonista app.</p>
+<div class="section" id="version-3-0">
+<h2>Version 3.0<a class="headerlink" href="#version-3-0" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="highlights">
+<h3>Highlights<a class="headerlink" href="#highlights" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Support for both Python 3.5 and 2.7</li>
+<li>Integrated debugger with support for breakpoints and visual stack frame inspection</li>
+<li>Split-screen support on iPad Air 2 and later</li>
+<li>Theme editor for custom UI and syntax highlighting themes</li>
+<li>Integrated doctest support</li>
+<li>Integrated PEP-8 style checker</li>
+<li>Improved code completion with fuzzy matching and user-defined snippets</li>
+<li>Completely revamped <a class="reference internal" href="photos.html#module-photos" title="photos: Provides access to the photo library on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">photos</span></tt></a> module, including editable metadata, album creation, content editing, and more</li>
+</ul>
+</div>
+<div class="section" id="python-3-suppport">
+<h3>Python 3 Suppport<a class="headerlink" href="#python-3-suppport" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Pythonista now supports Python 3.5, in addition to 2.7. You can select the default interpreter in the settings. It&#8217;s also possible to override the default interpreter for individual scripts, using a &#8220;shebang&#8221; like <tt class="docutils literal"><span class="pre">#!</span> <span class="pre">python3</span></tt> or <tt class="docutils literal"><span class="pre">#!</span> <span class="pre">python2</span></tt> as the first line of a script. Alternatively, you can tap and hold the run button to test a script in the non-default Python version. To help you with migrating your scripts to Python 3, you can use the &#8220;Python 2 to 3&#8221; tool in the &#8220;wrench&#8221; menu.</li>
+<li>To learn more about the differences between Python 2.7 and 3.x, I recommend the following article (external link): <a class="reference external" href="http://sebastianraschka.com/Articles/2014_python_2_3_key_diff.html">The key differences between Python 2.7.x and Python 3.x with examples</a>.</li>
+<li>If you also have Pythonista 2 installed, you can access your existing files through the special &#8220;Pythonista 2&#8221; folder in the script library. It is possible to move files from Pythonista 2 to Pythonista 3, but not vice-versa. You can disable the Pythonista 2 folder entirely from the settings.</li>
+<li>The interactive console uses the default interpreter version, but you can switch to the other interpreter by tapping the <tt class="docutils literal"><span class="pre">[2.7]</span></tt> or <tt class="docutils literal"><span class="pre">[3.5]</span></tt> button (depending on the current setting).</li>
+</ul>
+</div>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>When using the URL scheme to launch Pythonista, you can now use <tt class="docutils literal"><span class="pre">pythonista3://</span></tt> instead of <tt class="docutils literal"><span class="pre">pythonista://</span></tt>. The old scheme is still supported, but its behavior is undefined if both Pythonista 2.x and 3.x are installed.</li>
+<li>On iPad Air 2 or later (including iPad Pro and iPad mini 4), Pythonista now fully supports the system-wide split-screen feature, so you can run another app next to Pythonista. Unfortunately, this also means that the <tt class="docutils literal"><span class="pre">orientations</span></tt> argument for <a class="reference internal" href="ui.html#ui.View.present" title="ui.View.present"><tt class="xref py py-meth docutils literal"><span class="pre">ui.View.present()</span></tt></a> no longer works on devices that support split-screen, i.e. you can&#8217;t lock the orientation of a view to portrait or landscape. If auto-rotation isn&#8217;t disabled via Control Center, the app <em>always</em> auto-rotates. It is currently not possible to change this due to iOS limitations.</li>
+<li>Script shortcuts can now be added to the home screen from the <em>editor actions</em> (&#8220;wrench&#8221;) menu. This basically works by setting up a website that redirects to a pythonista3:// URL, so the actual shortcut is added from Safari. The <em>Convert to PDF</em> action has moved into the <em>Share</em> menu.</li>
+<li>Improved support for <a class="reference internal" href="../library/doctest.html#module-doctest" title="doctest: Test pieces of code within docstrings."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> tests &#8211; a new file template allows you to create a doctest file in Markdown format. There&#8217;s more information about this in the template itself. Doctest results are shown as annotations directly in the editor.</li>
+<li>You can now add your own templates to the &#8220;New File&#8221; menu. Simply add files to the <em>Templates</em> folder (in the <em>Modules &amp; Templates</em> group).</li>
+<li>The view options for the script library (thumbnails, sort order) are now accesible directly in the library view (&#8221;...&#8221; button).</li>
+<li>Script shortcuts of the sharing extension can now be edited in the main app&#8217;s settings as well.</li>
+<li>Added a <em>Sound Effects</em> setting to disable keyboard clicks etc.</li>
+<li>Various &#8220;special&#8221; folders (standard library, site-packages) are now grouped under &#8220;Modules &amp; Templates&#8221; in the script library. Note that this doesn&#8217;t change the location of these folders on disk, so the site-packages and Templates folders still appear directly under &#8220;Documents&#8221; in the &#8220;Move Files&#8221; dialog.</li>
+<li>There are now separate site-packages folders for the two interpreter versions. <cite>site-packages-2</cite> is only used by Python 2.7, <cite>site-packages-3</cite> only by 3.5. The old <cite>site-packages</cite> folder still exists as a fallback for both interpreters.</li>
+</ul>
+</div>
+<div class="section" id="debugger">
+<h3>Debugger<a class="headerlink" href="#debugger" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Pythonista now includes a real debugger with support for breakpoints and visual stackframe inspection. This also replaces the traceback navigator, and enables more advanced &#8220;post-mortem&#8221; debugging when an exception occurs.</li>
+<li>To start breakpoint debugging, you have to add at least one breakpoint to your script (from the copy/paste menu). If a script contains breakpoints, tapping the run button will automatically offer a &#8220;Debug&#8221; option. The debugger is also shown in &#8220;post-mortem&#8221; mode when an unhandled exceptions occurs.</li>
+<li>The debugger UI appears as an overlay &#8220;window&#8221; on top of everything else, so that it&#8217;s possible to use it e.g. while a full-screen UI is presented. You can drag the debugger around on the screen if it gets in the way.</li>
+<li>To get more information about variables and stack frames, you can expand the debugger UI. The <em>Variables</em> tab shows you all local and global variables in the selected stack frame, and you can expand objects (using the triangle buttons) to show their attributes (or members, in case of sequences or dicts), which makes it possible to inspect nested data structures. Tapping on a variable name shows a string representation, similar to <tt class="docutils literal"><span class="pre">repr(var)</span></tt>. For certain types of objects, a preview image is shown instead &#8211; this currently works for <tt class="xref py py-class docutils literal"><span class="pre">PIL.Image</span></tt>, <a class="reference internal" href="ui.html#ui.Image" title="ui.Image"><tt class="xref py py-class docutils literal"><span class="pre">ui.Image</span></tt></a>, <a class="reference internal" href="ui.html#ui.View" title="ui.View"><tt class="xref py py-class docutils literal"><span class="pre">ui.View</span></tt></a>, and <a class="reference internal" href="ui.html#ui.Path" title="ui.Path"><tt class="xref py py-class docutils literal"><span class="pre">ui.Path</span></tt></a>, and it&#8217;s indicated by an &#8220;eye&#8221; icon in the list.</li>
+</ul>
+</div>
+<div class="section" id="editor">
+<h3>Editor<a class="headerlink" href="#editor" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>You can now define <em>snippets</em> in the settings to insert frequently-used pieces of (boilerplate) code more quickly. When you set an abbreviation for a snippet, it shows up in the code completion suggestions. You can also select from a list of snippets in the editor using the copy/paste menu (with an empty selection) or the Cmd+D keyboard shortcut. Note: Snippets are only supported in Python files.</li>
+<li>The <em>Convert Tabs</em> action is now undoable, and the confirmation dialog has a new option to open the indentation settings.</li>
+<li>Code completions can now be suggested based on fuzzy matching, e.g. typing &#8220;rage&#8221; also suggests &#8220;range()&#8221; (fuzzy-matched completions are always shown after precise matches).</li>
+<li>When using an external (Bluetooth) keyboard, code completions can now be selected with the up/down arrow keys.</li>
+<li>A new Cmd+L (or Ctrl+6) keyboard shortcut shows the current file&#8217;s outline (while editing) &#8211; The up/down arrow keys and return can be used to navigate to a different function without touching the screen.</li>
+<li>New Cmd+Shift+B shortcut for adding/removing breakpoints.</li>
+<li>When text is selected, pressing the tab key will now indent the selected line(s) instead of replacing the selected text with a tab. Shift-tab can be used to unindent on an external keyboard. On the on-screen keyboard, you can tap and hold the tab key for an unindent option. Indentation options are no longer shown in the copy/paste menu by default, but you can re-enable them in the settings (under &#8220;Keyboard &amp; Typing&#8221;).</li>
+<li>The color picker (in the UI editor and asset picker) now allows entering arbitrary hex values by tapping on the color swatch.</li>
+<li>Integrated PEP8 style checker: You can check a script by tapping and holding the ▷ (run) button. Various options for customizing the rules are available in the settings. Issues are highlighted directly in the editor.</li>
+<li>Integrated <cite>pyflakes</cite> static analyzer: Similar to the PEP8 style checker, you can invoke this by tapping and holding the ▷ (run) button. The analyzer can find unused imports, undefined variables, and similar issues, which are also highlighted directly in the editor.</li>
+<li>When running a script with arguments (by tapping and holding the run button), the arguments are now saved for each script individually. When the current script has any saved arguments, they are also used for running the script normally (i.e. by just tapping the run button). The icon of the run button changes slightly to indicate whether there are arguments for the current script.</li>
+<li>Line numbers can optionally be shown on iPhone as well (line numbers were previously iPad-only).</li>
+<li>On iPhone, the &#8220;show tabs&#8221; button is now at the bottom of the screen (or above the keyboard), so that the <em>editor actions</em> (&#8220;wrench&#8221;) menu is more easily accessible in the main toolbar.</li>
+<li>The search bar in the editor now uses the same extra keyboard row as the editor itself.</li>
+<li>New &#8220;Line Length Warning&#8221; option (under <em>Indentation &amp; Coding Style</em>). When enabled, the end of long lines is highlighted. The maximum line length can be customized (79 by default).</li>
+</ul>
+</div>
+<div class="section" id="console">
+<h3>Console<a class="headerlink" href="#console" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Improved console prompt: The text input area now expands automatically for multi-line statements (e.g. function definitions, loops). The code completion behavior is also more consistent between the editor and console now (e.g. the tab key inserts the first suggestion).</li>
+<li>Showing images in the console has been improved substantially. A single tap on an image now opens it in a zoomable full-screen view. The sizing of image containers also matches the aspect ratio of the shown images more closely, especially when the console is in the more compact &#8220;docked&#8221; mode.</li>
+</ul>
+</div>
+<div class="section" id="modules">
+<h3>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="photos">
+<h4><a class="reference internal" href="photos.html#module-photos" title="photos: Provides access to the photo library on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">photos</span></tt></a><a class="headerlink" href="#photos" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The <a class="reference internal" href="photos.html#module-photos" title="photos: Provides access to the photo library on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">photos</span></tt></a> module has been completely revamped, and allows far more advanced access to the iOS photo library, including editable metadata, album creation, and content editing. Please see the <a class="reference internal" href="photos.html#module-photos" title="photos: Provides access to the photo library on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">photos</span></tt></a> module docs for details.</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h4><a class="reference internal" href="editor.html#module-editor" title="editor: Scripting Pythonista's text editor"><tt class="xref py py-mod docutils literal"><span class="pre">editor</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference internal" href="editor.html#editor.open_file" title="editor.open_file"><tt class="xref py py-func docutils literal"><span class="pre">editor.open_file()</span></tt></a> now accepts both relative and absolute paths (relative paths are always resolved against ~/Documents though, not the current working directory).</li>
+<li>New <a class="reference internal" href="editor.html#editor.annotate_line" title="editor.annotate_line"><tt class="xref py py-func docutils literal"><span class="pre">editor.annotate_line()</span></tt></a> function to annotate lines of code in the editor, similar to the integrated style checker and static analyzer.</li>
+<li>New <a class="reference internal" href="editor.html#editor.apply_ui_theme" title="editor.apply_ui_theme"><tt class="xref py py-func docutils literal"><span class="pre">editor.apply_ui_theme()</span></tt></a> and <a class="reference internal" href="editor.html#editor.present_themed" title="editor.present_themed"><tt class="xref py py-func docutils literal"><span class="pre">editor.present_themed()</span></tt></a> functions for styling a <a class="reference internal" href="ui.html#ui.View" title="ui.View"><tt class="xref py py-class docutils literal"><span class="pre">ui.View</span></tt></a> with a theme.</li>
+</ul>
+</div>
+<div class="section" id="ui">
+<h4><a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a><a class="headerlink" href="#ui" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Views that are presented in &#8216;panel&#8217; style can be closed programmatically now (the <a class="reference internal" href="ui.html#ui.View.close" title="ui.View.close"><tt class="xref py py-meth docutils literal"><span class="pre">ui.View.close()</span></tt></a> method was previously ignored for this presentation style).</li>
+<li>The <a class="reference internal" href="ui.html#ui.TableView" title="ui.TableView"><tt class="xref py py-class docutils literal"><span class="pre">ui.TableView</span></tt></a> initializer supports keyword arguments now (same as other <a class="reference internal" href="ui.html#ui.View" title="ui.View"><tt class="xref py py-class docutils literal"><span class="pre">ui.View</span></tt></a> subclasses)</li>
+<li><a class="reference internal" href="ui.html#ui.WebView" title="ui.WebView"><tt class="xref py py-class docutils literal"><span class="pre">ui.WebView</span></tt></a> can now load non-https pages in the app extension.</li>
+<li><a class="reference internal" href="ui.html#ui.WebView.load_url" title="ui.WebView.load_url"><tt class="xref py py-class docutils literal"><span class="pre">ui.WebView.load_url</span></tt></a> now treats absolute file paths like file URLs (so you don&#8217;t have to construct a <tt class="docutils literal"><span class="pre">file://</span></tt> URL for loading local files).</li>
+<li><a class="reference internal" href="../library/copy.html#copy.copy" title="copy.copy"><tt class="xref py py-func docutils literal"><span class="pre">copy.copy()</span></tt></a> now works correctly for geometry types (<tt class="xref py py-class docutils literal"><span class="pre">ui.Point</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">ui.Size</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">ui.Rect</span></tt>).</li>
+</ul>
+</div>
+<div class="section" id="scene">
+<h4><a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a><a class="headerlink" href="#scene" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Added support for MFi game controllers (see the module docs for details).</li>
+<li><tt class="docutils literal"><span class="pre">anchor_point</span></tt> can now be passed as a keyword argument to the <tt class="xref py py-class docutils literal"><span class="pre">SpriteNode</span></tt> initializer.</li>
+<li><a class="reference internal" href="scene.html#scene.Texture" title="scene.Texture"><tt class="xref py py-class docutils literal"><span class="pre">scene.Texture</span></tt></a> has a new <a class="reference internal" href="scene.html#scene.Texture.subtexture" title="scene.Texture.subtexture"><tt class="xref py py-meth docutils literal"><span class="pre">scene.Texture.subtexture()</span></tt></a> method that can be used for sprite sheets etc.</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">LabelNode</span></tt> rendering quality is improved.</li>
+<li>Initializing <a class="reference internal" href="scene.html#scene.ShapeNode" title="scene.ShapeNode"><tt class="xref py py-class docutils literal"><span class="pre">scene.ShapeNode</span></tt></a> with <tt class="docutils literal"><span class="pre">path=None</span></tt> no longer throws an exception.</li>
+<li>Initializing <a class="reference internal" href="scene.html#scene.SpriteNode" title="scene.SpriteNode"><tt class="xref py py-class docutils literal"><span class="pre">scene.SpriteNode</span></tt></a> with <tt class="docutils literal"><span class="pre">texture=None</span></tt> no longer throws an exception.</li>
+<li><a class="reference internal" href="../library/copy.html#copy.copy" title="copy.copy"><tt class="xref py py-func docutils literal"><span class="pre">copy.copy()</span></tt></a> now works correctly for geometry types (<a class="reference internal" href="scene.html#scene.Point" title="scene.Point"><tt class="xref py py-class docutils literal"><span class="pre">scene.Point</span></tt></a>, <a class="reference internal" href="scene.html#scene.Size" title="scene.Size"><tt class="xref py py-class docutils literal"><span class="pre">scene.Size</span></tt></a>, <a class="reference internal" href="scene.html#scene.Rect" title="scene.Rect"><tt class="xref py py-class docutils literal"><span class="pre">scene.Rect</span></tt></a>).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="misc">
+<h3>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The behavior of <a class="reference internal" href="../library/sys.html#sys.exit" title="sys.exit"><tt class="xref py py-func docutils literal"><span class="pre">sys.exit()</span></tt></a> has changed: Registered <a class="reference internal" href="../library/atexit.html#module-atexit" title="atexit: Register and execute cleanup functions."><tt class="xref py py-mod docutils literal"><span class="pre">atexit</span></tt></a> handlers are called, but nothing else happens (previous versions printed the exit code to the console). If you <em>really</em> want to exit the app, use <a class="reference internal" href="../library/os.html#os._exit" title="os._exit"><tt class="xref py py-func docutils literal"><span class="pre">os._exit()</span></tt></a>.</li>
+<li>The editor no longer strips trailing blank lines when saving.</li>
+<li>The console has (limited) support for the <tt class="docutils literal"><span class="pre">\b</span></tt> and <tt class="docutils literal"><span class="pre">\r</span></tt> control characters now. The most common use case would be simple progress displays that overwrite the last line that was printed. Note that (unlike in a real terminal) these control characters only have an effect within a single string. Printing should also be a bit faster, and a couple of issues with <a class="reference internal" href="console.html#console.set_color" title="console.set_color"><tt class="xref py py-func docutils literal"><span class="pre">console.set_color()</span></tt></a> and <a class="reference internal" href="console.html#console.write_link" title="console.write_link"><tt class="xref py py-func docutils literal"><span class="pre">console.write_link()</span></tt></a> are fixed.</li>
+<li>When a script is running in the background for longer than iOS allows (about 3-4 minutes), the app should usually be suspended now (previously, it was killed immediately).</li>
+<li>It&#8217;s now possible to open folders in the library using the URL scheme. The syntax is the same as for opening files (pythonista3://some/path?action=open).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-2-0">
+<h2>Version 2.0<a class="headerlink" href="#version-2-0" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>General<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Pythonista is now compatible with all iOS screen sizes &#8211; from iPhone 4 to iPad Pro, and everything in-between.</li>
+<li>For larger projects, you can now use multiple editor tabs to switch between related files more quickly.</li>
+<li>The Pythonista app extension allows you to run Python scripts directly within other apps, using the standard iOS share sheet. Depending on the context, you can use the new <cite>appex</cite> module to access data that was passed to the share sheet, e.g. images in the Photos app, URLs in Safari, text in Notes, etc. The app extension also provides an interactive console and a basic code editor for small tweaks.</li>
+<li>New and refined color themes are available in the settings; selecting a different theme now changes the entire app&#8217;s UI instead of just syntax highlighting.</li>
+<li>The file browser and editor have much better support for non-Python files. HTML, CSS, JavaScript, and Markdown files are syntax-highlighted in the editor, Zip archives can be extracted, and a QuickLook preview is available for most common file types, e.g. images, PDFs, and audio/video.</li>
+<li>Additional templates are available in the improved &#8220;new file&#8221; menu. You can also import photos from your camera roll as image files there.</li>
+<li>The console&#8217;s interactive prompt is now syntax-highlighted, and provides better support for Bluetooth keyboards (you can use the up/down keys to navigate the command history).</li>
+<li>You can now read the (pure Python) source code of the included standard library (and third-party modules) directly in the app. Simply enable the &#8220;Show Standard Library&#8221; setting if you&#8217;re interested in looking &#8220;under the hood&#8221;.</li>
+<li>The UI editor contains a much improved inspector panel, undo/redo support, the possibility to set custom attributes, and a lot of other refinements.</li>
+</ul>
+</div>
+<div class="section" id="code-editor">
+<h3>Code Editor<a class="headerlink" href="#code-editor" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The new traceback navigator allows you to get a lot more information about errors in your programs. When an exception occurs, a brief summary is shown at the top of the screen, and the line where the exception occurred is highlighted in the editor. By tapping on the exception summary, you can navigate the entire traceback, even if the source of the exception is in a different file. You can also tap the <tt class="docutils literal"><span class="pre">&lt;...</span></tt> marker in the editor to inspect variable values in the selected stack frame.</li>
+<li>The editor actions (&#8220;wrench&#8221;) menu has been improved significantly. You can now assign custom icons and colors to your script shortcuts. It&#8217;s also possible to invoke the standard iOS share sheet from the actions menu. If you have an iPhone 6s or 6s Plus (with 3D Touch), you can launch shortcuts directly from the homescreen by pressing the Pythonista icon.</li>
+<li>The improved asset picker (<tt class="docutils literal"><span class="pre">[+]</span></tt> button) contains more free image and sound effect collections that can be used with the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a>, <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a>, and <a class="reference internal" href="sound.html#module-sound" title="sound: Sound effects and music playback"><tt class="xref py py-mod docutils literal"><span class="pre">sound</span></tt></a> modules. The UI for opening the asset picker is also consistent between iPad and iPhone now.</li>
+<li>When the cursor is inside a color string (e.g. &#8216;#ff0000&#8217; or &#8216;red&#8217;) or built-in image name, a preview overlay is shown automatically. You can also tap the preview overlay to select a different color or image.</li>
+<li>The new <em>Highlight All</em> option in the copy/paste menu allows you to quickly find all occurrences of a word (e.g. variable name), without typing anything in the search bar.</li>
+<li>You can adjust the indentation of a selected block of code more easily with the new <tt class="docutils literal"><span class="pre">⇥</span> <span class="pre">Indent</span></tt> menu items (in the copy/paste menu).</li>
+<li>iPad only: The extended keyboard has a more compact layout by default. If you prefer a larger keyboard with an additional number row, you can enable this in the settings.</li>
+</ul>
+</div>
+<div class="section" id="python-modules">
+<h3>Python / Modules<a class="headerlink" href="#python-modules" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The completely revamped <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module gives you a lot more possibilities for building 2D games and animations in Pythonista. You can even use custom OpenGL fragment shaders. Lots of new sample code and a tutorial for building a simple game are available in the included <em>Examples</em> folder.</li>
+<li>The <a class="reference internal" href="../library/ctypes.html#module-ctypes" title="ctypes: A foreign function library for Python."><tt class="xref py py-mod docutils literal"><span class="pre">ctypes</span></tt></a> module from the standard library is finally available in Pythonista, and the custom <a class="reference internal" href="objc_util.html#module-objc_util" title="objc_util: Utility module for &quot;bridging&quot; a limited set of Objective-APIs to Python"><tt class="xref py py-mod docutils literal"><span class="pre">objc_util</span></tt></a> module uses this as the foundation for an Objective-C bridge that makes it possible to call native APIs using familiar Python syntax. A few sample scripts are included in the <em>Examples</em> folder.</li>
+<li>You can customize the startup process of the Python interpreter by creating a file named &#8220;pythonista_startup.py&#8221; in the site-packages folder. When the app is launched, the interpreter will execute this module, so that all variables/functions/classes in the script become available globally. A common use case might be <tt class="docutils literal"><span class="pre">from</span> <span class="pre">math</span> <span class="pre">import</span> <span class="pre">*</span></tt> (if you want to use the console as a calculator). Note: If Pythonista becomes unusable due to a misbehaving startup script, you can launch the app in a &#8220;clean&#8221; state by entering <tt class="docutils literal"><span class="pre">pythonista://</span></tt> in Safari&#8217;s address field.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-5">
+<h2>Version 1.5<a class="headerlink" href="#version-1-5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>General<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>You can no longer use the &#8220;Open in...&#8221; menu from other apps to open files in Pythonista. This change was made in order to comply with Apple&#8217;s app review guidelines.</li>
+<li>Xcode export is currently not available from within the app. I&#8217;m working on a way to create Xcode projects from Pythonista scripts on a Mac instead; details will be available on the <a class="reference external" href="http://omz-software.com/pythonista">Pythonista website</a> soon.</li>
+<li>Smarter code completion &#8211; in situations that the old completion system couldn&#8217;t handle, Pythonista is now using the <a class="reference external" href="http://jedi.jedidjah.ch">jedi</a> library. This applies to things like instance members, where the type of the object can be inferred. The extended code completion can be somewhat slow, depending on your device generation and the size of modules you&#8217;re working with. It should get faster over time, as caches are built, and the old completion system continues to work while you&#8217;re waiting for jedi results, but in case you find this impacting the overall performance of the app and your scripts, you can disable extended completion separately in the settings.</li>
+<li>The documentation is now shown in the same panel as the console (this also applies to the built-in web browser used by the <a class="reference internal" href="../library/webbrowser.html#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module).</li>
+<li>The keyboard shortcut for switching between editor and console is now Cmd+J instead of Cmd+&lt;Space&gt; (the previous shortcut conflicted with switching the keyboard language).</li>
+<li>The integrated documentation has a new look.</li>
+<li>User-created modules are now reloaded automatically when running a script.</li>
+<li>New <cite>site-packages</cite> folder that is included in the default <tt class="docutils literal"><span class="pre">sys.path</span></tt> (this is a good location for shared modules that you want to import in scripts across different folders). Please note that the aforementioned automatic reloading doesn&#8217;t apply to modules in this folder (in order to improve performance).</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Python / Modules<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Integrated <a class="reference external" href="../numpy/reference/index.html">numpy</a> and <a class="reference external" href="../matplotlib/index.html">matplotlib</a>.</li>
+<li>New <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a> module for creating native user interfaces on iOS, including an integrated UI editor.</li>
+<li>New <a class="reference internal" href="motion.html#module-motion" title="motion: Provides motion sensor data on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">motion</span></tt></a> module for accessing the device&#8217;s motion sensors (accelerometer, gyroscope, magnetometer).</li>
+<li>The <a class="reference internal" href="notification.html#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> module has a new <tt class="xref py py-meth docutils literal"><span class="pre">notification.set_badge()</span></tt> method.</li>
+<li>Various improvements in the <a class="reference internal" href="photos.html#module-photos" title="photos: Provides access to the photo library on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">photos</span></tt></a> module, especially the <tt class="xref py py-func docutils literal"><span class="pre">photos.pick_image()</span></tt> function (new keyword arguments for multiple selection, including metadata, and returning raw data instead of decoded images)</li>
+<li>Updated various modules to the latest PyPI versions (<a class="reference internal" href="bottle/index.html#module-bottle" title="bottle"><tt class="xref py py-mod docutils literal"><span class="pre">bottle</span></tt></a>: 0.11.4 → 0.12.5, <a class="reference internal" href="beautifulsoup_ref.html#module-bs4" title="bs4"><tt class="xref py py-mod docutils literal"><span class="pre">bs4</span></tt></a>: 4.1.3 → 4.3.2, <a class="reference internal" href="feedparser.html#module-feedparser" title="feedparser"><tt class="xref py py-mod docutils literal"><span class="pre">feedparser</span></tt></a>: 5.1.2 → 5.1.3, <tt class="xref py py-mod docutils literal"><span class="pre">html5lib</span></tt>: 0.95-dev → 0.999, <a class="reference internal" href="markdown2.html#module-markdown2" title="markdown2: A fast and complete implementation of Markdown in Python"><tt class="xref py py-mod docutils literal"><span class="pre">markdown2</span></tt></a>: 2.1.0 → 2.2.1, <a class="reference internal" href="paramiko.html#module-paramiko" title="paramiko"><tt class="xref py py-mod docutils literal"><span class="pre">paramiko</span></tt></a>: 1.7.7.1 → 1.13.0, <tt class="xref py py-mod docutils literal"><span class="pre">pygments</span></tt>: 1.5 → 1.6, <tt class="xref py py-mod docutils literal"><span class="pre">pyparsing</span></tt>: 1.5.7 → 2.0.1, <a class="reference internal" href="requests.html#module-requests" title="requests"><tt class="xref py py-mod docutils literal"><span class="pre">requests</span></tt></a>: 1.2.2 → 2.2.1)</li>
+</ul>
+</div>
+<div class="section" id="bug-fixes">
+<h3>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed incorrect behavior of up/down arrow keys (on hardware keyboards) after changing the selection via tap.</li>
+<li>Fixed a bug that caused indentation errors to be silently ignored (the script failed to run, but no error message was shown).</li>
+<li>Fixed a potential crash with photos.get_metadata on Chinese iPhones.</li>
+<li>Fixed a potential crash when the recursion limit was exceeded.</li>
+<li>The <a class="reference internal" href="contacts.html#module-contacts" title="contacts: Access the iOS Contacts Database"><tt class="xref py py-mod docutils literal"><span class="pre">contacts</span></tt></a> module can now retrieve the birthday of a person if the year isn&#8217;t set (the year component will be in the distant past in this case); this previously raised an internal exception.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-4">
+<h2>Version 1.4<a class="headerlink" href="#version-1-4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>General<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Complete UI overhaul for iOS 7.</li>
+<li>The interpreter is now based on Python 2.7.5.</li>
+<li>There&#8217;s a new setting to use spaces (&#8220;soft tabs&#8221;) instead of tab characters for indentation. The new &#8220;Convert Indentation...&#8221; action can be used to change the indentation of an existing script to the current setting.</li>
+<li>The action menu is now directly editable, without having to open the settings. It is also  possible to add scripts in folders as actions, and actions can have custom command-line arguments.</li>
+<li>Non-Python files are now visible in the script library. Plain text files can be edited, for other files, a QuickLook preview is shown.</li>
+<li>All scripts are now run in the same interpreter that is also used for the interactive prompt. This makes the console a lot more useful because you can now define functions, classes, etc. in a script and experiment with them directly, without having to use <tt class="xref py py-func docutils literal"><span class="pre">execfile()</span></tt>. It also makes starting scripts a lot faster in most cases because imports are cached. By default, all global variables are cleared before running a script, but there&#8217;s a new setting to control that behavior in the &#8220;Interpreter Options&#8221; section. If you want to completely reset the interpreter, you can do that by tapping and holding the &#8220;Clear&#8221; button in the console.</li>
+<li>There&#8217;s a new option to always clear the console before running a script (in the &#8220;Interpreter Options&#8221; section of the settings).</li>
+<li>Tapping and holding an auto-completion suggestion now shows a help popover (iPad only).</li>
+<li>Improved support for (external) keyboard shortcuts &#8211; Shortcuts now use the Command key instead of Option/Alt, and there&#8217;s a new shortcut to clear the console output (Command + K).</li>
+<li>Scripts are auto-saved more often.</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>Bug Fixes<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed: Using an action URL with the <a class="reference internal" href="notification.html#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> module did not work correctly if Pythonista was not already running in the background when the notification was activated.</li>
+<li>Fixed: Certain types of syntax errors (e.g. &#8220;&#8216;break&#8217; outside loop&#8221;) weren&#8217;t shown.</li>
+<li>Fixed: Exporting the entire script library also exports subfolders now.</li>
+<li>Fixed: CJK string encodings should work properly now.</li>
+<li>Fixed: After using the <a class="reference internal" href="canvas.html#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> module, the console sometimes showed up, even though there was no output.</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3>Python / Modules<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>New <a class="reference internal" href="contacts.html#module-contacts" title="contacts: Access the iOS Contacts Database"><tt class="xref py py-mod docutils literal"><span class="pre">contacts</span></tt></a> module to access the iOS address book database.</li>
+<li>New <a class="reference internal" href="location.html#module-location" title="location: Provides geo-location services on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">location</span></tt></a> module (access to GPS data and geocoding services)</li>
+<li>New <a class="reference internal" href="speech.html#module-speech" title="speech"><tt class="xref py py-mod docutils literal"><span class="pre">speech</span></tt></a> module (text-to-speech synthesis).</li>
+<li>Most standard library modules have been updated as part of the transition to Python 2.7.5.</li>
+<li>The <a class="reference internal" href="console.html#module-console" title="console: Utilities for Console Output and Various System Services"><tt class="xref py py-mod docutils literal"><span class="pre">console</span></tt></a> module has a new <a class="reference internal" href="console.html#console.quicklook" title="console.quicklook"><tt class="xref py py-func docutils literal"><span class="pre">console.quicklook()</span></tt></a> function for previewing many types of files (e.g. PDF and Office documents, but also images and media files).</li>
+<li>The <a class="reference internal" href="sound.html#sound.play_effect" title="sound.play_effect"><tt class="xref py py-func docutils literal"><span class="pre">sound.play_effect()</span></tt></a> function now supports local files (in addition to the built-in effects). It also has two new optional parameters for volume and pitch, and it&#8217;s possible to stop individual sound effects with the <a class="reference internal" href="sound.html#sound.stop_effect" title="sound.stop_effect"><tt class="xref py py-func docutils literal"><span class="pre">sound.stop_effect()</span></tt></a> function.</li>
+<li>New <tt class="xref py py-func docutils literal"><span class="pre">webbrowser.add_to_reading_list()</span></tt> function to add URLs to Safari&#8217;s <cite>Reading List</cite>.</li>
+<li>The standard library is now included as compiled bytecode (.pyc), in addition to the source code. This should improve performance in a lot of cases.</li>
+<li>The <a class="reference internal" href="requests.html#module-requests" title="requests"><tt class="xref py py-mod docutils literal"><span class="pre">requests</span></tt></a> module has been updated to the latest version.</li>
+<li>There&#8217;s a new <cite>anti_alias</cite> option in the <a class="reference internal" href="scene.html#scene.run" title="scene.run"><tt class="xref py py-func docutils literal"><span class="pre">scene.run()</span></tt></a> function (the equivalent setting is gone).</li>
+</ul>
+<div class="section" id="added-modules-from-the-standard-library">
+<h4>Added Modules from the Standard Library<a class="headerlink" href="#added-modules-from-the-standard-library" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference internal" href="../library/compileall.html#module-compileall" title="compileall: Tools for byte-compiling all Python source files in a directory tree."><tt class="xref py py-mod docutils literal"><span class="pre">compileall</span></tt></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">compiler</span></tt></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">imputil</span></tt></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">MimeWriter</span></tt></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">mimify</span></tt></li>
+<li><a class="reference internal" href="../library/modulefinder.html#module-modulefinder" title="modulefinder: Find modules used by a script."><tt class="xref py py-mod docutils literal"><span class="pre">modulefinder</span></tt></a></li>
+<li><a class="reference internal" href="../library/py_compile.html#module-py_compile" title="py_compile: Generate byte-code files from Python source files."><tt class="xref py py-mod docutils literal"><span class="pre">py_compile</span></tt></a></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">sha</span></tt></li>
+<li><tt class="xref py py-mod docutils literal"><span class="pre">SimpleXMLRPCServer</span></tt></li>
+</ul>
+</div>
+<div class="section" id="other-new-modules">
+<h4>Other New Modules<a class="headerlink" href="#other-new-modules" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference internal" href="evernote.html#module-evernote" title="evernote: The Evernote Python SDK"><tt class="xref py py-mod docutils literal"><span class="pre">evernote</span></tt></a></li>
+<li><a class="reference internal" href="xmltodict.html#module-xmltodict" title="xmltodict: Makes working with XML feel like you are working with JSON"><tt class="xref py py-mod docutils literal"><span class="pre">xmltodict</span></tt></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="version-1-3">
+<h2>Version 1.3<a class="headerlink" href="#version-1-3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h3>General<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Redesigned library view.</li>
+<li>It&#8217;s now possible to organize your scripts in folders.</li>
+<li>Triple-quoted strings are now highlighted correctly in the editor.</li>
+<li>Wrapped lines are indented and marked with a triangle symbol in the editor.</li>
+<li>Scripts can now continue to run for up to 10 minutes in the background. This is particularly useful for things like local web servers because it&#8217;s now possible to access them from Safari. Please note that sound effects will not be played while the app is in the background (but you can use the new <a class="reference internal" href="notification.html#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> module for that).</li>
+<li>New sample code: <cite>Image Warp</cite> and <cite>Markdown Conversion</cite></li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3>Python / Modules<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="new-modules">
+<h4>New Modules<a class="headerlink" href="#new-modules" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The new <a class="reference internal" href="photos.html#module-photos" title="photos: Provides access to the photo library on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">photos</span></tt></a> module allows you to access images in your camera roll and manipulate them using the <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> (Python Imaging Library) module.</li>
+<li>The new <a class="reference internal" href="notification.html#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> module allows you to schedule notifications that are shown in Notification Center.</li>
+<li><a class="reference internal" href="markdown2.html#module-markdown2" title="markdown2: A fast and complete implementation of Markdown in Python"><tt class="xref py py-mod docutils literal"><span class="pre">markdown2</span></tt></a> provides an alternative to the <a class="reference internal" href="markdown.html#module-markdown" title="markdown"><tt class="xref py py-mod docutils literal"><span class="pre">markdown</span></tt></a> module that was added in 1.2.</li>
+<li><a class="reference internal" href="paramiko.html#module-paramiko" title="paramiko"><tt class="xref py py-mod docutils literal"><span class="pre">paramiko</span></tt></a></li>
+</ul>
+</div>
+<div class="section" id="changes-in-existing-modules">
+<h4>Changes in Existing Modules<a class="headerlink" href="#changes-in-existing-modules" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first"><a class="reference internal" href="console.html#module-console" title="console: Utilities for Console Output and Various System Services"><tt class="xref py py-mod docutils literal"><span class="pre">console</span></tt></a> module:</p>
+<blockquote>
+<div><ul class="simple">
+<li>New <a class="reference internal" href="console.html#console.write_link" title="console.write_link"><tt class="xref py py-func docutils literal"><span class="pre">console.write_link()</span></tt></a> function to create tappable links in the console output area.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module:</p>
+<blockquote>
+<div><ul class="simple">
+<li>New <tt class="xref py py-func docutils literal"><span class="pre">scene.unload_image()</span></tt> function that can be used to remove dynamically generated images (loaded via <tt class="xref py py-func docutils literal"><span class="pre">scene.load_pil_image()</span></tt>) from the cache.</li>
+<li>Additional parameters in the <tt class="xref py py-func docutils literal"><span class="pre">scene.image()</span></tt> function allow to draw partial images (e.g. for things like sliding puzzles).</li>
+<li>New <tt class="xref py py-func docutils literal"><span class="pre">image_quad()</span></tt> function to draw quadrangular portions of an image. It is also possible to use this to distort images. See the new <cite>Image Warp</cite> sample script for an example.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference internal" href="../library/webbrowser.html#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module:</p>
+<blockquote>
+<div><ul class="simple">
+<li>It&#8217;s now possible to use <a class="reference internal" href="../library/webbrowser.html#webbrowser.open" title="webbrowser.open"><tt class="xref py py-func docutils literal"><span class="pre">webbrowser.open()</span></tt></a> to open <tt class="docutils literal"><span class="pre">http</span></tt> or <tt class="docutils literal"><span class="pre">https</span></tt> URLs in Safari instead of the built-in browser. Simply replace <tt class="docutils literal"><span class="pre">http://</span></tt> with <tt class="docutils literal"><span class="pre">safari-http://</span></tt> in the URL (<tt class="docutils literal"><span class="pre">safari-https://</span></tt> for <tt class="docutils literal"><span class="pre">https</span></tt> URLs).</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h4>Added Modules from the Standard Library<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Added <tt class="xref py py-mod docutils literal"><span class="pre">pyexpat</span></tt> (this also fixes issues with some other modules, like <a class="reference internal" href="../library/plistlib.html#module-plistlib" title="plistlib: Generate and parse Mac OS X plist files."><tt class="xref py py-mod docutils literal"><span class="pre">plistlib</span></tt></a>)</li>
+<li>Added <tt class="xref py py-mod docutils literal"><span class="pre">xmlrpclib</span></tt></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>Bug Fixes<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed issues in the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module with auto-rotation on iOS 6.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-2">
+<h2>Version 1.2<a class="headerlink" href="#version-1-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general-ui">
+<h3>General / UI<a class="headerlink" href="#general-ui" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Support for the larger screen of the iPhone 5.</li>
+<li>We now have a community forum, <a class="reference external" href="http://omz-software.com/pythonista/forums">come say hello</a>!</li>
+<li>There is a new line spacing setting for the editor.</li>
+<li>iPad: Some keys on the extended keyboard can be used to enter different characters by touching and holding them. These keys are marked with a gray corner. You can also swipe up on such a key to enter the first alternate key (e.g. swipe up on the forward-slash key to insert a backslash).</li>
+<li>You can now run scripts with command-line arguments. Just touch and hold the run button.</li>
+<li>Pythonista now has a URL scheme for opening and running scripts that are in your library. See <a class="reference internal" href="urlscheme.html#pythonista-urlscheme"><em>The Pythonista URL Scheme</em></a> for details.</li>
+<li>The prompt history no longer adds the same command multiple times if you repeat it.</li>
+<li>Added a new image collection of test images from the <a class="reference external" href="http://sipi.usc.edu/database">USC-SIPI Image Database</a>.</li>
+<li>New font option for the editor: Adobe Source Code Pro</li>
+<li>The &#8220;High Resolution&#8221; setting for retina screens is gone (it is now always enabled).</li>
+<li>The color picker now has an option to insert HTML-style colors. This is primarily meant for the new <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> module, but it has other uses as well.</li>
+<li>The gesture recognition on the extended keyboard is a bit less sensitive, so that it doesn&#8217;t interpret very small movements as gestures (which could sometimes interfere with tapping keys).</li>
+<li>Error markers in the editor now include the type of the exception.</li>
+<li>Some additional shortcuts are available to use with external hardware keyboards (see <a class="reference internal" href="pythonista.html#using-external-keyboards"><em>Using External Keyboards</em></a> for details)</li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h3>Python / Modules<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h4>New Modules<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference internal" href="beautifulsoup_ref.html#module-bs4" title="bs4"><tt class="xref py py-mod docutils literal"><span class="pre">bs4</span></tt></a> (BeautifulSoup 4)</li>
+<li><a class="reference internal" href="dropbox.html#module-dropbox" title="dropbox"><tt class="xref py py-mod docutils literal"><span class="pre">dropbox</span></tt></a></li>
+<li><a class="reference internal" href="feedparser.html#module-feedparser" title="feedparser"><tt class="xref py py-mod docutils literal"><span class="pre">feedparser</span></tt></a></li>
+<li><a class="reference internal" href="markdown.html#module-markdown" title="markdown"><tt class="xref py py-mod docutils literal"><span class="pre">markdown</span></tt></a></li>
+<li><a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> (Python Imaging Library) &#8211; Have a look at the new &#8220;Image Effects&#8221; sample code to see how <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> is integrated with Pythonista.</li>
+</ul>
+</div>
+<div class="section" id="id14">
+<h4>Changes in Existing Modules<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="console.html#module-console" title="console: Utilities for Console Output and Various System Services"><tt class="xref py py-mod docutils literal"><span class="pre">console</span></tt></a> module</dt>
+<dd><ul class="first last simple">
+<li>There is a new <a class="reference internal" href="console.html#console.show_image" title="console.show_image"><tt class="xref py py-func docutils literal"><span class="pre">console.show_image()</span></tt></a> function to
+display images in the text output area. This is used internally
+by the <tt class="xref py py-meth docutils literal"><span class="pre">Image.show()</span></tt> method in the <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> (Python Imaging
+Library) module that was also added in this release.</li>
+<li>There are two new functions for controlling the network activity indicator
+(&#8220;spinner&#8221;) in the status bar &#8211; <a class="reference internal" href="console.html#console.show_activity" title="console.show_activity"><tt class="xref py py-func docutils literal"><span class="pre">console.show_activity()</span></tt></a> and
+<a class="reference internal" href="console.html#console.hide_activity" title="console.hide_activity"><tt class="xref py py-func docutils literal"><span class="pre">console.hide_activity()</span></tt></a>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module</dt>
+<dd><ul class="first last simple">
+<li>You can now load images from regular image files with the
+<tt class="xref py py-func docutils literal"><span class="pre">scene.load_image_file()</span></tt> function. It&#8217;s also possible to load images
+created with <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> (Python Imaging Library), using the
+<tt class="xref py py-func docutils literal"><span class="pre">scene.load_pil_image()</span></tt> function.</li>
+<li>You can now get at the underlying image files of built-in images using
+the <a class="reference internal" href="scene.html#scene.get_image_path" title="scene.get_image_path"><tt class="xref py py-func docutils literal"><span class="pre">scene.get_image_path()</span></tt></a> function.</li>
+<li>The new <tt class="xref py py-func docutils literal"><span class="pre">scene.line()</span></tt> function can be used to draw simple lines
+between two points.</li>
+<li>The new <a class="reference internal" href="scene.html#scene.get_screen_scale" title="scene.get_screen_scale"><tt class="xref py py-func docutils literal"><span class="pre">scene.get_screen_scale()</span></tt></a> function allows you to detect
+programmatically if your script is running on a device with a retina
+screen.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="../library/webbrowser.html#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module</dt>
+<dd><ul class="first last simple">
+<li>The <a class="reference internal" href="../library/webbrowser.html#webbrowser.open" title="webbrowser.open"><tt class="xref py py-func docutils literal"><span class="pre">webbrowser.open()</span></tt></a> function has a new, optional <cite>modal</cite> parameter
+that blocks the script until the <cite>Done</cite> button is tapped in the browser.
+Additionally, there is an optional <cite>stop_when_done</cite> parameter that can
+be used to stop a script automatically when the <cite>Done</cite> button is tapped
+in the browser.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h4>Added Modules from the Standard Library<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference internal" href="../library/argparse.html#module-argparse" title="argparse: Command-line option and argument parsing library."><tt class="xref py py-mod docutils literal"><span class="pre">argparse</span></tt></a></li>
+<li><a class="reference internal" href="../library/profile.html#module-profile" title="profile: Python source profiler."><tt class="xref py py-mod docutils literal"><span class="pre">profile</span></tt></a></li>
+<li><a class="reference internal" href="../library/runpy.html#module-runpy" title="runpy: Locate and run Python modules without importing them first."><tt class="xref py py-mod docutils literal"><span class="pre">runpy</span></tt></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>On the iPad you can now view the current documentation page&#8217;s table of contents to make navigating in long documents easier.</li>
+<li>The documentation now uses DejaVuSansMono instead of Courier for code.</li>
+<li>Basic documentation for the <a class="reference internal" href="requests.html#module-requests" title="requests"><tt class="xref py py-mod docutils literal"><span class="pre">requests</span></tt></a> module is now included. The module itself was already available in version 1.1, but there was no documentation.</li>
+</ul>
+</div>
+<div class="section" id="id16">
+<h3>Bug Fixes<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fixed an issue with big numbers not automatically being converted to long integers (something like <tt class="docutils literal"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">100</span></tt> should now work correctly without having to append <tt class="docutils literal"><span class="pre">L</span></tt> explicitly).</li>
+<li>The <tt class="docutils literal"><span class="pre">__file__</span></tt> variable is now correctly set when you run a script.</li>
+<li>Fixed issues with pasted text that contains unicode space characters.</li>
+<li>Fixed a bug in <a class="reference internal" href="console.html#console.password_alert" title="console.password_alert"><tt class="xref py py-func docutils literal"><span class="pre">console.password_alert()</span></tt></a> that caused it to always return <tt class="xref docutils literal"><span class="pre">None</span></tt>.</li>
+<li>Some images in the Typicons library weren&#8217;t centered properly, this has been fixed.</li>
+<li>Fixed an issue on iOS 6 that caused the documentation viewer to start with a blank page.</li>
+<li>The <a class="reference internal" href="clipboard.html#module-clipboard" title="clipboard: Provides copy and paste integration on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">clipboard</span></tt></a> module can handle unicode now.</li>
+<li><a class="reference internal" href="../library/time.html#time.strptime" title="time.strptime"><tt class="xref py py-func docutils literal"><span class="pre">time.strptime()</span></tt></a> works correctly now.</li>
+<li><a class="reference internal" href="editor.html#editor.make_new_file" title="editor.make_new_file"><tt class="xref py py-func docutils literal"><span class="pre">editor.make_new_file()</span></tt></a> no longer appends a numeric suffix when it&#8217;s not needed (i.e. when no file with the given name exists).</li>
+<li>Fixed a crash that occurred when canceling the console&#8217;s &#8220;Copy Text Output&#8221; dialog.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-1">
+<h2>Version 1.1<a class="headerlink" href="#version-1-1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id17">
+<h3>General / UI<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Pythonista is now a universal app that runs on all iOS devices!</li>
+<li>The editor has a new search feature.</li>
+<li>The editor itself is now scriptable (via the new <a class="reference internal" href="editor.html#module-editor" title="editor: Scripting Pythonista's text editor"><tt class="xref py py-mod docutils literal"><span class="pre">editor</span></tt></a> module) and custom scripts can be added to the new actions menu for quick access.</li>
+<li>Scripts can now be exported from the editor, optionally as Xcode projects that build standalone iOS apps (please note that in order to run standalone apps on an actual device you need to be a paying member of Apple&#8217;s iOS developer program).</li>
+<li>The script library has a new list mode (in the iPhone version, the thumbnail view is not present and this is the only view mode).</li>
+<li>The script library can be sorted by date instead of by name.</li>
+<li>The top toolbar that was shown for scenes created with the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module is gone, so that there is more room for drawing. Instead, there is only a small overlay button in the top-right corner to close a scene.</li>
+<li>The <a class="reference external" href="http://www.typicons.com">Typicons</a> set of monochrome icons is now available to use in the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> and <a class="reference internal" href="canvas.html#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> modules.</li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h3>Python / Modules<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">The <a class="reference internal" href="scene.html#scene.Scene" title="scene.Scene"><tt class="xref py py-class docutils literal"><span class="pre">scene.Scene</span></tt></a> class has additional callbacks for when the home button is pressed (<a class="reference internal" href="scene.html#scene.Scene.pause" title="scene.Scene.pause"><tt class="xref py py-meth docutils literal"><span class="pre">scene.Scene.pause()</span></tt></a>) or the app resumes from the background (<a class="reference internal" href="scene.html#scene.Scene.resume" title="scene.Scene.resume"><tt class="xref py py-meth docutils literal"><span class="pre">scene.Scene.resume()</span></tt></a>).</p>
+</li>
+<li><p class="first">Scenes can now optionally auto-rotate to different device orientations (see <tt class="xref py py-meth docutils literal"><span class="pre">scene.Scene.should_rotate()</span></tt> for more information).</p>
+</li>
+<li><dl class="first docutils">
+<dt>The <a class="reference internal" href="console.html#module-console" title="console: Utilities for Console Output and Various System Services"><tt class="xref py py-mod docutils literal"><span class="pre">console</span></tt></a> module provides some new functions:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="console.html#console.secure_input" title="console.secure_input"><tt class="xref py py-func docutils literal"><span class="pre">console.secure_input()</span></tt></a> – A drop-in replacement for the built-in <cite>raw_input</cite> that is suitable for entering passwords (the text being entered is hidden).</li>
+<li><a class="reference internal" href="console.html#console.alert" title="console.alert"><tt class="xref py py-func docutils literal"><span class="pre">console.alert()</span></tt></a> –&nbsp;Allows you to show simple message boxes with up to three custom buttons, e.g. to ask the user for confirmation without requiring keyboard input.</li>
+<li>There are several other alert types that allow you to present alerts with text and/or password fields.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">The new <a class="reference internal" href="keychain.html#module-keychain" title="keychain: Persistent storage for passwords and other sensitive information"><tt class="xref py py-mod docutils literal"><span class="pre">keychain</span></tt></a> module provides simple functions for securely storing passwords.</p>
+</li>
+<li><p class="first">The new <a class="reference internal" href="editor.html#module-editor" title="editor: Scripting Pythonista's text editor"><tt class="xref py py-mod docutils literal"><span class="pre">editor</span></tt></a> module allows you to script Pythonista&#8217;s text editor itself, have a look at its documentation for some interesting examples.</p>
+</li>
+<li><dl class="first docutils">
+<dt>More modules from the Standard Library are included:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="../library/gzip.html#module-gzip" title="gzip: Interfaces for gzip compression and decompression using file objects."><tt class="xref py py-mod docutils literal"><span class="pre">gzip</span></tt></a>, <a class="reference internal" href="../library/zipfile.html#module-zipfile" title="zipfile: Read and write ZIP-format archive files."><tt class="xref py py-mod docutils literal"><span class="pre">zipfile</span></tt></a></li>
+<li><a class="reference internal" href="../library/ssl.html#module-ssl" title="ssl: TLS/SSL wrapper for socket objects"><tt class="xref py py-mod docutils literal"><span class="pre">ssl</span></tt></a></li>
+<li><a class="reference internal" href="../library/sqlite3.html#module-sqlite3" title="sqlite3: A DB-API 2.0 implementation using SQLite 3.x."><tt class="xref py py-mod docutils literal"><span class="pre">sqlite3</span></tt></a></li>
+<li><a class="reference internal" href="../library/email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><tt class="xref py py-mod docutils literal"><span class="pre">email</span></tt></a>, <a class="reference internal" href="../library/smtplib.html#module-smtplib" title="smtplib: SMTP protocol client (requires sockets)."><tt class="xref py py-mod docutils literal"><span class="pre">smtplib</span></tt></a>, <a class="reference internal" href="../library/imaplib.html#module-imaplib" title="imaplib: IMAP4 protocol client (requires sockets)."><tt class="xref py py-mod docutils literal"><span class="pre">imaplib</span></tt></a>, <a class="reference internal" href="../library/poplib.html#module-poplib" title="poplib: POP3 protocol client (requires sockets)."><tt class="xref py py-mod docutils literal"><span class="pre">poplib</span></tt></a></li>
+<li><a class="reference internal" href="../library/unicodedata.html#module-unicodedata" title="unicodedata: Access the Unicode Database."><tt class="xref py py-mod docutils literal"><span class="pre">unicodedata</span></tt></a></li>
+<li>A custom version of <a class="reference internal" href="../library/getpass.html#module-getpass" title="getpass: Portable reading of passwords and retrieval of the userid."><tt class="xref py py-mod docutils literal"><span class="pre">getpass</span></tt></a> that uses the new <a class="reference internal" href="console.html#console.secure_input" title="console.secure_input"><tt class="xref py py-func docutils literal"><span class="pre">console.secure_input()</span></tt></a> function.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">The Documents directory (where scripts are stored) is now the default directory in the interactive prompt,
+so that it&#8217;s easier to write files without giving an absolute path.</p>
+</li>
+<li><p class="first">The console output and text drawing functions in the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module support unicode now.</p>
+</li>
+<li><p class="first">The <a class="reference internal" href="../library/webbrowser.html#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> now opens web pages in an in-app browser view instead of Safari.</p>
+</li>
+<li><p class="first">The <a class="reference internal" href="canvas.html#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> module has new functions for drawing text.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id19">
+<h3>Documentation<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>All code samples now have &#8220;Copy&#8221; and &#8220;Open in Editor&#8221; buttons attached to them for quickly trying out things you read about.</li>
+<li>There is a new &#8220;Using Pythonista&#8221; page that provides an illustrated overview of the UI.</li>
+<li>Text in the documentation is now hyphenated for better readability, especially on the iPhone.</li>
+<li>The <a class="reference internal" href="canvas.html#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> documentation contains more details and examples.</li>
+<li>The search suggestions in the documentation now show modules first.</li>
+<li>The chapter &#8220;Using the Python Interpreter&#8221; in the Python language tutorial is no longer included. Most of it only applies to other platforms and it seems to have caused some confusion. If you&#8217;re interested in this chapter, you can read it <a class="reference external" href="http://docs.python.org/tutorial/interpreter.html">here</a>. The same applies to &#8220;Interactive Input Editing and History Substitution&#8221; which can be found <a class="reference external" href="http://docs.python.org/tutorial/interactive.html">here</a>.</li>
+</ul>
+</div>
+<div class="section" id="id21">
+<h3>Bug Fixes<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>A crash that could occur when holding down the backspace key has been fixed.</li>
+<li>Switching from the quick help popover to the full documentation should be more reliable.</li>
+<li><tt class="docutils literal"><span class="pre">os.getcwd()</span></tt> should now work correctly.</li>
+<li>Entering a blank line when using <tt class="docutils literal"><span class="pre">raw_input</span></tt> no longer raises an <tt class="docutils literal"><span class="pre">EOFError</span></tt>.</li>
+<li>Drawing images with the <a class="reference internal" href="canvas.html#module-canvas" title="canvas: Provides drawing functions on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">canvas</span></tt></a> module now works correctly if no other drawing functions were used before.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="version-1-0">
+<h2>Version 1.0<a class="headerlink" href="#version-1-0" title="Permalink to this headline">¶</a></h2>
+<p>This is the initial release of Pythonista on the App Store.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 11, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

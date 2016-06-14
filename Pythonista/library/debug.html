@@ -1,0 +1,219 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>26. Debugging and Profiling &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="The Python Standard Library" href="index.html" />
+    <link rel="next" title="26.1. bdb — Debugger framework" href="bdb.html" />
+    <link rel="prev" title="25.7. 2to3 - Automated Python 2 to 3 code translation" href="2to3.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bdb.html" title="26.1. bdb — Debugger framework"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="2to3.html" title="25.7. 2to3 - Automated Python 2 to 3 code translation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">The Python Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="debugging-and-profiling">
+<h1>26. Debugging and Profiling<a class="headerlink" href="#debugging-and-profiling" title="Permalink to this headline">¶</a></h1>
+<p>These libraries help you with Python development: the debugger enables you to
+step through code, analyze stack frames and set breakpoints etc., and the
+profilers run code and give you a detailed breakdown of execution times,
+allowing you to identify bottlenecks in your programs.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bdb.html">26.1. <tt class="docutils literal"><span class="pre">bdb</span></tt> &#8212; Debugger framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faulthandler.html">26.2. <tt class="docutils literal"><span class="pre">faulthandler</span></tt> &#8212; Dump the Python traceback</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#dumping-the-traceback">26.2.1. Dumping the traceback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#fault-handler-state">26.2.2. Fault handler state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#dumping-the-tracebacks-after-a-timeout">26.2.3. Dumping the tracebacks after a timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#dumping-the-traceback-on-a-user-signal">26.2.4. Dumping the traceback on a user signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#issue-with-file-descriptors">26.2.5. Issue with file descriptors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faulthandler.html#example">26.2.6. Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pdb.html">26.3. <tt class="docutils literal"><span class="pre">pdb</span></tt> &#8212; The Python Debugger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pdb.html#debugger-commands">26.3.1. Debugger Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="profile.html">26.4. The Python Profilers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#introduction-to-the-profilers">26.4.1. Introduction to the profilers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#instant-user-s-manual">26.4.2. Instant User&#8217;s Manual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#module-cProfile">26.4.3. <tt class="docutils literal"><span class="pre">profile</span></tt> and <tt class="docutils literal"><span class="pre">cProfile</span></tt> Module Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#the-stats-class">26.4.4. The <tt class="docutils literal"><span class="pre">Stats</span></tt> Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#what-is-deterministic-profiling">26.4.5. What Is Deterministic Profiling?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#limitations">26.4.6. Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#calibration">26.4.7. Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="profile.html#using-a-custom-timer">26.4.8. Using a custom timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeit.html">26.5. <tt class="docutils literal"><span class="pre">timeit</span></tt> &#8212; Measure execution time of small code snippets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="timeit.html#basic-examples">26.5.1. Basic Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeit.html#python-interface">26.5.2. Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeit.html#command-line-interface">26.5.3. Command-Line Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timeit.html#examples">26.5.4. Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html">26.6. <tt class="docutils literal"><span class="pre">trace</span></tt> &#8212; Trace or track Python statement execution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="trace.html#command-line-usage">26.6.1. Command-Line Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="trace.html#main-options">26.6.1.1. Main options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html#modifiers">26.6.1.2. Modifiers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html#filters">26.6.1.3. Filters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trace.html#programmatic-interface">26.6.2. Programmatic Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tracemalloc.html">26.7. <tt class="docutils literal"><span class="pre">tracemalloc</span></tt> &#8212; Trace memory allocations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tracemalloc.html#examples">26.7.1. Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#display-the-top-10">26.7.1.1. Display the top 10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#compute-differences">26.7.1.2. Compute differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#get-the-traceback-of-a-memory-block">26.7.1.3. Get the traceback of a memory block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#pretty-top">26.7.1.4. Pretty top</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tracemalloc.html#api">26.7.2. API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#functions">26.7.2.1. Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#filter">26.7.2.2. Filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#frame">26.7.2.3. Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#snapshot">26.7.2.4. Snapshot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#statistic">26.7.2.5. Statistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#statisticdiff">26.7.2.6. StatisticDiff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#trace">26.7.2.7. Trace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html#traceback">26.7.2.8. Traceback</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

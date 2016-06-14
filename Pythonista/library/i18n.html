@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>23. Internationalization &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="The Python Standard Library" href="index.html" />
+    <link rel="next" title="23.1. gettext — Multilingual internationalization services" href="gettext.html" />
+    <link rel="prev" title="22.8. sndhdr — Determine type of sound file" href="sndhdr.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gettext.html" title="23.1. gettext — Multilingual internationalization services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sndhdr.html" title="22.8. sndhdr — Determine type of sound file"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">The Python Standard Library</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="internationalization">
+<span id="i18n"></span><h1>23. Internationalization<a class="headerlink" href="#internationalization" title="Permalink to this headline">¶</a></h1>
+<p>The modules described in this chapter help you write software that is
+independent of language and locale by providing mechanisms for selecting a
+language to be used in  program messages or by tailoring output to match local
+conventions.</p>
+<p>The list of modules described in this chapter is:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gettext.html">23.1. <tt class="docutils literal"><span class="pre">gettext</span></tt> &#8212; Multilingual internationalization services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gettext.html#gnu-gettext-api">23.1.1. GNU <strong class="program">gettext</strong> API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettext.html#class-based-api">23.1.2. Class-based API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html#the-nulltranslations-class">23.1.2.1. The <tt class="docutils literal"><span class="pre">NullTranslations</span></tt> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html#the-gnutranslations-class">23.1.2.2. The <tt class="docutils literal"><span class="pre">GNUTranslations</span></tt> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html#solaris-message-catalog-support">23.1.2.3. Solaris message catalog support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html#the-catalog-constructor">23.1.2.4. The Catalog constructor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gettext.html#internationalizing-your-programs-and-modules">23.1.3. Internationalizing your programs and modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html#localizing-your-module">23.1.3.1. Localizing your module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html#localizing-your-application">23.1.3.2. Localizing your application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html#changing-languages-on-the-fly">23.1.3.3. Changing languages on the fly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html#deferred-translations">23.1.3.4. Deferred translations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gettext.html#acknowledgements">23.1.4. Acknowledgements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="locale.html">23.2. <tt class="docutils literal"><span class="pre">locale</span></tt> &#8212; Internationalization services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="locale.html#background-details-hints-tips-and-caveats">23.2.1. Background, details, hints, tips and caveats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locale.html#for-extension-writers-and-programs-that-embed-python">23.2.2. For extension writers and programs that embed Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="locale.html#access-to-message-catalogs">23.2.3. Access to message catalogs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

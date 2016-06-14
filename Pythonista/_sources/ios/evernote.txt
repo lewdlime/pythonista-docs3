@@ -1,0 +1,55 @@
+
+:mod:`evernote`
+======================================================
+
+.. module:: evernote
+   :synopsis: The Evernote Python SDK
+.. sectionauthor:: Ole Zorn
+
+
+This SDK contains wrapper code used to call the Evernote Cloud API from Python.
+
+Prerequisites
+-------------
+
+In order to run the client client sample code, you need a developer token. Get one at https://www.evernote.com/api/DeveloperToken.action
+
+Example
+--------
+
+Here is a basic example of how you can use the evernote module to create a new note in your default notebook::
+
+   auth_token = "YOUR_DEVELOPER_TOKEN"
+   
+   import evernote.edam.userstore.constants as UserStoreConstants
+   import evernote.edam.type.ttypes as Types
+   from evernote.api.client import EvernoteClient
+   
+   client = EvernoteClient(token=auth_token, sandbox=False)
+   note_store = client.get_note_store()
+   
+   # List all of the notebooks in the user's account
+   notebooks = note_store.listNotebooks()
+   print "Found ", len(notebooks), " notebooks:"
+   for notebook in notebooks:
+      print "  * ", notebook.name
+   print "Creating a new note in the default notebook"
+   
+   # To create a new note, simply create a new Note object and fill in
+   # attributes such as the note's title.
+   note = Types.Note()
+   note.title = "Hello"
+   
+   note.content = '<?xml version="1.0" encoding="UTF-8"?>'
+   note.content += '<!DOCTYPE en-note SYSTEM ' \
+      '"http://xml.evernote.com/pub/enml2.dtd">'
+   note.content += '<en-note>Test Note<br/>'
+   note.content += '</en-note>'
+   
+   # Finally, send the new note to Evernote using the createNote method
+   # The new Note object that is returned will contain server-generated
+   # attributes such as the new note's unique GUID.
+   created_note = note_store.createNote(note)
+
+   print "Successfully created a new note with GUID: ", created_note.guid
+   

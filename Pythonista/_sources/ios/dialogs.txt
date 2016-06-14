@@ -1,0 +1,126 @@
+
+:mod:`dialogs` --- Easy-to-use UI Dialogs
+=========================================
+
+.. module:: dialogs
+.. sectionauthor:: Ole Zorn
+
+The :mod:`dialogs` module provides easy-to-use GUI dialogs for simple data input on iOS. It is mostly built on top of the :mod:`ui` module, and while less flexible than using :mod:`ui` directly, it is a lot easier to use and requires very few lines of code in most cases.
+
+Overview
+--------
+
+Most functions in this module present a dialog and return the user's input. The following kinds of dialogs are supported:
+
+* **Text Dialogs** present a multi-line text input area. The font and some keyboard attributes (autocorrection...) are customizable. (see :func:`text_dialog`)
+* **List Dialogs** present a list of items, allowing to select one or more of them. (see :func:`list_dialog`)
+* **Edit List Dialogs** also present a list of items, but instead of selecting an item, the list can be rearranged by the user, and items can be deleted from the list. (see :func:`edit_list_dialog`)
+* **Date/Time Dialogs** present a date picker -- there are multiple variants for picking a date, time, or both, and there's also a mode for picking a countdown/duration, e.g. for timers. (see :func:`date_dialog`, :func:`time_dialog`, :func:`datetime_dialog`, :func:`duration_dialog`)
+* **Form Dialogs** present a list of customizable data input fields. The fields can contain switches (for boolean values), text/email/password fields (for strings), date pickers, and checkmarks (for multiple selection lists). This is the most flexible type of dialog, but it also requires the most configuration (see :func:`form_dialog`)
+
+Dialog Functions
+----------------
+
+.. function:: list_dialog(title='', items=None, multiple=False)
+
+    Present a list of items and return the one(s) that were selected. When the dialog is cancelled, `None` is returned. The `items` list can contain any kind of object that can be converted to a string. To get more control over how each item is displayed in the list, you can also use a list of dictionaries (see :attr:`ui.ListDataSource.items` for details).
+
+.. function:: edit_list_dialog(title='', items=None, move=True, delete=True)
+
+    Present a list of items that can be edited by the user. By default, the user can both rearrange the list and remove items; this behavior can be controlled with the `move` and `delete` parameters.
+    
+    The return value is the modified list of items, or `None` if the dialog was cancelled.
+
+.. function:: form_dialog(title='', fields=None, sections=None)
+
+    Present a form dialog, similar to many settings interfaces.
+    
+    Each field in the dialog is configured by dictionary. If there is only a single section of fields, the list of these field dictionaries can be passed as the `fields` parameter. If there should be multiple sections, each section is represented by a tuple (usually a 2-tuple containing the title of the section and its list of fields; an optional third item can contain footer text for the section).
+    
+    The return value of this function is a dictionary of values for each field (or `None`, if the dialog was cancelled).
+    
+    A field dictionary should contain the following keys:
+    
+    * ``'type'`` -- (required) the type of the field, this can be ``'switch'``, ``'text'``, ``'url'``, ``'email'``, ``'password'``, ``'number'``, ``'check'``, ``'datetime'``, ``'date'``, or ``'time'``
+    * ``'key'`` -- the key of this field in the return value of the form
+    * ``'value'`` -- the initial value of the field (for text/url/email/password/number fields, this should be a string, for switch fields a boolean (`True`/`False`), for datetime fields a `datetime` object)
+    * ``'title'`` -- the human-readable title/label of the field
+    
+    ``'type'`` is the only required key. If ``'key'`` is not present, the ``'title'`` is used instead. If both are missing, fields are numbered sequentially in the returned dictionary.
+    
+    Optional keys for all field types:
+        
+    * ``'tint_color'`` -- the field's tint color (the effect of this depends on the type of the field)
+    * ``'icon'`` -- the name of a built-in image or a :class:`ui.Image` object
+    
+    Optional keys for text/url/email/password/number fields:
+    
+    * ``'placeholder'`` -- the text that is shown when the field is empty
+    * ``'autocorrection'`` -- whether auto-correction should be enabled for this field (`True`/`False`)
+    * ``'autocapitalization'`` -- auto-capitalization behavior for the text fields, for possible values, see :attr:`ui.TextField.autocapitalization_type`
+    
+
+.. function:: text_dialog(title='', text='', font=('<system>', 16), autocorrection=None, autocapitalization=ui.AUTOCAPITALIZE_SENTENCES, spellchecking=None)
+    
+    Show a multi-line text editor sheet.
+    
+    The behavior of the editor can be customized with the `autocorrection`, `autocapitalization`, and `spellchecking` parameters. The `text` parameter controls the initial text in the editor.
+    
+    The edited text is returned as a string (if the dialog is cancelled, `None` is returned instead).
+
+.. function:: date_dialog(title='')
+
+    Show a date picker dialog, the return value is a :class:`datetime.datetime` object.
+
+.. function:: time_dialog(title='')
+    
+    Show a time picker dialog, the return value is a :class:`datetime.datetime` object.
+
+.. function:: datetime_dialog(title='')
+
+    Show a date/time picker dialog, the return value is a :class:`datetime.datetime` object.
+
+.. function:: duration_dialog(title='')
+
+    Show a duration picker dialog (e.g. for a countdown timer), the return value is the selected duration in seconds (e.g. 60.0 for 1 minute).
+
+Sharing
+-------
+
+.. function:: share_image(img)
+
+    Show the system sharing dialog for a given image (can be either a :class:`ui.Image` or a PIL ``Image``).    
+
+.. function:: share_text(text)
+
+    Show the system sharing dialog for a given string.
+
+.. function:: share_url(url)
+
+    Show the system sharing dialog for a given URL.
+
+Alert Functions
+---------------
+
+These functions are imported from the :mod:`console` module for convenience.
+
+.. function:: alert()
+
+    see :func:`console.alert`
+
+.. function:: input_alert()
+
+    see :func:`console.input_alert`
+    
+.. function:: login_alert()
+
+    see :func:`console.login_alert`
+
+.. function:: password_alert()
+    
+    see :func:`console.password_alert`
+
+.. function:: hud_alert()
+
+    see :func:`console.hud_alert`
+

@@ -1,0 +1,169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>About these documents &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="index.html" />
+    <link rel="next" title="Reporting Bugs" href="bugs.html" />
+    <link rel="prev" title="Glossary" href="glossary.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="bugs.html" title="Reporting Bugs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="glossary.html" title="Glossary"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="about-these-documents">
+<h1>About these documents<a class="headerlink" href="#about-these-documents" title="Permalink to this headline">¶</a></h1>
+<p>These documents are generated from <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> sources by <a class="reference external" href="http://sphinx-doc.org/">Sphinx</a>, a
+document processor specifically written for the Python documentation.</p>
+<p>Development of the documentation and its toolchain is an entirely volunteer
+effort, just like Python itself.  If you want to contribute, please take a
+look at the <a class="reference internal" href="bugs.html#reporting-bugs"><em>Reporting Bugs</em></a> page for information on how to do so.  New
+volunteers are always welcome!</p>
+<p>Many thanks go to:</p>
+<ul class="simple">
+<li>Fred L. Drake, Jr., the creator of the original Python documentation toolset
+and writer of much of the content;</li>
+<li>the <a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> project for creating
+reStructuredText and the Docutils suite;</li>
+<li>Fredrik Lundh for his <a class="reference external" href="http://effbot.org/zone/pyref.htm">Alternative Python Reference</a> project from which Sphinx got many good
+ideas.</li>
+</ul>
+<div class="section" id="contributors-to-the-python-documentation">
+<h2>Contributors to the Python Documentation<a class="headerlink" href="#contributors-to-the-python-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Many people have contributed to the Python language, the Python standard
+library, and the Python documentation.  See <a class="reference external" href="http://hg.python.org/cpython/file/2.7/Misc/ACKS">Misc/ACKS</a> in the Python
+source distribution for a partial list of contributors.</p>
+<p>It is only with the input and contributions of the Python community
+that Python has such wonderful documentation &#8211; Thank You!</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

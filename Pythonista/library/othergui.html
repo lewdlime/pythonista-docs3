@@ -1,0 +1,188 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Other Graphical User Interface Packages &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="other-graphical-user-interface-packages">
+<span id="other-gui-packages"></span><h1>Other Graphical User Interface Packages<a class="headerlink" href="#other-graphical-user-interface-packages" title="Permalink to this headline">¶</a></h1>
+<p>Major cross-platform (Windows, Mac OS X, Unix-like) GUI toolkits are
+available for Python:</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="https://live.gnome.org/PyGObject">PyGObject</a></dt>
+<dd><p class="first">provides introspection bindings for C libraries using
+<a class="reference external" href="https://developer.gnome.org/gobject/stable/">GObject</a>.  One of
+these libraries is the <a class="reference external" href="http://www.gtk.org/">GTK+ 3</a> widget set.
+GTK+ comes with many more widgets than Tkinter provides.  An online
+<a class="reference external" href="http://python-gtk-3-tutorial.readthedocs.org/en/latest/">Python GTK+ 3 Tutorial</a>
+is available.</p>
+<p class="last"><a class="reference external" href="http://www.pygtk.org/">PyGTK</a> provides bindings for an older version
+of the library, GTK+ 2.  It provides an object oriented interface that
+is slightly higher level than the C one.  There are also bindings to
+<a class="reference external" href="http://www.gnome.org">GNOME</a>.  An online <a class="reference external" href="http://www.pygtk.org/pygtk2tutorial/index.html">tutorial</a> is available.</p>
+</dd>
+<dt><a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/intro">PyQt</a></dt>
+<dd>PyQt is a <strong class="program">sip</strong>-wrapped binding to the Qt toolkit.  Qt is an
+extensive C++ GUI application development framework that is
+available for Unix, Windows and Mac OS X. <strong class="program">sip</strong> is a tool
+for generating bindings for C++ libraries as Python classes, and
+is specifically designed for Python. The <em>PyQt3</em> bindings have a
+book, <a class="reference external" href="http://www.commandprompt.com/community/pyqt/">GUI Programming with Python: QT Edition</a> by Boudewijn
+Rempt. The <em>PyQt4</em> bindings also have a book, <a class="reference external" href="http://www.qtrac.eu/pyqtbook.html">Rapid GUI Programming
+with Python and Qt</a>, by Mark
+Summerfield.</dd>
+<dt><a class="reference external" href="http://qt-project.org/wiki/PySide">PySide</a></dt>
+<dd>is a newer binding to the Qt toolkit, provided by Nokia.
+Compared to PyQt, its licensing scheme is friendlier to non-open source
+applications.</dd>
+<dt><a class="reference external" href="http://www.wxpython.org">wxPython</a></dt>
+<dd>wxPython is a cross-platform GUI toolkit for Python that is built around
+the popular <a class="reference external" href="http://www.wxwidgets.org/">wxWidgets</a> (formerly wxWindows)
+C++ toolkit.  It provides a native look and feel for applications on
+Windows, Mac OS X, and Unix systems by using each platform&#8217;s native
+widgets where ever possible, (GTK+ on Unix-like systems).  In addition to
+an extensive set of widgets, wxPython provides classes for online
+documentation and context sensitive help, printing, HTML viewing,
+low-level device context drawing, drag and drop, system clipboard access,
+an XML-based resource format and more, including an ever growing library
+of user-contributed modules.  wxPython has a book, <a class="reference external" href="http://www.manning.com/rappin/">wxPython in Action</a>, by Noel Rappin and
+Robin Dunn.</dd>
+</dl>
+</div>
+<p>PyGTK, PyQt, and wxPython, all have a modern look and feel and more
+widgets than Tkinter. In addition, there are many other GUI toolkits for
+Python, both cross-platform, and platform-specific. See the <a class="reference external" href="https://wiki.python.org/moin/GuiProgramming">GUI Programming</a> page in the Python Wiki for a
+much more complete list, and also for links to documents where the
+different GUI toolkits are compared.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

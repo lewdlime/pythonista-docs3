@@ -1,0 +1,116 @@
+
+:mod:`xmltodict`
+======================================================
+
+.. module:: xmltodict
+   :synopsis: Makes working with XML feel like you are working with JSON
+
+:mod:`xmltodict` is a Python module that makes working with XML feel like you are working with `JSON <http://docs.python.org/library/json.html>`_, as in this
+`"spec" <http://www.xml.com/pub/a/2006/05/31/converting-between-xml-and-json.html>`_::
+
+   >>> doc = xmltodict.parse("""
+   ... <mydocument has="an attribute">
+   ...   <and>
+   ...     <many>elements</many>
+   ...     <many>more elements</many>
+   ...   </and>
+   ...   <plus a="complex">
+   ...     element as well
+   ...   </plus>
+   ... </mydocument>
+   ... """)
+   >>>
+   >>> doc['mydocument']['@has']
+   u'an attribute'
+   >>> doc['mydocument']['and']['many']
+   [u'elements', u'more elements']
+   >>> doc['mydocument']['plus']['@a']
+   u'complex'
+   >>> doc['mydocument']['plus']['#text']
+   u'element as well'
+
+Functions in the :mod:`xmltodict` module:
+
+.. function:: parse(xml_input, encoding='utf-8', expat=expat, process_namespaces=False, namespace_separator=':', **kwargs)
+
+   Parse the given XML input and convert it into a dictionary.
+
+   `xml_input` can either be a `string` or a file-like object.
+
+   If `xml_attribs` is `True`, element attributes are put in the dictionary
+   among regular child elements, using `@` as a prefix to avoid collisions. If
+   set to `False`, they are just ignored.
+
+   Simple example::
+
+      >>> doc = xmltodict.parse(\"\"\"
+      ... <a prop="x">
+      ...   <b>1</b>
+      ...   <b>2</b>
+      ... </a>
+      ... \"\"\")
+      >>> doc['a']['@prop']
+      u'x'
+      >>> doc['a']['b']
+      [u'1', u'2']
+
+   If `item_depth` is `0`, the function returns a dictionary for the root
+   element (default behavior). Otherwise, it calls `item_callback` every time
+   an item at the specified depth is found and returns `None` in the end
+   (streaming mode).
+
+   The callback function receives two parameters: the `path` from the document
+   root to the item (name-attribs pairs), and the `item` (dict). If the
+   callback's return value is false-ish, parsing will be stopped with the
+   :class:`ParsingInterrupted` exception.
+
+   Streaming example::
+
+       >>> def handle(path, item):
+       ...     print 'path:%s item:%s' % (path, item)
+       ...     return True
+       ...
+       >>> xmltodict.parse(\"\"\"
+       ... <a prop="x">
+       ...   <b>1</b>
+       ...   <b>2</b>
+       ... </a>\"\"\", item_depth=2, item_callback=handle)
+       path:[(u'a', {u'prop': u'x'}), (u'b', None)] item:1
+       path:[(u'a', {u'prop': u'x'}), (u'b', None)] item:2
+
+   The optional argument `postprocessor` is a function that takes `path`, `key`
+   and `value` as positional arguments and returns a new `(key, value)` pair
+   where both `key` and `value` may have changed. Usage example::
+
+       >>> def postprocessor(path, key, value):
+       ...     try:
+       ...         return key + ':int', int(value)
+       ...     except (ValueError, TypeError):
+       ...         return key, value
+       >>> xmltodict.parse('<a><b>1</b><b>2</b><b>x</b></a>',
+       ...                 postprocessor=postprocessor)
+       OrderedDict([(u'a', OrderedDict([(u'b:int', [1, 2]), (u'b', u'x')]))])
+
+   You can pass an alternate version of `expat` (such as `defusedexpat`) by
+   using the `expat` parameter. E.g::
+
+       >>> import defusedexpat
+       >>> xmltodict.parse('<a>hello</a>', expat=defusedexpat.pyexpat)
+       OrderedDict([(u'a', u'hello')])
+
+
+.. function:: unparse(input_dict, output=None, encoding='utf-8', **kwargs)
+
+   Emit an XML document for the given `input_dict` (reverse of `parse`).
+
+   The resulting XML document is returned as a string, but if `output` (a
+   file-like object) is specified, it is written there instead.
+
+   Dictionary keys prefixed with `attr_prefix` (default=`'@'`) are interpreted
+   as XML node attributes, whereas keys equal to `cdata_key`
+   (default=`'#text'`) are treated as character data.
+
+   The `pretty` parameter (default=`False`) enables pretty-printing. In this
+   mode, lines are terminated with `'\n'` and indented with `'\t'`, but this
+   can be customized with the `newl` and `indent` parameters.
+   

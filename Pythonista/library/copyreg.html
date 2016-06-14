@@ -1,0 +1,200 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>12.2. copyreg — Register pickle support functions &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="12. Data Persistence" href="persistence.html" />
+    <link rel="next" title="12.3. shelve — Python object persistence" href="shelve.html" />
+    <link rel="prev" title="12.1. pickle — Python object serialization" href="pickle.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="shelve.html" title="12.3. shelve — Python object persistence"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pickle.html" title="12.1. pickle — Python object serialization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="persistence.html" accesskey="U">12. Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-copyreg">
+<span id="copyreg-register-pickle-support-functions"></span><h1>12.2. <a class="reference internal" href="#module-copyreg" title="copyreg: Register pickle support functions."><tt class="xref py py-mod docutils literal"><span class="pre">copyreg</span></tt></a> &#8212; Register <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> support functions<a class="headerlink" href="#module-copyreg" title="Permalink to this headline">¶</a></h1>
+<p id="index-0">The <a class="reference internal" href="#module-copyreg" title="copyreg: Register pickle support functions."><tt class="xref py py-mod docutils literal"><span class="pre">copyreg</span></tt></a> module offers a way to define functions used while pickling
+specific objects.  The <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> and <a class="reference internal" href="copy.html#module-copy" title="copy: Shallow and deep copy operations."><tt class="xref py py-mod docutils literal"><span class="pre">copy</span></tt></a> modules use those functions
+when pickling/copying those objects.  The module provides configuration
+information about object constructors which are not classes.
+Such constructors may be factory functions or class instances.</p>
+<dl class="function">
+<dt id="copyreg.constructor">
+<tt class="descclassname">copyreg.</tt><tt class="descname">constructor</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#copyreg.constructor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Declares <em>object</em> to be a valid constructor.  If <em>object</em> is not callable (and
+hence not valid as a constructor), raises <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="copyreg.pickle">
+<tt class="descclassname">copyreg.</tt><tt class="descname">pickle</tt><big>(</big><em>type</em>, <em>function</em>, <em>constructor=None</em><big>)</big><a class="headerlink" href="#copyreg.pickle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Declares that <em>function</em> should be used as a &#8220;reduction&#8221; function for objects
+of type <em>type</em>.  <em>function</em> should return either a string or a tuple
+containing two or three elements.</p>
+<p>The optional <em>constructor</em> parameter, if provided, is a callable object which
+can be used to reconstruct the object when called with the tuple of arguments
+returned by <em>function</em> at pickling time.  <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt></a> will be raised if
+<em>object</em> is a class or <em>constructor</em> is not callable.</p>
+<p>See the <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> module for more details on the interface
+expected of <em>function</em> and <em>constructor</em>.  Note that the
+<a class="reference internal" href="pickle.html#pickle.Pickler.dispatch_table" title="pickle.Pickler.dispatch_table"><tt class="xref py py-attr docutils literal"><span class="pre">dispatch_table</span></tt></a> attribute of a pickler
+object or subclass of <a class="reference internal" href="pickle.html#pickle.Pickler" title="pickle.Pickler"><tt class="xref py py-class docutils literal"><span class="pre">pickle.Pickler</span></tt></a> can also be used for
+declaring reduction functions.</p>
+</dd></dl>
+
+<div class="section" id="example">
+<h2>12.2.1. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>The example below would like to show how to register a pickle function and how
+it will be used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">copyreg</span><span class="o">,</span> <span class="nn">copy</span><span class="o">,</span> <span class="nn">pickle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">pickle_c</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;pickling a C instance...&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">C</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">a</span><span class="p">,)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copyreg</span><span class="o">.</span><span class="n">pickle</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">pickle_c</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">pickling a C instance...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">pickling a C instance...</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

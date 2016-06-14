@@ -1,0 +1,249 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Primer to Asynchronous Applications &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="primer-to-asynchronous-applications">
+<h1>Primer to Asynchronous Applications<a class="headerlink" href="#primer-to-asynchronous-applications" title="Permalink to this headline">¶</a></h1>
+<p>Asynchronous design patterns don&#8217;t mix well with the synchronous nature of <a class="reference external" href="http://www.python.org/dev/peps/pep-3333/">WSGI</a>. This is why most asynchronous frameworks (tornado, twisted, ...) implement a specialized API to expose their asynchronous features. Bottle is a WSGI framework and shares the synchronous nature of WSGI, but thanks to the awesome <a class="reference external" href="http://www.gevent.org/">gevent project</a>, it is still possible to write asynchronous applications with bottle. This article documents the usage of Bottle with Asynchronous WSGI.</p>
+<div class="section" id="the-limits-of-synchronous-wsgi">
+<h2>The Limits of Synchronous WSGI<a class="headerlink" href="#the-limits-of-synchronous-wsgi" title="Permalink to this headline">¶</a></h2>
+<p>Briefly worded, the <a class="reference external" href="http://www.python.org/dev/peps/pep-3333/">WSGI specification (pep 3333)</a> defines a request/response circle as follows: The application callable is invoked once for each request and must return a body iterator. The server then iterates over the body and writes each chunk to the socket. As soon as the body iterator is exhausted, the client connection is closed.</p>
+<p>Simple enough, but there is a snag: All this happens synchronously. If your application needs to wait for data (IO, sockets, databases, ...), it must either yield empty strings (busy wait) or block the current thread. Both solutions occupy the handling thread and prevent it from answering new requests. There is consequently only one ongoing request per thread.</p>
+<p>Most servers limit the number of threads to avoid their relatively high overhead. Pools of 20 or less threads are common. As soon as all threads are occupied, any new connection is stalled. The server is effectively dead for everyone else. If you want to implement a chat that uses long-polling ajax requests to get real-time updates, you&#8217;d reach the limited at 20 concurrent connections. That&#8217;s a pretty small chat.</p>
+</div>
+<div class="section" id="greenlets-to-the-rescue">
+<h2>Greenlets to the rescue<a class="headerlink" href="#greenlets-to-the-rescue" title="Permalink to this headline">¶</a></h2>
+<p>Most servers limit the size of their worker pools to a relatively low number of concurrent threads, due to the high overhead involved in switching between and creating new threads. While threads are cheap compared to processes (forks), they are still expensive to create for each new connection.</p>
+<p>The <a class="reference external" href="http://www.gevent.org/">gevent</a> module adds <em>greenlets</em> to the mix. Greenlets behave similar to traditional threads, but are very cheap to create. A gevent-based server can spawn thousands of greenlets (one for each connection) with almost no overhead. Blocking individual greenlets has no impact on the servers ability to accept new requests. The number of concurrent connections is virtually unlimited.</p>
+<p>This makes creating asynchronous applications incredibly easy, because they look and feel like synchronous applications. A gevent-based server is actually not asynchronous, but massively multi-threaded. Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">gevent</span> <span class="kn">import</span> <span class="n">monkey</span><span class="p">;</span> <span class="n">monkey</span><span class="o">.</span><span class="n">patch_all</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">run</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/stream&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">stream</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="s">&#39;START&#39;</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s">&#39;MIDDLE&#39;</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="s">&#39;END&#39;</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="s">&#39;gevent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first line is important. It causes gevent to monkey-patch most of Python&#8217;s blocking APIs to not block the current thread, but pass the CPU to the next greenlet instead. It actually replaces Python&#8217;s threading with gevent-based pseudo-threads. This is why you can still use <tt class="docutils literal"><span class="pre">time.sleep()</span></tt> which would normally block the whole thread. If you don&#8217;t feel comfortable with monkey-patching python built-ins, you can use the corresponding gevent functions (<tt class="docutils literal"><span class="pre">gevent.sleep()</span></tt> in this case).</p>
+<p>If you run this script and point your browser to <tt class="docutils literal"><span class="pre">http://localhost:8080/stream</span></tt>, you should see <cite>START</cite>, <cite>MIDDLE</cite>, and <cite>END</cite> show up one by one (rather than waiting 8 seconds to see them all at once). It works exactly as with normal threads, but now your server can handle thousands of concurrent requests without any problems.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some browsers buffer a certain amount of data before they start rendering a
+page. You might need to yield more than a few bytes to see an effect in
+these browsers. Additionally, many browsers have a limit of one concurrent
+connection per URL. If this is the case, you can use a second browser or a
+benchmark tool (e.g. <cite>ab</cite> or <cite>httperf</cite>) to measure performance.</p>
+</div>
+</div>
+<div class="section" id="event-callbacks">
+<h2>Event Callbacks<a class="headerlink" href="#event-callbacks" title="Permalink to this headline">¶</a></h2>
+<p>A very common design pattern in asynchronous frameworks (including tornado, twisted, node.js and friends) is to use non-blocking APIs and bind callbacks to asynchronous events. The socket object is kept open until it is closed explicitly to allow callbacks to write to the socket at a later point. Here is an example based on the <a class="reference external" href="http://www.tornadoweb.org/documentation#non-blocking-asynchronous-requests">tornado library</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MainHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="nd">@tornado.web.asynchronous</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">worker</span> <span class="o">=</span> <span class="n">SomeAsyncWorker</span><span class="p">()</span>
+        <span class="n">worker</span><span class="o">.</span><span class="n">on_data</span><span class="p">(</span><span class="k">lambda</span> <span class="n">chunk</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">))</span>
+        <span class="n">worker</span><span class="o">.</span><span class="n">on_finish</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The main benefit is that the request handler terminates early. The handling thread can move on and accept new requests while the callbacks continue to write to sockets of previous requests. This is how these frameworks manage to process a lot of concurrent requests with only a small number of OS threads.</p>
+<p>With Gevent+WSGI, things are different: First, terminating early has no benefit because we have an unlimited pool of (pseudo)threads to accept new connections. Second, we cannot terminate early because that would close the socket (as required by WSGI). Third, we must return an iterable to conform to WSGI.</p>
+<p>In order to conform to the WSGI standard, all we have to do is to return a body iterable that we can write to asynchronously. With the help of <a class="reference external" href="http://www.gevent.org/gevent.queue.html">gevent.queue</a>, we can <em>simulate</em> a detached socket and rewrite the previous example as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/fetch&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fetch</span><span class="p">():</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">gevent</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+    <span class="n">worker</span> <span class="o">=</span> <span class="n">SomeAsyncWorker</span><span class="p">()</span>
+    <span class="n">worker</span><span class="o">.</span><span class="n">on_data</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">put</span><span class="p">)</span>
+    <span class="n">worker</span><span class="o">.</span><span class="n">on_finish</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">body</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="ne">StopIteration</span><span class="p">))</span>
+    <span class="n">worker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">body</span>
+</pre></div>
+</div>
+<p>From the server perspective, the queue object is iterable. It blocks if empty and stops as soon as it reaches <tt class="docutils literal"><span class="pre">StopIteration</span></tt>. This conforms to WSGI. On the application side, the queue object behaves like a non-blocking socket. You can write to it at any time, pass it around and even start a new (pseudo)thread that writes to it asynchronously. This is how long-polling is implemented most of the time.</p>
+</div>
+<div class="section" id="finally-websockets">
+<h2>Finally: WebSockets<a class="headerlink" href="#finally-websockets" title="Permalink to this headline">¶</a></h2>
+<p>Lets forget about the low-level details for a while and speak about WebSockets. Since you are reading this article, you probably know what WebSockets are: A bidirectional communication channel between a browser (client) and a web application (server).</p>
+<p>Thankfully the <a class="reference external" href="http://pypi.python.org/pypi/gevent-websocket/">gevent-websocket</a> package does all the hard work for us. Here is a simple WebSocket endpoint that receives messages and just sends them back to the client:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">Bottle</span><span class="p">,</span> <span class="n">abort</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Bottle</span><span class="p">()</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/websocket&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">handle_websocket</span><span class="p">():</span>
+    <span class="n">wsock</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;wsgi.websocket&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">wsock</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s">&#39;Expected WebSocket request.&#39;</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">wsock</span><span class="o">.</span><span class="n">receive</span><span class="p">()</span>
+            <span class="n">wsock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;Your message was: </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">message</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">WebSocketError</span><span class="p">:</span>
+            <span class="k">break</span>
+
+<span class="kn">from</span> <span class="nn">gevent.pywsgi</span> <span class="kn">import</span> <span class="n">WSGIServer</span>
+<span class="kn">from</span> <span class="nn">geventwebsocket</span> <span class="kn">import</span> <span class="n">WebSocketError</span>
+<span class="kn">from</span> <span class="nn">geventwebsocket.handler</span> <span class="kn">import</span> <span class="n">WebSocketHandler</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">WSGIServer</span><span class="p">((</span><span class="s">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">),</span> <span class="n">app</span><span class="p">,</span>
+                    <span class="n">handler_class</span><span class="o">=</span><span class="n">WebSocketHandler</span><span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The while-loop runs until the client closes the connection. You get the idea :)</p>
+<p>The client-site JavaScript API is really straight forward, too:</p>
+<div class="highlight-python"><pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;script type="text/javascript"&gt;
+    var ws = new WebSocket("ws://example.com:8080/websocket");
+    ws.onopen = function() {
+        ws.send("Hello, world");
+    };
+    ws.onmessage = function (evt) {
+        alert(evt.data);
+    };
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;/html&gt;</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,148 @@
+paramiko
+========
+
+.. module:: paramiko
+
+.. note::
+	This page only contains a brief summary about available classes in paramiko. Please refer to the full documentation on the paramiko website for more information: http://www.lag.net/paramiko/docs/
+
+Paramiko (a combination of the esperanto words for "paranoid" and "friend") is a module for python 2.3 or greater that implements the SSH2 protocol for secure (encrypted and authenticated) connections to remote machines. Unlike SSL (aka TLS), the SSH2 protocol does not require hierarchical certificates signed by a powerful central authority. You may know SSH2 as the protocol that replaced telnet and rsh for secure access to remote shells, but the protocol also includes the ability to open arbitrary channels to remote services across an encrypted tunnel. (This is how sftp works, for example.)
+
+The high-level client API starts with creation of an SSHClient object. For more direct control, pass a socket (or socket-like object) to a Transport, and use start_server or start_client to negoatite with the remote host as either a server or client. As a client, you are responsible for authenticating using a password or private key, and checking the server's host key. (Key signature and verification is done by paramiko, but you will need to provide private keys and check that the content of a public key matches what you expected to see.) As a server, you are responsible for deciding which users, passwords, and keys to allow, and what kind of channels to allow.
+
+Once you have finished, either side may request flow-controlled Channels to the other side, which are python objects that act like sockets, but send and receive data over the encrypted session.
+
+Paramiko is written entirely in python (no C or platform-dependent code) and is released under the GNU Lesser General Public License (LGPL).
+
+Classes:
+
+.. class:: SecurityOptions
+
+	Simple object containing the security preferences of an ssh transport.
+	
+.. class:: Transport
+
+	An SSH Transport attaches to a stream (usually a socket), negotiates an encrypted session, authenticates, and then creates stream tunnels, called Channels, across the session.
+
+.. class:: SSHClient
+
+   A high-level representation of a session with an SSH server.
+
+.. class:: MissingHostKeyPolicy
+
+   Interface for defining the policy that SSHClient should use when the SSH server's hostname is not in either the system host keys or the application's keys.
+
+.. class:: AutoAddPolicy
+
+   Policy for automatically adding the hostname and new host key to the local HostKeys object, and saving it.
+
+.. class:: RejectPolicy
+
+   Policy for automatically rejecting the unknown hostname & key.
+
+.. class:: WarningPolicy
+
+   Policy for logging a python-style warning for an unknown host key, but accepting it.
+
+.. class:: Channel
+
+   A secure tunnel across an SSH Transport.
+
+.. class:: SSHException
+
+   Exception raised by failures in SSH2 protocol negotiation or logic errors.
+   
+.. class:: PasswordRequiredException
+
+   Exception raised when a password is needed to unlock a private key file.
+
+.. class:: BadAuthenticationType
+
+   Exception raised when an authentication type (like password) is used, but the server isn't allowing that type.
+
+.. class:: ChannelException
+
+   Exception raised when an attempt to open a new Channel fails.
+
+.. class:: BadHostKeyException
+
+   The host key given by the SSH server did not match what we were expecting.
+ 
+ .. class:: AuthenticationException
+
+   Exception raised when authentication failed for some reason.
+ 	
+.. class:: ServerInterface
+
+   This class defines an interface for controlling the behavior of paramiko in server mode.
+
+.. class:: SubsystemHandler
+
+   Handler for a subsytem in server mode.
+ 	
+.. class:: RSAKey
+
+   Representation of an RSA key which can be used to sign and verify SSH2 data.
+ 	
+.. class:: DSSKey
+
+   Representation of a DSS key which can be used to sign an verify SSH2 data.
+
+.. class:: SFTPError
+
+.. class:: SFTP
+
+   an alias for SFTPClient for backwards compatability
+
+.. class:: SFTPClient
+   
+   SFTP client object.
+
+.. class:: SFTPServer
+
+   Server-side SFTP subsystem support.
+
+.. class:: SFTPAttributes
+
+   Representation of the attributes of a file (or proxied file) for SFTP in client or server mode.
+
+.. class:: SFTPHandle
+
+   Abstract object representing a handle to an open file (or folder) in an SFTP server implementation.
+
+.. class:: SFTPServerInterface
+
+   This class defines an interface for controlling the behavior of paramiko when using the SFTPServer subsystem to provide an SFTP server.
+
+.. class:: SFTPFile
+   
+   Proxy object for a file on the remote server, in client mode SFTP.
+
+.. class:: Message
+
+   An SSH2 Message is a stream of bytes that encodes some combination of strings, integers, bools, and infinite-precision integers (known in python as longs).
+
+.. class:: BufferedFile
+   
+   Reusable base class to implement python-style file buffering around a simpler stream.
+
+.. class:: Agent
+
+   Client interface for using private keys from an SSH agent running on the local machine.
+
+.. class:: AgentKey
+   
+   Private key held in a local SSH agent.
+
+.. class:: PKey
+
+   Base class for public keys.
+
+.. class:: HostKeys
+
+   Representation of an openssh-style "known hosts" file.
+
+.. class:: SSHConfig
+
+   Representation of config information as stored in the format used by OpenSSH.
+   

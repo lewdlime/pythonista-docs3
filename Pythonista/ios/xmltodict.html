@@ -1,0 +1,242 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>xmltodict &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-xmltodict">
+<span id="xmltodict"></span><h1><a class="reference internal" href="#module-xmltodict" title="xmltodict: Makes working with XML feel like you are working with JSON"><tt class="xref py py-mod docutils literal"><span class="pre">xmltodict</span></tt></a><a class="headerlink" href="#module-xmltodict" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="#module-xmltodict" title="xmltodict: Makes working with XML feel like you are working with JSON"><tt class="xref py py-mod docutils literal"><span class="pre">xmltodict</span></tt></a> is a Python module that makes working with XML feel like you are working with <a class="reference external" href="http://docs.python.org/library/json.html">JSON</a>, as in this
+<a class="reference external" href="http://www.xml.com/pub/a/2006/05/31/converting-between-xml-and-json.html">&#8220;spec&#8221;</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="gp">... </span><span class="s">&lt;mydocument has=&quot;an attribute&quot;&gt;</span>
+<span class="gp">... </span><span class="s">  &lt;and&gt;</span>
+<span class="gp">... </span><span class="s">    &lt;many&gt;elements&lt;/many&gt;</span>
+<span class="gp">... </span><span class="s">    &lt;many&gt;more elements&lt;/many&gt;</span>
+<span class="gp">... </span><span class="s">  &lt;/and&gt;</span>
+<span class="gp">... </span><span class="s">  &lt;plus a=&quot;complex&quot;&gt;</span>
+<span class="gp">... </span><span class="s">    element as well</span>
+<span class="gp">... </span><span class="s">  &lt;/plus&gt;</span>
+<span class="gp">... </span><span class="s">&lt;/mydocument&gt;</span>
+<span class="gp">... </span><span class="s">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="p">[</span><span class="s">&#39;mydocument&#39;</span><span class="p">][</span><span class="s">&#39;@has&#39;</span><span class="p">]</span>
+<span class="go">u&#39;an attribute&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="p">[</span><span class="s">&#39;mydocument&#39;</span><span class="p">][</span><span class="s">&#39;and&#39;</span><span class="p">][</span><span class="s">&#39;many&#39;</span><span class="p">]</span>
+<span class="go">[u&#39;elements&#39;, u&#39;more elements&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="p">[</span><span class="s">&#39;mydocument&#39;</span><span class="p">][</span><span class="s">&#39;plus&#39;</span><span class="p">][</span><span class="s">&#39;@a&#39;</span><span class="p">]</span>
+<span class="go">u&#39;complex&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="p">[</span><span class="s">&#39;mydocument&#39;</span><span class="p">][</span><span class="s">&#39;plus&#39;</span><span class="p">][</span><span class="s">&#39;#text&#39;</span><span class="p">]</span>
+<span class="go">u&#39;element as well&#39;</span>
+</pre></div>
+</div>
+<p>Functions in the <a class="reference internal" href="#module-xmltodict" title="xmltodict: Makes working with XML feel like you are working with JSON"><tt class="xref py py-mod docutils literal"><span class="pre">xmltodict</span></tt></a> module:</p>
+<dl class="function">
+<dt id="xmltodict.parse">
+<tt class="descclassname">xmltodict.</tt><tt class="descname">parse</tt><big>(</big><em>xml_input</em>, <em>encoding='utf-8'</em>, <em>expat=expat</em>, <em>process_namespaces=False</em>, <em>namespace_separator=':'</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#xmltodict.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the given XML input and convert it into a dictionary.</p>
+<p><cite>xml_input</cite> can either be a <cite>string</cite> or a file-like object.</p>
+<p>If <cite>xml_attribs</cite> is <cite>True</cite>, element attributes are put in the dictionary
+among regular child elements, using <cite>&#64;</cite> as a prefix to avoid collisions. If
+set to <cite>False</cite>, they are just ignored.</p>
+<p>Simple example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>\<span class="s">&quot;</span><span class="se">\&quot;\&quot;</span><span class="gp">... </span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">prop</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="o">&gt;</span>
+<span class="gp">... </span>  <span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+<span class="gp">... </span>  <span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+<span class="gp">... </span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="gp">... </span>\<span class="s">&quot;</span><span class="se">\&quot;\&quot;</span><span class="s">)</span><span class="gp">&gt;&gt;&gt; </span>
+<span class="n">doc</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">][</span><span class="s">&#39;@prop&#39;</span><span class="p">]</span>
+<span class="go">u&#39;x&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">][</span><span class="s">&#39;b&#39;</span><span class="p">]</span>
+<span class="go">[u&#39;1&#39;, u&#39;2&#39;]</span>
+</pre></div>
+</div>
+<p>If <cite>item_depth</cite> is <cite>0</cite>, the function returns a dictionary for the root
+element (default behavior). Otherwise, it calls <cite>item_callback</cite> every time
+an item at the specified depth is found and returns <cite>None</cite> in the end
+(streaming mode).</p>
+<p>The callback function receives two parameters: the <cite>path</cite> from the document
+root to the item (name-attribs pairs), and the <cite>item</cite> (dict). If the
+callback&#8217;s return value is false-ish, parsing will be stopped with the
+<tt class="xref py py-class docutils literal"><span class="pre">ParsingInterrupted</span></tt> exception.</p>
+<p>Streaming example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">&#39;path:</span><span class="si">%s</span><span class="s"> item:</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="bp">True</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span>\<span class="s">&quot;</span><span class="se">\&quot;\&quot;</span><span class="gp">... </span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">prop</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="o">&gt;</span>
+<span class="gp">... </span>  <span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+<span class="gp">... </span>  <span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span>
+<span class="gp">... </span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>\<span class="s">&quot;</span><span class="se">\&quot;\&quot;</span><span class="s">, item_depth=2, item_callback=handle)</span>
+<span class="go">path:[(u&#39;a&#39;, {u&#39;prop&#39;: u&#39;x&#39;}), (u&#39;b&#39;, None)] item:1</span>
+<span class="go">path:[(u&#39;a&#39;, {u&#39;prop&#39;: u&#39;x&#39;}), (u&#39;b&#39;, None)] item:2</span>
+</pre></div>
+</div>
+<p>The optional argument <cite>postprocessor</cite> is a function that takes <cite>path</cite>, <cite>key</cite>
+and <cite>value</cite> as positional arguments and returns a new <cite>(key, value)</cite> pair
+where both <cite>key</cite> and <cite>value</cite> may have changed. Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">postprocessor</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&#39;:int&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;&lt;a&gt;&lt;b&gt;1&lt;/b&gt;&lt;b&gt;2&lt;/b&gt;&lt;b&gt;x&lt;/b&gt;&lt;/a&gt;&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">postprocessor</span><span class="o">=</span><span class="n">postprocessor</span><span class="p">)</span>
+<span class="go">OrderedDict([(u&#39;a&#39;, OrderedDict([(u&#39;b:int&#39;, [1, 2]), (u&#39;b&#39;, u&#39;x&#39;)]))])</span>
+</pre></div>
+</div>
+<p>You can pass an alternate version of <cite>expat</cite> (such as <cite>defusedexpat</cite>) by
+using the <cite>expat</cite> parameter. E.g:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">defusedexpat</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;&lt;a&gt;hello&lt;/a&gt;&#39;</span><span class="p">,</span> <span class="n">expat</span><span class="o">=</span><span class="n">defusedexpat</span><span class="o">.</span><span class="n">pyexpat</span><span class="p">)</span>
+<span class="go">OrderedDict([(u&#39;a&#39;, u&#39;hello&#39;)])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="xmltodict.unparse">
+<tt class="descclassname">xmltodict.</tt><tt class="descname">unparse</tt><big>(</big><em>input_dict</em>, <em>output=None</em>, <em>encoding='utf-8'</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#xmltodict.unparse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emit an XML document for the given <cite>input_dict</cite> (reverse of <cite>parse</cite>).</p>
+<p>The resulting XML document is returned as a string, but if <cite>output</cite> (a
+file-like object) is specified, it is written there instead.</p>
+<p>Dictionary keys prefixed with <cite>attr_prefix</cite> (default=`&#8217;&#64;&#8217;<cite>) are interpreted
+as XML node attributes, whereas keys equal to `cdata_key</cite>
+(default=`&#8217;#text&#8217;<a href="#id1"><span class="problematic" id="id2">`</span></a>) are treated as character data.</p>
+<p>The <cite>pretty</cite> parameter (default=`False`) enables pretty-printing. In this
+mode, lines are terminated with <cite>&#8216;n&#8217;</cite> and indented with <cite>&#8216;t&#8217;</cite>, but this
+can be customized with the <cite>newl</cite> and <cite>indent</cite> parameters.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,280 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dialogs — Easy-to-use UI Dialogs &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-dialogs">
+<span id="dialogs-easy-to-use-ui-dialogs"></span><h1><a class="reference internal" href="#module-dialogs" title="dialogs"><tt class="xref py py-mod docutils literal"><span class="pre">dialogs</span></tt></a> &#8212; Easy-to-use UI Dialogs<a class="headerlink" href="#module-dialogs" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-dialogs" title="dialogs"><tt class="xref py py-mod docutils literal"><span class="pre">dialogs</span></tt></a> module provides easy-to-use GUI dialogs for simple data input on iOS. It is mostly built on top of the <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a> module, and while less flexible than using <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a> directly, it is a lot easier to use and requires very few lines of code in most cases.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Most functions in this module present a dialog and return the user&#8217;s input. The following kinds of dialogs are supported:</p>
+<ul class="simple">
+<li><strong>Text Dialogs</strong> present a multi-line text input area. The font and some keyboard attributes (autocorrection...) are customizable. (see <a class="reference internal" href="#dialogs.text_dialog" title="dialogs.text_dialog"><tt class="xref py py-func docutils literal"><span class="pre">text_dialog()</span></tt></a>)</li>
+<li><strong>List Dialogs</strong> present a list of items, allowing to select one or more of them. (see <a class="reference internal" href="#dialogs.list_dialog" title="dialogs.list_dialog"><tt class="xref py py-func docutils literal"><span class="pre">list_dialog()</span></tt></a>)</li>
+<li><strong>Edit List Dialogs</strong> also present a list of items, but instead of selecting an item, the list can be rearranged by the user, and items can be deleted from the list. (see <a class="reference internal" href="#dialogs.edit_list_dialog" title="dialogs.edit_list_dialog"><tt class="xref py py-func docutils literal"><span class="pre">edit_list_dialog()</span></tt></a>)</li>
+<li><strong>Date/Time Dialogs</strong> present a date picker &#8211; there are multiple variants for picking a date, time, or both, and there&#8217;s also a mode for picking a countdown/duration, e.g. for timers. (see <a class="reference internal" href="#dialogs.date_dialog" title="dialogs.date_dialog"><tt class="xref py py-func docutils literal"><span class="pre">date_dialog()</span></tt></a>, <a class="reference internal" href="#dialogs.time_dialog" title="dialogs.time_dialog"><tt class="xref py py-func docutils literal"><span class="pre">time_dialog()</span></tt></a>, <a class="reference internal" href="#dialogs.datetime_dialog" title="dialogs.datetime_dialog"><tt class="xref py py-func docutils literal"><span class="pre">datetime_dialog()</span></tt></a>, <a class="reference internal" href="#dialogs.duration_dialog" title="dialogs.duration_dialog"><tt class="xref py py-func docutils literal"><span class="pre">duration_dialog()</span></tt></a>)</li>
+<li><strong>Form Dialogs</strong> present a list of customizable data input fields. The fields can contain switches (for boolean values), text/email/password fields (for strings), date pickers, and checkmarks (for multiple selection lists). This is the most flexible type of dialog, but it also requires the most configuration (see <a class="reference internal" href="#dialogs.form_dialog" title="dialogs.form_dialog"><tt class="xref py py-func docutils literal"><span class="pre">form_dialog()</span></tt></a>)</li>
+</ul>
+</div>
+<div class="section" id="dialog-functions">
+<h2>Dialog Functions<a class="headerlink" href="#dialog-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="dialogs.list_dialog">
+<tt class="descclassname">dialogs.</tt><tt class="descname">list_dialog</tt><big>(</big><em>title=''</em>, <em>items=None</em>, <em>multiple=False</em><big>)</big><a class="headerlink" href="#dialogs.list_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Present a list of items and return the one(s) that were selected. When the dialog is cancelled, <cite>None</cite> is returned. The <cite>items</cite> list can contain any kind of object that can be converted to a string. To get more control over how each item is displayed in the list, you can also use a list of dictionaries (see <a class="reference internal" href="ui.html#ui.ListDataSource.items" title="ui.ListDataSource.items"><tt class="xref py py-attr docutils literal"><span class="pre">ui.ListDataSource.items</span></tt></a> for details).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.edit_list_dialog">
+<tt class="descclassname">dialogs.</tt><tt class="descname">edit_list_dialog</tt><big>(</big><em>title=''</em>, <em>items=None</em>, <em>move=True</em>, <em>delete=True</em><big>)</big><a class="headerlink" href="#dialogs.edit_list_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Present a list of items that can be edited by the user. By default, the user can both rearrange the list and remove items; this behavior can be controlled with the <cite>move</cite> and <cite>delete</cite> parameters.</p>
+<p>The return value is the modified list of items, or <cite>None</cite> if the dialog was cancelled.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.form_dialog">
+<tt class="descclassname">dialogs.</tt><tt class="descname">form_dialog</tt><big>(</big><em>title=''</em>, <em>fields=None</em>, <em>sections=None</em><big>)</big><a class="headerlink" href="#dialogs.form_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Present a form dialog, similar to many settings interfaces.</p>
+<p>Each field in the dialog is configured by dictionary. If there is only a single section of fields, the list of these field dictionaries can be passed as the <cite>fields</cite> parameter. If there should be multiple sections, each section is represented by a tuple (usually a 2-tuple containing the title of the section and its list of fields; an optional third item can contain footer text for the section).</p>
+<p>The return value of this function is a dictionary of values for each field (or <cite>None</cite>, if the dialog was cancelled).</p>
+<p>A field dictionary should contain the following keys:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">'type'</span></tt> &#8211; (required) the type of the field, this can be <tt class="docutils literal"><span class="pre">'switch'</span></tt>, <tt class="docutils literal"><span class="pre">'text'</span></tt>, <tt class="docutils literal"><span class="pre">'url'</span></tt>, <tt class="docutils literal"><span class="pre">'email'</span></tt>, <tt class="docutils literal"><span class="pre">'password'</span></tt>, <tt class="docutils literal"><span class="pre">'number'</span></tt>, <tt class="docutils literal"><span class="pre">'check'</span></tt>, <tt class="docutils literal"><span class="pre">'datetime'</span></tt>, <tt class="docutils literal"><span class="pre">'date'</span></tt>, or <tt class="docutils literal"><span class="pre">'time'</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">'key'</span></tt> &#8211; the key of this field in the return value of the form</li>
+<li><tt class="docutils literal"><span class="pre">'value'</span></tt> &#8211; the initial value of the field (for text/url/email/password/number fields, this should be a string, for switch fields a boolean (<cite>True</cite>/<cite>False</cite>), for datetime fields a <cite>datetime</cite> object)</li>
+<li><tt class="docutils literal"><span class="pre">'title'</span></tt> &#8211; the human-readable title/label of the field</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">'type'</span></tt> is the only required key. If <tt class="docutils literal"><span class="pre">'key'</span></tt> is not present, the <tt class="docutils literal"><span class="pre">'title'</span></tt> is used instead. If both are missing, fields are numbered sequentially in the returned dictionary.</p>
+<p>Optional keys for all field types:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">'tint_color'</span></tt> &#8211; the field&#8217;s tint color (the effect of this depends on the type of the field)</li>
+<li><tt class="docutils literal"><span class="pre">'icon'</span></tt> &#8211; the name of a built-in image or a <a class="reference internal" href="ui.html#ui.Image" title="ui.Image"><tt class="xref py py-class docutils literal"><span class="pre">ui.Image</span></tt></a> object</li>
+</ul>
+<p>Optional keys for text/url/email/password/number fields:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">'placeholder'</span></tt> &#8211; the text that is shown when the field is empty</li>
+<li><tt class="docutils literal"><span class="pre">'autocorrection'</span></tt> &#8211; whether auto-correction should be enabled for this field (<cite>True</cite>/<cite>False</cite>)</li>
+<li><tt class="docutils literal"><span class="pre">'autocapitalization'</span></tt> &#8211; auto-capitalization behavior for the text fields, for possible values, see <a class="reference internal" href="ui.html#ui.TextField.autocapitalization_type" title="ui.TextField.autocapitalization_type"><tt class="xref py py-attr docutils literal"><span class="pre">ui.TextField.autocapitalization_type</span></tt></a></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.text_dialog">
+<tt class="descclassname">dialogs.</tt><tt class="descname">text_dialog</tt><big>(</big><em>title=''</em>, <em>text=''</em>, <em>font=('&lt;system&gt;'</em>, <em>16)</em>, <em>autocorrection=None</em>, <em>autocapitalization=ui.AUTOCAPITALIZE_SENTENCES</em>, <em>spellchecking=None</em><big>)</big><a class="headerlink" href="#dialogs.text_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a multi-line text editor sheet.</p>
+<p>The behavior of the editor can be customized with the <cite>autocorrection</cite>, <cite>autocapitalization</cite>, and <cite>spellchecking</cite> parameters. The <cite>text</cite> parameter controls the initial text in the editor.</p>
+<p>The edited text is returned as a string (if the dialog is cancelled, <cite>None</cite> is returned instead).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.date_dialog">
+<tt class="descclassname">dialogs.</tt><tt class="descname">date_dialog</tt><big>(</big><em>title=''</em><big>)</big><a class="headerlink" href="#dialogs.date_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a date picker dialog, the return value is a <a class="reference internal" href="../library/datetime.html#datetime.datetime" title="datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.time_dialog">
+<tt class="descclassname">dialogs.</tt><tt class="descname">time_dialog</tt><big>(</big><em>title=''</em><big>)</big><a class="headerlink" href="#dialogs.time_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a time picker dialog, the return value is a <a class="reference internal" href="../library/datetime.html#datetime.datetime" title="datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.datetime_dialog">
+<tt class="descclassname">dialogs.</tt><tt class="descname">datetime_dialog</tt><big>(</big><em>title=''</em><big>)</big><a class="headerlink" href="#dialogs.datetime_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a date/time picker dialog, the return value is a <a class="reference internal" href="../library/datetime.html#datetime.datetime" title="datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime.datetime</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.duration_dialog">
+<tt class="descclassname">dialogs.</tt><tt class="descname">duration_dialog</tt><big>(</big><em>title=''</em><big>)</big><a class="headerlink" href="#dialogs.duration_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a duration picker dialog (e.g. for a countdown timer), the return value is the selected duration in seconds (e.g. 60.0 for 1 minute).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="sharing">
+<h2>Sharing<a class="headerlink" href="#sharing" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="dialogs.share_image">
+<tt class="descclassname">dialogs.</tt><tt class="descname">share_image</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#dialogs.share_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the system sharing dialog for a given image (can be either a <a class="reference internal" href="ui.html#ui.Image" title="ui.Image"><tt class="xref py py-class docutils literal"><span class="pre">ui.Image</span></tt></a> or a PIL <tt class="docutils literal"><span class="pre">Image</span></tt>).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.share_text">
+<tt class="descclassname">dialogs.</tt><tt class="descname">share_text</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#dialogs.share_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the system sharing dialog for a given string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.share_url">
+<tt class="descclassname">dialogs.</tt><tt class="descname">share_url</tt><big>(</big><em>url</em><big>)</big><a class="headerlink" href="#dialogs.share_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the system sharing dialog for a given URL.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="alert-functions">
+<h2>Alert Functions<a class="headerlink" href="#alert-functions" title="Permalink to this headline">¶</a></h2>
+<p>These functions are imported from the <a class="reference internal" href="console.html#module-console" title="console: Utilities for Console Output and Various System Services"><tt class="xref py py-mod docutils literal"><span class="pre">console</span></tt></a> module for convenience.</p>
+<dl class="function">
+<dt id="dialogs.alert">
+<tt class="descclassname">dialogs.</tt><tt class="descname">alert</tt><big>(</big><big>)</big><a class="headerlink" href="#dialogs.alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>see <a class="reference internal" href="console.html#console.alert" title="console.alert"><tt class="xref py py-func docutils literal"><span class="pre">console.alert()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.input_alert">
+<tt class="descclassname">dialogs.</tt><tt class="descname">input_alert</tt><big>(</big><big>)</big><a class="headerlink" href="#dialogs.input_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>see <a class="reference internal" href="console.html#console.input_alert" title="console.input_alert"><tt class="xref py py-func docutils literal"><span class="pre">console.input_alert()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.login_alert">
+<tt class="descclassname">dialogs.</tt><tt class="descname">login_alert</tt><big>(</big><big>)</big><a class="headerlink" href="#dialogs.login_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>see <a class="reference internal" href="console.html#console.login_alert" title="console.login_alert"><tt class="xref py py-func docutils literal"><span class="pre">console.login_alert()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.password_alert">
+<tt class="descclassname">dialogs.</tt><tt class="descname">password_alert</tt><big>(</big><big>)</big><a class="headerlink" href="#dialogs.password_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>see <a class="reference internal" href="console.html#console.password_alert" title="console.password_alert"><tt class="xref py py-func docutils literal"><span class="pre">console.password_alert()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dialogs.hud_alert">
+<tt class="descclassname">dialogs.</tt><tt class="descname">hud_alert</tt><big>(</big><big>)</big><a class="headerlink" href="#dialogs.hud_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>see <a class="reference internal" href="console.html#console.hud_alert" title="console.hud_alert"><tt class="xref py py-func docutils literal"><span class="pre">console.hud_alert()</span></tt></a></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

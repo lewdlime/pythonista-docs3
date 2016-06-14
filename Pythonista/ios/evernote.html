@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>evernote &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-evernote">
+<span id="evernote"></span><h1><a class="reference internal" href="#module-evernote" title="evernote: The Evernote Python SDK"><tt class="xref py py-mod docutils literal"><span class="pre">evernote</span></tt></a><a class="headerlink" href="#module-evernote" title="Permalink to this headline">¶</a></h1>
+<p>This SDK contains wrapper code used to call the Evernote Cloud API from Python.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>In order to run the client client sample code, you need a developer token. Get one at <a class="reference external" href="https://www.evernote.com/api/DeveloperToken.action">https://www.evernote.com/api/DeveloperToken.action</a></p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Here is a basic example of how you can use the evernote module to create a new note in your default notebook:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">auth_token</span> <span class="o">=</span> <span class="s">&quot;YOUR_DEVELOPER_TOKEN&quot;</span>
+
+<span class="kn">import</span> <span class="nn">evernote.edam.userstore.constants</span> <span class="kn">as</span> <span class="nn">UserStoreConstants</span>
+<span class="kn">import</span> <span class="nn">evernote.edam.type.ttypes</span> <span class="kn">as</span> <span class="nn">Types</span>
+<span class="kn">from</span> <span class="nn">evernote.api.client</span> <span class="kn">import</span> <span class="n">EvernoteClient</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">EvernoteClient</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">auth_token</span><span class="p">,</span> <span class="n">sandbox</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">note_store</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_note_store</span><span class="p">()</span>
+
+<span class="c"># List all of the notebooks in the user&#39;s account</span>
+<span class="n">notebooks</span> <span class="o">=</span> <span class="n">note_store</span><span class="o">.</span><span class="n">listNotebooks</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;Found &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">notebooks</span><span class="p">),</span> <span class="s">&quot; notebooks:&quot;</span>
+<span class="k">for</span> <span class="n">notebook</span> <span class="ow">in</span> <span class="n">notebooks</span><span class="p">:</span>
+   <span class="k">print</span> <span class="s">&quot;  * &quot;</span><span class="p">,</span> <span class="n">notebook</span><span class="o">.</span><span class="n">name</span>
+<span class="k">print</span> <span class="s">&quot;Creating a new note in the default notebook&quot;</span>
+
+<span class="c"># To create a new note, simply create a new Note object and fill in</span>
+<span class="c"># attributes such as the note&#39;s title.</span>
+<span class="n">note</span> <span class="o">=</span> <span class="n">Types</span><span class="o">.</span><span class="n">Note</span><span class="p">()</span>
+<span class="n">note</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Hello&quot;</span>
+
+<span class="n">note</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="s">&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#39;</span>
+<span class="n">note</span><span class="o">.</span><span class="n">content</span> <span class="o">+=</span> <span class="s">&#39;&lt;!DOCTYPE en-note SYSTEM &#39;</span> \
+   <span class="s">&#39;&quot;http://xml.evernote.com/pub/enml2.dtd&quot;&gt;&#39;</span>
+<span class="n">note</span><span class="o">.</span><span class="n">content</span> <span class="o">+=</span> <span class="s">&#39;&lt;en-note&gt;Test Note&lt;br/&gt;&#39;</span>
+<span class="n">note</span><span class="o">.</span><span class="n">content</span> <span class="o">+=</span> <span class="s">&#39;&lt;/en-note&gt;&#39;</span>
+
+<span class="c"># Finally, send the new note to Evernote using the createNote method</span>
+<span class="c"># The new Note object that is returned will contain server-generated</span>
+<span class="c"># attributes such as the new note&#39;s unique GUID.</span>
+<span class="n">created_note</span> <span class="o">=</span> <span class="n">note_store</span><span class="o">.</span><span class="n">createNote</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&quot;Successfully created a new note with GUID: &quot;</span><span class="p">,</span> <span class="n">created_note</span><span class="o">.</span><span class="n">guid</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>List of available Plugins &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../../../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="copyright" title="Copyright" href="../../../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../../../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../../../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../../../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <span class="target" id="module-bottle"></span><div class="section" id="list-of-available-plugins">
+<h1>List of available Plugins<a class="headerlink" href="#list-of-available-plugins" title="Permalink to this headline">¶</a></h1>
+<p>This is a list of third-party plugins that add extend Bottles core functionality or integrate other libraries with the Bottle framework.</p>
+<p>Have a look at <a class="reference internal" href="../tutorial.html#plugins"><em>Plugins</em></a> for general questions about plugins (installation, usage). If you plan to develop a new plugin, the <tt class="xref doc docutils literal"><span class="pre">/plugindev</span></tt> may help you.</p>
+<dl class="docutils">
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-beaker/">Bottle-Beaker</a></dt>
+<dd>Beaker to session and caching library with WSGI Middleware</dd>
+<dt><a class="reference external" href="http://cork.firelet.net/">Bottle-Cork</a></dt>
+<dd>Cork provides a simple set of methods to implement Authentication and Authorization in web applications based on Bottle.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-extras/">Bottle-Extras</a></dt>
+<dd>Meta package to install the bottle plugin collection.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-flash/">Bottle-Flash</a></dt>
+<dd>flash plugin for bottle</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-hotqueue/">Bottle-Hotqueue</a></dt>
+<dd>FIFO Queue for Bottle built upon redis</dd>
+<dt><a class="reference external" href="http://nobrin.github.com/macaron/webapp.html">Macaron</a></dt>
+<dd>Macaron is an object-relational mapper (ORM) for SQLite.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-memcache/">Bottle-Memcache</a></dt>
+<dd>Memcache integration for Bottle.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-mongo/">Bottle-Mongo</a></dt>
+<dd>MongoDB integration for Bottle</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-redis/">Bottle-Redis</a></dt>
+<dd>Redis integration for Bottle.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-renderer/">Bottle-Renderer</a></dt>
+<dd>Renderer plugin for bottle</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-servefiles/">Bottle-Servefiles</a></dt>
+<dd>A reusable app that serves static files for bottle apps</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-sqlalchemy/">Bottle-Sqlalchemy</a></dt>
+<dd>SQLAlchemy integration for Bottle.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-sqlite/">Bottle-Sqlite</a></dt>
+<dd>SQLite3 database integration for Bottle.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-web2pydal/">Bottle-Web2pydal</a></dt>
+<dd>Web2py Dal integration for Bottle.</dd>
+<dt><a class="reference external" href="http://pypi.python.org/pypi/bottle-werkzeug/">Bottle-Werkzeug</a></dt>
+<dd>Integrates the <cite>werkzeug</cite> library (alternative request and response objects, advanced debugging middleware and more).</dd>
+</dl>
+<p>Plugins listed here are not part of Bottle or the Bottle project, but developed and maintained by third parties.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

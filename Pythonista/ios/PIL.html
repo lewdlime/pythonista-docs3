@@ -1,0 +1,169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python Imaging Library &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-PIL">
+<span id="python-imaging-library"></span><h1>Python Imaging Library<a class="headerlink" href="#module-PIL" title="Permalink to this headline">¶</a></h1>
+<p>The Python Imaging Library adds image processing capabilities to your Python interpreter.</p>
+<p>This library provides extensive file format support, an efficient internal representation, and fairly powerful image processing capabilities.</p>
+<p>The core image library is designed for fast access to data stored in a few basic pixel formats. It should provide a solid foundation for a general image processing tool.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This documentation is based on the <a class="reference external" href="http://effbot.org/imagingbook/">Python Imaging Library Handbook</a> which you can also read online for more detailed information about concepts and supported file formats.</p>
+<p>The version of PIL that is bundled with Pythonista includes some modifications to make it work well on iOS:</p>
+<ul class="last simple">
+<li>You can use Pythonista&#8217;s built-in images with the <a class="reference internal" href="Image.html#Image.open" title="Image.open"><tt class="xref py py-func docutils literal"><span class="pre">Image.open()</span></tt></a> function without needing to know the full file path. Example: <tt class="docutils literal"><span class="pre">img</span> <span class="pre">=</span> <span class="pre">Image.open('Test_Lenna')</span></tt>.</li>
+<li>The <a class="reference internal" href="Image.html#Image.Image.show" title="Image.Image.show"><tt class="xref py py-meth docutils literal"><span class="pre">Image.Image.show()</span></tt></a> method can be used to view images directly in the console output area of Pythonista. This uses the <tt class="xref py py-func docutils literal"><span class="pre">console.show_image_file()</span></tt> function internally. On other platforms, this method usually shows an image in an external application.</li>
+<li>The <a class="reference internal" href="ImageFont.html#ImageFont.truetype" title="ImageFont.truetype"><tt class="xref py py-func docutils literal"><span class="pre">ImageFont.truetype()</span></tt></a> function can also be used to load built-in system fonts in Pythonista. This also works on Windows, but not on most other platforms. When you&#8217;re loading a  built-in font, don&#8217;t add a file extension, just use the font name, e.g. <tt class="docutils literal"><span class="pre">font</span> <span class="pre">=</span> <span class="pre">ImageFont.truetype('Helvetica',</span> <span class="pre">20)</span></tt>.</li>
+</ul>
+</div>
+<div class="section" id="module-reference">
+<h2>Module Reference<a class="headerlink" href="#module-reference" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Image.html">The Image Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageChops.html">The ImageChops Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageColor.html">The ImageColor Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageDraw.html">The ImageDraw Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageEnhance.html">The ImageEnhance Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageFile.html">The ImageFile Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageFilter.html">The ImageFilter Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageFont.html">The ImageFont Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageMath.html">The ImageMath Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImageOps.html">The ImageOps Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImagePath.html">The ImagePath Module</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

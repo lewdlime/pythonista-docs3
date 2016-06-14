@@ -1,0 +1,175 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Frequently Asked Questions &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <span class="target" id="module-bottle"></span><div class="section" id="frequently-asked-questions">
+<h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-bottle">
+<h2>About Bottle<a class="headerlink" href="#about-bottle" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="is-bottle-suitable-for-complex-applications">
+<h3>Is bottle suitable for complex applications?<a class="headerlink" href="#is-bottle-suitable-for-complex-applications" title="Permalink to this headline">¶</a></h3>
+<p>Bottle is a <em>micro</em> framework designed for prototyping and building small web applications and services. It stays out of your way and allows you to get things done fast, but misses some advanced features and ready-to-use solutions found in other frameworks (MVC, ORM, form validation, scaffolding, XML-RPC). Although it <em>is</em> possible to add these features and build complex applications with Bottle, you should consider using a full-stack Web framework like <a class="reference external" href="http://pylonshq.com/">pylons</a> or <a class="reference external" href="http://pythonpaste.org/modules/evalexception.html">paste</a> instead.</p>
+</div>
+</div>
+<div class="section" id="common-problems-and-pitfalls">
+<h2>Common Problems and Pitfalls<a class="headerlink" href="#common-problems-and-pitfalls" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="template-not-found-in-mod-wsgi-mod-python">
+<h3>&#8220;Template Not Found&#8221; in mod_wsgi/mod_python<a class="headerlink" href="#template-not-found-in-mod-wsgi-mod-python" title="Permalink to this headline">¶</a></h3>
+<p>Bottle searches in <tt class="docutils literal"><span class="pre">./</span></tt> and <tt class="docutils literal"><span class="pre">./views/</span></tt> for templates. In a <a class="reference external" href="http://www.modpython.org/">mod_python</a> or <a class="reference external" href="http://code.google.com/p/modwsgi/">mod_wsgi</a> environment, the working directory (<tt class="docutils literal"><span class="pre">./</span></tt>) depends on your Apache settings. You should add an absolute path to the template search path:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bottle</span><span class="o">.</span><span class="n">TEMPLATE_PATH</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;/absolut/path/to/templates/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>so bottle searches the right paths.</p>
+</div>
+<div class="section" id="dynamic-routes-and-slashes">
+<h3>Dynamic Routes and Slashes<a class="headerlink" href="#dynamic-routes-and-slashes" title="Permalink to this headline">¶</a></h3>
+<p>In <a class="reference internal" href="tutorial.html#tutorial-dynamic-routes"><em>dynamic route syntax</em></a>, a placeholder token (<tt class="docutils literal"><span class="pre">:name</span></tt>) matches everything up to the next slash. This equals to <tt class="docutils literal"><span class="pre">[^/]+</span></tt> in regular expression syntax. To accept slashes too, you have to add a custom regular pattern to the placeholder. An example: <tt class="docutils literal"><span class="pre">/images/:filepath#.*#</span></tt> would match <tt class="docutils literal"><span class="pre">/images/icons/error.png</span></tt> but <tt class="docutils literal"><span class="pre">/images/:filename</span></tt> won&#8217;t.</p>
+</div>
+<div class="section" id="problems-with-reverse-proxies">
+<h3>Problems with reverse proxies<a class="headerlink" href="#problems-with-reverse-proxies" title="Permalink to this headline">¶</a></h3>
+<p>Redirects and url-building only works if bottle knows the public address and location of your application. If you run bottle locally behind a reverse proxy or load balancer, some information might get lost along the way. For example, the <tt class="docutils literal"><span class="pre">wsgi.url_scheme</span></tt> value or the <tt class="docutils literal"><span class="pre">Host</span></tt> header might reflect the local request by your proxy, not the real request by the client. Here is a small WSGI middleware snippet that helps to fix these values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">fix_environ_middleware</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">fixed_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;https&#39;</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s">&#39;HTTP_X_FORWARDED_HOST&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;example.com&#39;</span>
+    <span class="k">return</span> <span class="n">app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">https_app</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">bottle</span><span class="o">.</span><span class="n">default_app</span><span class="p">()</span>
+<span class="n">app</span><span class="o">.</span><span class="n">wsgi</span> <span class="o">=</span> <span class="n">fix_environ_middleware</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">wsgi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

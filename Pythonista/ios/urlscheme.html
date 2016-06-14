@@ -1,0 +1,209 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Pythonista URL Scheme &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="the-pythonista-url-scheme">
+<span id="pythonista-urlscheme"></span><h1>The Pythonista URL Scheme<a class="headerlink" href="#the-pythonista-url-scheme" title="Permalink to this headline">¶</a></h1>
+<p>Pythonista can be launched from other applications with the custom <tt class="docutils literal"><span class="pre">pythonista://</span></tt> URL scheme.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Pythonista 3.x, you can use <tt class="docutils literal"><span class="pre">pythonista3://</span></tt> instead of <tt class="docutils literal"><span class="pre">pythonista://</span></tt>. In Pythonista 2 (starting with 2.1), you can use <tt class="docutils literal"><span class="pre">pythonista2://</span></tt>. Use these schemes if you want to target a specific version of the app. In case both apps are installed, it is undefined which one of them handles a <tt class="docutils literal"><span class="pre">pythonista://</span></tt> URL.</p>
+</div>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><strong>Open the app:</strong></p>
+<p>Use <tt class="docutils literal"><span class="pre">pythonista://</span></tt> without any additional parameters
+to open the app without doing anything else.</p>
+</li>
+<li><p class="first"><strong>Open a script for editing:</strong></p>
+<p>Use <tt class="docutils literal"><span class="pre">pythonista://MyScript</span></tt> for opening one of your scripts in the editor.
+The name of the script can contain the <tt class="docutils literal"><span class="pre">.py</span></tt> file extension, but it
+doesn&#8217;t have to.</p>
+</li>
+<li><p class="first"><strong>Run a script from your library:</strong></p>
+<p>Use <tt class="docutils literal"><span class="pre">pythonista://MyScript?action=run</span></tt> for
+running a script that is in your library. This only works if no script is
+already running when the app is started.</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can only open or run scripts that are <cite>already in your library</cite>.
+It is not possible to run arbitrary code or create new scripts using
+the URL scheme.</p>
+</div>
+</div>
+<div class="section" id="command-line-arguments">
+<h2>Command-line Arguments<a class="headerlink" href="#command-line-arguments" title="Permalink to this headline">¶</a></h2>
+<p>When using the <tt class="docutils literal"><span class="pre">action=run</span></tt> parameter (see above), you can pass command-line
+arguments to the script in two ways:</p>
+<ul>
+<li><p class="first"><strong>Method 1: One args parameter</strong></p>
+<p>Example: <tt class="docutils literal"><span class="pre">pythonista://MyScript?action=run&amp;args=foo%20bar</span></tt></p>
+<p>When you pass a single string with the <cite>args</cite> URL parameter, the string is
+split by spaces (the space is encoded as <tt class="docutils literal"><span class="pre">%20</span></tt> here) and <a class="reference internal" href="../library/sys.html#sys.argv" title="sys.argv"><tt class="xref py py-data docutils literal"><span class="pre">sys.argv</span></tt></a>
+would be <tt class="docutils literal"><span class="pre">[&lt;script_path&gt;,</span> <span class="pre">'foo',</span> <span class="pre">'bar']</span></tt> in this example.</p>
+<p>If you want to pass arguments that contain spaces, you have to enclose them
+in double quotes (as you would in a classic shell).</p>
+<p>This is basically the same as running a script by long-pressing the run
+button.</p>
+</li>
+<li><p class="first"><strong>Method 2: Multiple argv parameters</strong></p>
+<p>Example: <tt class="docutils literal"><span class="pre">pythonista://MyScript?action=run&amp;argv=foo&amp;argv=bar</span></tt></p>
+<p>Using multiple arguments that are all named <cite>argv</cite>, you don&#8217;t have to worry
+about quoting arguments that contain spaces. Each of the parameters
+corresponds to one element in <a class="reference internal" href="../library/sys.html#sys.argv" title="sys.argv"><tt class="xref py py-data docutils literal"><span class="pre">sys.argv</span></tt></a>.</p>
+<p>If the URL contains at least one <cite>argv</cite> parameter, <cite>args</cite> is ignored.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="python-version">
+<h2>Python Version<a class="headerlink" href="#python-version" title="Permalink to this headline">¶</a></h2>
+<p>Pythonista 3 supports two different Python interpreters: 2.7 and 3.5. If you want to use a specific interpreter for running a script, you can use the <tt class="docutils literal"><span class="pre">version=[2|3]</span></tt> or <tt class="docutils literal"><span class="pre">py=[2|3]</span></tt> parameter. This parameter is ignored in Pythonista 2 (which only supports Python 2.7).</p>
+<p>If the <tt class="docutils literal"><span class="pre">version</span></tt> parameter is used, it overrides both the default interpreter setting and any shebang that might be defined in the script itself.</p>
+</div>
+<div class="section" id="launching-other-apps">
+<h2>Launching Other Apps<a class="headerlink" href="#launching-other-apps" title="Permalink to this headline">¶</a></h2>
+<p>If you want to go in the opposite direction, and open an app <cite>from Pythonista</cite>,
+you can do this with the <a class="reference internal" href="../library/webbrowser.html#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module.</p>
+<p>For example, to open TweetBot, you could use the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">webbrowser</span>
+<span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;tweetbot://&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a list of third-party applications that have URL schemes, you can refer
+to <a class="reference external" href="http://handleopenurl.com">handleopenurl.com</a>.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

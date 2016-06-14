@@ -1,0 +1,183 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Abstract Objects Layer &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="Python/C API Reference Manual" href="index.html" />
+    <link rel="next" title="Object Protocol" href="object.html" />
+    <link rel="prev" title="Codec registry and support functions" href="codec.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="object.html" title="Object Protocol"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="codec.html" title="Codec registry and support functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Python/C API Reference Manual</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="abstract-objects-layer">
+<span id="abstract"></span><h1>Abstract Objects Layer<a class="headerlink" href="#abstract-objects-layer" title="Permalink to this headline">¶</a></h1>
+<p>The functions in this chapter interact with Python objects regardless of their
+type, or with wide classes of object types (e.g. all numerical types, or all
+sequence types).  When used on object types for which they do not apply, they
+will raise a Python exception.</p>
+<p>It is not possible to use these functions on objects that are not properly
+initialized, such as a list object that has been created by <a class="reference internal" href="list.html#PyList_New" title="PyList_New"><tt class="xref c c-func docutils literal"><span class="pre">PyList_New()</span></tt></a>,
+but whose items have not been set to some non-<tt class="docutils literal"><span class="pre">NULL</span></tt> value yet.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="object.html">Object Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="number.html">Number Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iter.html">Iterator Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="buffer.html">Buffer Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="buffer.html#buffer-structure">Buffer structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buffer.html#buffer-request-types">Buffer request types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="buffer.html#request-independent-fields">request-independent fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buffer.html#readonly-format">readonly, format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buffer.html#shape-strides-suboffsets">shape, strides, suboffsets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buffer.html#contiguity-requests">contiguity requests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buffer.html#compound-requests">compound requests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="buffer.html#complex-arrays">Complex arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="buffer.html#numpy-style-shape-and-strides">NumPy-style: shape and strides</a></li>
+<li class="toctree-l3"><a class="reference internal" href="buffer.html#pil-style-shape-strides-and-suboffsets">PIL-style: shape, strides and suboffsets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="buffer.html#buffer-related-functions">Buffer-related functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objbuffer.html">Old Buffer Protocol</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

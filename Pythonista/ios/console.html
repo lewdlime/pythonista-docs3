@@ -1,0 +1,274 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>console — Utilities for Console Output and Various System Services &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-console">
+<span id="console-utilities-for-console-output-and-various-system-services"></span><h1><a class="reference internal" href="#module-console" title="console: Utilities for Console Output and Various System Services"><tt class="xref py py-mod docutils literal"><span class="pre">console</span></tt></a> &#8212; Utilities for Console Output and Various System Services<a class="headerlink" href="#module-console" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-console" title="console: Utilities for Console Output and Various System Services"><tt class="xref py py-mod docutils literal"><span class="pre">console</span></tt></a> module provides functions to control the text output area and keyboard input in Pythonista.</p>
+<p>There are also several functions for presenting simple modal dialogs, and to access system services like the &#8220;Open in...&#8221; menu and QuickLook.</p>
+<dl class="function">
+<dt id="console.clear">
+<tt class="descclassname">console.</tt><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#console.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the console output</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.set_font">
+<tt class="descclassname">console.</tt><tt class="descname">set_font</tt><big>(</big><span class="optional">[</span><em>name</em>, <em>size</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#console.set_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the font and font size for following output. Call with no parameters to reset to default.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.set_color">
+<tt class="descclassname">console.</tt><tt class="descname">set_color</tt><big>(</big><em>r</em>, <em>g</em>, <em>b</em><big>)</big><a class="headerlink" href="#console.set_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the RGB color for following output. The components are floats between 0.0 and 1.0.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.secure_input">
+<tt class="descclassname">console.</tt><tt class="descname">secure_input</tt><big>(</big><span class="optional">[</span><em>prompt</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#console.secure_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is similar to the built-in <cite>raw_input</cite> function, but the user&#8217;s input is hidden,
+so that it&#8217;s suitable to request passwords and other sensitive information.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.show_image">
+<tt class="descclassname">console.</tt><tt class="descname">show_image</tt><big>(</big><em>image_path</em><big>)</big><a class="headerlink" href="#console.show_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show an image, loaded from a file, in the console output area.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.alert">
+<tt class="descclassname">console.</tt><tt class="descname">alert</tt><big>(</big><em>title</em><span class="optional">[</span>, <em>message</em>, <em>button1</em>, <em>button2</em>, <em>button3</em>, <em>hide_cancel_button=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#console.alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show an alert dialog with up to three custom buttons. The selected button is returned as an integer
+(button1 =&gt; 1 ...). Unless <cite>hide_cancel_button</cite> is <cite>True</cite>, all alert dialogs contain a &#8216;Cancel&#8217; button that sends a <cite>KeyboardInterrupt</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.input_alert">
+<tt class="descclassname">console.</tt><tt class="descname">input_alert</tt><big>(</big><em>title</em><span class="optional">[</span>, <em>message</em>, <em>input</em>, <em>ok_button_title</em>, <em>hide_cancel_button=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#console.input_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a dialog with a single text field. The text field can be pre-filled with the <cite>input</cite> parameter.
+The text that was entered by the user is returned. The &#8216;Cancel&#8217; button sends a <cite>KeyboardInterrupt</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.password_alert">
+<tt class="descclassname">console.</tt><tt class="descname">password_alert</tt><big>(</big><em>title</em><span class="optional">[</span>, <em>message</em>, <em>password</em>, <em>ok_button_title</em>, <em>hide_cancel_button=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#console.password_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a dialog with a password entry text field. The password field can be pre-filled with the <cite>password</cite>
+parameter. The password that was entered by the user is returned.
+The &#8216;Cancel&#8217; button sends a <cite>KeyboardInterrupt</cite> (which will usually stop the script).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.login_alert">
+<tt class="descclassname">console.</tt><tt class="descname">login_alert</tt><big>(</big><em>title</em><span class="optional">[</span>, <em>message</em>, <em>login</em>, <em>password</em>, <em>ok_button_title</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#console.login_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a dialog with two text fields, one for a login, one for a password. The text fields can be pre-filled
+with the <cite>login</cite> and <cite>password</cite> parameters. Returns a tuple of the entered text as <cite>(login, password)</cite>.
+The &#8216;Cancel&#8217; button sends a <cite>KeyboardInterrupt</cite> (which will usually stop the script).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.show_activity">
+<tt class="descclassname">console.</tt><tt class="descname">show_activity</tt><big>(</big><big>)</big><a class="headerlink" href="#console.show_activity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the animated &#8220;network activity indicator&#8221; in the status bar.</p>
+<p>The spinner is automatically hidden when a script ends. Calling this function
+when the spinner is already visible has no effect.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.hide_activity">
+<tt class="descclassname">console.</tt><tt class="descname">hide_activity</tt><big>(</big><big>)</big><a class="headerlink" href="#console.hide_activity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide the animated &#8220;network activity indicator&#8221; in the status bar.</p>
+<p>The spinner is automatically hidden when a script ends. Calling this function
+when the spinner is not visible has no effect.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.hud_alert">
+<tt class="descclassname">console.</tt><tt class="descname">hud_alert</tt><big>(</big><em>message</em><span class="optional">[</span>, <em>icon</em>, <em>duration</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#console.hud_alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a HUD-style alert with the given <cite>message</cite>. The <cite>icon</cite> can be either <tt class="docutils literal"><span class="pre">'success'</span></tt> (the default, a checkmark symbol), or <tt class="docutils literal"><span class="pre">'error'</span></tt> (a cross symbol).</p>
+<p>The <cite>duration</cite> parameter determines how long the alert is shown on screen. It can be between 0.25 and 5.0 seconds. The default is 1.8 seconds. The function blocks until the alert is dismissed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.write_link">
+<tt class="descclassname">console.</tt><tt class="descname">write_link</tt><big>(</big><em>title</em>, <em>link_url</em><big>)</big><a class="headerlink" href="#console.write_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a tappable link to the console with the given title and URL. Depending on the URL, it is either
+opened in the built-in browser (for http, https and file URLs), or opened in a different app (if possible).</p>
+<p>If a custom text color is set via <a class="reference internal" href="#console.set_color" title="console.set_color"><tt class="xref py py-func docutils literal"><span class="pre">set_color()</span></tt></a>, the color of the link text is the same as that, otherwise,
+a default link color is used.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.hide_output">
+<tt class="descclassname">console.</tt><tt class="descname">hide_output</tt><big>(</big><big>)</big><a class="headerlink" href="#console.hide_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide the console output area with a sliding animation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.quicklook">
+<tt class="descclassname">console.</tt><tt class="descname">quicklook</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#console.quicklook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a full-screen preview of the local file(s) at the given path. It is possible to pass a sequence of paths (e.g. a list), in order to preview multiple files at once. The function returns when the preview is dismissed.</p>
+<p>Many common file formats are supported:</p>
+<ul class="simple">
+<li>iWork documents</li>
+<li>Microsoft Office documents (Office ‘97 and newer)</li>
+<li>Rich Text Format (RTF) documents</li>
+<li>PDF files</li>
+<li>Images</li>
+<li>Text files whose uniform type identifier (UTI) conforms to the public.text type</li>
+<li>Comma-separated value (csv) files</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.open_in">
+<tt class="descclassname">console.</tt><tt class="descname">open_in</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#console.open_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the iOS &#8220;Open in...&#8221; menu for the specified file.</p>
+<p>If an application was selected in the menu, its bundle identifier will be returned (for example <tt class="docutils literal"><span class="pre">'com.getdropbox.Dropbox'</span></tt>). If the menu was cancelled, or no application is installed that can open the file, the return value is <cite>None</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.set_idle_timer_disabled">
+<tt class="descclassname">console.</tt><tt class="descname">set_idle_timer_disabled</tt><big>(</big><em>flag</em><big>)</big><a class="headerlink" href="#console.set_idle_timer_disabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable or enable the idle timer (which puts the device to sleep after a certain period of inactivity).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="console.is_in_background">
+<tt class="descclassname">console.</tt><tt class="descname">is_in_background</tt><big>(</big><big>)</big><a class="headerlink" href="#console.is_in_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if the app is currently running in the background, <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 01, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

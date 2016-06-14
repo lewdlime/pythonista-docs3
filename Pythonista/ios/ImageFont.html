@@ -1,0 +1,204 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ImageFont Module &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ImageFont">
+<span id="the-imagefont-module"></span><h1>The ImageFont Module<a class="headerlink" href="#module-ImageFont" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-ImageFont" title="ImageFont"><tt class="xref py py-mod docutils literal"><span class="pre">ImageFont</span></tt></a> module defines a class with the same name. Instances of this class store bitmap fonts, and are used with the text method of the ImageDraw class.</p>
+<p>PIL uses its own font file format to store bitmap fonts. You can use the pilfont utility to convert BDF and PCF font descriptors (X window font formats) to this format.</p>
+<p>Starting with version 1.1.4, PIL can be configured to support TrueType and OpenType fonts (as well as other font formats supported by the FreeType library). For earlier versions, TrueType support is only available as part of the imToolkit package.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Pythonista, the <a class="reference internal" href="#ImageFont.truetype" title="ImageFont.truetype"><tt class="xref py py-func docutils literal"><span class="pre">truetype()</span></tt></a> function can be used to load built-in system fonts, e.g. <tt class="docutils literal"><span class="pre">font</span> <span class="pre">=</span> <span class="pre">ImageFont.truetype('Helvetica',</span> <span class="pre">20)</span></tt>.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Here’s a simple example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ImageFont</span><span class="o">,</span> <span class="nn">ImageDraw</span>
+
+<span class="n">draw</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+<span class="c"># use a truetype font</span>
+<span class="n">font</span> <span class="o">=</span> <span class="n">ImageFont</span><span class="o">.</span><span class="n">truetype</span><span class="p">(</span><span class="s">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+
+<span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="s">&quot;Hello World&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ImageFont.load">
+<tt class="descclassname">ImageFont.</tt><tt class="descname">load</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#ImageFont.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a font from the given file, and returns the corresponding font object. If this function fails, it raises an IOError exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageFont.load_path">
+<tt class="descclassname">ImageFont.</tt><tt class="descname">load_path</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#ImageFont.load_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as <a class="reference internal" href="#ImageFont.load" title="ImageFont.load"><tt class="xref py py-func docutils literal"><span class="pre">load()</span></tt></a>, but searches for the file along sys.path if it’s not found in the current directory.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageFont.truetype">
+<tt class="descclassname">ImageFont.</tt><tt class="descname">truetype</tt><big>(</big><em>file</em>, <em>size</em><big>)</big><a class="headerlink" href="#ImageFont.truetype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a TrueType or OpenType font file, and create a font object. This function loads a font object from the given file, and creates a font object for a font of the given size.</p>
+<p>On Windows, if the given file name does not exist, the loader also looks in Windows fonts directory.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageFont.load_default">
+<tt class="descclassname">ImageFont.</tt><tt class="descname">load_default</tt><big>(</big><big>)</big><a class="headerlink" href="#ImageFont.load_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>(New in 1.1.4) Load a “better than nothing” default font.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="ImageFont.font.getsize">
+<tt class="descclassname">font.</tt><tt class="descname">getsize</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#ImageFont.font.getsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the width and height of the given text, as a 2-tuple.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ImageFont.font.getmask">
+<tt class="descclassname">font.</tt><tt class="descname">getmask</tt><big>(</big><em>text</em>, <em>mode=''</em><big>)</big><a class="headerlink" href="#ImageFont.font.getmask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a bitmap for the text. The bitmap should be an internal PIL storage memory instance (as defined by the Image.core interface module).</p>
+<p>If the font uses antialiasing, the bitmap should have mode “L” and use a maximum value of 255. Otherwise, it should have mode “1”.</p>
+<p>(New in 1.1.5) The optional mode argument is used by some graphics drivers to indicate what mode the driver prefers; if empty, the renderer may return either mode. Note that the mode is always a string, to simplify C-level implementations.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

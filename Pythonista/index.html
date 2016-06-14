@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="#" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="#">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Pythonista Documentation</h1>
+  <p>
+    <img src="_static/pythonista_icon.png" style="width: 104px; float: left; margin-right: 20px; margin-bottom: 20px;"/>
+    Welcome! This is the documentation for Pythonista. It is based on the official Python 3.5.1 documentation and includes information about additional modules that were developed specifically for Pythonista.
+  </p>
+  <p>If you have questions, feedback, or just want to share things you've made with Pythonista, please visit the <a href="http://omz-software.com/pythonista/forums">Community Forums</a>.</p>
+  
+<hr style="clear:both; border-style: solid; border-width: 1px 0 0 0; height: 0; border-color: #bfbfbf; margin: 30px 0 30px 0;"/>
+
+      <p class="biglink">
+          <a class="biglink" href="ios/pythonista.html">Using Pythonista</a>
+          <br/>
+         <span class="linkdescr">An overview of Pythonista's UI, including some tips and tricks</span></p>
+	  <p class="biglink"><a class="biglink" href="ios/new.html">What's New in Pythonista</a><br/>
+	     <span class="linkdescr">Detailed release notes</span></p>
+      <p class="biglink"><a class="biglink" href="ios/index.html">Pythonista Modules</a><br/>
+         <span class="linkdescr">Additional modules developed specifically for iOS</span></p>
+      <p class="biglink"><a class="biglink" href="http://omz-software.com/pythonista/forums">Community Forums</a><br/>
+              <span class="linkdescr">Visit the forums to get help and share ideas with other Pythonistas</span></p>
+<hr style="border-style: solid; border-width: 1px 0 0 0; height: 0; border-color: #bfbfbf; margin: 30px 0 30px 0;"/>
+
+      <p class="biglink"><a class="biglink" href="tutorial/index.html">Language Tutorial</a><br/>
+         <span class="linkdescr">The official Python language tutorial</span></p>
+      <p class="biglink"><a class="biglink" href="library/index.html">Library Reference</a><br/>
+         <span class="linkdescr">Keep this under your pillow</span></p>
+      
+      <p class="biglink"><a class="biglink" href="reference/index.html">Language Reference</a><br/>
+         <span class="linkdescr">Describes syntax and language elements</span></p>
+
+      <p class="biglink"><a class="biglink" href="py-modindex.html">Global Module Index</a><br/>
+         <span class="linkdescr">Quick access to all modules</span></p>
+      <p class="biglink"><a class="biglink" href="genindex.html">General Index</a><br/>
+         <span class="linkdescr">All functions, classes, terms</span></p>
+      <p class="biglink"><a class="biglink" href="glossary.html">Glossary</a><br/>
+         <span class="linkdescr">The most important terms explained</span></p>
+	    <p class="biglink"><a class="biglink" href="whatsnew/index.html">What's New in Python</a><br/>
+	          <span class="linkdescr"></span></p>
+
+<hr style="border-style: solid; border-width: 1px 0 0 0; height: 0; border-color: #bfbfbf; margin: 30px 0 30px 0;"/>
+
+<p class="biglink"><a class="biglink" href="../numpy/user/index.html">NumPy User Guide</a><br/>
+   <span class="linkdescr">NumPy is the fundamental package for scientific computing with Python.</span></p>
+<p class="biglink"><a class="biglink" href="../numpy/reference/index.html">NumPy Reference</a><br/>
+   <span class="linkdescr">Reference documentation for NumPy</span></p>
+   
+   <p class="biglink"><a class="biglink" href="../matplotlib/index.html">matplotlib Documentation</a><br/>
+      <span class="linkdescr">matplotlib is a python 2D plotting library.</span></p>
+   
+   <p class="biglink"><a class="biglink" href="../sympy/index.html">SymPy Documentation</a><br/>
+      <span class="linkdescr">SymPy is a Python library for symbolic mathematics.</span></p>
+
+<hr style="border-style: solid; border-width: 1px 0 0 0; height: 0; border-color: #bfbfbf; margin: 30px 0 30px 0;"/>
+      <p class="biglink"><a class="biglink" href="about.html">About the documentation</a></p>
+      <p class="biglink"><a class="biglink" href="license.html">History and License of Python</a></p>
+      <p class="biglink"><a class="biglink" href="numpy/license.html">NumPy License</a></p>
+      <p class="biglink"><a class="biglink" href="copyright.html">Copyright</a></p>
+
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 11, 2016.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

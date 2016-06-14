@@ -1,0 +1,467 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.5.5. Streams (high-level API) &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="18.5. asyncio – Asynchronous I/O, event loop, coroutines and tasks" href="asyncio.html" />
+    <link rel="next" title="18.5.6. Subprocess" href="asyncio-subprocess.html" />
+    <link rel="prev" title="18.5.4. Transports and protocols (low-level API)" href="asyncio-protocol.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="asyncio-subprocess.html" title="18.5.6. Subprocess"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="asyncio-protocol.html" title="18.5.4. Transports and protocols (low-level API)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="ipc.html" >18. Interprocess Communication and Networking</a> &raquo;</li>
+          <li><a href="asyncio.html" accesskey="U">18.5. <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">asyncio</span></tt> &#8211; Asynchronous I/O, event loop, coroutines and tasks</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="streams-high-level-api">
+<span id="asyncio-streams"></span><h1>18.5.5. Streams (high-level API)<a class="headerlink" href="#streams-high-level-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="stream-functions">
+<h2>18.5.5.1. Stream functions<a class="headerlink" href="#stream-functions" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The top-level functions in this module are meant convenience wrappers
+only; there&#8217;s really nothing special there, and if they don&#8217;t do
+exactly what you want, feel free to copy their code.</p>
+</div>
+</div>
+<div class="section" id="streamreader">
+<h2>18.5.5.2. StreamReader<a class="headerlink" href="#streamreader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asyncio.StreamReader">
+<em class="property">class </em><tt class="descclassname">asyncio.</tt><tt class="descname">StreamReader</tt><big>(</big><em>limit=None</em>, <em>loop=None</em><big>)</big><a class="headerlink" href="#asyncio.StreamReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is <a class="reference internal" href="asyncio-dev.html#asyncio-multithreading"><em>not thread safe</em></a>.</p>
+<dl class="method">
+<dt id="asyncio.StreamReader.exception">
+<tt class="descname">exception</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.StreamReader.exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the exception.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamReader.feed_eof">
+<tt class="descname">feed_eof</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.StreamReader.feed_eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Acknowledge the EOF.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamReader.feed_data">
+<tt class="descname">feed_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#asyncio.StreamReader.feed_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feed <em>data</em> bytes in the internal buffer.  Any operations waiting
+for the data will be resumed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamReader.set_exception">
+<tt class="descname">set_exception</tt><big>(</big><em>exc</em><big>)</big><a class="headerlink" href="#asyncio.StreamReader.set_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the exception.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamReader.set_transport">
+<tt class="descname">set_transport</tt><big>(</big><em>transport</em><big>)</big><a class="headerlink" href="#asyncio.StreamReader.set_transport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the transport.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamReader.at_eof">
+<tt class="descname">at_eof</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.StreamReader.at_eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <tt class="xref docutils literal"><span class="pre">True</span></tt> if the buffer is empty and <a class="reference internal" href="#asyncio.StreamReader.feed_eof" title="asyncio.StreamReader.feed_eof"><tt class="xref py py-meth docutils literal"><span class="pre">feed_eof()</span></tt></a> was called.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="streamwriter">
+<h2>18.5.5.3. StreamWriter<a class="headerlink" href="#streamwriter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asyncio.StreamWriter">
+<em class="property">class </em><tt class="descclassname">asyncio.</tt><tt class="descname">StreamWriter</tt><big>(</big><em>transport</em>, <em>protocol</em>, <em>reader</em>, <em>loop</em><big>)</big><a class="headerlink" href="#asyncio.StreamWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps a Transport.</p>
+<p>This exposes <a class="reference internal" href="#asyncio.StreamWriter.write" title="asyncio.StreamWriter.write"><tt class="xref py py-meth docutils literal"><span class="pre">write()</span></tt></a>, <a class="reference internal" href="#asyncio.StreamWriter.writelines" title="asyncio.StreamWriter.writelines"><tt class="xref py py-meth docutils literal"><span class="pre">writelines()</span></tt></a>, <a class="reference internal" href="#asyncio.StreamWriter.can_write_eof" title="asyncio.StreamWriter.can_write_eof"><tt class="xref py py-meth docutils literal"><span class="pre">can_write_eof()</span></tt></a>,
+<a class="reference internal" href="#asyncio.StreamWriter.write_eof" title="asyncio.StreamWriter.write_eof"><tt class="xref py py-meth docutils literal"><span class="pre">write_eof()</span></tt></a>, <a class="reference internal" href="#asyncio.StreamWriter.get_extra_info" title="asyncio.StreamWriter.get_extra_info"><tt class="xref py py-meth docutils literal"><span class="pre">get_extra_info()</span></tt></a> and <a class="reference internal" href="#asyncio.StreamWriter.close" title="asyncio.StreamWriter.close"><tt class="xref py py-meth docutils literal"><span class="pre">close()</span></tt></a>.  It adds
+<tt class="xref py py-meth docutils literal"><span class="pre">drain()</span></tt> which returns an optional <a class="reference internal" href="asyncio-task.html#asyncio.Future" title="asyncio.Future"><tt class="xref py py-class docutils literal"><span class="pre">Future</span></tt></a> on which you can
+wait for flow control.  It also adds a transport attribute which references
+the <tt class="xref py py-class docutils literal"><span class="pre">Transport</span></tt> directly.</p>
+<p>This class is <a class="reference internal" href="asyncio-dev.html#asyncio-multithreading"><em>not thread safe</em></a>.</p>
+<dl class="attribute">
+<dt id="asyncio.StreamWriter.transport">
+<tt class="descname">transport</tt><a class="headerlink" href="#asyncio.StreamWriter.transport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transport.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamWriter.can_write_eof">
+<tt class="descname">can_write_eof</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.StreamWriter.can_write_eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference internal" href="constants.html#True" title="True"><tt class="xref py py-const xref docutils literal"><span class="pre">True</span></tt></a> if the transport supports <a class="reference internal" href="#asyncio.StreamWriter.write_eof" title="asyncio.StreamWriter.write_eof"><tt class="xref py py-meth docutils literal"><span class="pre">write_eof()</span></tt></a>,
+<a class="reference internal" href="constants.html#False" title="False"><tt class="xref py py-const xref docutils literal"><span class="pre">False</span></tt></a> if not. See <a class="reference internal" href="asyncio-protocol.html#asyncio.WriteTransport.can_write_eof" title="asyncio.WriteTransport.can_write_eof"><tt class="xref py py-meth docutils literal"><span class="pre">WriteTransport.can_write_eof()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamWriter.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.StreamWriter.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the transport: see <a class="reference internal" href="asyncio-protocol.html#asyncio.BaseTransport.close" title="asyncio.BaseTransport.close"><tt class="xref py py-meth docutils literal"><span class="pre">BaseTransport.close()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamWriter.get_extra_info">
+<tt class="descname">get_extra_info</tt><big>(</big><em>name</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#asyncio.StreamWriter.get_extra_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return optional transport information: see
+<a class="reference internal" href="asyncio-protocol.html#asyncio.BaseTransport.get_extra_info" title="asyncio.BaseTransport.get_extra_info"><tt class="xref py py-meth docutils literal"><span class="pre">BaseTransport.get_extra_info()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamWriter.write">
+<tt class="descname">write</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#asyncio.StreamWriter.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write some <em>data</em> bytes to the transport: see
+<a class="reference internal" href="asyncio-protocol.html#asyncio.WriteTransport.write" title="asyncio.WriteTransport.write"><tt class="xref py py-meth docutils literal"><span class="pre">WriteTransport.write()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamWriter.writelines">
+<tt class="descname">writelines</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#asyncio.StreamWriter.writelines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a list (or any iterable) of data bytes to the transport:
+see <a class="reference internal" href="asyncio-protocol.html#asyncio.WriteTransport.writelines" title="asyncio.WriteTransport.writelines"><tt class="xref py py-meth docutils literal"><span class="pre">WriteTransport.writelines()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asyncio.StreamWriter.write_eof">
+<tt class="descname">write_eof</tt><big>(</big><big>)</big><a class="headerlink" href="#asyncio.StreamWriter.write_eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the write end of the transport after flushing buffered data:
+see <a class="reference internal" href="asyncio-protocol.html#asyncio.WriteTransport.write_eof" title="asyncio.WriteTransport.write_eof"><tt class="xref py py-meth docutils literal"><span class="pre">WriteTransport.write_eof()</span></tt></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="streamreaderprotocol">
+<h2>18.5.5.4. StreamReaderProtocol<a class="headerlink" href="#streamreaderprotocol" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asyncio.StreamReaderProtocol">
+<em class="property">class </em><tt class="descclassname">asyncio.</tt><tt class="descname">StreamReaderProtocol</tt><big>(</big><em>stream_reader</em>, <em>client_connected_cb=None</em>, <em>loop=None</em><big>)</big><a class="headerlink" href="#asyncio.StreamReaderProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trivial helper class to adapt between <a class="reference internal" href="asyncio-protocol.html#asyncio.Protocol" title="asyncio.Protocol"><tt class="xref py py-class docutils literal"><span class="pre">Protocol</span></tt></a> and
+<a class="reference internal" href="#asyncio.StreamReader" title="asyncio.StreamReader"><tt class="xref py py-class docutils literal"><span class="pre">StreamReader</span></tt></a>. Sublclass of <a class="reference internal" href="asyncio-protocol.html#asyncio.Protocol" title="asyncio.Protocol"><tt class="xref py py-class docutils literal"><span class="pre">Protocol</span></tt></a>.</p>
+<p><em>stream_reader</em> is a <a class="reference internal" href="#asyncio.StreamReader" title="asyncio.StreamReader"><tt class="xref py py-class docutils literal"><span class="pre">StreamReader</span></tt></a> instance, <em>client_connected_cb</em>
+is an optional function called with (stream_reader, stream_writer) when a
+connection is made, <em>loop</em> is the event loop instance to use.</p>
+<p>(This is a helper class instead of making <a class="reference internal" href="#asyncio.StreamReader" title="asyncio.StreamReader"><tt class="xref py py-class docutils literal"><span class="pre">StreamReader</span></tt></a> itself a
+<a class="reference internal" href="asyncio-protocol.html#asyncio.Protocol" title="asyncio.Protocol"><tt class="xref py py-class docutils literal"><span class="pre">Protocol</span></tt></a> subclass, because the <a class="reference internal" href="#asyncio.StreamReader" title="asyncio.StreamReader"><tt class="xref py py-class docutils literal"><span class="pre">StreamReader</span></tt></a> has other
+potential uses, and to prevent the user of the <a class="reference internal" href="#asyncio.StreamReader" title="asyncio.StreamReader"><tt class="xref py py-class docutils literal"><span class="pre">StreamReader</span></tt></a> from
+accidentally calling inappropriate methods of the protocol.)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="incompletereaderror">
+<h2>18.5.5.5. IncompleteReadError<a class="headerlink" href="#incompletereaderror" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="asyncio.IncompleteReadError">
+<em class="property">exception </em><tt class="descclassname">asyncio.</tt><tt class="descname">IncompleteReadError</tt><a class="headerlink" href="#asyncio.IncompleteReadError" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Incomplete read error, subclass of <a class="reference internal" href="exceptions.html#EOFError" title="EOFError"><tt class="xref py py-exc docutils literal"><span class="pre">EOFError</span></tt></a>.</div></blockquote>
+<dl class="attribute">
+<dt id="asyncio.IncompleteReadError.expected">
+<tt class="descname">expected</tt><a class="headerlink" href="#asyncio.IncompleteReadError.expected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total number of expected bytes (<a class="reference internal" href="functions.html#int" title="int"><tt class="xref py py-class docutils literal"><span class="pre">int</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asyncio.IncompleteReadError.partial">
+<tt class="descname">partial</tt><a class="headerlink" href="#asyncio.IncompleteReadError.partial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read bytes string before the end of stream was reached (<a class="reference internal" href="functions.html#bytes" title="bytes"><tt class="xref py py-class docutils literal"><span class="pre">bytes</span></tt></a>).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="stream-examples">
+<h2>18.5.5.6. Stream examples<a class="headerlink" href="#stream-examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tcp-echo-client-using-streams">
+<span id="asyncio-tcp-echo-client-streams"></span><h3>18.5.5.6.1. TCP echo client using streams<a class="headerlink" href="#tcp-echo-client-using-streams" title="Permalink to this headline">¶</a></h3>
+<p>TCP echo client using the <tt class="xref py py-func docutils literal"><span class="pre">asyncio.open_connection()</span></tt> function:</p>
+<div class="highlight-python"><pre>import asyncio
+
+@asyncio.coroutine
+def tcp_echo_client(message, loop):
+    reader, writer = yield from asyncio.open_connection('127.0.0.1', 8888,
+                                                        loop=loop)
+
+    print('Send: %r' % message)
+    writer.write(message.encode())
+
+    data = yield from reader.read(100)
+    print('Received: %r' % data.decode())
+
+    print('Close the socket')
+    writer.close()
+
+message = 'Hello World!'
+loop = asyncio.get_event_loop()
+loop.run_until_complete(tcp_echo_client(message, loop))
+loop.close()</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="asyncio-protocol.html#asyncio-tcp-echo-client-protocol"><em>TCP echo client protocol</em></a>
+example uses the <tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.create_connection()</span></tt> method.</p>
+</div>
+</div>
+<div class="section" id="tcp-echo-server-using-streams">
+<span id="asyncio-tcp-echo-server-streams"></span><h3>18.5.5.6.2. TCP echo server using streams<a class="headerlink" href="#tcp-echo-server-using-streams" title="Permalink to this headline">¶</a></h3>
+<p>TCP echo server using the <tt class="xref py py-func docutils literal"><span class="pre">asyncio.start_server()</span></tt> function:</p>
+<div class="highlight-python"><pre>import asyncio
+
+@asyncio.coroutine
+def handle_echo(reader, writer):
+    data = yield from reader.read(100)
+    message = data.decode()
+    addr = writer.get_extra_info('peername')
+    print("Received %r from %r" % (message, addr))
+
+    print("Send: %r" % message)
+    writer.write(data)
+    yield from writer.drain()
+
+    print("Close the client socket")
+    writer.close()
+
+loop = asyncio.get_event_loop()
+coro = asyncio.start_server(handle_echo, '127.0.0.1', 8888, loop=loop)
+server = loop.run_until_complete(coro)
+
+# Serve requests until Ctrl+C is pressed
+print('Serving on {}'.format(server.sockets[0].getsockname()))
+try:
+    loop.run_forever()
+except KeyboardInterrupt:
+    pass
+
+# Close the server
+server.close()
+loop.run_until_complete(server.wait_closed())
+loop.close()</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="asyncio-protocol.html#asyncio-tcp-echo-server-protocol"><em>TCP echo server protocol</em></a>
+example uses the <tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.create_server()</span></tt> method.</p>
+</div>
+</div>
+<div class="section" id="get-http-headers">
+<h3>18.5.5.6.3. Get HTTP headers<a class="headerlink" href="#get-http-headers" title="Permalink to this headline">¶</a></h3>
+<p>Simple example querying HTTP headers of the URL passed on the command line:</p>
+<div class="highlight-python"><pre>import asyncio
+import urllib.parse
+import sys
+
+@asyncio.coroutine
+def print_http_headers(url):
+    url = urllib.parse.urlsplit(url)
+    if url.scheme == 'https':
+        connect = asyncio.open_connection(url.hostname, 443, ssl=True)
+    else:
+        connect = asyncio.open_connection(url.hostname, 80)
+    reader, writer = yield from connect
+    query = ('HEAD {path} HTTP/1.0\r\n'
+             'Host: {hostname}\r\n'
+             '\r\n').format(path=url.path or '/', hostname=url.hostname)
+    writer.write(query.encode('latin-1'))
+    while True:
+        line = yield from reader.readline()
+        if not line:
+            break
+        line = line.decode('latin1').rstrip()
+        if line:
+            print('HTTP header&gt; %s' % line)
+
+    # Ignore the body, close the socket
+    writer.close()
+
+url = sys.argv[1]
+loop = asyncio.get_event_loop()
+task = asyncio.ensure_future(print_http_headers(url))
+loop.run_until_complete(task)
+loop.close()</pre>
+</div>
+<p>Usage:</p>
+<div class="highlight-python"><pre>python example.py http://example.com/path/page.html</pre>
+</div>
+<p>or with HTTPS:</p>
+<div class="highlight-python"><pre>python example.py https://example.com/path/page.html</pre>
+</div>
+</div>
+<div class="section" id="register-an-open-socket-to-wait-for-data-using-streams">
+<span id="asyncio-register-socket-streams"></span><h3>18.5.5.6.4. Register an open socket to wait for data using streams<a class="headerlink" href="#register-an-open-socket-to-wait-for-data-using-streams" title="Permalink to this headline">¶</a></h3>
+<p>Coroutine waiting until a socket receives data using the
+<tt class="xref py py-func docutils literal"><span class="pre">open_connection()</span></tt> function:</p>
+<div class="highlight-python"><pre>import asyncio
+try:
+    from socket import socketpair
+except ImportError:
+    from asyncio.windows_utils import socketpair
+
+@asyncio.coroutine
+def wait_for_data(loop):
+    # Create a pair of connected sockets
+    rsock, wsock = socketpair()
+
+    # Register the open socket to wait for data
+    reader, writer = yield from asyncio.open_connection(sock=rsock, loop=loop)
+
+    # Simulate the reception of data from the network
+    loop.call_soon(wsock.send, 'abc'.encode())
+
+    # Wait for data
+    data = yield from reader.read(100)
+
+    # Got data, we are done: close the socket
+    print("Received:", data.decode())
+    writer.close()
+
+    # Close the second socket
+    wsock.close()
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(wait_for_data(loop))
+loop.close()</pre>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>The <a class="reference internal" href="asyncio-protocol.html#asyncio-register-socket"><em>register an open socket to wait for data using a protocol</em></a> example uses a low-level protocol created by the
+<tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.create_connection()</span></tt> method.</p>
+<p class="last">The <a class="reference internal" href="asyncio-eventloop.html#asyncio-watch-read-event"><em>watch a file descriptor for read events</em></a> example uses the low-level
+<a class="reference internal" href="asyncio-eventloop.html#asyncio.BaseEventLoop.add_reader" title="asyncio.BaseEventLoop.add_reader"><tt class="xref py py-meth docutils literal"><span class="pre">BaseEventLoop.add_reader()</span></tt></a> method to register the file descriptor of a
+socket.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

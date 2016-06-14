@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>20.1. html — HyperText Markup Language support &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="20. Structured Markup Processing Tools" href="markup.html" />
+    <link rel="next" title="20.2. html.parser — Simple HTML and XHTML parser" href="html.parser.html" />
+    <link rel="prev" title="20. Structured Markup Processing Tools" href="markup.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="html.parser.html" title="20.2. html.parser — Simple HTML and XHTML parser"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="markup.html" title="20. Structured Markup Processing Tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="markup.html" accesskey="U">20. Structured Markup Processing Tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-html">
+<span id="html-hypertext-markup-language-support"></span><h1>20.1. <a class="reference internal" href="#module-html" title="html: Helpers for manipulating HTML."><tt class="xref py py-mod docutils literal"><span class="pre">html</span></tt></a> &#8212; HyperText Markup Language support<a class="headerlink" href="#module-html" title="Permalink to this headline">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="http://hg.python.org/cpython/file/2.7/Lib/html/__init__.py">Lib/html/__init__.py</a></p>
+<hr class="docutils" />
+<p>This module defines utilities to manipulate HTML.</p>
+<dl class="function">
+<dt id="html.escape">
+<tt class="descclassname">html.</tt><tt class="descname">escape</tt><big>(</big><em>s</em>, <em>quote=True</em><big>)</big><a class="headerlink" href="#html.escape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the characters <tt class="docutils literal"><span class="pre">&amp;</span></tt>, <tt class="docutils literal"><span class="pre">&lt;</span></tt> and <tt class="docutils literal"><span class="pre">&gt;</span></tt> in string <em>s</em> to HTML-safe
+sequences.  Use this if you need to display text that might contain such
+characters in HTML.  If the optional flag <em>quote</em> is true, the characters
+(<tt class="docutils literal"><span class="pre">&quot;</span></tt>) and (<tt class="docutils literal"><span class="pre">'</span></tt>) are also translated; this helps for inclusion in an HTML
+attribute value delimited by quotes, as in <tt class="docutils literal"><span class="pre">&lt;a</span> <span class="pre">href=&quot;...&quot;&gt;</span></tt>.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.2.</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="html.unescape">
+<tt class="descclassname">html.</tt><tt class="descname">unescape</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#html.unescape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert all named and numeric character references (e.g. <tt class="docutils literal"><span class="pre">&amp;gt;</span></tt>,
+<tt class="docutils literal"><span class="pre">&amp;#62;</span></tt>, <tt class="docutils literal"><span class="pre">&amp;x3e;</span></tt>) in the string <em>s</em> to the corresponding unicode
+characters.  This function uses the rules defined by the HTML 5 standard
+for both valid and invalid character references, and the <a class="reference internal" href="html.entities.html#html.entities.html5" title="html.entities.html5"><tt class="xref py py-data docutils literal"><span class="pre">list</span> <span class="pre">of</span>
+<span class="pre">HTML</span> <span class="pre">5</span> <span class="pre">named</span> <span class="pre">character</span> <span class="pre">references</span></tt></a>.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.4.</span></p>
+</dd></dl>
+
+<hr class="docutils" />
+<p>Submodules in the <tt class="docutils literal"><span class="pre">html</span></tt> package are:</p>
+<ul class="simple">
+<li><a class="reference internal" href="html.parser.html#module-html.parser" title="html.parser: A simple parser that can handle HTML and XHTML."><tt class="xref py py-mod docutils literal"><span class="pre">html.parser</span></tt></a> &#8211; HTML/XHTML parser with lenient parsing mode</li>
+<li><a class="reference internal" href="html.entities.html#module-html.entities" title="html.entities: Definitions of HTML general entities."><tt class="xref py py-mod docutils literal"><span class="pre">html.entities</span></tt></a> &#8211; HTML entity definitions</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

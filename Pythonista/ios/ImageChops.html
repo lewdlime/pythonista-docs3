@@ -1,0 +1,236 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ImageChops Module &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ImageChops">
+<span id="the-imagechops-module"></span><h1>The ImageChops Module<a class="headerlink" href="#module-ImageChops" title="Permalink to this headline">¶</a></h1>
+<p>The ImageChops module contains a number of arithmetical image operations, called channel operations (“chops”). These can be used for various purposes, including special effects, image compositions, algorithmic painting, and more.</p>
+<p>For more pre-made operations, see <a class="reference internal" href="ImageOps.html#module-ImageOps" title="ImageOps"><tt class="xref py py-mod docutils literal"><span class="pre">ImageOps</span></tt></a>.</p>
+<p>At this time, most channel operations are only implemented for 8-bit images (e.g. “L” and “RGB”).</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>Most channel operations take one or two image arguments and returns a new image. Unless otherwise noted, the result of a channel operation is always clipped to the range 0 to MAX (which is 255 for all modes supported by the operations in this module).</p>
+<dl class="function">
+<dt id="ImageChops.constant">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">constant</tt><big>(</big><em>image</em>, <em>value</em><big>)</big><a class="headerlink" href="#ImageChops.constant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a layer with the same size as the given image, but filled with the given pixel value.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.duplicate">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">duplicate</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageChops.duplicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the given image.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.invert">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">invert</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageChops.invert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inverts an image.</p>
+<p><tt class="docutils literal"><span class="pre">out</span> <span class="pre">=</span> <span class="pre">MAX</span> <span class="pre">-</span> <span class="pre">image</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.lighter">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">lighter</tt><big>(</big><em>image1</em>, <em>image2</em><big>)</big><a class="headerlink" href="#ImageChops.lighter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares the two images, pixel by pixel, and returns a new image containing the lighter values.</p>
+<p><tt class="docutils literal"><span class="pre">out</span> <span class="pre">=</span> <span class="pre">max(image1,</span> <span class="pre">image2)</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.darker">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">darker</tt><big>(</big><em>image1</em>, <em>image2</em><big>)</big><a class="headerlink" href="#ImageChops.darker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares the two images, pixel by pixel, and returns a new image containing the darker values.</p>
+<p><tt class="docutils literal"><span class="pre">out</span> <span class="pre">=</span> <span class="pre">min(image1,</span> <span class="pre">image2)</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.difference">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">difference</tt><big>(</big><em>image1</em>, <em>image2</em><big>)</big><a class="headerlink" href="#ImageChops.difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the absolute value of the difference between the two images.</p>
+<p><tt class="docutils literal"><span class="pre">out</span> <span class="pre">=</span> <span class="pre">abs(image1</span> <span class="pre">-</span> <span class="pre">image2)</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.multiply">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">multiply</tt><big>(</big><em>image1</em>, <em>image2</em><big>)</big><a class="headerlink" href="#ImageChops.multiply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Superimposes two images on top of each other. If you multiply an image with a solid black image, the result is black. If you multiply with a solid white image, the image is unaffected.</p>
+<p><tt class="docutils literal"><span class="pre">out</span> <span class="pre">=</span> <span class="pre">image1</span> <span class="pre">*</span> <span class="pre">image2</span> <span class="pre">/</span> <span class="pre">MAX</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.screen">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">screen</tt><big>(</big><em>image1</em>, <em>image2</em><big>)</big><a class="headerlink" href="#ImageChops.screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Superimposes two inverted images on top of each other.</p>
+<p><tt class="docutils literal"><span class="pre">out</span> <span class="pre">=</span> <span class="pre">MAX</span> <span class="pre">-</span> <span class="pre">((MAX</span> <span class="pre">-</span> <span class="pre">image1)</span> <span class="pre">*</span> <span class="pre">(MAX</span> <span class="pre">-</span> <span class="pre">image2)</span> <span class="pre">/</span> <span class="pre">MAX)</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.add">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">add</tt><big>(</big><em>image1</em>, <em>image2</em>, <em>scale</em>, <em>offset</em><big>)</big><a class="headerlink" href="#ImageChops.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds two images, dividing the result by scale and adding the offset. If omitted, scale defaults to 1.0, and offset to 0.0.</p>
+<p><tt class="docutils literal"><span class="pre">out</span> <span class="pre">=</span> <span class="pre">(image1</span> <span class="pre">+</span> <span class="pre">image2)</span> <span class="pre">/</span> <span class="pre">scale</span> <span class="pre">+</span> <span class="pre">offset</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.subtract">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">subtract</tt><big>(</big><em>image1</em>, <em>image2</em>, <em>scale</em>, <em>offset</em><big>)</big><a class="headerlink" href="#ImageChops.subtract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtracts two images, dividing the result by scale and adding the offset. If omitted, scale defaults to 1.0, and offset to 0.0.</p>
+<p><tt class="docutils literal"><span class="pre">out</span> <span class="pre">=</span> <span class="pre">(image1</span> <span class="pre">-</span> <span class="pre">image2)</span> <span class="pre">/</span> <span class="pre">scale</span> <span class="pre">+</span> <span class="pre">offset</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.blend">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">blend</tt><big>(</big><em>image1</em>, <em>image2</em>, <em>alpha</em><big>)</big><a class="headerlink" href="#ImageChops.blend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as the <a class="reference internal" href="Image.html#Image.blend" title="Image.blend"><tt class="xref py py-func docutils literal"><span class="pre">Image.blend()</span></tt></a> function in the <a class="reference internal" href="Image.html#module-Image" title="Image"><tt class="xref py py-mod docutils literal"><span class="pre">Image</span></tt></a> module.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.composite">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">composite</tt><big>(</big><em>image1</em>, <em>image2</em>, <em>mask</em><big>)</big><a class="headerlink" href="#ImageChops.composite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as the <a class="reference internal" href="Image.html#Image.composite" title="Image.composite"><tt class="xref py py-func docutils literal"><span class="pre">Image.composite()</span></tt></a> function in the <a class="reference internal" href="Image.html#module-Image" title="Image"><tt class="xref py py-mod docutils literal"><span class="pre">Image</span></tt></a> module.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageChops.offset">
+<tt class="descclassname">ImageChops.</tt><tt class="descname">offset</tt><big>(</big><em>image</em>, <em>xoffset</em>, <em>yoffset</em><big>)</big><a class="headerlink" href="#ImageChops.offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">ImageChops.</tt><tt class="descname">offset</tt><big>(</big><em>image</em>, <em>offset</em><big>)</big></dt>
+<dd><p>Returns a copy of the image where data has been offset by the given distances. Data wraps around the edges. If yoffset is omitted, it is assumed to be equal to xoffset.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

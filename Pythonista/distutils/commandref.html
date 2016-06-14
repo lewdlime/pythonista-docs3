@@ -1,0 +1,217 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9. Command Reference &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="Distributing Python Modules (Legacy version)" href="index.html" />
+    <link rel="next" title="10. API Reference" href="apiref.html" />
+    <link rel="prev" title="8. Extending Distutils" href="extending.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apiref.html" title="10. API Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="extending.html" title="8. Extending Distutils"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">Distributing Python Modules (Legacy version)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="command-reference">
+<span id="reference"></span><h1>9. Command Reference<a class="headerlink" href="#command-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installing-modules-the-install-command-family">
+<span id="install-cmd"></span><h2>9.1. Installing modules: the <strong class="command">install</strong> command family<a class="headerlink" href="#installing-modules-the-install-command-family" title="Permalink to this headline">¶</a></h2>
+<p>The install command ensures that the build commands have been run and then runs
+the subcommands <strong class="command">install_lib</strong>, <strong class="command">install_data</strong> and
+<strong class="command">install_scripts</strong>.</p>
+<div class="section" id="install-data">
+<span id="install-data-cmd"></span><h3>9.1.1. <strong class="command">install_data</strong><a class="headerlink" href="#install-data" title="Permalink to this headline">¶</a></h3>
+<p>This command installs all data files provided with the distribution.</p>
+</div>
+<div class="section" id="install-scripts">
+<span id="install-scripts-cmd"></span><h3>9.1.2. <strong class="command">install_scripts</strong><a class="headerlink" href="#install-scripts" title="Permalink to this headline">¶</a></h3>
+<p>This command installs all (Python) scripts in the distribution.</p>
+</div>
+</div>
+<div class="section" id="creating-a-source-distribution-the-sdist-command">
+<span id="sdist-cmd"></span><h2>9.2. Creating a source distribution: the <strong class="command">sdist</strong> command<a class="headerlink" href="#creating-a-source-distribution-the-sdist-command" title="Permalink to this headline">¶</a></h2>
+<p>The manifest template commands are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="48%" />
+<col width="52%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><strong class="command">include pat1 pat2 ...</strong></td>
+<td>include all files matching any of the listed
+patterns</td>
+</tr>
+<tr><td><strong class="command">exclude pat1 pat2 ...</strong></td>
+<td>exclude all files matching any of the listed
+patterns</td>
+</tr>
+<tr><td><strong class="command">recursive-include dir pat1 pat2
+...</strong></td>
+<td>include all files under <em>dir</em> matching any of
+the listed patterns</td>
+</tr>
+<tr><td><strong class="command">recursive-exclude dir pat1 pat2
+...</strong></td>
+<td>exclude all files under <em>dir</em> matching any of
+the listed patterns</td>
+</tr>
+<tr><td><strong class="command">global-include pat1 pat2 ...</strong></td>
+<td>include all files anywhere in the source tree
+matching &#8212; &amp; any of the listed patterns</td>
+</tr>
+<tr><td><strong class="command">global-exclude pat1 pat2 ...</strong></td>
+<td>exclude all files anywhere in the source tree
+matching &#8212; &amp; any of the listed patterns</td>
+</tr>
+<tr><td><strong class="command">prune dir</strong></td>
+<td>exclude all files under <em>dir</em></td>
+</tr>
+<tr><td><strong class="command">graft dir</strong></td>
+<td>include all files under <em>dir</em></td>
+</tr>
+</tbody>
+</table>
+<p>The patterns here are Unix-style &#8220;glob&#8221; patterns: <tt class="docutils literal"><span class="pre">*</span></tt> matches any sequence of
+regular filename characters, <tt class="docutils literal"><span class="pre">?</span></tt> matches any single regular filename
+character, and <tt class="docutils literal"><span class="pre">[range]</span></tt> matches any of the characters in <em>range</em> (e.g.,
+<tt class="docutils literal"><span class="pre">a-z</span></tt>, <tt class="docutils literal"><span class="pre">a-zA-Z</span></tt>, <tt class="docutils literal"><span class="pre">a-f0-9_.</span></tt>).  The definition of &#8220;regular filename
+character&#8221; is platform-specific: on Unix it is anything except slash; on Windows
+anything except backslash or colon.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

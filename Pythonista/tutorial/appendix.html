@@ -1,0 +1,245 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>16. Appendix &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="The Python Tutorial" href="index.html" />
+    <link rel="next" title="Python Setup and Usage" href="../using/index.html" />
+    <link rel="prev" title="15. Floating Point Arithmetic: Issues and Limitations" href="floatingpoint.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../using/index.html" title="Python Setup and Usage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="floatingpoint.html" title="15. Floating Point Arithmetic: Issues and Limitations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">The Python Tutorial</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="appendix">
+<span id="tut-appendix"></span><h1>16. Appendix<a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="interactive-mode">
+<span id="tut-interac"></span><h2>16.1. Interactive Mode<a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="error-handling">
+<span id="tut-error"></span><h3>16.1.1. Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h3>
+<p>When an error occurs, the interpreter prints an error message and a stack trace.
+In interactive mode, it then returns to the primary prompt; when input came from
+a file, it exits with a nonzero exit status after printing the stack trace.
+(Exceptions handled by an <a class="reference internal" href="../reference/compound_stmts.html#except"><tt class="xref std std-keyword docutils literal"><span class="pre">except</span></tt></a> clause in a <a class="reference internal" href="../reference/compound_stmts.html#try"><tt class="xref std std-keyword docutils literal"><span class="pre">try</span></tt></a> statement
+are not errors in this context.)  Some errors are unconditionally fatal and
+cause an exit with a nonzero exit; this applies to internal inconsistencies and
+some cases of running out of memory.  All error messages are written to the
+standard error stream; normal output from executed commands is written to
+standard output.</p>
+<p>Typing the interrupt character (usually <tt class="kbd docutils literal"><span class="pre">Control-C</span></tt> or <tt class="kbd docutils literal"><span class="pre">Delete</span></tt>) to the primary or
+secondary prompt cancels the input and returns to the primary prompt. <a class="footnote-reference" href="#id2" id="id1">[1]</a>
+Typing an interrupt while a command is executing raises the
+<a class="reference internal" href="../library/exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><tt class="xref py py-exc docutils literal"><span class="pre">KeyboardInterrupt</span></tt></a> exception, which may be handled by a <a class="reference internal" href="../reference/compound_stmts.html#try"><tt class="xref std std-keyword docutils literal"><span class="pre">try</span></tt></a>
+statement.</p>
+</div>
+<div class="section" id="executable-python-scripts">
+<span id="tut-scripts"></span><h3>16.1.2. Executable Python Scripts<a class="headerlink" href="#executable-python-scripts" title="Permalink to this headline">¶</a></h3>
+<p>On BSD&#8217;ish Unix systems, Python scripts can be made directly executable, like
+shell scripts, by putting the line</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python3.5</span>
+</pre></div>
+</div>
+<p>(assuming that the interpreter is on the user&#8217;s <span class="target" id="index-0"></span><tt class="xref std std-envvar docutils literal"><span class="pre">PATH</span></tt>) at the beginning
+of the script and giving the file an executable mode.  The <tt class="docutils literal"><span class="pre">#!</span></tt> must be the
+first two characters of the file.  On some platforms, this first line must end
+with a Unix-style line ending (<tt class="docutils literal"><span class="pre">'\n'</span></tt>), not a Windows (<tt class="docutils literal"><span class="pre">'\r\n'</span></tt>) line
+ending.  Note that the hash, or pound, character, <tt class="docutils literal"><span class="pre">'#'</span></tt>, is used to start a
+comment in Python.</p>
+<p>The script can be given an executable mode, or permission, using the
+<strong class="program">chmod</strong> command.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>chmod +x myscript.py
+</pre></div>
+</div>
+<p>On Windows systems, there is no notion of an &#8220;executable mode&#8221;.  The Python
+installer automatically associates <tt class="docutils literal"><span class="pre">.py</span></tt> files with <tt class="docutils literal"><span class="pre">python.exe</span></tt> so that
+a double-click on a Python file will run it as a script.  The extension can
+also be <tt class="docutils literal"><span class="pre">.pyw</span></tt>, in that case, the console window that normally appears is
+suppressed.</p>
+</div>
+<div class="section" id="the-interactive-startup-file">
+<span id="tut-startup"></span><h3>16.1.3. The Interactive Startup File<a class="headerlink" href="#the-interactive-startup-file" title="Permalink to this headline">¶</a></h3>
+<p>When you use Python interactively, it is frequently handy to have some standard
+commands executed every time the interpreter is started.  You can do this by
+setting an environment variable named <span class="target" id="index-1"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONSTARTUP"><tt class="xref std std-envvar docutils literal"><span class="pre">PYTHONSTARTUP</span></tt></a> to the name of a
+file containing your start-up commands.  This is similar to the <tt class="file docutils literal"><span class="pre">.profile</span></tt>
+feature of the Unix shells.</p>
+<p>This file is only read in interactive sessions, not when Python reads commands
+from a script, and not when <tt class="file docutils literal"><span class="pre">/dev/tty</span></tt> is given as the explicit source of
+commands (which otherwise behaves like an interactive session).  It is executed
+in the same namespace where interactive commands are executed, so that objects
+that it defines or imports can be used without qualification in the interactive
+session. You can also change the prompts <tt class="docutils literal"><span class="pre">sys.ps1</span></tt> and <tt class="docutils literal"><span class="pre">sys.ps2</span></tt> in this
+file.</p>
+<p>If you want to read an additional start-up file from the current directory, you
+can program this in the global start-up file using code like <tt class="docutils literal"><span class="pre">if</span>
+<span class="pre">os.path.isfile('.pythonrc.py'):</span> <span class="pre">exec(open('.pythonrc.py').read())</span></tt>.
+If you want to use the startup file in a script, you must do this explicitly
+in the script:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;PYTHONSTARTUP&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">filename</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fobj</span><span class="p">:</span>
+       <span class="n">startup_file</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">exec</span><span class="p">(</span><span class="n">startup_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-customization-modules">
+<span id="tut-customize"></span><h3>16.1.4. The Customization Modules<a class="headerlink" href="#the-customization-modules" title="Permalink to this headline">¶</a></h3>
+<p>Python provides two hooks to let you customize it: <tt class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></tt> and
+<tt class="xref py py-mod docutils literal"><span class="pre">usercustomize</span></tt>.  To see how it works, you need first to find the location
+of your user site-packages directory.  Start Python and run this code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">site</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">site</span><span class="o">.</span><span class="n">getusersitepackages</span><span class="p">()</span>
+<span class="go">&#39;/home/user/.local/lib/python3.5/site-packages&#39;</span>
+</pre></div>
+</div>
+<p>Now you can create a file named <tt class="file docutils literal"><span class="pre">usercustomize.py</span></tt> in that directory and
+put anything you want in it.  It will affect every invocation of Python, unless
+it is started with the <a class="reference internal" href="../using/cmdline.html#cmdoption-s"><em class="xref std std-option">-s</em></a> option to disable the automatic import.</p>
+<p><tt class="xref py py-mod docutils literal"><span class="pre">sitecustomize</span></tt> works in the same way, but is typically created by an
+administrator of the computer in the global site-packages directory, and is
+imported before <tt class="xref py py-mod docutils literal"><span class="pre">usercustomize</span></tt>.  See the documentation of the <a class="reference internal" href="../library/site.html#module-site" title="site: Module responsible for site-specific configuration."><tt class="xref py py-mod docutils literal"><span class="pre">site</span></tt></a>
+module for more details.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>A problem with the GNU Readline package may prevent this.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

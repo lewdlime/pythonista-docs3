@@ -1,0 +1,375 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>27.3. zipapp — Manage executable python zip archives &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="27. Software Packaging and Distribution" href="distribution.html" />
+    <link rel="next" title="28. Python Runtime Services" href="python.html" />
+    <link rel="prev" title="27.2. venv — Creation of virtual environments" href="venv.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="python.html" title="28. Python Runtime Services"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="venv.html" title="27.2. venv — Creation of virtual environments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="distribution.html" accesskey="U">27. Software Packaging and Distribution</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-zipapp">
+<span id="zipapp-manage-executable-python-zip-archives"></span><h1>27.3. <a class="reference internal" href="#module-zipapp" title="zipapp: Manage executable python zip archives"><tt class="xref py py-mod docutils literal"><span class="pre">zipapp</span></tt></a> &#8212; Manage executable python zip archives<a class="headerlink" href="#module-zipapp" title="Permalink to this headline">¶</a></h1>
+<p class="versionadded" id="index-0">
+<span class="versionmodified">New in version 3.5.</span></p>
+<p><strong>Source code:</strong> <a class="reference external" href="http://hg.python.org/cpython/file/2.7/Lib/zipapp.py">Lib/zipapp.py</a></p>
+<hr class="docutils" />
+<p>This module provides tools to manage the creation of zip files containing
+Python code, which can be  <a class="reference internal" href="../using/cmdline.html#using-on-interface-options"><em>executed directly by the Python interpreter</em></a>.  The module provides both a
+<a class="reference internal" href="#zipapp-command-line-interface"><em>Command-Line Interface</em></a> and a <a class="reference internal" href="#zipapp-python-api"><em>Python API</em></a>.</p>
+<div class="section" id="basic-example">
+<h2>27.3.1. Basic Example<a class="headerlink" href="#basic-example" title="Permalink to this headline">¶</a></h2>
+<p>The following example shows how the <a class="reference internal" href="timeit.html#command-line-interface"><em>Command-Line Interface</em></a>
+can be used to create an executable archive from a directory containing
+Python code.  When run, the archive will execute the <tt class="docutils literal"><span class="pre">main</span></tt> function from
+the module <tt class="docutils literal"><span class="pre">myapp</span></tt> in the archive.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>python -m zipapp myapp -m <span class="s2">&quot;myapp:main&quot;</span>
+<span class="nv">$ </span>python myapp.pyz
+&lt;output from myapp&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-interface">
+<span id="zipapp-command-line-interface"></span><h2>27.3.2. Command-Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h2>
+<p>When called as a program from the command line, the following form is used:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>python -m zipapp <span class="nb">source</span> <span class="o">[</span>options<span class="o">]</span>
+</pre></div>
+</div>
+<p>If <em>source</em> is a directory, this will create an archive from the contents of
+<em>source</em>.  If <em>source</em> is a file, it should be an archive, and it will be
+copied to the target archive (or the contents of its shebang line will be
+displayed if the &#8211;info option is specified).</p>
+<p>The following options are understood:</p>
+<dl class="cmdoption">
+<dt id="cmdoption-zipapp-o">
+<tt class="descname">-o</tt><tt class="descclassname"> &lt;output&gt;</tt><tt class="descclassname">, </tt><tt class="descname">--output</tt><tt class="descclassname">=&lt;output&gt;</tt><a class="headerlink" href="#cmdoption-zipapp-o" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the output to a file named <em>output</em>.  If this option is not specified,
+the output filename will be the same as the input <em>source</em>, with the
+extension <tt class="docutils literal"><span class="pre">.pyz</span></tt> added.  If an explicit filename is given, it is used as
+is (so a <tt class="docutils literal"><span class="pre">.pyz</span></tt> extension should be included if required).</p>
+<p>An output filename must be specified if the <em>source</em> is an archive (and in
+that case, <em>output</em> must not be the same as <em>source</em>).</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-zipapp-p">
+<tt class="descname">-p</tt><tt class="descclassname"> &lt;interpreter&gt;</tt><tt class="descclassname">, </tt><tt class="descname">--python</tt><tt class="descclassname">=&lt;interpreter&gt;</tt><a class="headerlink" href="#cmdoption-zipapp-p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a <tt class="docutils literal"><span class="pre">#!</span></tt> line to the archive specifying <em>interpreter</em> as the command
+to run.  Also, on POSIX, make the archive executable.  The default is to
+write no <tt class="docutils literal"><span class="pre">#!</span></tt> line, and not make the file executable.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-zipapp-m">
+<tt class="descname">-m</tt><tt class="descclassname"> &lt;mainfn&gt;</tt><tt class="descclassname">, </tt><tt class="descname">--main</tt><tt class="descclassname">=&lt;mainfn&gt;</tt><a class="headerlink" href="#cmdoption-zipapp-m" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a <tt class="docutils literal"><span class="pre">__main__.py</span></tt> file to the archive that executes <em>mainfn</em>.  The
+<em>mainfn</em> argument should have the form &#8220;pkg.mod:fn&#8221;, where &#8220;pkg.mod&#8221; is a
+package/module in the archive, and &#8220;fn&#8221; is a callable in the given module.
+The <tt class="docutils literal"><span class="pre">__main__.py</span></tt> file will execute that callable.</p>
+<p><em class="xref std std-option">--main</em> cannot be specified when copying an archive.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-zipapp--info">
+<tt class="descname">--info</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-zipapp--info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the interpreter embedded in the archive, for diagnostic purposes.  In
+this case, any other options are ignored and SOURCE must be an archive, not a
+directory.</p>
+</dd></dl>
+
+<dl class="cmdoption">
+<dt id="cmdoption-zipapp-h">
+<tt class="descname">-h</tt><tt class="descclassname"></tt><tt class="descclassname">, </tt><tt class="descname">--help</tt><tt class="descclassname"></tt><a class="headerlink" href="#cmdoption-zipapp-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a short usage message and exit.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="python-api">
+<span id="zipapp-python-api"></span><h2>27.3.3. Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">¶</a></h2>
+<p>The module defines two convenience functions:</p>
+<dl class="function">
+<dt id="zipapp.create_archive">
+<tt class="descclassname">zipapp.</tt><tt class="descname">create_archive</tt><big>(</big><em>source</em>, <em>target=None</em>, <em>interpreter=None</em>, <em>main=None</em><big>)</big><a class="headerlink" href="#zipapp.create_archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an application archive from <em>source</em>.  The source can be any
+of the following:</p>
+<ul class="simple">
+<li>The name of a directory, or a <a class="reference internal" href="pathlib.html#pathlib.Path" title="pathlib.Path"><tt class="xref py py-class docutils literal"><span class="pre">pathlib.Path</span></tt></a> object referring
+to a directory, in which case a new application archive will be
+created from the content of that directory.</li>
+<li>The name of an existing application archive file, or a <a class="reference internal" href="pathlib.html#pathlib.Path" title="pathlib.Path"><tt class="xref py py-class docutils literal"><span class="pre">pathlib.Path</span></tt></a>
+object referring to such a file, in which case the file is copied to
+the target (modifying it to reflect the value given for the <em>interpreter</em>
+argument).  The file name should include the <tt class="docutils literal"><span class="pre">.pyz</span></tt> extension, if required.</li>
+<li>A file object open for reading in bytes mode.  The content of the
+file should be an application archive, and the file object is
+assumed to be positioned at the start of the archive.</li>
+</ul>
+<p>The <em>target</em> argument determines where the resulting archive will be
+written:</p>
+<ul class="simple">
+<li>If it is the name of a file, or a <tt class="xref py py-class docutils literal"><span class="pre">pathlb.Path</span></tt> object,
+the archive will be written to that file.</li>
+<li>If it is an open file object, the archive will be written to that
+file object, which must be open for writing in bytes mode.</li>
+<li>If the target is omitted (or None), the source must be a directory
+and the target will be a file with the same name as the source, with
+a <tt class="docutils literal"><span class="pre">.pyz</span></tt> extension added.</li>
+</ul>
+<p>The <em>interpreter</em> argument specifies the name of the Python
+interpreter with which the archive will be executed.  It is written as
+a &#8220;shebang&#8221; line at the start of the archive.  On POSIX, this will be
+interpreted by the OS, and on Windows it will be handled by the Python
+launcher.  Omitting the <em>interpreter</em> results in no shebang line being
+written.  If an interpreter is specified, and the target is a
+filename, the executable bit of the target file will be set.</p>
+<p>The <em>main</em> argument specifies the name of a callable which will be
+used as the main program for the archive.  It can only be specified if
+the source is a directory, and the source does not already contain a
+<tt class="docutils literal"><span class="pre">__main__.py</span></tt> file.  The <em>main</em> argument should take the form
+&#8220;pkg.module:callable&#8221; and the archive will be run by importing
+&#8220;pkg.module&#8221; and executing the given callable with no arguments.  It
+is an error to omit <em>main</em> if the source is a directory and does not
+contain a <tt class="docutils literal"><span class="pre">__main__.py</span></tt> file, as otherwise the resulting archive
+would not be executable.</p>
+<p>If a file object is specified for <em>source</em> or <em>target</em>, it is the
+caller&#8217;s responsibility to close it after calling create_archive.</p>
+<p>When copying an existing archive, file objects supplied only need
+<tt class="docutils literal"><span class="pre">read</span></tt> and <tt class="docutils literal"><span class="pre">readline</span></tt>, or <tt class="docutils literal"><span class="pre">write</span></tt> methods.  When creating an
+archive from a directory, if the target is a file object it will be
+passed to the <tt class="docutils literal"><span class="pre">zipfile.ZipFile</span></tt> class, and must supply the methods
+needed by that class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="zipapp.get_interpreter">
+<tt class="descclassname">zipapp.</tt><tt class="descname">get_interpreter</tt><big>(</big><em>archive</em><big>)</big><a class="headerlink" href="#zipapp.get_interpreter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the interpreter specified in the <tt class="docutils literal"><span class="pre">#!</span></tt> line at the start of the
+archive.  If there is no <tt class="docutils literal"><span class="pre">#!</span></tt> line, return <a class="reference internal" href="constants.html#None" title="None"><tt class="xref py py-const xref docutils literal"><span class="pre">None</span></tt></a>.
+The <em>archive</em> argument can be a filename or a file-like object open
+for reading in bytes mode.  It is assumed to be at the start of the archive.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="examples">
+<span id="zipapp-examples"></span><h2>27.3.4. Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Pack up a directory into an archive, and run it.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>python -m zipapp myapp
+<span class="nv">$ </span>python myapp.pyz
+&lt;output from myapp&gt;
+</pre></div>
+</div>
+<p>The same can be done using the <a class="reference internal" href="#zipapp.create_archive" title="zipapp.create_archive"><tt class="xref py py-func docutils literal"><span class="pre">create_archive()</span></tt></a> functon:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">zipapp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zipapp</span><span class="o">.</span><span class="n">create_archive</span><span class="p">(</span><span class="s">&#39;myapp.pyz&#39;</span><span class="p">,</span> <span class="s">&#39;myapp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To make the application directly executable on POSIX, specify an interpreter
+to use.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>python -m zipapp myapp -p <span class="s2">&quot;/usr/bin/env python&quot;</span>
+<span class="nv">$ </span>./myapp.pyz
+&lt;output from myapp&gt;
+</pre></div>
+</div>
+<p>To replace the shebang line on an existing archive, create a modified archive
+using the <a class="reference internal" href="#zipapp.create_archive" title="zipapp.create_archive"><tt class="xref py py-func docutils literal"><span class="pre">create_archive()</span></tt></a> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">zipapp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zipapp</span><span class="o">.</span><span class="n">create_archive</span><span class="p">(</span><span class="s">&#39;old_archive.pyz&#39;</span><span class="p">,</span> <span class="s">&#39;new_archive.pyz&#39;</span><span class="p">,</span> <span class="s">&#39;/usr/bin/python3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To update the file in place, do the replacement in memory using a <tt class="xref py py-class docutils literal"><span class="pre">BytesIO</span></tt>
+object, and then overwrite the source afterwards.  Note that there is a risk
+when overwriting a file in place that an error will result in the loss of
+the original file.  This code does not protect against such errors, but
+production code should do so.  Also, this method will only work if the archive
+fits in memory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">zipapp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">io</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">temp</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zipapp</span><span class="o">.</span><span class="n">create_archive</span><span class="p">(</span><span class="s">&#39;myapp.pyz&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="s">&#39;/usr/bin/python2&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;myapp.pyz&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Note that if you specify an interpreter and then distribute your application
+archive, you need to ensure that the interpreter used is portable.  The Python
+launcher for Windows supports most common forms of POSIX <tt class="docutils literal"><span class="pre">#!</span></tt> line, but there
+are other issues to consider:</p>
+<ul class="simple">
+<li>If you use &#8220;/usr/bin/env python&#8221; (or other forms of the &#8220;python&#8221; command,
+such as &#8220;/usr/bin/python&#8221;), you need to consider that your users may have
+either Python 2 or Python 3 as their default, and write your code to work
+under both versions.</li>
+<li>If you use an explicit version, for example &#8220;/usr/bin/env python3&#8221; your
+application will not work for users who do not have that version.  (This
+may be what you want if you have not made your code Python 2 compatible).</li>
+<li>There is no way to say &#8220;python X.Y or later&#8221;, so be careful of using an
+exact version like &#8220;/usr/bin/env python3.4&#8221; as you will need to change your
+shebang line for users of Python 3.5, for example.</li>
+</ul>
+</div>
+<div class="section" id="the-python-zip-application-archive-format">
+<h2>27.3.5. The Python Zip Application Archive Format<a class="headerlink" href="#the-python-zip-application-archive-format" title="Permalink to this headline">¶</a></h2>
+<p>Python has been able to execute zip files which contain a <tt class="docutils literal"><span class="pre">__main__.py</span></tt> file
+since version 2.6.  In order to be executed by Python, an application archive
+simply has to be a standard zip file containing a <tt class="docutils literal"><span class="pre">__main__.py</span></tt> file which
+will be run as the entry point for the application.  As usual for any Python
+script, the parent of the script (in this case the zip file) will be placed on
+<a class="reference internal" href="sys.html#sys.path" title="sys.path"><tt class="xref py py-data docutils literal"><span class="pre">sys.path</span></tt></a> and thus further modules can be imported from the zip file.</p>
+<p>The zip file format allows arbitrary data to be prepended to a zip file.  The
+zip application format uses this ability to prepend a standard POSIX &#8220;shebang&#8221;
+line to the file (<tt class="docutils literal"><span class="pre">#!/path/to/interpreter</span></tt>).</p>
+<p>Formally, the Python zip application format is therefore:</p>
+<ol class="arabic simple">
+<li>An optional shebang line, containing the characters <tt class="docutils literal"><span class="pre">b'#!'</span></tt> followed by an
+interpreter name, and then a newline (<tt class="docutils literal"><span class="pre">b'\n'</span></tt>) character.  The interpreter
+name can be anything acceptable to the OS &#8220;shebang&#8221; processing, or the Python
+launcher on Windows.  The interpreter should be encoded in UTF-8 on Windows,
+and in <a class="reference internal" href="sys.html#sys.getfilesystemencoding" title="sys.getfilesystemencoding"><tt class="xref py py-func docutils literal"><span class="pre">sys.getfilesystemencoding()</span></tt></a> on POSIX.</li>
+<li>Standard zipfile data, as generated by the <a class="reference internal" href="zipfile.html#module-zipfile" title="zipfile: Read and write ZIP-format archive files."><tt class="xref py py-mod docutils literal"><span class="pre">zipfile</span></tt></a> module.  The
+zipfile content <em>must</em> include a file called <tt class="docutils literal"><span class="pre">__main__.py</span></tt> (which must be
+in the &#8220;root&#8221; of the zipfile - i.e., it cannot be in a subdirectory).  The
+zipfile data can be compressed or uncompressed.</li>
+</ol>
+<p>If an application archive has a shebang line, it may have the executable bit set
+on POSIX systems, to allow it to be executed directly.</p>
+<p>There is no requirement that the tools in this module are used to create
+application archives - the module is a convenience, but archives in the above
+format created by any means are acceptable to Python.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

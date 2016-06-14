@@ -1,0 +1,211 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MemoryView objects &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="Concrete Objects Layer" href="concrete.html" />
+    <link rel="next" title="Weak Reference Objects" href="weakref.html" />
+    <link rel="prev" title="Slice Objects" href="slice.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="weakref.html" title="Weak Reference Objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="slice.html" title="Slice Objects"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >Python/C API Reference Manual</a> &raquo;</li>
+          <li><a href="concrete.html" accesskey="U">Concrete Objects Layer</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <span class="target" id="memoryview-objects"></span><div class="section" id="index-0">
+<span id="id1"></span><h1>MemoryView objects<a class="headerlink" href="#index-0" title="Permalink to this headline">¶</a></h1>
+<p>A <a class="reference internal" href="../library/stdtypes.html#memoryview" title="memoryview"><tt class="xref py py-class docutils literal"><span class="pre">memoryview</span></tt></a> object exposes the C level <a class="reference internal" href="buffer.html#bufferobjects"><em>buffer interface</em></a> as a Python object which can then be passed around like
+any other object.</p>
+<dl class="function">
+<dt id="PyMemoryView_FromObject">
+<a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a> *<tt class="descname">PyMemoryView_FromObject</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*obj</em><big>)</big><a class="headerlink" href="#PyMemoryView_FromObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a memoryview object from an object that provides the buffer interface.
+If <em>obj</em> supports writable buffer exports, the memoryview object will be
+read/write, otherwise it may be either read-only or read/write at the
+discretion of the exporter.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyMemoryView_FromMemory">
+<a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a> *<tt class="descname">PyMemoryView_FromMemory</tt><big>(</big>char<em>&nbsp;*mem</em>, Py_ssize_t<em>&nbsp;size</em>, int<em>&nbsp;flags</em><big>)</big><a class="headerlink" href="#PyMemoryView_FromMemory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a memoryview object using <em>mem</em> as the underlying buffer.
+<em>flags</em> can be one of <tt class="xref c c-macro docutils literal"><span class="pre">PyBUF_READ</span></tt> or <tt class="xref c c-macro docutils literal"><span class="pre">PyBUF_WRITE</span></tt>.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 3.3.</span></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyMemoryView_FromBuffer">
+<a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a> *<tt class="descname">PyMemoryView_FromBuffer</tt><big>(</big><a class="reference internal" href="buffer.html#Py_buffer" title="Py_buffer">Py_buffer</a><em>&nbsp;*view</em><big>)</big><a class="headerlink" href="#PyMemoryView_FromBuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a memoryview object wrapping the given buffer structure <em>view</em>.
+For simple byte buffers, <a class="reference internal" href="#PyMemoryView_FromMemory" title="PyMemoryView_FromMemory"><tt class="xref c c-func docutils literal"><span class="pre">PyMemoryView_FromMemory()</span></tt></a> is the preferred
+function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyMemoryView_GetContiguous">
+<a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a> *<tt class="descname">PyMemoryView_GetContiguous</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*obj</em>, int<em>&nbsp;buffertype</em>, char<em>&nbsp;order</em><big>)</big><a class="headerlink" href="#PyMemoryView_GetContiguous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a memoryview object to a <a class="reference internal" href="../glossary.html#term-contiguous"><em class="xref std std-term">contiguous</em></a> chunk of memory (in either
+&#8216;C&#8217; or &#8216;F&#8217;ortran <em>order</em>) from an object that defines the buffer
+interface. If memory is contiguous, the memoryview object points to the
+original memory. Otherwise, a copy is made and the memoryview points to a
+new bytes object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyMemoryView_Check">
+int <tt class="descname">PyMemoryView_Check</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*obj</em><big>)</big><a class="headerlink" href="#PyMemoryView_Check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the object <em>obj</em> is a memoryview object.  It is not
+currently allowed to create subclasses of <a class="reference internal" href="../library/stdtypes.html#memoryview" title="memoryview"><tt class="xref py py-class docutils literal"><span class="pre">memoryview</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyMemoryView_GET_BUFFER">
+<a class="reference internal" href="buffer.html#Py_buffer" title="Py_buffer">Py_buffer</a> *<tt class="descname">PyMemoryView_GET_BUFFER</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*mview</em><big>)</big><a class="headerlink" href="#PyMemoryView_GET_BUFFER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a pointer to the memoryview&#8217;s private copy of the exporter&#8217;s buffer.
+<em>mview</em> <strong>must</strong> be a memoryview instance; this macro doesn&#8217;t check its type,
+you must do it yourself or you will risk crashes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PyMemoryView_GET_BASE">
+<a class="reference internal" href="buffer.html#Py_buffer" title="Py_buffer">Py_buffer</a> *<tt class="descname">PyMemoryView_GET_BASE</tt><big>(</big><a class="reference internal" href="structures.html#PyObject" title="PyObject">PyObject</a><em>&nbsp;*mview</em><big>)</big><a class="headerlink" href="#PyMemoryView_GET_BASE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return either a pointer to the exporting object that the memoryview is based
+on or <em>NULL</em> if the memoryview has been created by one of the functions
+<a class="reference internal" href="#PyMemoryView_FromMemory" title="PyMemoryView_FromMemory"><tt class="xref c c-func docutils literal"><span class="pre">PyMemoryView_FromMemory()</span></tt></a> or <a class="reference internal" href="#PyMemoryView_FromBuffer" title="PyMemoryView_FromBuffer"><tt class="xref c c-func docutils literal"><span class="pre">PyMemoryView_FromBuffer()</span></tt></a>.
+<em>mview</em> <strong>must</strong> be a memoryview instance.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

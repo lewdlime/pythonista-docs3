@@ -1,0 +1,699 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>25.1. typing — Support for type hints &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="25. Development Tools" href="development.html" />
+    <link rel="next" title="25.2. pydoc — Documentation generator and online help system" href="pydoc.html" />
+    <link rel="prev" title="25. Development Tools" href="development.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pydoc.html" title="25.2. pydoc — Documentation generator and online help system"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="development.html" title="25. Development Tools"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="development.html" accesskey="U">25. Development Tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-typing">
+<span id="typing-support-for-type-hints"></span><h1>25.1. <a class="reference internal" href="#module-typing" title="typing: Support for type hints (see PEP 484)."><tt class="xref py py-mod docutils literal"><span class="pre">typing</span></tt></a> &#8212; Support for type hints<a class="headerlink" href="#module-typing" title="Permalink to this headline">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="http://hg.python.org/cpython/file/2.7/Lib/typing.py">Lib/typing.py</a></p>
+<hr class="docutils" />
+<p>This module supports type hints as specified by <span class="target" id="index-0"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0484"><strong>PEP 484</strong></a>.  The most
+fundamental support consists of the type <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a>, <a class="reference internal" href="#typing.Union" title="typing.Union"><tt class="xref py py-class docutils literal"><span class="pre">Union</span></tt></a>,
+<a class="reference internal" href="#typing.Tuple" title="typing.Tuple"><tt class="xref py py-class docutils literal"><span class="pre">Tuple</span></tt></a>, <a class="reference internal" href="#typing.Callable" title="typing.Callable"><tt class="xref py py-class docutils literal"><span class="pre">Callable</span></tt></a>, <a class="reference internal" href="#typing.TypeVar" title="typing.TypeVar"><tt class="xref py py-class docutils literal"><span class="pre">TypeVar</span></tt></a>, and
+<a class="reference internal" href="#typing.Generic" title="typing.Generic"><tt class="xref py py-class docutils literal"><span class="pre">Generic</span></tt></a>.  For full specification please see <span class="target" id="index-1"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0484"><strong>PEP 484</strong></a>.  For
+a simplified introduction to type hints see <span class="target" id="index-2"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0483"><strong>PEP 483</strong></a>.</p>
+<p>The function below takes and returns a string and is annotated as follows:</p>
+<div class="highlight-python"><pre>def greeting(name: str) -&gt; str:
+    return 'Hello ' + name</pre>
+</div>
+<p>In the function <tt class="docutils literal"><span class="pre">greeting</span></tt>, the argument <tt class="docutils literal"><span class="pre">name</span></tt> is expected to by of type
+<a class="reference internal" href="stdtypes.html#str" title="str"><tt class="xref py py-class docutils literal"><span class="pre">str</span></tt></a> and the return type <a class="reference internal" href="stdtypes.html#str" title="str"><tt class="xref py py-class docutils literal"><span class="pre">str</span></tt></a>. Subtypes are accepted as
+arguments.</p>
+<div class="section" id="type-aliases">
+<h2>25.1.1. Type aliases<a class="headerlink" href="#type-aliases" title="Permalink to this headline">¶</a></h2>
+<p>A type alias is defined by assigning the type to the alias:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Vector</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="callable">
+<h2>25.1.2. Callable<a class="headerlink" href="#callable" title="Permalink to this headline">¶</a></h2>
+<p>Frameworks expecting callback functions of specific signatures might be
+type hinted using <tt class="docutils literal"><span class="pre">Callable[[Arg1Type,</span> <span class="pre">Arg2Type],</span> <span class="pre">ReturnType]</span></tt>.</p>
+<p>For example:</p>
+<div class="highlight-python"><pre>from typing import Callable
+
+def feeder(get_next_item: Callable[[], str]) -&gt; None:
+    # Body
+
+def async_query(on_success: Callable[[int], None],
+                on_error: Callable[[int, Exception], None]) -&gt; None:
+    # Body</pre>
+</div>
+<p>It is possible to declare the return type of a callable without specifying
+the call signature by substituting a literal ellipsis
+for the list of arguments in the type hint: <tt class="docutils literal"><span class="pre">Callable[...,</span> <span class="pre">ReturnType]</span></tt>.
+<tt class="xref docutils literal"><span class="pre">None</span></tt> as a type hint is a special case and is replaced by <tt class="docutils literal"><span class="pre">type(None)</span></tt>.</p>
+</div>
+<div class="section" id="generics">
+<h2>25.1.3. Generics<a class="headerlink" href="#generics" title="Permalink to this headline">¶</a></h2>
+<p>Since type information about objects kept in containers cannot be statically
+inferred in a generic way, abstract base classes have been extended to support
+subscription to denote expected types for container elements.</p>
+<div class="highlight-python"><pre>from typing import Mapping, Sequence
+
+def notify_by_email(employees: Sequence[Employee],
+                    overrides: Mapping[str, str]) -&gt; None: ...</pre>
+</div>
+<p>Generics can be parametrized by using a new factory available in typing
+called <a class="reference internal" href="#typing.TypeVar" title="typing.TypeVar"><tt class="xref py py-class docutils literal"><span class="pre">TypeVar</span></tt></a>.</p>
+<div class="highlight-python"><pre>from typing import Sequence, TypeVar
+
+T = TypeVar('T')      # Declare type variable
+
+def first(l: Sequence[T]) -&gt; T:   # Generic function
+    return l[0]</pre>
+</div>
+</div>
+<div class="section" id="user-defined-generic-types">
+<h2>25.1.4. User-defined generic types<a class="headerlink" href="#user-defined-generic-types" title="Permalink to this headline">¶</a></h2>
+<p>A user-defined class can be defined as a generic class.</p>
+<div class="highlight-python"><pre>from typing import TypeVar, Generic
+from logging import Logger
+
+T = TypeVar('T')
+
+class LoggedVar(Generic[T]):
+    def __init__(self, value: T, name: str, logger: Logger) -&gt; None:
+        self.name = name
+        self.logger = logger
+        self.value = value
+
+    def set(self, new: T) -&gt; None:
+        self.log('Set ' + repr(self.value))
+        self.value = new
+
+    def get(self) -&gt; T:
+        self.log('Get ' + repr(self.value))
+        return self.value
+
+    def log(self, message: str) -&gt; None:
+        self.logger.info('{}: {}'.format(self.name, message))</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">Generic[T]</span></tt> as a base class defines that the class <tt class="docutils literal"><span class="pre">LoggedVar</span></tt> takes a
+single type parameter <tt class="docutils literal"><span class="pre">T</span></tt> . This also makes <tt class="docutils literal"><span class="pre">T</span></tt> valid as a type within the
+class body.</p>
+<p>The <a class="reference internal" href="#typing.Generic" title="typing.Generic"><tt class="xref py py-class docutils literal"><span class="pre">Generic</span></tt></a> base class uses a metaclass that defines
+<a class="reference internal" href="../reference/datamodel.html#object.__getitem__" title="object.__getitem__"><tt class="xref py py-meth docutils literal"><span class="pre">__getitem__()</span></tt></a> so that <tt class="docutils literal"><span class="pre">LoggedVar[t]</span></tt> is valid as a type:</p>
+<div class="highlight-python"><pre>from typing import Iterable
+
+def zero_all_vars(vars: Iterable[LoggedVar[int]]) -&gt; None:
+    for var in vars:
+        var.set(0)</pre>
+</div>
+<p>A generic type can have any number of type variables, and type variables may
+be constrained:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span>
+<span class="o">...</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s">&#39;S&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">StrangePair</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">S</span><span class="p">]):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Each type variable argument to <a class="reference internal" href="#typing.Generic" title="typing.Generic"><tt class="xref py py-class docutils literal"><span class="pre">Generic</span></tt></a> must be distinct.
+This is thus invalid:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span>
+<span class="o">...</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s">&#39;T&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Pair</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">]):</span>   <span class="c"># INVALID</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>You can use multiple inheritance with <a class="reference internal" href="#typing.Generic" title="typing.Generic"><tt class="xref py py-class docutils literal"><span class="pre">Generic</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Sized</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s">&#39;T&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">LinkedList</span><span class="p">(</span><span class="n">Sized</span><span class="p">,</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>When inheriting from generic classes, some type variables could fixed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Mapping</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s">&#39;T&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyDict</span><span class="p">(</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">T</span><span class="p">]):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>In this case <tt class="docutils literal"><span class="pre">MyDict</span></tt> has a single parameter, <tt class="docutils literal"><span class="pre">T</span></tt>.</p>
+<p>Subclassing a generic class without specifying type parameters assumes
+<a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a> for each position. In the following example, <tt class="docutils literal"><span class="pre">MyIterable</span></tt> is
+not generic but implicitly inherits from <tt class="docutils literal"><span class="pre">Iterable[Any]</span></tt>:</p>
+<div class="highlight-python"><pre>from typing import Iterable
+
+class MyIterable(Iterable): # Same as Iterable[Any]</pre>
+</div>
+<p>The metaclass used by <a class="reference internal" href="#typing.Generic" title="typing.Generic"><tt class="xref py py-class docutils literal"><span class="pre">Generic</span></tt></a> is a subclass of <a class="reference internal" href="abc.html#abc.ABCMeta" title="abc.ABCMeta"><tt class="xref py py-class docutils literal"><span class="pre">abc.ABCMeta</span></tt></a>.
+A generic class can be an ABC by including abstract methods or properties,
+and generic classes can also have ABCs as base classes without a metaclass
+conflict.  Generic metaclasses are not supported.</p>
+</div>
+<div class="section" id="the-any-type">
+<h2>25.1.5. The <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a> type<a class="headerlink" href="#the-any-type" title="Permalink to this headline">¶</a></h2>
+<p>A special kind of type is <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a>. Every type is a subtype of
+<a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a>. This is also true for the builtin type object. However, to the
+static type checker these are completely different.</p>
+<p>When the type of a value is <a class="reference internal" href="functions.html#object" title="object"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a>, the type checker will reject
+almost all operations on it, and assigning it to a variable (or using it as a
+return value) of a more specialized type is a type error. On the other hand,
+when a value has type <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a>, the type checker will allow all operations
+on it, and a value of type <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a> can be assigned to a variable (or used
+as a return value) of a more constrained type.</p>
+</div>
+<div class="section" id="classes-functions-and-decorators">
+<h2>25.1.6. Classes, functions, and decorators<a class="headerlink" href="#classes-functions-and-decorators" title="Permalink to this headline">¶</a></h2>
+<p>The module defines the following classes, functions and decorators:</p>
+<dl class="class">
+<dt id="typing.Any">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Any</tt><a class="headerlink" href="#typing.Any" title="Permalink to this definition">¶</a></dt>
+<dd><p>Special type indicating an unconstrained type.</p>
+<ul class="simple">
+<li>Any object is an instance of <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a>.</li>
+<li>Any class is a subclass of <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a>.</li>
+<li>As a special case, <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a> and <a class="reference internal" href="functions.html#object" title="object"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a> are subclasses of
+each other.</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.TypeVar">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">TypeVar</tt><a class="headerlink" href="#typing.TypeVar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type variable.</p>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s">&#39;T&#39;</span><span class="p">)</span>  <span class="c"># Can be anything</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span>  <span class="c"># Must be str or bytes</span>
+</pre></div>
+</div>
+<p>Type variables exist primarily for the benefit of static type
+checkers.  They serve as the parameters for generic types as well
+as for generic function definitions.  See class Generic for more
+information on generic types.  Generic functions work as follows:</p>
+<div class="highlight-python"><pre>def repeat(x: T, n: int) -&gt; Sequence[T]:
+    """Return a list containing n references to x."""
+    return [x]*n
+
+def longest(x: A, y: A) -&gt; A:
+    """Return the longest of two strings."""
+    return x if len(x) &gt;= len(y) else y</pre>
+</div>
+<p>The latter example&#8217;s signature is essentially the overloading
+of <tt class="docutils literal"><span class="pre">(str,</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">str</span></tt> and <tt class="docutils literal"><span class="pre">(bytes,</span> <span class="pre">bytes)</span> <span class="pre">-&gt;</span> <span class="pre">bytes</span></tt>.  Also note
+that if the arguments are instances of some subclass of <a class="reference internal" href="stdtypes.html#str" title="str"><tt class="xref py py-class docutils literal"><span class="pre">str</span></tt></a>,
+the return type is still plain <a class="reference internal" href="stdtypes.html#str" title="str"><tt class="xref py py-class docutils literal"><span class="pre">str</span></tt></a>.</p>
+<p>At runtime, <tt class="docutils literal"><span class="pre">isinstance(x,</span> <span class="pre">T)</span></tt> will raise <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><tt class="xref py py-exc docutils literal"><span class="pre">TypeError</span></tt></a>.  In general,
+<a class="reference internal" href="functions.html#isinstance" title="isinstance"><tt class="xref py py-func docutils literal"><span class="pre">isinstance()</span></tt></a> and <a class="reference internal" href="functions.html#issubclass" title="issubclass"><tt class="xref py py-func docutils literal"><span class="pre">issubclass()</span></tt></a> should not be used with types.</p>
+<p>Type variables may be marked covariant or contravariant by passing
+<tt class="docutils literal"><span class="pre">covariant=True</span></tt> or <tt class="docutils literal"><span class="pre">contravariant=True</span></tt>.  See <span class="target" id="index-3"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0484"><strong>PEP 484</strong></a> for more
+details.  By default type variables are invariant.  Alternatively,
+a type variable may specify an upper bound using <tt class="docutils literal"><span class="pre">bound=&lt;type&gt;</span></tt>.
+This means that an actual type substituted (explicitly or implicitly)
+for the type variable must be a subclass of the boundary type,
+see <span class="target" id="index-4"></span><a class="pep reference external" href="http://www.python.org/dev/peps/pep-0484"><strong>PEP 484</strong></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Union">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Union</tt><a class="headerlink" href="#typing.Union" title="Permalink to this definition">¶</a></dt>
+<dd><p>Union type; <tt class="docutils literal"><span class="pre">Union[X,</span> <span class="pre">Y]</span></tt> means either X or Y.</p>
+<p>To define a union, use e.g. <tt class="docutils literal"><span class="pre">Union[int,</span> <span class="pre">str]</span></tt>.  Details:</p>
+<ul>
+<li><p class="first">The arguments must be types and there must be at least one.</p>
+</li>
+<li><p class="first">Unions of unions are flattened, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Union</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">==</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Unions of a single argument vanish, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">==</span> <span class="nb">int</span>  <span class="c"># The constructor actually returns int</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Redundant arguments are skipped, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">==</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">When comparing unions, the argument order is ignored, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">==</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If <a class="reference internal" href="#typing.Any" title="typing.Any"><tt class="xref py py-class docutils literal"><span class="pre">Any</span></tt></a> is present it is the sole survivor, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">==</span> <span class="n">Any</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">You cannot subclass or instantiate a union.</p>
+</li>
+<li><p class="first">You cannot write <tt class="docutils literal"><span class="pre">Union[X][Y]</span></tt>.</p>
+</li>
+<li><p class="first">You can use <tt class="docutils literal"><span class="pre">Optional[X]</span></tt> as a shorthand for <tt class="docutils literal"><span class="pre">Union[X,</span> <span class="pre">None]</span></tt>.</p>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Optional">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Optional</tt><a class="headerlink" href="#typing.Optional" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional type.</p>
+<p><tt class="docutils literal"><span class="pre">Optional[X]</span></tt> is equivalent to <tt class="docutils literal"><span class="pre">Union[X,</span> <span class="pre">type(None)]</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Tuple">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Tuple</tt><a class="headerlink" href="#typing.Tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tuple type; <tt class="docutils literal"><span class="pre">Tuple[X,</span> <span class="pre">Y]</span></tt> is the is the type of a tuple of two items
+with the first item of type X and the second of type Y.</p>
+<p>Example: <tt class="docutils literal"><span class="pre">Tuple[T1,</span> <span class="pre">T2]</span></tt> is a tuple of two elements corresponding
+to type variables T1 and T2.  <tt class="docutils literal"><span class="pre">Tuple[int,</span> <span class="pre">float,</span> <span class="pre">str]</span></tt> is a tuple
+of an int, a float and a string.</p>
+<p>To specify a variable-length tuple of homogeneous type,
+use literal ellipsis, e.g. <tt class="docutils literal"><span class="pre">Tuple[int,</span> <span class="pre">...]</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Callable">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Callable</tt><a class="headerlink" href="#typing.Callable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callable type; <tt class="docutils literal"><span class="pre">Callable[[int],</span> <span class="pre">str]</span></tt> is a function of (int) -&gt; str.</p>
+<p>The subscription syntax must always be used with exactly two
+values: the argument list and the return type.  The argument list
+must be a list of types; the return type must be a single type.</p>
+<p>There is no syntax to indicate optional or keyword arguments,
+such function types are rarely used as callback types.
+<tt class="docutils literal"><span class="pre">Callable[...,</span> <span class="pre">ReturnType]</span></tt> could be used to type hint a callable
+taking any number of arguments and returning <tt class="docutils literal"><span class="pre">ReturnType</span></tt>.
+A plain <a class="reference internal" href="#typing.Callable" title="typing.Callable"><tt class="xref py py-class docutils literal"><span class="pre">Callable</span></tt></a> is equivalent to <tt class="docutils literal"><span class="pre">Callable[...,</span> <span class="pre">Any]</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Generic">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Generic</tt><a class="headerlink" href="#typing.Generic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class for generic types.</p>
+<p>A generic type is typically declared by inheriting from an
+instantiation of this class with one or more type variables.
+For example, a generic mapping type might be defined as:</p>
+<div class="highlight-python"><pre>class Mapping(Generic[KT, VT]):
+    def __getitem__(self, key: KT) -&gt; VT:
+        ...
+        # Etc.</pre>
+</div>
+<p>This class can then be used as follows:</p>
+<div class="highlight-python"><pre>X = TypeVar('X')
+Y = TypeVar('Y')
+
+def lookup_name(mapping: Mapping[X, Y], key: X, default: Y) -&gt; Y:
+    try:
+        return mapping[key]
+    except KeyError:
+        return default</pre>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Iterable">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Iterable</tt><big>(</big><em>Generic[T_co]</em><big>)</big><a class="headerlink" href="#typing.Iterable" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of the <a class="reference internal" href="collections.abc.html#collections.abc.Iterable" title="collections.abc.Iterable"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.Iterable</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Iterator">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Iterator</tt><big>(</big><em>Iterable[T_co]</em><big>)</big><a class="headerlink" href="#typing.Iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of the <a class="reference internal" href="collections.abc.html#collections.abc.Iterator" title="collections.abc.Iterator"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.Iterator</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.SupportsInt">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">SupportsInt</tt><a class="headerlink" href="#typing.SupportsInt" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ABC with one abstract method <tt class="docutils literal"><span class="pre">__int__</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.SupportsFloat">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">SupportsFloat</tt><a class="headerlink" href="#typing.SupportsFloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ABC with one abstract method <tt class="docutils literal"><span class="pre">__float__</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.SupportsAbs">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">SupportsAbs</tt><a class="headerlink" href="#typing.SupportsAbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ABC with one abstract method <tt class="docutils literal"><span class="pre">__abs__</span></tt> that is covariant
+in its return type.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.SupportsRound">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">SupportsRound</tt><a class="headerlink" href="#typing.SupportsRound" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ABC with one abstract method <tt class="docutils literal"><span class="pre">__round__</span></tt>
+that is covariant in its return type.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Reversible">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Reversible</tt><a class="headerlink" href="#typing.Reversible" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ABC with one abstract method <tt class="docutils literal"><span class="pre">__reversed__</span></tt> returning
+an <tt class="docutils literal"><span class="pre">Iterator[T_co]</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Container">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Container</tt><big>(</big><em>Generic[T_co]</em><big>)</big><a class="headerlink" href="#typing.Container" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.Container" title="collections.abc.Container"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.Container</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.AbstractSet">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">AbstractSet</tt><big>(</big><em>Sized, Iterable[T_co], Container[T_co]</em><big>)</big><a class="headerlink" href="#typing.AbstractSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.Set" title="collections.abc.Set"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.Set</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.MutableSet">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">MutableSet</tt><big>(</big><em>AbstractSet[T]</em><big>)</big><a class="headerlink" href="#typing.MutableSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.MutableSet" title="collections.abc.MutableSet"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableSet</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Mapping">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Mapping</tt><big>(</big><em>Sized, Iterable[KT], Container[KT], Generic[VT_co]</em><big>)</big><a class="headerlink" href="#typing.Mapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.Mapping" title="collections.abc.Mapping"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.Mapping</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.MutableMapping">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">MutableMapping</tt><big>(</big><em>Mapping[KT, VT]</em><big>)</big><a class="headerlink" href="#typing.MutableMapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.MutableMapping" title="collections.abc.MutableMapping"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableMapping</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Sequence">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Sequence</tt><big>(</big><em>Sized, Iterable[T_co], Container[T_co]</em><big>)</big><a class="headerlink" href="#typing.Sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.Sequence" title="collections.abc.Sequence"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.Sequence</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.MutableSequence">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">MutableSequence</tt><big>(</big><em>Sequence[T]</em><big>)</big><a class="headerlink" href="#typing.MutableSequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.MutableSequence" title="collections.abc.MutableSequence"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableSequence</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.ByteString">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">ByteString</tt><big>(</big><em>Sequence[int]</em><big>)</big><a class="headerlink" href="#typing.ByteString" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <tt class="xref py py-class docutils literal"><span class="pre">collections.abc.ByteString</span></tt>.</p>
+<p>This type represents the types <a class="reference internal" href="functions.html#bytes" title="bytes"><tt class="xref py py-class docutils literal"><span class="pre">bytes</span></tt></a>, <a class="reference internal" href="functions.html#bytearray" title="bytearray"><tt class="xref py py-class docutils literal"><span class="pre">bytearray</span></tt></a>,
+and <a class="reference internal" href="stdtypes.html#memoryview" title="memoryview"><tt class="xref py py-class docutils literal"><span class="pre">memoryview</span></tt></a>.</p>
+<p>As a shorthand for this type, <a class="reference internal" href="functions.html#bytes" title="bytes"><tt class="xref py py-class docutils literal"><span class="pre">bytes</span></tt></a> can be used to
+annotate arguments of any of the types mentioned above.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.List">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">List</tt><big>(</big><em>list, MutableSequence[T]</em><big>)</big><a class="headerlink" href="#typing.List" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic version of <a class="reference internal" href="stdtypes.html#list" title="list"><tt class="xref py py-class docutils literal"><span class="pre">list</span></tt></a>.
+Useful for annotating return types. To annotate arguments it is preferred
+to use abstract collection types such as <a class="reference internal" href="#typing.Mapping" title="typing.Mapping"><tt class="xref py py-class docutils literal"><span class="pre">Mapping</span></tt></a>, <a class="reference internal" href="#typing.Sequence" title="typing.Sequence"><tt class="xref py py-class docutils literal"><span class="pre">Sequence</span></tt></a>,
+or <a class="reference internal" href="#typing.AbstractSet" title="typing.AbstractSet"><tt class="xref py py-class docutils literal"><span class="pre">AbstractSet</span></tt></a>.</p>
+<p>This type may be used as follows:</p>
+<div class="highlight-python"><pre>T = TypeVar('T', int, float)
+
+def vec2(x: T, y: T) -&gt; List[T]:
+    return [x, y]
+
+def slice__to_4(vector: Sequence[T]) -&gt; List[T]:
+    return vector[0:4]</pre>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">AbstractSet</tt><big>(</big><em>set, MutableSet[T]</em><big>)</big></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.Set" title="collections.abc.Set"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.Set</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.MappingView">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">MappingView</tt><big>(</big><em>Sized, Iterable[T_co]</em><big>)</big><a class="headerlink" href="#typing.MappingView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.MappingView" title="collections.abc.MappingView"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.MappingView</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.KeysView">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">KeysView</tt><big>(</big><em>MappingView[KT_co], AbstractSet[KT_co]</em><big>)</big><a class="headerlink" href="#typing.KeysView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.KeysView" title="collections.abc.KeysView"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.KeysView</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.ItemsView">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">ItemsView</tt><big>(</big><em>MappingView, Generic[KT_co, VT_co]</em><big>)</big><a class="headerlink" href="#typing.ItemsView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.ItemsView" title="collections.abc.ItemsView"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.ItemsView</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.ValuesView">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">ValuesView</tt><big>(</big><em>MappingView[VT_co]</em><big>)</big><a class="headerlink" href="#typing.ValuesView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="collections.abc.html#collections.abc.ValuesView" title="collections.abc.ValuesView"><tt class="xref py py-class docutils literal"><span class="pre">collections.abc.ValuesView</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Dict">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Dict</tt><big>(</big><em>dict, MutableMapping[KT, VT]</em><big>)</big><a class="headerlink" href="#typing.Dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic version of <a class="reference internal" href="stdtypes.html#dict" title="dict"><tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></a>.
+The usage of this type is as follows:</p>
+<div class="highlight-python"><pre>def get_position_in_index(word_list: Dict[str, int], word: str) -&gt; int:
+    return word_list[word]</pre>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.Generator">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">Generator</tt><big>(</big><em>Iterator[T_co], Generic[T_co, T_contra, V_co]</em><big>)</big><a class="headerlink" href="#typing.Generator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="typing.io">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">io</tt><a class="headerlink" href="#typing.io" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper namespace for I/O stream types.</p>
+<p>This defines the generic type <tt class="docutils literal"><span class="pre">IO[AnyStr]</span></tt> and aliases <tt class="docutils literal"><span class="pre">TextIO</span></tt>
+and <tt class="docutils literal"><span class="pre">BinaryIO</span></tt> for respectively <tt class="docutils literal"><span class="pre">IO[str]</span></tt> and <tt class="docutils literal"><span class="pre">IO[bytes]</span></tt>.
+These representing the types of I/O streams such as returned by
+<a class="reference internal" href="functions.html#open" title="open"><tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="typing.re">
+<em class="property">class </em><tt class="descclassname">typing.</tt><tt class="descname">re</tt><a class="headerlink" href="#typing.re" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper namespace for regular expression matching types.</p>
+<p>This defines the type aliases <tt class="docutils literal"><span class="pre">Pattern</span></tt> and <tt class="docutils literal"><span class="pre">Match</span></tt> which
+correspond to the return types from <a class="reference internal" href="re.html#re.compile" title="re.compile"><tt class="xref py py-func docutils literal"><span class="pre">re.compile()</span></tt></a> and
+<a class="reference internal" href="re.html#re.match" title="re.match"><tt class="xref py py-func docutils literal"><span class="pre">re.match()</span></tt></a>.  These types (and the corresponding functions)
+are generic in <tt class="docutils literal"><span class="pre">AnyStr</span></tt> and can be made specific by writing
+<tt class="docutils literal"><span class="pre">Pattern[str]</span></tt>, <tt class="docutils literal"><span class="pre">Pattern[bytes]</span></tt>, <tt class="docutils literal"><span class="pre">Match[str]</span></tt>, or
+<tt class="docutils literal"><span class="pre">Match[bytes]</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="typing.NamedTuple">
+<tt class="descclassname">typing.</tt><tt class="descname">NamedTuple</tt><big>(</big><em>typename</em>, <em>fields</em><big>)</big><a class="headerlink" href="#typing.NamedTuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typed version of namedtuple.</p>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Employee</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">NamedTuple</span><span class="p">(</span><span class="s">&#39;Employee&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>This is equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Employee</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;Employee&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;id&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The resulting class has one extra attribute: _field_types,
+giving a dict mapping field names to types.  (The field names
+are in the _fields attribute, which is part of the namedtuple
+API.)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="typing.cast">
+<tt class="descclassname">typing.</tt><tt class="descname">cast</tt><big>(</big><em>typ</em>, <em>val</em><big>)</big><a class="headerlink" href="#typing.cast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cast a value to a type.</p>
+<p>This returns the value unchanged.  To the type checker this
+signals that the return value has the designated type, but at
+runtime we intentionally don&#8217;t check anything (we want this
+to be as fast as possible).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="typing.get_type_hints">
+<tt class="descclassname">typing.</tt><tt class="descname">get_type_hints</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#typing.get_type_hints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return type hints for a function or method object.</p>
+<p>This is often the same as <tt class="docutils literal"><span class="pre">obj.__annotations__</span></tt>, but it handles
+forward references encoded as string literals, and if necessary
+adds <tt class="docutils literal"><span class="pre">Optional[t]</span></tt> if a default value equal to None is set.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="typing.no_type_check">
+<tt class="descclassname">&#64;</tt><tt class="descclassname">typing.</tt><tt class="descname">no_type_check</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#typing.no_type_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to indicate that annotations are not type hints.</p>
+<p>The argument must be a class or function; if it is a class, it
+applies recursively to all methods defined in that class (but not
+to methods defined in its superclasses or subclasses).</p>
+<p>This mutates the function(s) in place.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="typing.no_type_check_decorator">
+<tt class="descclassname">&#64;</tt><tt class="descclassname">typing.</tt><tt class="descname">no_type_check_decorator</tt><big>(</big><em>decorator</em><big>)</big><a class="headerlink" href="#typing.no_type_check_decorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to give another decorator the <a class="reference internal" href="#typing.no_type_check" title="typing.no_type_check"><tt class="xref py py-func docutils literal"><span class="pre">no_type_check()</span></tt></a> effect.</p>
+<p>This wraps the decorator with something that wraps the decorated
+function in <a class="reference internal" href="#typing.no_type_check" title="typing.no_type_check"><tt class="xref py py-func docutils literal"><span class="pre">no_type_check()</span></tt></a>.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>
