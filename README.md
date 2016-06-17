@@ -28,7 +28,7 @@ Updated by [Ole Zorn](https://github.com/omz).
 #### Option 1:
 
 - Install [doc2dash](https://pypi.python.org/pypi/doc2dash)
-- Buy [Pythonista 3](https://itunes.apple.com/us/app/pythonista-3/id1085978097) (yes you do have to buy it, it's completely worth the $6.99)
+- Buy [Pythonista 3](https://itunes.apple.com/us/app/pythonista-3/id1085978097) (yes, you do have to buy it, it's completely worth it)
 - Go to your Mobile Applications folder (`C:\Users\<username>\Music\iTunes\iTunes Media\Mobile Applications` for Windows, `~/Music/iTunes/iTunes Media/Mobile Applications` on Mac OS X)
 - Copy `Pythonista x.x.x.ipa` to another folder, where `x.x.x` is the version number
 - Rename to `Pythonista x.x.x.zip`, and decompress the archive
