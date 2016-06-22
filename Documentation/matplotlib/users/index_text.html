@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Working with text &mdash; Matplotlib 1.3.1 documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Matplotlib 1.3.1 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="top" title="Matplotlib 1.3.1 documentation" href="../index.html" />
+    <link rel="up" title="User’s Guide" href="index.html" />
+    <link rel="next" title="Text introduction" href="text_intro.html" />
+    <link rel="prev" title="Using matplotlib in a python shell" href="shell.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="text_intro.html" title="Text introduction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="shell.html" title="Using matplotlib in a python shell"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Matplotlib 1.3.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">User&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="working-with-text">
+<span id="text-guide"></span><h1>Working with text<a class="headerlink" href="#working-with-text" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="text_intro.html">Text introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_intro.html#basic-text-commands">Basic text commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text_props.html">Text properties and layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mathtext.html">Writing mathematical expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mathtext.html#subscripts-and-superscripts">Subscripts and superscripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathtext.html#fractions-binomials-and-stacked-numbers">Fractions, binomials and stacked numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathtext.html#radicals">Radicals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathtext.html#fonts">Fonts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mathtext.html#custom-fonts">Custom fonts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mathtext.html#accents">Accents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathtext.html#symbols">Symbols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathtext.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pgf.html">Typesetting With XeLaTeX/LuaLaTeX</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pgf.html#font-specification">Font specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pgf.html#custom-preamble">Custom preamble</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pgf.html#choosing-the-tex-system">Choosing the TeX system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pgf.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usetex.html">Text rendering With LaTeX</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usetex.html#usetex-with-unicode">usetex with unicode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usetex.html#postscript-options">Postscript options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usetex.html#possible-hangups">Possible hangups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usetex.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="annotations_intro.html">Annotating text</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2002 - 2012 John Hunter, Darren Dale, Eric Firing, Michael Droettboom and the matplotlib development team; 2012 - 2013 The matplotlib development team.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,13 @@
+===============
+Tips and Tricks
+===============
+
+* Swipe across the extended keyboard to move the cursor within the current line.
+
+* Touch and hold the "undo" button on the extended keyboard for a redo option.
+
+* Touch and hold the "Run" button to run a script with command-line arguments. The argumentes will be available to your script in :attr:`sys.argv`.
+
+* Tap with two fingers in the editor to select an entire line.
+
+* While editing, you can use the + button to insert resources, such as images, sounds, colors and fonts. These resources are meant to be used with the :mod:`scene`, :mod:`sound`, and :mod:`canvas` modules. The font names can also be useful for the :mod:`console` module. Colors will be inserted as comma-separated RGB values (in the range 0.0 - 1.0). For converting colors to other color models, you can use the :mod:`colorsys` module. Note: On the iPhone, use "Insert..." from the Copy/Paste menu instead.

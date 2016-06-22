@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>clipboard — Copy and paste &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-clipboard">
+<span id="clipboard-copy-and-paste"></span><h1><a class="reference internal" href="#module-clipboard" title="clipboard: Provides copy and paste integration on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">clipboard</span></tt></a> &#8212; Copy and paste<a class="headerlink" href="#module-clipboard" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-clipboard" title="clipboard: Provides copy and paste integration on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">clipboard</span></tt></a> module defines two simple functions to read and write to the text clipboard (a.k.a. pasteboard) on iOS.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#Convert clipboard to uppercase/lowercase</span>
+<span class="kn">import</span> <span class="nn">clipboard</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">clipboard</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;No text in clipboard&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">uppercase</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">uppercase</span> <span class="o">!=</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">new_clip</span> <span class="o">=</span> <span class="n">uppercase</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c">#already uppercase, convert to lowercase</span>
+        <span class="n">new_clip</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">clipboard</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">new_clip</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">new_clip</span>
+</pre></div>
+</div>
+<p>Functions in the <a class="reference internal" href="#module-clipboard" title="clipboard: Provides copy and paste integration on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">clipboard</span></tt></a> module:</p>
+<dl class="function">
+<dt id="clipboard.get">
+<tt class="descclassname">clipboard.</tt><tt class="descname">get</tt><big>(</big><big>)</big><a class="headerlink" href="#clipboard.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the clipboard&#8217;s content as a unicode string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="clipboard.set">
+<tt class="descclassname">clipboard.</tt><tt class="descname">set</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#clipboard.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the clipboard&#8217;s content to a new string or unicode string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="clipboard.get_image">
+<tt class="descclassname">clipboard.</tt><tt class="descname">get_image</tt><big>(</big><em>idx=0</em><big>)</big><a class="headerlink" href="#clipboard.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an image from the clipboard as a <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> <a class="reference internal" href="Image.html#module-Image" title="Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a>.</p>
+<p>If there are multiple images in the clipboard, the <cite>idx</cite> parameter can be
+used to get an image at a given index. If the index is &gt;= the number of
+images in the clipboard, <cite>None</cite> is returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="clipboard.set_image">
+<tt class="descclassname">clipboard.</tt><tt class="descname">set_image</tt><big>(</big><em>image</em>, <em>format='png'</em>, <em>jpeg_quality=0.75</em><big>)</big><a class="headerlink" href="#clipboard.set_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store a given <a class="reference internal" href="PIL.html#module-PIL" title="PIL"><tt class="xref py py-mod docutils literal"><span class="pre">PIL</span></tt></a> <a class="reference internal" href="Image.html#module-Image" title="Image"><tt class="xref py py-class docutils literal"><span class="pre">Image</span></tt></a> in the clipboard.</p>
+<p>The <cite>format</cite> parameter can be &#8216;png&#8217; or &#8216;jpeg&#8217;.</p>
+<p><cite>jpeg_quality</cite> is ignored if <cite>format</cite> is &#8216;png&#8217;, otherwise, it should be
+a float between 0.0 and 1.0.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

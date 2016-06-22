@@ -1,0 +1,197 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Masked arrays &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Array objects" href="arrays.html" />
+    <link rel="next" title="The numpy.ma module" href="maskedarray.generic.html" />
+    <link rel="prev" title="numpy.broadcast.reset" href="generated/numpy.broadcast.reset.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="maskedarray.generic.html" title="The numpy.ma module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.broadcast.reset.html" title="numpy.broadcast.reset"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="arrays.html" accesskey="U">Array objects</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="masked-arrays">
+<span id="maskedarray"></span><h1>Masked arrays<a class="headerlink" href="#masked-arrays" title="Permalink to this headline">¶</a></h1>
+<p>Masked arrays are arrays that may have missing or invalid entries.
+The <tt class="xref py py-mod docutils literal"><span class="pre">numpy.ma</span></tt> module provides a nearly work-alike replacement for numpy
+that supports data arrays with masks.</p>
+<div class="toctree-wrapper compound" id="index-0">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="maskedarray.generic.html">The <tt class="docutils literal"><span class="pre">numpy.ma</span></tt> module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#rationale">Rationale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#what-is-a-masked-array">What is a masked array?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#id1">The <tt class="docutils literal"><span class="pre">numpy.ma</span></tt> module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maskedarray.generic.html#using-numpy-ma">Using numpy.ma</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#constructing-masked-arrays">Constructing masked arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#accessing-the-data">Accessing the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#accessing-the-mask">Accessing the mask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#accessing-only-the-valid-entries">Accessing only the valid entries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#modifying-the-mask">Modifying the mask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#indexing-and-slicing">Indexing and slicing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#operations-on-masked-arrays">Operations on masked arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maskedarray.generic.html#examples">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#data-with-a-given-value-representing-missing-data">Data with a given value representing missing data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#filling-in-the-missing-data">Filling in the missing data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#numerical-operations">Numerical operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.generic.html#ignoring-extreme-values">Ignoring extreme values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maskedarray.baseclass.html">Constants of the <tt class="docutils literal"><span class="pre">numpy.ma</span></tt> module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maskedarray.baseclass.html#the-maskedarray-class">The <tt class="docutils literal"><span class="pre">MaskedArray</span></tt> class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#attributes-and-properties-of-masked-arrays">Attributes and properties of masked arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maskedarray.baseclass.html#maskedarray-methods"><tt class="docutils literal"><span class="pre">MaskedArray</span></tt> methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#conversion">Conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#shape-manipulation">Shape manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#item-selection-and-manipulation">Item selection and manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#pickling-and-copy">Pickling and copy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#calculations">Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#arithmetic-and-comparison-operations">Arithmetic and comparison operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#representation">Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#special-methods">Special methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maskedarray.baseclass.html#specific-methods">Specific methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routines.ma.html">Masked array operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routines.ma.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.ma.html#creation">Creation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.ma.html#inspecting-the-array">Inspecting the array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.ma.html#manipulating-a-maskedarray">Manipulating a MaskedArray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.ma.html#operations-on-masks">Operations on masks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.ma.html#conversion-operations">Conversion operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.ma.html#masked-arrays-arithmetics">Masked arrays arithmetics</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,166 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>11.7. whichdb — Guess which DBM module created a database &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="11. Data Persistence" href="persistence.html" />
+    <link rel="next" title="11.8. dumbdbm — Portable DBM implementation" href="dumbdbm.html" />
+    <link rel="prev" title="11.6. anydbm — Generic access to DBM-style databases" href="anydbm.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dumbdbm.html" title="11.8. dumbdbm — Portable DBM implementation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="anydbm.html" title="11.6. anydbm — Generic access to DBM-style databases"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="persistence.html" accesskey="U">11. Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-whichdb">
+<span id="whichdb-guess-which-dbm-module-created-a-database"></span><h1>11.7. <a class="reference internal" href="#module-whichdb" title="whichdb: Guess which DBM-style module created a given database."><tt class="xref py py-mod docutils literal"><span class="pre">whichdb</span></tt></a> &#8212; Guess which DBM module created a database<a class="headerlink" href="#module-whichdb" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference internal" href="#module-whichdb" title="whichdb: Guess which DBM-style module created a given database."><tt class="xref py py-mod docutils literal"><span class="pre">whichdb</span></tt></a> module&#8217;s only function has been put into the <tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt>
+module in Python 3.  The <a class="reference internal" href="../glossary.html#term-to3"><em class="xref std std-term">2to3</em></a> tool will automatically adapt imports
+when converting your sources to Python 3.</p>
+</div>
+<p>The single function in this module attempts to guess which of the several simple
+database modules available&#8211;<tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt>, <tt class="xref py py-mod docutils literal"><span class="pre">gdbm</span></tt>, or <tt class="xref py py-mod docutils literal"><span class="pre">dbhash</span></tt>&#8211;should be used to open a given file.</p>
+<dl class="function">
+<dt id="whichdb.whichdb">
+<tt class="descclassname">whichdb.</tt><tt class="descname">whichdb</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#whichdb.whichdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns one of the following values: <tt class="xref docutils literal"><span class="pre">None</span></tt> if the file can&#8217;t be opened
+because it&#8217;s unreadable or doesn&#8217;t exist; the empty string (<tt class="docutils literal"><span class="pre">''</span></tt>) if the
+file&#8217;s format can&#8217;t be guessed; or a string containing the required module name,
+such as <tt class="docutils literal"><span class="pre">'dbm'</span></tt> or <tt class="docutils literal"><span class="pre">'gdbm'</span></tt>.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

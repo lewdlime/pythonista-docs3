@@ -1,0 +1,253 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>twitter — iOS Twitter Accounts and API Access &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-twitter">
+<span id="twitter-ios-twitter-accounts-and-api-access"></span><h1><a class="reference internal" href="#module-twitter" title="twitter"><tt class="xref py py-mod docutils literal"><span class="pre">twitter</span></tt></a> &#8212; iOS Twitter Accounts and API Access<a class="headerlink" href="#module-twitter" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-twitter" title="twitter"><tt class="xref py py-mod docutils literal"><span class="pre">twitter</span></tt></a> module provides access to the system-wide Twitter accounts that you have added in the iOS settings.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The first time you use any of the functions that access your Twitter accounts, a system-provided permission dialog will be shown. If you deny access, most functions will return empty data. If you change your mind later, you can allow access to your accounts from the Twitter section in the Settings app.</p>
+</div>
+<p>The central function of this module is <a class="reference internal" href="#twitter.request" title="twitter.request"><tt class="xref py py-func docutils literal"><span class="pre">request()</span></tt></a> &#8211; with it, you can access all of Twitter&#8217;s REST API which is documented in more detail here: <a class="reference external" href="https://dev.twitter.com/overview/documentation">Twitter API documentation</a>.</p>
+<p>If you just want to post a tweet or retrieve your timeline/mentions, you can also use one of the convenience functions (<a class="reference internal" href="#twitter.get_home_timeline" title="twitter.get_home_timeline"><tt class="xref py py-func docutils literal"><span class="pre">get_home_timeline()</span></tt></a>, <a class="reference internal" href="#twitter.get_mentions_timeline" title="twitter.get_mentions_timeline"><tt class="xref py py-func docutils literal"><span class="pre">get_mentions_timeline()</span></tt></a> or <a class="reference internal" href="#twitter.post_tweet" title="twitter.post_tweet"><tt class="xref py py-func docutils literal"><span class="pre">post_tweet()</span></tt></a>), which all use <a class="reference internal" href="#twitter.request" title="twitter.request"><tt class="xref py py-func docutils literal"><span class="pre">request()</span></tt></a> under the hood.</p>
+<p>All API request functions require authentication via an <cite>account</cite> parameter. You can get an account by calling <a class="reference internal" href="#twitter.get_all_accounts" title="twitter.get_all_accounts"><tt class="xref py py-func docutils literal"><span class="pre">get_all_accounts()</span></tt></a> or <a class="reference internal" href="#twitter.get_account" title="twitter.get_account"><tt class="xref py py-func docutils literal"><span class="pre">get_account()</span></tt></a> (the latter allows you to get a specific account by its username).</p>
+<div class="section" id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="retrieving-your-timeline">
+<h3>Retrieving your Timeline<a class="headerlink" href="#retrieving-your-timeline" title="Permalink to this headline">¶</a></h3>
+<p>This example shows how to retrieve the 20 most recent tweets in the timeline of your first Twitter account:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">twitter</span>
+<span class="n">all_accounts</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_all_accounts</span><span class="p">()</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_accounts</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">account</span> <span class="o">=</span> <span class="n">all_accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tweets</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_home_timeline</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;text&#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;You don</span><span class="se">\&#39;</span><span class="s">t have any Twitter accounts (or haven</span><span class="se">\&#39;</span><span class="s">t given permission to access them).&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-other-apis">
+<h3>Using Other APIs<a class="headerlink" href="#using-other-apis" title="Permalink to this headline">¶</a></h3>
+<p>The previous example used a convenience function to access an often-used API without having to know its URL &#8211; but you can also access all other Twitter APIs by using the generic <a class="reference internal" href="#twitter.request" title="twitter.request"><tt class="xref py py-func docutils literal"><span class="pre">request()</span></tt></a> function, for example to download and show your profile image:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">twitter</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">Image</span>
+
+<span class="n">all_accounts</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_all_accounts</span><span class="p">()</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_accounts</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">account</span> <span class="o">=</span> <span class="n">all_accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;screen_name&#39;</span><span class="p">:</span> <span class="n">account</span><span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]}</span>
+    <span class="n">status</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="s">&#39;https://api.twitter.com/1.1/users/show.json&#39;</span><span class="p">,</span> <span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="n">user_info</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">avatar_url</span> <span class="o">=</span> <span class="n">user_info</span><span class="p">[</span><span class="s">&#39;profile_image_url&#39;</span><span class="p">]</span>
+        <span class="c"># Get the URL for the original size:</span>
+        <span class="n">avatar_url</span> <span class="o">=</span> <span class="n">avatar_url</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;_normal&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">avatar_url</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Could not retrieve profile image (status: </span><span class="si">%i</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">status</span><span class="p">,)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;You don</span><span class="se">\&#39;</span><span class="s">t have any Twitter accounts (or haven</span><span class="se">\&#39;</span><span class="s">t given permission to access them).&#39;</span>
+</pre></div>
+</div>
+<p>For more information about valid URLs, methods, and parameters, please refer to the <a class="reference external" href="https://dev.twitter.com/overview/documentation">Twitter API documentation</a>.</p>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="twitter.get_all_accounts">
+<tt class="descclassname">twitter.</tt><tt class="descname">get_all_accounts</tt><big>(</big><big>)</big><a class="headerlink" href="#twitter.get_all_accounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all Twitter accounts. Each account is represented as a dictionary that contains the internal account ID, and your username.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="twitter.get_account">
+<tt class="descclassname">twitter.</tt><tt class="descname">get_account</tt><big>(</big><em>username</em><big>)</big><a class="headerlink" href="#twitter.get_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the account with the given username if it exists, <cite>None</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="twitter.request">
+<tt class="descclassname">twitter.</tt><tt class="descname">request</tt><big>(</big><em>account</em>, <em>url</em>, <em>method='GET'</em>, <em>parameters=None</em><big>)</big><a class="headerlink" href="#twitter.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a Twitter API request on behalf of the given account. The return value is a tuple of the HTTP status code and the data that was returned (usually in JSON format).</p>
+<p>See the <a class="reference external" href="https://dev.twitter.com/overview/documentation">Twitter API documentation</a> for details about possible URLs, methods, and parameters.</p>
+<p>If you want more control over the networking part, consider using <a class="reference internal" href="#twitter.get_request_headers" title="twitter.get_request_headers"><tt class="xref py py-func docutils literal"><span class="pre">get_request_headers()</span></tt></a> instead.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="twitter.get_request_headers">
+<tt class="descclassname">twitter.</tt><tt class="descname">get_request_headers</tt><big>(</big><em>account</em>, <em>url</em>, <em>method='GET'</em>, <em>parameters=None</em><big>)</big><a class="headerlink" href="#twitter.get_request_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return appropriate authorization headers for performing a Twitter API request. The parameters are the same as for the <a class="reference internal" href="#twitter.request" title="twitter.request"><tt class="xref py py-func docutils literal"><span class="pre">request()</span></tt></a> function, but this function does not actually perform the request. You can use the returned dictionary to authorize a Twitter API request with your favorite HTTP library (e.g. <a class="reference internal" href="requests.html#module-requests" title="requests"><tt class="xref py py-mod docutils literal"><span class="pre">requests</span></tt></a> or <a class="reference internal" href="../library/urllib.html#module-urllib" title="urllib: Open an arbitrary network resource by URL (requires sockets)."><tt class="xref py py-mod docutils literal"><span class="pre">urllib</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="twitter.get_favorites">
+<tt class="descclassname">twitter.</tt><tt class="descname">get_favorites</tt><big>(</big><em>account</em>, <em>username=None</em>, <em>count=20</em>, <em>parameters=None</em><big>)</big><a class="headerlink" href="#twitter.get_favorites" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the favorites of the given user. If <cite>username</cite> is <cite>None</cite>, it will return the favorites of the given <cite>account</cite> (i.e. your own).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="twitter.get_home_timeline">
+<tt class="descclassname">twitter.</tt><tt class="descname">get_home_timeline</tt><big>(</big><em>account</em>, <em>count=20</em>, <em>parameters=None</em><big>)</big><a class="headerlink" href="#twitter.get_home_timeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of tweets in the timeline of the given account. In case of an error, <cite>None</cite> is returned. Each tweet in the list is represented as a dictionary.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="twitter.get_mentions_timeline">
+<tt class="descclassname">twitter.</tt><tt class="descname">get_mentions_timeline</tt><big>(</big><em>account</em>, <em>count=20</em>, <em>parameters=None</em><big>)</big><a class="headerlink" href="#twitter.get_mentions_timeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of mentions for the given account. In case of an error, <cite>None</cite> is returned. Each tweet in the list is represented as a dictionary.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="twitter.post_tweet">
+<tt class="descclassname">twitter.</tt><tt class="descname">post_tweet</tt><big>(</big><em>account</em>, <em>text</em>, <em>parameters=None</em><big>)</big><a class="headerlink" href="#twitter.post_tweet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post a tweet on behalf of the given account/user. If successful, information about the created tweet is returned as a dictionary. Note that the Twitter API doesn&#8217;t allow to post the same tweet multiple times.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="twitter.search">
+<tt class="descclassname">twitter.</tt><tt class="descname">search</tt><big>(</big><em>account</em>, <em>query</em>, <em>count=20</em>, <em>parameters=None</em><big>)</big><a class="headerlink" href="#twitter.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a search for public tweets that contain the query, and return the list of results. Each tweet in the list is represented as a dictionary. In case of an error, <cite>None</cite> is returned.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

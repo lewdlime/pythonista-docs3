@@ -1,0 +1,44 @@
+
+:mod:`notification` --- Notifications on iOS
+======================================================
+
+.. module:: notification
+   :synopsis: Integration with Notification Center on iOS
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`notification` module allows you to schedule notification messages that are shown in the iOS Notification Center. Scheduled notifications are delivered even when your script (or even the entire app) is no longer running. 
+
+It is also possible to attach a URL to a notification that is launched when the notification is activated (e.g. selected in Notification Center).
+
+Functions in the :mod:`notification` module:
+
+.. function:: schedule(message [, delay, sound_name, action_url])
+
+   Schedule a notification with the given message text.
+   
+   The return value is a `dict` that can be used as the `notification` parameter for the :func:`cancel` function.
+
+   `delay` is the time interval in seconds until the notification is delivered.
+
+   `sound_name` can be any of the bundled sound effects that are also available via the :mod:`sound` module. Use an empty string to schedule a silent notification. Using an non-existing sound effect (e.g. 'default') will result in the system's standard alert sound being played.
+
+   With the `action_url` parameter, you can specify a URL that is opened when the notification is activated (e.g. by tapping it in Notification Center). Which app is used to open the URL depends on the URL's scheme, e.g. for ``http:`` URLs, Safari is used.
+
+.. function:: cancel(notification)
+
+   Cancel a notification that was previously scheduled.
+   
+   The `notification` parameter is a `dict` that was either retrieved via :func:`get_scheduled` or returned
+   from the :func:`schedule` function.
+
+.. function:: cancel_all()
+
+	Cancel all previously scheduled notifications.
+
+.. function:: get_scheduled()
+
+   Return a list of scheduled notifications.
+   
+   The entries in the list are dicts that can be used as parameters for the :func:`cancel` function.
+

@@ -1,0 +1,201 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>linguistictagger — Linguistic analysis &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-linguistictagger">
+<span id="linguistictagger-linguistic-analysis"></span><h1><a class="reference internal" href="#module-linguistictagger" title="linguistictagger"><tt class="xref py py-mod docutils literal"><span class="pre">linguistictagger</span></tt></a> &#8212; Linguistic analysis<a class="headerlink" href="#module-linguistictagger" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-linguistictagger" title="linguistictagger"><tt class="xref py py-mod docutils literal"><span class="pre">linguistictagger</span></tt></a> module can be used to segment natural-language text and tag it with information, such as parts of speech.</p>
+<p>The module provides a single function:</p>
+<dl class="function">
+<dt id="linguistictagger.tag_string">
+<tt class="descclassname">linguistictagger.</tt><tt class="descname">tag_string</tt><big>(</big><em>string</em>, <em>scheme</em><big>)</big><a class="headerlink" href="#linguistictagger.tag_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tag a given string according to the scheme. See below for valid scheme constants.</p>
+<p>The return value is a list of 3-tuples, each consisting of the tag, the tagged substring, and the substring&#8217;s range in the original string.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">linguistictagger</span> <span class="kn">as</span> <span class="nn">lt</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Python is pretty awesome.&#39;</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">lt</span><span class="o">.</span><span class="n">tag_string</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">lt</span><span class="o">.</span><span class="n">SCHEME_LEXICAL_CLASS</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="nb">range</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tag</span> <span class="o">!=</span> <span class="s">&#39;Whitespace&#39;</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">substring</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="n">tag</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="linguistictagger.SCHEME_TOKEN_TYPE">
+<tt class="descclassname">linguistictagger.</tt><tt class="descname">SCHEME_TOKEN_TYPE</tt><a class="headerlink" href="#linguistictagger.SCHEME_TOKEN_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classifies tokens according to their broad type: word, punctuation, whitespace, etc.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="linguistictagger.SCHEME_LEXICAL_CLASS">
+<tt class="descclassname">linguistictagger.</tt><tt class="descname">SCHEME_LEXICAL_CLASS</tt><a class="headerlink" href="#linguistictagger.SCHEME_LEXICAL_CLASS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classifies tokens according to class: part of speech for words, type of punctuation or whitespace, etc.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="linguistictagger.SCHEME_NAME_TYPE">
+<tt class="descclassname">linguistictagger.</tt><tt class="descname">SCHEME_NAME_TYPE</tt><a class="headerlink" href="#linguistictagger.SCHEME_NAME_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classifies tokens as to whether they are part of named entities of various types or not.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="linguistictagger.SCHEME_NAME_TYPE_OR_LEXICAL_CLASS">
+<tt class="descclassname">linguistictagger.</tt><tt class="descname">SCHEME_NAME_TYPE_OR_LEXICAL_CLASS</tt><a class="headerlink" href="#linguistictagger.SCHEME_NAME_TYPE_OR_LEXICAL_CLASS" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tag scheme follows <cite>SCHEME_NAME_TYPE</cite> for names and <cite>SCHEME_LEXICAL_CLASS</cite> for all other tokens.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="linguistictagger.SCHEME_LEMMA">
+<tt class="descclassname">linguistictagger.</tt><tt class="descname">SCHEME_LEMMA</tt><a class="headerlink" href="#linguistictagger.SCHEME_LEMMA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Supplies a stem forms of the words, if known.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="linguistictagger.SCHEME_LANGUAGE">
+<tt class="descclassname">linguistictagger.</tt><tt class="descname">SCHEME_LANGUAGE</tt><a class="headerlink" href="#linguistictagger.SCHEME_LANGUAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tag scheme tags tokens according to their language. The tag values will be standard language abbreviations such as &#8220;en&#8221;, &#8220;fr&#8221;, &#8220;de&#8221;, etc. Note that the tagger generally attempts to determine the language of text at the level of an entire sentence or paragraph, rather than word by word.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="linguistictagger.SCHEME_SCRIPT">
+<tt class="descclassname">linguistictagger.</tt><tt class="descname">SCHEME_SCRIPT</tt><a class="headerlink" href="#linguistictagger.SCHEME_SCRIPT" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tag scheme tags tokens according to their script. The tag values will be standard script abbreviations such as “Latn”, “Cyrl”, “Jpan”, “Hans”, “Hant”, etc.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

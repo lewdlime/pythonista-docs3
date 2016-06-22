@@ -1,0 +1,184 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.fft.irfft2 &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Discrete Fourier Transform (numpy.fft)" href="../routines.fft.html" />
+    <link rel="next" title="numpy.fft.rfftn" href="numpy.fft.rfftn.html" />
+    <link rel="prev" title="numpy.fft.rfft2" href="numpy.fft.rfft2.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.fft.rfftn.html" title="numpy.fft.rfftn"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.fft.rfft2.html" title="numpy.fft.rfft2"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.fft.html" accesskey="U">Discrete Fourier Transform (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.fft</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-fft-irfft2">
+<h1>numpy.fft.irfft2<a class="headerlink" href="#numpy-fft-irfft2" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.fft.irfft2">
+<tt class="descclassname">numpy.fft.</tt><tt class="descname">irfft2</tt><big>(</big><em>a</em>, <em>s=None</em>, <em>axes=(-2</em>, <em>-1)</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/fft/fftpack.py#L1089"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.fft.irfft2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the 2-dimensional inverse FFT of a real array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>a</strong> : array_like</p>
+<blockquote>
+<div><p>The input array</p>
+</div></blockquote>
+<p><strong>s</strong> : sequence of ints, optional</p>
+<blockquote>
+<div><p>Shape of the inverse FFT.</p>
+</div></blockquote>
+<p><strong>axes</strong> : sequence of ints, optional</p>
+<blockquote>
+<div><p>The axes over which to compute the inverse fft.
+Default is the last two axes.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>The result of the inverse real 2-D FFT.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="numpy.fft.irfftn.html#numpy.fft.irfftn" title="numpy.fft.irfftn"><tt class="xref py py-obj docutils literal"><span class="pre">irfftn</span></tt></a></dt>
+<dd>Compute the inverse of the N-dimensional FFT of real input.</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This is really <a class="reference internal" href="numpy.fft.irfftn.html#numpy.fft.irfftn" title="numpy.fft.irfftn"><tt class="xref py py-obj docutils literal"><span class="pre">irfftn</span></tt></a> with different defaults.
+For more details see <a class="reference internal" href="numpy.fft.irfftn.html#numpy.fft.irfftn" title="numpy.fft.irfftn"><tt class="xref py py-obj docutils literal"><span class="pre">irfftn</span></tt></a>.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

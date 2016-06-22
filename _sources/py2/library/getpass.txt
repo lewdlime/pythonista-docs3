@@ -1,0 +1,22 @@
+:mod:`getpass` --- Portable password input
+==========================================
+
+.. module:: getpass
+   :synopsis: Portable reading of passwords and retrieval of the userid.
+.. moduleauthor:: Piers Lauder <piers@cs.su.oz.au>
+.. sectionauthor:: Fred L. Drake, Jr. <fdrake@acm.org>
+.. Windows (& Mac?) support by Guido van Rossum.
+
+**Note**: The custom version of `getpass` used in Pythonista does *not* include the `getuser` function, given that iOS is essentially a single-user OS. Also, the :func:`getpass` function has no `stream` parameter.
+
+The :func:`getpass` function is basically just a wrapper for the :func:`console.secure_input` function in the
+iOS-only :mod:`console` module with the benefit that you can use the same code on other platforms.
+
+
+.. function:: getpass([prompt])
+
+   Prompt the user for a password without echoing.  The user is prompted using the
+   string *prompt*, which defaults to ``'Password: '``.
+
+   Availability: Macintosh, Unix, Windows.
+

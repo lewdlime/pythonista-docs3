@@ -1,0 +1,216 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pylab_examples example code: image_interp.py &mdash; Matplotlib 1.3.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Matplotlib 1.3.1 documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="top" title="Matplotlib 1.3.1 documentation" href="../../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../../index.html">Matplotlib 1.3.1 documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="pylab-examples-example-code-image-interp-py">
+<span id="pylab-examples-image-interp"></span><h1>pylab_examples example code: image_interp.py<a class="headerlink" href="#pylab-examples-example-code-image-interp-py" title="Permalink to this headline">¶</a></h1>
+<p>(<a class="reference external" href="../../../../../Pythonista/matplotlib-1.3.1/doc/mpl_examples/pylab_examples/image_interp.py">Source code</a>)</p>
+<div class="figure">
+<img alt="../../_images/image_interp_00.png" src="../../_images/image_interp_00.png" />
+<p class="caption">(<a class="reference external" href="../../../../../Pythonista/matplotlib-1.3.1/doc/mpl_examples/pylab_examples/image_interp_00.png">png</a>)</p>
+</div>
+<div class="figure">
+<img alt="../../_images/image_interp_01.png" src="../../_images/image_interp_01.png" />
+<p class="caption">(<a class="reference external" href="../../../../../Pythonista/matplotlib-1.3.1/doc/mpl_examples/pylab_examples/image_interp_01.png">png</a>)</p>
+</div>
+<div class="figure">
+<img alt="../../_images/image_interp_02.png" src="../../_images/image_interp_02.png" />
+<p class="caption">(<a class="reference external" href="../../../../../Pythonista/matplotlib-1.3.1/doc/mpl_examples/pylab_examples/image_interp_02.png">png</a>)</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The same (small) array, interpolated with three different</span>
+<span class="sd">interpolation methods.</span>
+
+<span class="sd">The center of the pixel at A[i,j] is plotted at i+0.5, i+0.5.  If you</span>
+<span class="sd">are using interpolation=&#39;nearest&#39;, the region bounded by (i,j) and</span>
+<span class="sd">(i+1,j+1) will have the same color.  If you are using interpolation,</span>
+<span class="sd">the pixel center will have the same color as it does with nearest, but</span>
+<span class="sd">other pixels will be interpolated between the neighboring pixels.</span>
+
+<span class="sd">Earlier versions of matplotlib (&lt;0.63) tried to hide the edge effects</span>
+<span class="sd">from you by setting the view limits so that they would not be visible.</span>
+<span class="sd">A recent bugfix in antigrain, and a new implementation in the</span>
+<span class="sd">matplotlib._image module which takes advantage of this fix, no longer</span>
+<span class="sd">makes this necessary.  To prevent edge effects, when doing</span>
+<span class="sd">interpolation, the matplotlib._image module now pads the input array</span>
+<span class="sd">with identical pixels around the edge.  e.g., if you have a 5x5 array</span>
+<span class="sd">with colors a-y as below</span>
+
+
+<span class="sd">  a b c d e</span>
+<span class="sd">  f g h i j</span>
+<span class="sd">  k l m n o</span>
+<span class="sd">  p q r s t</span>
+<span class="sd">  u v w x y</span>
+
+<span class="sd">the _image module creates the padded array,</span>
+
+<span class="sd">  a a b c d e e</span>
+<span class="sd">  a a b c d e e</span>
+<span class="sd">  f f g h i j j</span>
+<span class="sd">  k k l m n o o</span>
+<span class="sd">  p p q r s t t</span>
+<span class="sd">  o u v w x y y</span>
+<span class="sd">  o u v w x y y</span>
+
+<span class="sd">does the interpolation/resizing, and then extracts the central region.</span>
+<span class="sd">This allows you to plot the full range of your array w/o edge effects,</span>
+<span class="sd">and for example to layer multiple images of different sizes over one</span>
+<span class="sd">another with different interpolation methods - see</span>
+<span class="sd">examples/layer_images.py.  It also implies a performance hit, as this</span>
+<span class="sd">new temporary, padded array must be created.  Sophisticated</span>
+<span class="sd">interpolation also implies a performance hit, so if you need maximal</span>
+<span class="sd">performance or have very large images, interpolation=&#39;nearest&#39; is</span>
+<span class="sd">suggested.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;bilinear&#39;</span><span class="p">)</span>
+<span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">figure</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;bicubic&#39;</span><span class="p">)</span>
+<span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Keywords: python, matplotlib, pylab, example, codex (see <a class="reference internal" href="../../faq/howto_faq.html#how-to-search-examples"><em>Search examples</em></a>)</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2002 - 2012 John Hunter, Darren Dale, Eric Firing, Michael Droettboom and the matplotlib development team; 2012 - 2013 The matplotlib development team.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

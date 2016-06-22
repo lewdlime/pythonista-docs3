@@ -1,0 +1,216 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.arange &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Array creation routines" href="../routines.array-creation.html" />
+    <link rel="next" title="numpy.linspace" href="numpy.linspace.html" />
+    <link rel="prev" title="numpy.core.defchararray.asarray" href="numpy.core.defchararray.asarray.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.linspace.html" title="numpy.linspace"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.core.defchararray.asarray.html" title="numpy.core.defchararray.asarray"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.array-creation.html" accesskey="U">Array creation routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-arange">
+<h1>numpy.arange<a class="headerlink" href="#numpy-arange" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.arange">
+<tt class="descclassname">numpy.</tt><tt class="descname">arange</tt><big>(</big><span class="optional">[</span><em>start</em>, <span class="optional">]</span><em>stop</em>, <span class="optional">[</span><em>step</em>, <span class="optional">]</span><em>dtype=None</em><big>)</big><a class="headerlink" href="#numpy.arange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return evenly spaced values within a given interval.</p>
+<p>Values are generated within the half-open interval <tt class="docutils literal"><span class="pre">[start,</span> <span class="pre">stop)</span></tt>
+(in other words, the interval including <em class="xref py py-obj">start</em> but excluding <em class="xref py py-obj">stop</em>).
+For integer arguments the function is equivalent to the Python built-in
+<a class="reference external" href="http://docs.python.org/lib/built-in-funcs.html">range</a> function,
+but returns an ndarray rather than a list.</p>
+<p>When using a non-integer step, such as 0.1, the results will often not
+be consistent.  It is better to use <tt class="docutils literal"><span class="pre">linspace</span></tt> for these cases.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>start</strong> : number, optional</p>
+<blockquote>
+<div><p>Start of interval.  The interval includes this value.  The default
+start value is 0.</p>
+</div></blockquote>
+<p><strong>stop</strong> : number</p>
+<blockquote>
+<div><p>End of interval.  The interval does not include this value, except
+in some cases where <em class="xref py py-obj">step</em> is not an integer and floating point
+round-off affects the length of <em class="xref py py-obj">out</em>.</p>
+</div></blockquote>
+<p><strong>step</strong> : number, optional</p>
+<blockquote>
+<div><p>Spacing between values.  For any output <em class="xref py py-obj">out</em>, this is the distance
+between two adjacent values, <tt class="docutils literal"><span class="pre">out[i+1]</span> <span class="pre">-</span> <span class="pre">out[i]</span></tt>.  The default
+step size is 1.  If <em class="xref py py-obj">step</em> is specified, <em class="xref py py-obj">start</em> must also be given.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : dtype</p>
+<blockquote>
+<div><p>The type of the output array.  If <a class="reference internal" href="numpy.dtype.html#numpy.dtype" title="numpy.dtype"><tt class="xref py py-obj docutils literal"><span class="pre">dtype</span></tt></a> is not given, infer the data
+type from the other input arguments.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>arange</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>Array of evenly spaced values.</p>
+<p>For floating point arguments, the length of the result is
+<tt class="docutils literal"><span class="pre">ceil((stop</span> <span class="pre">-</span> <span class="pre">start)/step)</span></tt>.  Because of floating point overflow,
+this rule may result in the last element of <em class="xref py py-obj">out</em> being greater
+than <em class="xref py py-obj">stop</em>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="numpy.linspace.html#numpy.linspace" title="numpy.linspace"><tt class="xref py py-obj docutils literal"><span class="pre">linspace</span></tt></a></dt>
+<dd>Evenly spaced numbers with careful handling of endpoints.</dd>
+<dt><a class="reference internal" href="numpy.ogrid.html#numpy.ogrid" title="numpy.ogrid"><tt class="xref py py-obj docutils literal"><span class="pre">ogrid</span></tt></a></dt>
+<dd>Arrays of evenly spaced numbers in N-dimensions.</dd>
+<dt><a class="reference internal" href="numpy.mgrid.html#numpy.mgrid" title="numpy.mgrid"><tt class="xref py py-obj docutils literal"><span class="pre">mgrid</span></tt></a></dt>
+<dd>Grid-shaped arrays of evenly spaced numbers in N-dimensions.</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([0, 1, 2])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="go">array([ 0.,  1.,  2.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="go">array([3, 4, 5, 6])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">array([3, 5])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

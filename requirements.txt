@@ -1,2 +1,0 @@
-virtualenv
-doc2dash

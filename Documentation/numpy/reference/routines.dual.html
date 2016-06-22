@@ -1,0 +1,236 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Optionally Scipy-accelerated routines (numpy.dual) &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Routines" href="routines.html" />
+    <link rel="next" title="Mathematical functions with automatic domain (numpy.emath)" href="routines.emath.html" />
+    <link rel="prev" title="numpy.mintypecode" href="generated/numpy.mintypecode.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="routines.emath.html" title="Mathematical functions with automatic domain (numpy.emath)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.mintypecode.html" title="numpy.mintypecode"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" accesskey="U">Routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-numpy.dual">
+<span id="optionally-scipy-accelerated-routines-numpy-dual"></span><h1>Optionally Scipy-accelerated routines (<a class="reference internal" href="#module-numpy.dual" title="numpy.dual"><tt class="xref py py-mod docutils literal"><span class="pre">numpy.dual</span></tt></a>)<a class="headerlink" href="#module-numpy.dual" title="Permalink to this headline">¶</a></h1>
+<p>Aliases for functions which may be accelerated by Scipy.</p>
+<p><a class="reference external" href="http://www.scipy.org">Scipy</a> can be built to use accelerated or otherwise improved libraries
+for FFTs, linear algebra, and special functions. This module allows
+developers to transparently support these accelerated functions when
+scipy is available but still support users who have only installed
+Numpy.</p>
+<div class="section" id="linear-algebra">
+<h2>Linear algebra<a class="headerlink" href="#linear-algebra" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.linalg.cholesky.html#numpy.linalg.cholesky" title="numpy.linalg.cholesky"><tt class="xref py py-obj docutils literal"><span class="pre">cholesky</span></tt></a>(a)</td>
+<td>Cholesky decomposition.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.linalg.det.html#numpy.linalg.det" title="numpy.linalg.det"><tt class="xref py py-obj docutils literal"><span class="pre">det</span></tt></a>(a)</td>
+<td>Compute the determinant of an array.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.linalg.eig.html#numpy.linalg.eig" title="numpy.linalg.eig"><tt class="xref py py-obj docutils literal"><span class="pre">eig</span></tt></a>(a)</td>
+<td>Compute the eigenvalues and right eigenvectors of a square array.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.linalg.eigh.html#numpy.linalg.eigh" title="numpy.linalg.eigh"><tt class="xref py py-obj docutils literal"><span class="pre">eigh</span></tt></a>(a[,&nbsp;UPLO])</td>
+<td>Return the eigenvalues and eigenvectors of a Hermitian or symmetric matrix.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.linalg.eigvals.html#numpy.linalg.eigvals" title="numpy.linalg.eigvals"><tt class="xref py py-obj docutils literal"><span class="pre">eigvals</span></tt></a>(a)</td>
+<td>Compute the eigenvalues of a general matrix.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.linalg.eigvalsh.html#numpy.linalg.eigvalsh" title="numpy.linalg.eigvalsh"><tt class="xref py py-obj docutils literal"><span class="pre">eigvalsh</span></tt></a>(a[,&nbsp;UPLO])</td>
+<td>Compute the eigenvalues of a Hermitian or real symmetric matrix.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.linalg.inv.html#numpy.linalg.inv" title="numpy.linalg.inv"><tt class="xref py py-obj docutils literal"><span class="pre">inv</span></tt></a>(a)</td>
+<td>Compute the (multiplicative) inverse of a matrix.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq" title="numpy.linalg.lstsq"><tt class="xref py py-obj docutils literal"><span class="pre">lstsq</span></tt></a>(a,&nbsp;b[,&nbsp;rcond])</td>
+<td>Return the least-squares solution to a linear matrix equation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.linalg.norm.html#numpy.linalg.norm" title="numpy.linalg.norm"><tt class="xref py py-obj docutils literal"><span class="pre">norm</span></tt></a>(x[,&nbsp;ord,&nbsp;axis])</td>
+<td>Matrix or vector norm.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.linalg.pinv.html#numpy.linalg.pinv" title="numpy.linalg.pinv"><tt class="xref py py-obj docutils literal"><span class="pre">pinv</span></tt></a>(a[,&nbsp;rcond])</td>
+<td>Compute the (Moore-Penrose) pseudo-inverse of a matrix.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.linalg.solve.html#numpy.linalg.solve" title="numpy.linalg.solve"><tt class="xref py py-obj docutils literal"><span class="pre">solve</span></tt></a>(a,&nbsp;b)</td>
+<td>Solve a linear matrix equation, or system of linear scalar equations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.linalg.svd.html#numpy.linalg.svd" title="numpy.linalg.svd"><tt class="xref py py-obj docutils literal"><span class="pre">svd</span></tt></a>(a[,&nbsp;full_matrices,&nbsp;compute_uv])</td>
+<td>Singular Value Decomposition.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fft">
+<h2>FFT<a class="headerlink" href="#fft" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.fft.fft.html#numpy.fft.fft" title="numpy.fft.fft"><tt class="xref py py-obj docutils literal"><span class="pre">fft</span></tt></a>(a[,&nbsp;n,&nbsp;axis])</td>
+<td>Compute the one-dimensional discrete Fourier Transform.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.fft.fft2.html#numpy.fft.fft2" title="numpy.fft.fft2"><tt class="xref py py-obj docutils literal"><span class="pre">fft2</span></tt></a>(a[,&nbsp;s,&nbsp;axes])</td>
+<td>Compute the 2-dimensional discrete Fourier Transform  This function computes the <em>n</em>-dimensional discrete Fourier Transform over any axes in an <em>M</em>-dimensional array by means of the Fast Fourier Transform (FFT).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.fft.fftn.html#numpy.fft.fftn" title="numpy.fft.fftn"><tt class="xref py py-obj docutils literal"><span class="pre">fftn</span></tt></a>(a[,&nbsp;s,&nbsp;axes])</td>
+<td>Compute the N-dimensional discrete Fourier Transform.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.fft.ifft.html#numpy.fft.ifft" title="numpy.fft.ifft"><tt class="xref py py-obj docutils literal"><span class="pre">ifft</span></tt></a>(a[,&nbsp;n,&nbsp;axis])</td>
+<td>Compute the one-dimensional inverse discrete Fourier Transform.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.fft.ifft2.html#numpy.fft.ifft2" title="numpy.fft.ifft2"><tt class="xref py py-obj docutils literal"><span class="pre">ifft2</span></tt></a>(a[,&nbsp;s,&nbsp;axes])</td>
+<td>Compute the 2-dimensional inverse discrete Fourier Transform.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.fft.ifftn.html#numpy.fft.ifftn" title="numpy.fft.ifftn"><tt class="xref py py-obj docutils literal"><span class="pre">ifftn</span></tt></a>(a[,&nbsp;s,&nbsp;axes])</td>
+<td>Compute the N-dimensional inverse discrete Fourier Transform.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="other">
+<h2>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.i0.html#numpy.i0" title="numpy.i0"><tt class="xref py py-obj docutils literal"><span class="pre">i0</span></tt></a>(x)</td>
+<td>Modified Bessel function of the first kind, order 0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

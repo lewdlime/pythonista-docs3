@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>matplotlib: python plotting &mdash; Matplotlib 1.3.1 documentation</title>
+    <link rel="stylesheet" href="_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Matplotlib 1.3.1 documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="top" title="Matplotlib 1.3.1 documentation" href="#" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="#">Matplotlib 1.3.1 documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+
+  <h1>Introduction</h1>
+
+  <p>matplotlib is a python 2D plotting library which produces
+  publication quality figures in a variety of hardcopy formats and
+  interactive environments across platforms.</p>
+
+  <p align="center"><a href="users/screenshots.html"><img align="middle"
+  src="_static/logo_sidebar_horiz.png" border="0"
+  alt="screenshots"/></a></p>
+
+  <p>matplotlib tries to make easy things easy and hard things possible.
+  You can generate plots, histograms, power spectra, bar charts,
+  errorcharts, scatterplots, etc, with just a few lines of code.
+  For a sampling, see the <a href="users/screenshots.html">screenshots</a>, <a href="gallery.html">thumbnail</a> gallery,  and
+    <a href="examples/index.html">examples</a> directory</p>
+
+  <p>For the power user, you have full control of line styles, font
+  properties, axes properties, etc, via an object oriented interface
+  or via a set of functions familiar to MATLAB users.</p>
+
+  <h1>Using matplotlib in Pythonista</h1>
+  
+  <p>
+    Most <a href="gallery.html">examples</a> in this documentation should "just work" in Pythonista, interactive charts (with GUI) and animation are not supported though.
+  </p>
+  <p>Please note that matplotlib can be somewhat slow on an iOS device. It usually takes around 10 seconds for the first plot to show up, though it should be faster afterwards (a few seconds are still common, even for simple plots).</p>
+  <p>
+    Another thing you should be aware of is that the pyplot module relies a lot on global state. Since Pythonista runs scripts in a single interpreter that exists for the entire runtime of the app, this would normally mean that running a script repeatedly might lead to undesirable behavior (e.g. adding lines to the plot each time, instead of creating a new plot). When you have the "Clear Global Variables" setting enabled however (the default), Pythonista tries to clear the current plot using <code>plt.clf()</code> when you run a script, so in most cases you should still get the expected result.
+  </p>
+  <p>
+    Pythonista only supports the default 'Agg' backend, which is usually non-interactive, but Pythonista's version includes a custom <code>show</code> method, so that plots can be displayed in the console without having to save an image file manually.
+  </p>
+  
+<div>
+  <h1>John Hunter (1968-2012)</h1>
+  <table>
+   <tr>
+    <td>
+      <img src="_static/John-hunter-crop-2.jpg" align="left" />
+    </td>
+    <td>
+      <p>
+      On August 28 2012, John D. Hunter, the creator of matplotlib, died
+      from complications arising from cancer treatment, after a brief but
+      intense battle with this terrible illness.  John is survived by his
+      wife Miriam, his three daughters Rahel, Ava and Clara, his sisters
+      Layne and Mary, and his mother Sarah.</p>
+
+      <p>
+      If you have benefited from John's many contributions, please say
+      thanks in the way that would matter most to him.  Please consider
+      making a donation to
+      the <a href="http://numfocus.org/johnhunter/">John Hunter Memorial
+      Fund</a>.</p>
+    </td>
+   </tr>
+  </table>
+</div>
+
+  <h1>Documentation</h1>
+
+  This is the documentation for matplotlib version 1.3.1.
+
+  <p>Trying to learn how to do a particular kind of plot?  Check out
+  the <a href="gallery.html">gallery</a>, <a href="examples/index.html">examples</a>,
+  or the <a href="api/pyplot_summary.html">list of plotting
+  commands</a>.</p>
+
+  <h4>Other learning resources</h4>
+
+  <ul>
+    <li>Sandro Tosi has a new book
+      <a href="http://www.packtpub.com/matplotlib-python-development/book?utm_source=matplotlib.sourceforge.net&utm_medium=link&utm_content=pod&utm_campaign=mdb_002124">Matplotlib
+  for python developers</a> also
+  at <a href="http://www.amazon.com/Matplotlib-Python-Developers-Sandro-Tosi/dp/1847197906">amazon</a>.</li>
+
+    <li>Nicolas Rougier has
+      a <a href="http://www.loria.fr/~rougier/teaching/matplotlib/">beginner
+      tutorial.</a></li>
+
+    <li>Eric Jones gave
+    an <a href="http://www.youtube.com/watch?v=3Fp1zn5ao2M&feature=plcp">introductory
+    tutorial on Numpy and matplotlib</a> at SciPy 2012.</li>
+  </ul>
+
+  <h4>Need help?</h4>
+
+<p>matplotlib is a welcoming, inclusive project, and we try to follow
+the <a href="http://www.python.org/psf/codeofconduct/">Python Software
+Foundation Code of Conduct</a> in everything we do.</p>
+
+<p>Check the <a href="faq/index.html">faq</a>,
+the <a href="api/index.html">api</a> docs,
+<a href="http://matplotlib.1069221.n5.nabble.com/matplotlib-users-f3.html">mailing
+list archives</a>, and join the matplotlib
+mailing <a href="http://sourceforge.net/mail/?group_id=80706">lists</a>.
+Check out the matplotlib questions
+on <a href="http://stackoverflow.com/questions/tagged/matplotlib">stackoverflow</a>.
+The <a href="search.html">search</a> tool searches all of
+the documentation, including full text search of over 350 complete
+examples which exercise almost every corner of matplotlib.</p>
+
+<p>You can file bugs, patches and feature requests on the
+github
+<a href="https://github.com/matplotlib/matplotlib/issues?sort=created&direction=desc&state=open">tracker</a>,
+but it is a good idea to ping us on the mailing list too.</p>
+
+<p>To keep up to date with what's going on in matplotlib, see
+the <a href="users/whats_new.html">what's new
+page</a>, the more detailed <a href="_static/CHANGELOG">changelog</a> or browse
+the <a href="https://github.com/matplotlib/matplotlib">source
+code</a>.  Anything that could require changes to your existing code
+is logged in the <a href="api/api_changes.html">api
+changes</a> file.</p>
+
+<h1>Toolkits</h1>
+
+<p>There are several matplotlib add-on <a href="mpl_toolkits/index.html">toolkits</a>,
+including a choice of two projection and mapping toolkits <a href="http://matplotlib.org/basemap">basemap</a> and
+<a href="http://scitools.org.uk/cartopy/docs/latest">cartopy</a>,
+3d plotting with <a href="mpl_toolkits/mplot3d/index.html">mplot3d</a>,
+axes and axis helpers in <a href="mpl_toolkits/axes_grid/index.html">axes_grid</a> and more.
+ </p>
+
+<h1>Citing matplotlib</h1>
+
+<p>
+  matplotlib is the brainchild of John Hunter (1968-2012), who, along with its many
+  contributors, have put an immeasurable amount of time and effort into producing a
+  piece of software utilized by thousands of scientists worldwide.
+
+  If matplotlib contributes to a project that leads to a scientific publication,
+  please acknowledge this work by citing the project. You can use this
+  <a href="citing.html">ready-made citation entry</a>.
+</p>
+
+  <h1>Open source</h1>
+
+<p>
+Please consider <a href="http://sourceforge.net/project/project_donations.php?group_id=80706">donating</a>
+to support matplotlib development or to the <a href="http://numfocus.org/johnhunter/">John Hunter Memorial Fund</a>.
+</p>
+
+<p>
+The matplotlib <a href="users/license.html">license</a> is based on the Python Software Foundation
+<a href="http://www.python.org/psf/license">(PSF)</a> license.
+</p>
+
+<p>
+There is an active developer community and a long list of people
+who have made significant <a href="users/credits.html">contributions</a>.
+</p>
+
+
+<div class="footnote"><p>
+<sup><a name="ftn.matlab" href="#matlab">*</a></sup>
+MATLAB is a registered trademark of The MathWorks, Inc.
+</p>
+<p>
+<sup><a name="ftn.mathematica" href="#mathematica">&#8224;</a></sup>
+Mathematica is a registered trademark of Wolfram Research, Inc.
+</p>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="copyright.html">Copyright</a> 2002 - 2012 John Hunter, Darren Dale, Eric Firing, Michael Droettboom and the matplotlib development team; 2012 - 2013 The matplotlib development team.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

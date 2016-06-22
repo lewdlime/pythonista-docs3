@@ -1,0 +1,246 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.distutils.exec_command &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Packaging (numpy.distutils)" href="../distutils.html" />
+    <link rel="next" title="Numpy C-API" href="../c-api.html" />
+    <link rel="prev" title="numpy.distutils.log.set_verbosity" href="numpy.distutils.log.set_verbosity.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../c-api.html" title="Numpy C-API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.distutils.log.set_verbosity.html" title="numpy.distutils.log.set_verbosity"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../distutils.html" accesskey="U">Packaging (<tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.distutils</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-numpy.distutils.exec_command">
+<span id="numpy-distutils-exec-command"></span><h1>numpy.distutils.exec_command<a class="headerlink" href="#module-numpy.distutils.exec_command" title="Permalink to this headline">¶</a></h1>
+<p>exec_command</p>
+<p>Implements exec_command function that is (almost) equivalent to
+commands.getstatusoutput function but on NT, DOS systems the
+returned status is actually correct (though, the returned status
+values may be different by a factor). In addition, exec_command
+takes keyword arguments for (re-)defining environment variables.</p>
+<dl class="docutils">
+<dt>Provides functions:</dt>
+<dd><dl class="first last docutils">
+<dt>exec_command  &#8212; execute command in a specified directory and</dt>
+<dd>in the modified environment.</dd>
+<dt>find_executable &#8212; locate a command using info from environment</dt>
+<dd>variable PATH. Equivalent to posix <em class="xref py py-obj">which</em>
+command.</dd>
+</dl>
+</dd>
+</dl>
+<p>Author: Pearu Peterson &lt;<a class="reference external" href="mailto:pearu&#37;&#52;&#48;cens&#46;ioc&#46;ee">pearu<span>&#64;</span>cens<span>&#46;</span>ioc<span>&#46;</span>ee</a>&gt;
+Created: 11 January 2003</p>
+<p>Requires: Python 2.x</p>
+<dl class="docutils">
+<dt>Succesfully tested on:</dt>
+<dd><p class="first">os.name | sys.platform | comments
+&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;-
+posix   | linux2       | Debian (sid) Linux, Python 2.1.3+, 2.2.3+, 2.3.3</p>
+<blockquote>
+<div>PyCrust 0.9.3, Idle 1.0.2</div></blockquote>
+<p>posix   | linux2       | Red Hat 9 Linux, Python 2.1.3, 2.2.2, 2.3.2
+posix   | sunos5       | SunOS 5.9, Python 2.2, 2.3.2
+posix   | darwin       | Darwin 7.2.0, Python 2.3
+nt      | win32        | Windows Me</p>
+<blockquote>
+<div>Python 2.3(EE), Idle 1.0, PyCrust 0.7.2
+Python 2.1.1 Idle 0.8</div></blockquote>
+<p>nt      | win32        | Windows 98, Python 2.1.1. Idle 0.8
+nt      | win32        | Cygwin 98-4.10, Python 2.1.1(MSC) - echo tests</p>
+<blockquote>
+<div>fail i.e. redefining environment variables may
+not work. FIXED: don&#8217;t use cygwin echo!
+Comment: also <em class="xref py py-obj">cmd /c echo</em> will not work
+but redefining environment variables do work.</div></blockquote>
+<p class="last">posix   | cygwin       | Cygwin 98-4.10, Python 2.3.3(cygming special)
+nt      | win32        | Windows XP, Python 2.3.3</p>
+</dd>
+</dl>
+<p>Known bugs:
+- Tests, that send messages to stderr, fail when executed from MSYS prompt</p>
+<blockquote>
+<div>because the messages are lost at some point.</div></blockquote>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">exec_command</span></tt>(command[,&nbsp;execute_in,&nbsp;...])</td>
+<td>Return (status,output) of executed command.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">find_executable</span></tt>(exe[,&nbsp;path,&nbsp;_cache])</td>
+<td>Return full path of a executable or None.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">get_exception</span></tt>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">get_pythonexe</span></tt>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">is_sequence</span></tt>(seq)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">make_temp_file</span></tt>([suffix,&nbsp;prefix,&nbsp;text])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">open_latin1</span></tt>(filename[,&nbsp;mode])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">quote_arg</span></tt>(arg)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">splitcmdline</span></tt>(line)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">temp_file_name</span></tt>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">test</span></tt>(**kws)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">test_cl</span></tt>(**kws)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">test_execute_in</span></tt>(**kws)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">test_nt</span></tt>(**kws)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">test_posix</span></tt>(**kws)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">test_svn</span></tt>(**kws)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

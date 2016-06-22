@@ -1,0 +1,190 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.ix &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Indexing routines" href="../routines.indexing.html" />
+    <link rel="next" title="numpy.ogrid" href="numpy.ogrid.html" />
+    <link rel="prev" title="numpy.indices" href="numpy.indices.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.ogrid.html" title="numpy.ogrid"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.indices.html" title="numpy.indices"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.indexing.html" accesskey="U">Indexing routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-ix">
+<h1><a class="reference internal" href="#numpy-ix">numpy.ix</a><a class="headerlink" href="#numpy-ix" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.ix_">
+<tt class="descclassname">numpy.</tt><tt class="descname">ix_</tt><big>(</big><em>*args</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/lib/index_tricks.py#L26"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.ix_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an open mesh from multiple sequences.</p>
+<p>This function takes N 1-D sequences and returns N outputs with N
+dimensions each, such that the shape is 1 in all but one dimension
+and the dimension with the non-unit shape value cycles through all
+N dimensions.</p>
+<p>Using <a class="reference internal" href="#numpy.ix_" title="numpy.ix_"><tt class="xref py py-obj docutils literal"><span class="pre">ix_</span></tt></a> one can quickly construct index arrays that will index
+the cross product. <tt class="docutils literal"><span class="pre">a[np.ix_([1,3],[2,5])]</span></tt> returns the array
+<tt class="docutils literal"><span class="pre">[[a[1,2]</span> <span class="pre">a[1,5]],</span> <span class="pre">[a[3,2]</span> <span class="pre">a[3,5]]]</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>args</strong> : 1-D sequences</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : tuple of ndarrays</p>
+<blockquote class="last">
+<div><p>N arrays with N dimensions each, with N the number of input
+sequences. Together these arrays form an open mesh.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="numpy.ogrid.html#numpy.ogrid" title="numpy.ogrid"><tt class="xref py py-obj docutils literal"><span class="pre">ogrid</span></tt></a>, <a class="reference internal" href="numpy.mgrid.html#numpy.mgrid" title="numpy.mgrid"><tt class="xref py py-obj docutils literal"><span class="pre">mgrid</span></tt></a>, <a class="reference internal" href="numpy.meshgrid.html#numpy.meshgrid" title="numpy.meshgrid"><tt class="xref py py-obj docutils literal"><span class="pre">meshgrid</span></tt></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[0, 1, 2, 3, 4],</span>
+<span class="go">       [5, 6, 7, 8, 9]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ixgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ixgrid</span>
+<span class="go">(array([[0],</span>
+<span class="go">       [1]]), array([[2, 4]]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ixgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">ixgrid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">((2, 1), (1, 2))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="n">ixgrid</span><span class="p">]</span>
+<span class="go">array([[2, 4],</span>
+<span class="go">       [7, 9]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,197 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.polynomial.legendre.legvander2d &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Legendre Module (numpy.polynomial.legendre)" href="../routines.polynomials.legendre.html" />
+    <link rel="next" title="numpy.polynomial.legendre.legvander3d" href="numpy.polynomial.legendre.legvander3d.html" />
+    <link rel="prev" title="numpy.polynomial.legendre.legvander" href="numpy.polynomial.legendre.legvander.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.polynomial.legendre.legvander3d.html" title="numpy.polynomial.legendre.legvander3d"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.polynomial.legendre.legvander.html" title="numpy.polynomial.legendre.legvander"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.polynomials.html" >Polynomials</a> &raquo;</li>
+          <li><a href="../routines.polynomials.package.html" >Polynomial Package</a> &raquo;</li>
+          <li><a href="../routines.polynomials.legendre.html" accesskey="U">Legendre Module (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.polynomial.legendre</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-polynomial-legendre-legvander2d">
+<h1>numpy.polynomial.legendre.legvander2d<a class="headerlink" href="#numpy-polynomial-legendre-legvander2d" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.polynomial.legendre.legvander2d">
+<tt class="descclassname">numpy.polynomial.legendre.</tt><tt class="descname">legvander2d</tt><big>(</big><em>x</em>, <em>y</em>, <em>deg</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/polynomial/legendre.py#L1268"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.polynomial.legendre.legvander2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pseudo-Vandermonde matrix of given degrees.</p>
+<p>Returns the pseudo-Vandermonde matrix of degrees <em class="xref py py-obj">deg</em> and sample
+points <em class="xref py py-obj">(x, y)</em>. The pseudo-Vandermonde matrix is defined by</p>
+<div class="math">
+<p><span class="math">V[..., deg[1]*i + j] = L_i(x) * L_j(y),</span></p>
+</div><p>where <em class="xref py py-obj">0 &lt;= i &lt;= deg[0]</em> and <em class="xref py py-obj">0 &lt;= j &lt;= deg[1]</em>. The leading indices of
+<em class="xref py py-obj">V</em> index the points <em class="xref py py-obj">(x, y)</em> and the last index encodes the degrees of
+the Legendre polynomials.</p>
+<p>If <tt class="docutils literal"><span class="pre">V</span> <span class="pre">=</span> <span class="pre">legvander2d(x,</span> <span class="pre">y,</span> <span class="pre">[xdeg,</span> <span class="pre">ydeg])</span></tt>, then the columns of <em class="xref py py-obj">V</em>
+correspond to the elements of a 2-D coefficient array <em class="xref py py-obj">c</em> of shape
+(xdeg + 1, ydeg + 1) in the order</p>
+<div class="math">
+<p><span class="math">c_{00}, c_{01}, c_{02} ... , c_{10}, c_{11}, c_{12} ...</span></p>
+</div><p>and <tt class="docutils literal"><span class="pre">np.dot(V,</span> <span class="pre">c.flat)</span></tt> and <tt class="docutils literal"><span class="pre">legval2d(x,</span> <span class="pre">y,</span> <span class="pre">c)</span></tt> will be the same
+up to roundoff. This equivalence is useful both for least squares
+fitting and for the evaluation of a large number of 2-D Legendre
+series of the same degrees and sample points.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>x, y</strong> : array_like</p>
+<blockquote>
+<div><p>Arrays of point coordinates, all of the same shape. The dtypes
+will be converted to either float64 or complex128 depending on
+whether any of the elements are complex. Scalars are converted to
+1-D arrays.</p>
+</div></blockquote>
+<p><strong>deg</strong> : list of ints</p>
+<blockquote>
+<div><p>List of maximum degrees of the form [x_deg, y_deg].</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vander2d</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>The shape of the returned matrix is <tt class="docutils literal"><span class="pre">x.shape</span> <span class="pre">+</span> <span class="pre">(order,)</span></tt>, where
+<span class="math">order = (deg[0]+1)*(deg([1]+1)</span>.  The dtype will be the same
+as the converted <em class="xref py py-obj">x</em> and <em class="xref py py-obj">y</em>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="numpy.polynomial.legendre.legvander.html#numpy.polynomial.legendre.legvander" title="numpy.polynomial.legendre.legvander"><tt class="xref py py-obj docutils literal"><span class="pre">legvander</span></tt></a>, <tt class="xref py py-obj docutils literal"><span class="pre">legvander3d.</span></tt>, <a class="reference internal" href="numpy.polynomial.legendre.legval3d.html#numpy.polynomial.legendre.legval3d" title="numpy.polynomial.legendre.legval3d"><tt class="xref py py-obj docutils literal"><span class="pre">legval3d</span></tt></a></p>
+</div>
+<p class="rubric">Notes</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

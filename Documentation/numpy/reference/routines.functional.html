@@ -1,0 +1,163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Functional programming &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Routines" href="routines.html" />
+    <link rel="next" title="numpy.apply_along_axis" href="generated/numpy.apply_along_axis.html" />
+    <link rel="prev" title="numpy.rate" href="generated/numpy.rate.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="generated/numpy.apply_along_axis.html" title="numpy.apply_along_axis"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.rate.html" title="numpy.rate"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" accesskey="U">Routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="functional-programming">
+<h1>Functional programming<a class="headerlink" href="#functional-programming" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.apply_along_axis.html#numpy.apply_along_axis" title="numpy.apply_along_axis"><tt class="xref py py-obj docutils literal"><span class="pre">apply_along_axis</span></tt></a>(func1d,&nbsp;axis,&nbsp;arr,&nbsp;*args)</td>
+<td>Apply a function to 1-D slices along the given axis.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.apply_over_axes.html#numpy.apply_over_axes" title="numpy.apply_over_axes"><tt class="xref py py-obj docutils literal"><span class="pre">apply_over_axes</span></tt></a>(func,&nbsp;a,&nbsp;axes)</td>
+<td>Apply a function repeatedly over multiple axes.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.vectorize.html#numpy.vectorize" title="numpy.vectorize"><tt class="xref py py-obj docutils literal"><span class="pre">vectorize</span></tt></a>(pyfunc[,&nbsp;otypes,&nbsp;doc,&nbsp;excluded,&nbsp;cache])</td>
+<td>Generalized function class.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.frompyfunc.html#numpy.frompyfunc" title="numpy.frompyfunc"><tt class="xref py py-obj docutils literal"><span class="pre">frompyfunc</span></tt></a>(func,&nbsp;nin,&nbsp;nout)</td>
+<td>Takes an arbitrary Python function and returns a Numpy ufunc.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.piecewise.html#numpy.piecewise" title="numpy.piecewise"><tt class="xref py py-obj docutils literal"><span class="pre">piecewise</span></tt></a>(x,&nbsp;condlist,&nbsp;funclist,&nbsp;*args,&nbsp;**kw)</td>
+<td>Evaluate a piecewise-defined function.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,320 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Laguerre Module (numpy.polynomial.laguerre) &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Polynomial Package" href="routines.polynomials.package.html" />
+    <link rel="next" title="numpy.polynomial.laguerre.Laguerre" href="generated/numpy.polynomial.laguerre.Laguerre.html" />
+    <link rel="prev" title="numpy.polynomial.legendre.poly2leg" href="generated/numpy.polynomial.legendre.poly2leg.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="generated/numpy.polynomial.laguerre.Laguerre.html" title="numpy.polynomial.laguerre.Laguerre"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.polynomial.legendre.poly2leg.html" title="numpy.polynomial.legendre.poly2leg"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" >Routines</a> &raquo;</li>
+          <li><a href="routines.polynomials.html" >Polynomials</a> &raquo;</li>
+          <li><a href="routines.polynomials.package.html" accesskey="U">Polynomial Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="laguerre-module-numpy-polynomial-laguerre">
+<h1>Laguerre Module (<tt class="xref py py-mod docutils literal"><span class="pre">numpy.polynomial.laguerre</span></tt>)<a class="headerlink" href="#laguerre-module-numpy-polynomial-laguerre" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.0.</span></p>
+</div>
+<p>This module provides a number of objects (mostly functions) useful for
+dealing with Laguerre series, including a <a class="reference internal" href="generated/numpy.polynomial.laguerre.Laguerre.html#numpy.polynomial.laguerre.Laguerre" title="numpy.polynomial.laguerre.Laguerre"><tt class="xref py py-obj docutils literal"><span class="pre">Laguerre</span></tt></a> class that
+encapsulates the usual arithmetic operations.  (General information
+on how this module represents and works with such polynomials is in the
+docstring for its &#8220;parent&#8221; sub-package, <tt class="xref py py-obj docutils literal"><span class="pre">numpy.polynomial</span></tt>).</p>
+<div class="section" id="laguerre-class">
+<h2>Laguerre Class<a class="headerlink" href="#laguerre-class" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.Laguerre.html#numpy.polynomial.laguerre.Laguerre" title="numpy.polynomial.laguerre.Laguerre"><tt class="xref py py-obj docutils literal"><span class="pre">Laguerre</span></tt></a>(coef[,&nbsp;domain,&nbsp;window])</td>
+<td>A Laguerre series class.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagval.html#numpy.polynomial.laguerre.lagval" title="numpy.polynomial.laguerre.lagval"><tt class="xref py py-obj docutils literal"><span class="pre">lagval</span></tt></a>(x,&nbsp;c[,&nbsp;tensor])</td>
+<td>Evaluate a Laguerre series at points x.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagval2d.html#numpy.polynomial.laguerre.lagval2d" title="numpy.polynomial.laguerre.lagval2d"><tt class="xref py py-obj docutils literal"><span class="pre">lagval2d</span></tt></a>(x,&nbsp;y,&nbsp;c)</td>
+<td>Evaluate a 2-D Laguerre series at points (x, y).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagval3d.html#numpy.polynomial.laguerre.lagval3d" title="numpy.polynomial.laguerre.lagval3d"><tt class="xref py py-obj docutils literal"><span class="pre">lagval3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;c)</td>
+<td>Evaluate a 3-D Laguerre series at points (x, y, z).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.laggrid2d.html#numpy.polynomial.laguerre.laggrid2d" title="numpy.polynomial.laguerre.laggrid2d"><tt class="xref py py-obj docutils literal"><span class="pre">laggrid2d</span></tt></a>(x,&nbsp;y,&nbsp;c)</td>
+<td>Evaluate a 2-D Laguerre series on the Cartesian product of x and y.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.laggrid3d.html#numpy.polynomial.laguerre.laggrid3d" title="numpy.polynomial.laguerre.laggrid3d"><tt class="xref py py-obj docutils literal"><span class="pre">laggrid3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;c)</td>
+<td>Evaluate a 3-D Laguerre series on the Cartesian product of x, y, and z.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagroots.html#numpy.polynomial.laguerre.lagroots" title="numpy.polynomial.laguerre.lagroots"><tt class="xref py py-obj docutils literal"><span class="pre">lagroots</span></tt></a>(c)</td>
+<td>Compute the roots of a Laguerre series.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagfromroots.html#numpy.polynomial.laguerre.lagfromroots" title="numpy.polynomial.laguerre.lagfromroots"><tt class="xref py py-obj docutils literal"><span class="pre">lagfromroots</span></tt></a>(roots)</td>
+<td>Generate a Laguerre series with given roots.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fitting">
+<h2>Fitting<a class="headerlink" href="#fitting" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagfit.html#numpy.polynomial.laguerre.lagfit" title="numpy.polynomial.laguerre.lagfit"><tt class="xref py py-obj docutils literal"><span class="pre">lagfit</span></tt></a>(x,&nbsp;y,&nbsp;deg[,&nbsp;rcond,&nbsp;full,&nbsp;w])</td>
+<td>Least squares fit of Laguerre series to data.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagvander.html#numpy.polynomial.laguerre.lagvander" title="numpy.polynomial.laguerre.lagvander"><tt class="xref py py-obj docutils literal"><span class="pre">lagvander</span></tt></a>(x,&nbsp;deg)</td>
+<td>Pseudo-Vandermonde matrix of given degree.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagvander2d.html#numpy.polynomial.laguerre.lagvander2d" title="numpy.polynomial.laguerre.lagvander2d"><tt class="xref py py-obj docutils literal"><span class="pre">lagvander2d</span></tt></a>(x,&nbsp;y,&nbsp;deg)</td>
+<td>Pseudo-Vandermonde matrix of given degrees.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagvander3d.html#numpy.polynomial.laguerre.lagvander3d" title="numpy.polynomial.laguerre.lagvander3d"><tt class="xref py py-obj docutils literal"><span class="pre">lagvander3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;deg)</td>
+<td>Pseudo-Vandermonde matrix of given degrees.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="calculus">
+<h2>Calculus<a class="headerlink" href="#calculus" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagder.html#numpy.polynomial.laguerre.lagder" title="numpy.polynomial.laguerre.lagder"><tt class="xref py py-obj docutils literal"><span class="pre">lagder</span></tt></a>(c[,&nbsp;m,&nbsp;scl,&nbsp;axis])</td>
+<td>Differentiate a Laguerre series.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagint.html#numpy.polynomial.laguerre.lagint" title="numpy.polynomial.laguerre.lagint"><tt class="xref py py-obj docutils literal"><span class="pre">lagint</span></tt></a>(c[,&nbsp;m,&nbsp;k,&nbsp;lbnd,&nbsp;scl,&nbsp;axis])</td>
+<td>Integrate a Laguerre series.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="algebra">
+<h2>Algebra<a class="headerlink" href="#algebra" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagadd.html#numpy.polynomial.laguerre.lagadd" title="numpy.polynomial.laguerre.lagadd"><tt class="xref py py-obj docutils literal"><span class="pre">lagadd</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Add one Laguerre series to another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagsub.html#numpy.polynomial.laguerre.lagsub" title="numpy.polynomial.laguerre.lagsub"><tt class="xref py py-obj docutils literal"><span class="pre">lagsub</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Subtract one Laguerre series from another.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagmul.html#numpy.polynomial.laguerre.lagmul" title="numpy.polynomial.laguerre.lagmul"><tt class="xref py py-obj docutils literal"><span class="pre">lagmul</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Multiply one Laguerre series by another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagmulx.html#numpy.polynomial.laguerre.lagmulx" title="numpy.polynomial.laguerre.lagmulx"><tt class="xref py py-obj docutils literal"><span class="pre">lagmulx</span></tt></a>(c)</td>
+<td>Multiply a Laguerre series by x.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagdiv.html#numpy.polynomial.laguerre.lagdiv" title="numpy.polynomial.laguerre.lagdiv"><tt class="xref py py-obj docutils literal"><span class="pre">lagdiv</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Divide one Laguerre series by another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagpow.html#numpy.polynomial.laguerre.lagpow" title="numpy.polynomial.laguerre.lagpow"><tt class="xref py py-obj docutils literal"><span class="pre">lagpow</span></tt></a>(c,&nbsp;pow[,&nbsp;maxpower])</td>
+<td>Raise a Laguerre series to a power.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="quadrature">
+<h2>Quadrature<a class="headerlink" href="#quadrature" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.laggauss.html#numpy.polynomial.laguerre.laggauss" title="numpy.polynomial.laguerre.laggauss"><tt class="xref py py-obj docutils literal"><span class="pre">laggauss</span></tt></a>(deg)</td>
+<td>Gauss-Laguerre quadrature.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagweight.html#numpy.polynomial.laguerre.lagweight" title="numpy.polynomial.laguerre.lagweight"><tt class="xref py py-obj docutils literal"><span class="pre">lagweight</span></tt></a>(x)</td>
+<td>Weight function of the Laguerre polynomials.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagcompanion.html#numpy.polynomial.laguerre.lagcompanion" title="numpy.polynomial.laguerre.lagcompanion"><tt class="xref py py-obj docutils literal"><span class="pre">lagcompanion</span></tt></a>(c)</td>
+<td>Return the companion matrix of c.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagdomain.html#numpy.polynomial.laguerre.lagdomain" title="numpy.polynomial.laguerre.lagdomain"><tt class="xref py py-obj docutils literal"><span class="pre">lagdomain</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagzero.html#numpy.polynomial.laguerre.lagzero" title="numpy.polynomial.laguerre.lagzero"><tt class="xref py py-obj docutils literal"><span class="pre">lagzero</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagone.html#numpy.polynomial.laguerre.lagone" title="numpy.polynomial.laguerre.lagone"><tt class="xref py py-obj docutils literal"><span class="pre">lagone</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagx.html#numpy.polynomial.laguerre.lagx" title="numpy.polynomial.laguerre.lagx"><tt class="xref py py-obj docutils literal"><span class="pre">lagx</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagtrim.html#numpy.polynomial.laguerre.lagtrim" title="numpy.polynomial.laguerre.lagtrim"><tt class="xref py py-obj docutils literal"><span class="pre">lagtrim</span></tt></a>(c[,&nbsp;tol])</td>
+<td>Remove &#8220;small&#8221; &#8220;trailing&#8221; coefficients from a polynomial.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lagline.html#numpy.polynomial.laguerre.lagline" title="numpy.polynomial.laguerre.lagline"><tt class="xref py py-obj docutils literal"><span class="pre">lagline</span></tt></a>(off,&nbsp;scl)</td>
+<td>Laguerre series whose graph is a straight line.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.lag2poly.html#numpy.polynomial.laguerre.lag2poly" title="numpy.polynomial.laguerre.lag2poly"><tt class="xref py py-obj docutils literal"><span class="pre">lag2poly</span></tt></a>(c)</td>
+<td>Convert a Laguerre series to a polynomial.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.laguerre.poly2lag.html#numpy.polynomial.laguerre.poly2lag" title="numpy.polynomial.laguerre.poly2lag"><tt class="xref py py-obj docutils literal"><span class="pre">poly2lag</span></tt></a>(pol)</td>
+<td>Convert a polynomial to a Laguerre series.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

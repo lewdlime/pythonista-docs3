@@ -1,0 +1,281 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Indexing routines &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Routines" href="routines.html" />
+    <link rel="next" title="numpy.c" href="generated/numpy.c_.html" />
+    <link rel="prev" title="numpy.source" href="generated/numpy.source.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="generated/numpy.c_.html" title="numpy.c"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.source.html" title="numpy.source"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" accesskey="U">Routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="indexing-routines">
+<span id="routines-indexing"></span><h1>Indexing routines<a class="headerlink" href="#indexing-routines" title="Permalink to this headline">¶</a></h1>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="arrays.indexing.html#arrays-indexing"><em>Indexing</em></a></p>
+</div>
+<div class="section" id="generating-index-arrays">
+<h2>Generating index arrays<a class="headerlink" href="#generating-index-arrays" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.c_.html#numpy.c_" title="numpy.c_"><tt class="xref py py-obj docutils literal"><span class="pre">c_</span></tt></a></td>
+<td>Translates slice objects to concatenation along the second axis.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.r_.html#numpy.r_" title="numpy.r_"><tt class="xref py py-obj docutils literal"><span class="pre">r_</span></tt></a></td>
+<td>Translates slice objects to concatenation along the first axis.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.s_.html#numpy.s_" title="numpy.s_"><tt class="xref py py-obj docutils literal"><span class="pre">s_</span></tt></a></td>
+<td>A nicer way to build up index tuples for arrays.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.nonzero.html#numpy.nonzero" title="numpy.nonzero"><tt class="xref py py-obj docutils literal"><span class="pre">nonzero</span></tt></a>(a)</td>
+<td>Return the indices of the elements that are non-zero.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.where.html#numpy.where" title="numpy.where"><tt class="xref py py-obj docutils literal"><span class="pre">where</span></tt></a>(condition,&nbsp;[x,&nbsp;y])</td>
+<td>Return elements, either from <em class="xref py py-obj">x</em> or <em class="xref py py-obj">y</em>, depending on <em class="xref py py-obj">condition</em>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.indices.html#numpy.indices" title="numpy.indices"><tt class="xref py py-obj docutils literal"><span class="pre">indices</span></tt></a>(dimensions[,&nbsp;dtype])</td>
+<td>Return an array representing the indices of a grid.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.ix_.html#numpy.ix_" title="numpy.ix_"><tt class="xref py py-obj docutils literal"><span class="pre">ix_</span></tt></a>(*args)</td>
+<td>Construct an open mesh from multiple sequences.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.ogrid.html#numpy.ogrid" title="numpy.ogrid"><tt class="xref py py-obj docutils literal"><span class="pre">ogrid</span></tt></a></td>
+<td><em class="xref py py-obj">nd_grid</em> instance which returns an open multi-dimensional &#8220;meshgrid&#8221;.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.ravel_multi_index.html#numpy.ravel_multi_index" title="numpy.ravel_multi_index"><tt class="xref py py-obj docutils literal"><span class="pre">ravel_multi_index</span></tt></a>(multi_index,&nbsp;dims[,&nbsp;mode,&nbsp;...])</td>
+<td>Converts a tuple of index arrays into an array of flat indices, applying boundary modes to the multi-index.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.unravel_index.html#numpy.unravel_index" title="numpy.unravel_index"><tt class="xref py py-obj docutils literal"><span class="pre">unravel_index</span></tt></a>(indices,&nbsp;dims[,&nbsp;order])</td>
+<td>Converts a flat index or array of flat indices into a tuple of coordinate arrays.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.diag_indices.html#numpy.diag_indices" title="numpy.diag_indices"><tt class="xref py py-obj docutils literal"><span class="pre">diag_indices</span></tt></a>(n[,&nbsp;ndim])</td>
+<td>Return the indices to access the main diagonal of an array.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.diag_indices_from.html#numpy.diag_indices_from" title="numpy.diag_indices_from"><tt class="xref py py-obj docutils literal"><span class="pre">diag_indices_from</span></tt></a>(arr)</td>
+<td>Return the indices to access the main diagonal of an n-dimensional array.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.mask_indices.html#numpy.mask_indices" title="numpy.mask_indices"><tt class="xref py py-obj docutils literal"><span class="pre">mask_indices</span></tt></a>(n,&nbsp;mask_func[,&nbsp;k])</td>
+<td>Return the indices to access (n, n) arrays, given a masking function.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.tril_indices.html#numpy.tril_indices" title="numpy.tril_indices"><tt class="xref py py-obj docutils literal"><span class="pre">tril_indices</span></tt></a>(n[,&nbsp;k])</td>
+<td>Return the indices for the lower-triangle of an (n, n) array.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.tril_indices_from.html#numpy.tril_indices_from" title="numpy.tril_indices_from"><tt class="xref py py-obj docutils literal"><span class="pre">tril_indices_from</span></tt></a>(arr[,&nbsp;k])</td>
+<td>Return the indices for the lower-triangle of arr.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.triu_indices.html#numpy.triu_indices" title="numpy.triu_indices"><tt class="xref py py-obj docutils literal"><span class="pre">triu_indices</span></tt></a>(n[,&nbsp;k])</td>
+<td>Return the indices for the upper-triangle of an (n, n) array.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.triu_indices_from.html#numpy.triu_indices_from" title="numpy.triu_indices_from"><tt class="xref py py-obj docutils literal"><span class="pre">triu_indices_from</span></tt></a>(arr[,&nbsp;k])</td>
+<td>Return the indices for the upper-triangle of a (N, N) array.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="indexing-like-operations">
+<h2>Indexing-like operations<a class="headerlink" href="#indexing-like-operations" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.take.html#numpy.take" title="numpy.take"><tt class="xref py py-obj docutils literal"><span class="pre">take</span></tt></a>(a,&nbsp;indices[,&nbsp;axis,&nbsp;out,&nbsp;mode])</td>
+<td>Take elements from an array along an axis.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.choose.html#numpy.choose" title="numpy.choose"><tt class="xref py py-obj docutils literal"><span class="pre">choose</span></tt></a>(a,&nbsp;choices[,&nbsp;out,&nbsp;mode])</td>
+<td>Construct an array from an index array and a set of arrays to choose from.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.compress.html#numpy.compress" title="numpy.compress"><tt class="xref py py-obj docutils literal"><span class="pre">compress</span></tt></a>(condition,&nbsp;a[,&nbsp;axis,&nbsp;out])</td>
+<td>Return selected slices of an array along given axis.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.diag.html#numpy.diag" title="numpy.diag"><tt class="xref py py-obj docutils literal"><span class="pre">diag</span></tt></a>(v[,&nbsp;k])</td>
+<td>Extract a diagonal or construct a diagonal array.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.diagonal.html#numpy.diagonal" title="numpy.diagonal"><tt class="xref py py-obj docutils literal"><span class="pre">diagonal</span></tt></a>(a[,&nbsp;offset,&nbsp;axis1,&nbsp;axis2])</td>
+<td>Return specified diagonals.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.select.html#numpy.select" title="numpy.select"><tt class="xref py py-obj docutils literal"><span class="pre">select</span></tt></a>(condlist,&nbsp;choicelist[,&nbsp;default])</td>
+<td>Return an array drawn from elements in choicelist, depending on conditions.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="inserting-data-into-arrays">
+<h2>Inserting data into arrays<a class="headerlink" href="#inserting-data-into-arrays" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.place.html#numpy.place" title="numpy.place"><tt class="xref py py-obj docutils literal"><span class="pre">place</span></tt></a>(arr,&nbsp;mask,&nbsp;vals)</td>
+<td>Change elements of an array based on conditional and input values.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.put.html#numpy.put" title="numpy.put"><tt class="xref py py-obj docutils literal"><span class="pre">put</span></tt></a>(a,&nbsp;ind,&nbsp;v[,&nbsp;mode])</td>
+<td>Replaces specified elements of an array with given values.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.putmask.html#numpy.putmask" title="numpy.putmask"><tt class="xref py py-obj docutils literal"><span class="pre">putmask</span></tt></a>(a,&nbsp;mask,&nbsp;values)</td>
+<td>Changes elements of an array based on conditional and input values.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.fill_diagonal.html#numpy.fill_diagonal" title="numpy.fill_diagonal"><tt class="xref py py-obj docutils literal"><span class="pre">fill_diagonal</span></tt></a>(a,&nbsp;val[,&nbsp;wrap])</td>
+<td>Fill the main diagonal of the given array of any dimensionality.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="iterating-over-arrays">
+<h2>Iterating over arrays<a class="headerlink" href="#iterating-over-arrays" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.nditer.html#numpy.nditer" title="numpy.nditer"><tt class="xref py py-obj docutils literal"><span class="pre">nditer</span></tt></a></td>
+<td>Efficient multi-dimensional iterator object to iterate over arrays.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.ndenumerate.html#numpy.ndenumerate" title="numpy.ndenumerate"><tt class="xref py py-obj docutils literal"><span class="pre">ndenumerate</span></tt></a>(arr)</td>
+<td>Multidimensional index iterator.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.ndindex.html#numpy.ndindex" title="numpy.ndindex"><tt class="xref py py-obj docutils literal"><span class="pre">ndindex</span></tt></a>(*shape)</td>
+<td>An N-dimensional iterator object to index arrays.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.flatiter.html#numpy.flatiter" title="numpy.flatiter"><tt class="xref py py-obj docutils literal"><span class="pre">flatiter</span></tt></a></td>
+<td>Flat iterator object to iterate over arrays.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

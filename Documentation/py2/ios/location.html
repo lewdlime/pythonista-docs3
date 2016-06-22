@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>location — Geo-Location Services on iOS &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-location">
+<span id="location-geo-location-services-on-ios"></span><h1><a class="reference internal" href="#module-location" title="location: Provides geo-location services on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">location</span></tt></a> &#8212; Geo-Location Services on iOS<a class="headerlink" href="#module-location" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-location" title="location: Provides geo-location services on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">location</span></tt></a> module allows you to access geo-location data (e.g. GPS) on iOS. Additionally, you can use the <a class="reference internal" href="#module-location" title="location: Provides geo-location services on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">location</span></tt></a> module to convert addresses to coordinates and vice-versa (geocoding and reverse-geocoding).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The first time this module is used, a system-provided permission alert will be shown. Until you have given the app permission to access your location, most functions won&#8217;t return meaningful results.</p>
+</div>
+<p>Functions in the <a class="reference internal" href="#module-location" title="location: Provides geo-location services on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">location</span></tt></a> module:</p>
+<dl class="function">
+<dt id="location.get_location">
+<tt class="descclassname">location.</tt><tt class="descname">get_location</tt><big>(</big><big>)</big><a class="headerlink" href="#location.get_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the most recently obtained location data. The return value is a dictionary containing various numbers that describe the current location (most importantly, &#8216;longitude&#8217;, &#8216;latitude&#8217; and &#8216;timestamp&#8217;). This dictionary can be used as a parameter for the <a class="reference internal" href="#location.reverse_geocode" title="location.reverse_geocode"><tt class="xref py py-func docutils literal"><span class="pre">reverse_geocode()</span></tt></a> function. If no location data has been obtained yet (or you haven&#8217;t authorized the app), the return value may be <cite>None</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="location.start_updates">
+<tt class="descclassname">location.</tt><tt class="descname">start_updates</tt><big>(</big><big>)</big><a class="headerlink" href="#location.start_updates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start updating location data. This should be called before using <a class="reference internal" href="#location.get_location" title="location.get_location"><tt class="xref py py-func docutils literal"><span class="pre">get_location()</span></tt></a>. To save energy, it is recommended to call <a class="reference internal" href="#location.stop_updates" title="location.stop_updates"><tt class="xref py py-func docutils literal"><span class="pre">stop_updates()</span></tt></a> when you no longer need location data.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="location.stop_updates">
+<tt class="descclassname">location.</tt><tt class="descname">stop_updates</tt><big>(</big><big>)</big><a class="headerlink" href="#location.stop_updates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop updating location data.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="location.geocode">
+<tt class="descclassname">location.</tt><tt class="descname">geocode</tt><big>(</big><em>address</em><big>)</big><a class="headerlink" href="#location.geocode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to convert an address dictionary to geo-coordinates. The return value is a list of possible coordinates (can be empty if no results are found). Each entry in the list is a dictionary with &#8216;longitude&#8217; and &#8216;latitude&#8217; keys.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">location</span>
+<span class="n">address_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Street&#39;</span><span class="p">:</span> <span class="s">&#39;Infinite Loop&#39;</span><span class="p">,</span> <span class="s">&#39;City&#39;</span><span class="p">:</span> <span class="s">&#39;Cupertino&#39;</span><span class="p">,</span> <span class="s">&#39;Country&#39;</span><span class="p">:</span> <span class="s">&#39;USA&#39;</span><span class="p">}</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">geocode</span><span class="p">(</span><span class="n">address_dict</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">results</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="location.reverse_geocode">
+<tt class="descclassname">location.</tt><tt class="descname">reverse_geocode</tt><big>(</big><em>location</em><big>)</big><a class="headerlink" href="#location.reverse_geocode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to convert a location (longitude/latitude) to a human-readable address. The <cite>location</cite> parameter should be a dictionary containing values for &#8216;longitude&#8217; and &#8216;latitude&#8217;. The return value is a list of possible address dictionaries (usually just one).</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">location</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;latitude&#39;</span><span class="p">:</span> <span class="mf">37.331684</span><span class="p">,</span> <span class="s">&#39;longitude&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">122.030758</span><span class="p">}</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">location</span><span class="o">.</span><span class="n">reverse_geocode</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">results</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="location.is_authorized">
+<tt class="descclassname">location.</tt><tt class="descname">is_authorized</tt><big>(</big><big>)</big><a class="headerlink" href="#location.is_authorized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <cite>True</cite> if access to location data is currently allowed, <cite>False</cite> otherwise (e.g. if the permission dialog hasn&#8217;t been shown yet or if access is denied due to parental controls).</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

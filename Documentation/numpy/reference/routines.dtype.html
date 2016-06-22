@@ -1,0 +1,249 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data type routines &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Routines" href="routines.html" />
+    <link rel="next" title="numpy.can_cast" href="generated/numpy.can_cast.html" />
+    <link rel="prev" title="numpy.busday_count" href="generated/numpy.busday_count.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="generated/numpy.can_cast.html" title="numpy.can_cast"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.busday_count.html" title="numpy.busday_count"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" accesskey="U">Routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="data-type-routines">
+<span id="routines-dtype"></span><h1>Data type routines<a class="headerlink" href="#data-type-routines" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.can_cast.html#numpy.can_cast" title="numpy.can_cast"><tt class="xref py py-obj docutils literal"><span class="pre">can_cast</span></tt></a>(from,&nbsp;totype,&nbsp;casting&nbsp;=&nbsp;)</td>
+<td>Returns True if cast between data types can occur according to the casting rule.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.promote_types.html#numpy.promote_types" title="numpy.promote_types"><tt class="xref py py-obj docutils literal"><span class="pre">promote_types</span></tt></a>(type1,&nbsp;type2)</td>
+<td>Returns the data type with the smallest size and smallest scalar kind to which both <tt class="docutils literal"><span class="pre">type1</span></tt> and <tt class="docutils literal"><span class="pre">type2</span></tt> may be safely cast.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.min_scalar_type.html#numpy.min_scalar_type" title="numpy.min_scalar_type"><tt class="xref py py-obj docutils literal"><span class="pre">min_scalar_type</span></tt></a>(a)</td>
+<td>For scalar <tt class="docutils literal"><span class="pre">a</span></tt>, returns the data type with the smallest size and smallest scalar kind which can hold its value.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.result_type.html#numpy.result_type" title="numpy.result_type"><tt class="xref py py-obj docutils literal"><span class="pre">result_type</span></tt></a>(*arrays_and_dtypes)</td>
+<td>Returns the type that results from applying the NumPy type promotion rules to the arguments.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.common_type.html#numpy.common_type" title="numpy.common_type"><tt class="xref py py-obj docutils literal"><span class="pre">common_type</span></tt></a>(*arrays)</td>
+<td>Return a scalar type which is common to the input arrays.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.obj2sctype.html#numpy.obj2sctype" title="numpy.obj2sctype"><tt class="xref py py-obj docutils literal"><span class="pre">obj2sctype</span></tt></a>(rep[,&nbsp;default])</td>
+<td>Return the scalar dtype or NumPy equivalent of Python type of an object.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="creating-data-types">
+<h2>Creating data types<a class="headerlink" href="#creating-data-types" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.dtype.html#numpy.dtype" title="numpy.dtype"><tt class="xref py py-obj docutils literal"><span class="pre">dtype</span></tt></a></td>
+<td>Create a data type object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.format_parser.html#numpy.format_parser" title="numpy.format_parser"><tt class="xref py py-obj docutils literal"><span class="pre">format_parser</span></tt></a>(formats,&nbsp;names,&nbsp;titles[,&nbsp;...])</td>
+<td>Class to convert formats, names, titles description to a dtype.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="data-type-information">
+<h2>Data type information<a class="headerlink" href="#data-type-information" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.finfo.html#numpy.finfo" title="numpy.finfo"><tt class="xref py py-obj docutils literal"><span class="pre">finfo</span></tt></a></td>
+<td>Machine limits for floating point types.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.iinfo.html#numpy.iinfo" title="numpy.iinfo"><tt class="xref py py-obj docutils literal"><span class="pre">iinfo</span></tt></a>(type)</td>
+<td>Machine limits for integer types.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.MachAr.html#numpy.MachAr" title="numpy.MachAr"><tt class="xref py py-obj docutils literal"><span class="pre">MachAr</span></tt></a>([float_conv,&nbsp;int_conv,&nbsp;...])</td>
+<td>Diagnosing machine parameters.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="data-type-testing">
+<h2>Data type testing<a class="headerlink" href="#data-type-testing" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.issctype.html#numpy.issctype" title="numpy.issctype"><tt class="xref py py-obj docutils literal"><span class="pre">issctype</span></tt></a>(rep)</td>
+<td>Determines whether the given object represents a scalar data-type.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.issubdtype.html#numpy.issubdtype" title="numpy.issubdtype"><tt class="xref py py-obj docutils literal"><span class="pre">issubdtype</span></tt></a>(arg1,&nbsp;arg2)</td>
+<td>Returns True if first argument is a typecode lower/equal in type hierarchy.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.issubsctype.html#numpy.issubsctype" title="numpy.issubsctype"><tt class="xref py py-obj docutils literal"><span class="pre">issubsctype</span></tt></a>(arg1,&nbsp;arg2)</td>
+<td>Determine if the first argument is a subclass of the second argument.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.issubclass_.html#numpy.issubclass_" title="numpy.issubclass_"><tt class="xref py py-obj docutils literal"><span class="pre">issubclass_</span></tt></a>(arg1,&nbsp;arg2)</td>
+<td>Determine if a class is a subclass of a second class.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.find_common_type.html#numpy.find_common_type" title="numpy.find_common_type"><tt class="xref py py-obj docutils literal"><span class="pre">find_common_type</span></tt></a>(array_types,&nbsp;scalar_types)</td>
+<td>Determine common type following standard coercion rules.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.typename.html#numpy.typename" title="numpy.typename"><tt class="xref py py-obj docutils literal"><span class="pre">typename</span></tt></a>(char)</td>
+<td>Return a description for the given data type code.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.sctype2char.html#numpy.sctype2char" title="numpy.sctype2char"><tt class="xref py py-obj docutils literal"><span class="pre">sctype2char</span></tt></a>(sctype)</td>
+<td>Return the string representation of a scalar dtype.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.mintypecode.html#numpy.mintypecode" title="numpy.mintypecode"><tt class="xref py py-obj docutils literal"><span class="pre">mintypecode</span></tt></a>(typechars[,&nbsp;typeset,&nbsp;default])</td>
+<td>Return the character for the minimum-size type to which given types can be safely cast.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

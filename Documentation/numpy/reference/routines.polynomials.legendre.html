@@ -1,0 +1,320 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Legendre Module (numpy.polynomial.legendre) &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Polynomial Package" href="routines.polynomials.package.html" />
+    <link rel="next" title="numpy.polynomial.legendre.Legendre" href="generated/numpy.polynomial.legendre.Legendre.html" />
+    <link rel="prev" title="numpy.polynomial.chebyshev.poly2cheb" href="generated/numpy.polynomial.chebyshev.poly2cheb.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="generated/numpy.polynomial.legendre.Legendre.html" title="numpy.polynomial.legendre.Legendre"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.polynomial.chebyshev.poly2cheb.html" title="numpy.polynomial.chebyshev.poly2cheb"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" >Routines</a> &raquo;</li>
+          <li><a href="routines.polynomials.html" >Polynomials</a> &raquo;</li>
+          <li><a href="routines.polynomials.package.html" accesskey="U">Polynomial Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="legendre-module-numpy-polynomial-legendre">
+<h1>Legendre Module (<tt class="xref py py-mod docutils literal"><span class="pre">numpy.polynomial.legendre</span></tt>)<a class="headerlink" href="#legendre-module-numpy-polynomial-legendre" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.0.</span></p>
+</div>
+<p>This module provides a number of objects (mostly functions) useful for
+dealing with Legendre series, including a <a class="reference internal" href="generated/numpy.polynomial.legendre.Legendre.html#numpy.polynomial.legendre.Legendre" title="numpy.polynomial.legendre.Legendre"><tt class="xref py py-obj docutils literal"><span class="pre">Legendre</span></tt></a> class that
+encapsulates the usual arithmetic operations.  (General information
+on how this module represents and works with such polynomials is in the
+docstring for its &#8220;parent&#8221; sub-package, <tt class="xref py py-obj docutils literal"><span class="pre">numpy.polynomial</span></tt>).</p>
+<div class="section" id="legendre-class">
+<h2>Legendre Class<a class="headerlink" href="#legendre-class" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.Legendre.html#numpy.polynomial.legendre.Legendre" title="numpy.polynomial.legendre.Legendre"><tt class="xref py py-obj docutils literal"><span class="pre">Legendre</span></tt></a>(coef[,&nbsp;domain,&nbsp;window])</td>
+<td>A Legendre series class.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legval.html#numpy.polynomial.legendre.legval" title="numpy.polynomial.legendre.legval"><tt class="xref py py-obj docutils literal"><span class="pre">legval</span></tt></a>(x,&nbsp;c[,&nbsp;tensor])</td>
+<td>Evaluate a Legendre series at points x.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legval2d.html#numpy.polynomial.legendre.legval2d" title="numpy.polynomial.legendre.legval2d"><tt class="xref py py-obj docutils literal"><span class="pre">legval2d</span></tt></a>(x,&nbsp;y,&nbsp;c)</td>
+<td>Evaluate a 2-D Legendre series at points (x, y).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legval3d.html#numpy.polynomial.legendre.legval3d" title="numpy.polynomial.legendre.legval3d"><tt class="xref py py-obj docutils literal"><span class="pre">legval3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;c)</td>
+<td>Evaluate a 3-D Legendre series at points (x, y, z).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.leggrid2d.html#numpy.polynomial.legendre.leggrid2d" title="numpy.polynomial.legendre.leggrid2d"><tt class="xref py py-obj docutils literal"><span class="pre">leggrid2d</span></tt></a>(x,&nbsp;y,&nbsp;c)</td>
+<td>Evaluate a 2-D Legendre series on the Cartesian product of x and y.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.leggrid3d.html#numpy.polynomial.legendre.leggrid3d" title="numpy.polynomial.legendre.leggrid3d"><tt class="xref py py-obj docutils literal"><span class="pre">leggrid3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;c)</td>
+<td>Evaluate a 3-D Legendre series on the Cartesian product of x, y, and z.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legroots.html#numpy.polynomial.legendre.legroots" title="numpy.polynomial.legendre.legroots"><tt class="xref py py-obj docutils literal"><span class="pre">legroots</span></tt></a>(c)</td>
+<td>Compute the roots of a Legendre series.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legfromroots.html#numpy.polynomial.legendre.legfromroots" title="numpy.polynomial.legendre.legfromroots"><tt class="xref py py-obj docutils literal"><span class="pre">legfromroots</span></tt></a>(roots)</td>
+<td>Generate a Legendre series with given roots.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fitting">
+<h2>Fitting<a class="headerlink" href="#fitting" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legfit.html#numpy.polynomial.legendre.legfit" title="numpy.polynomial.legendre.legfit"><tt class="xref py py-obj docutils literal"><span class="pre">legfit</span></tt></a>(x,&nbsp;y,&nbsp;deg[,&nbsp;rcond,&nbsp;full,&nbsp;w])</td>
+<td>Least squares fit of Legendre series to data.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legvander.html#numpy.polynomial.legendre.legvander" title="numpy.polynomial.legendre.legvander"><tt class="xref py py-obj docutils literal"><span class="pre">legvander</span></tt></a>(x,&nbsp;deg)</td>
+<td>Pseudo-Vandermonde matrix of given degree.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legvander2d.html#numpy.polynomial.legendre.legvander2d" title="numpy.polynomial.legendre.legvander2d"><tt class="xref py py-obj docutils literal"><span class="pre">legvander2d</span></tt></a>(x,&nbsp;y,&nbsp;deg)</td>
+<td>Pseudo-Vandermonde matrix of given degrees.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legvander3d.html#numpy.polynomial.legendre.legvander3d" title="numpy.polynomial.legendre.legvander3d"><tt class="xref py py-obj docutils literal"><span class="pre">legvander3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;deg)</td>
+<td>Pseudo-Vandermonde matrix of given degrees.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="calculus">
+<h2>Calculus<a class="headerlink" href="#calculus" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legder.html#numpy.polynomial.legendre.legder" title="numpy.polynomial.legendre.legder"><tt class="xref py py-obj docutils literal"><span class="pre">legder</span></tt></a>(c[,&nbsp;m,&nbsp;scl,&nbsp;axis])</td>
+<td>Differentiate a Legendre series.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legint.html#numpy.polynomial.legendre.legint" title="numpy.polynomial.legendre.legint"><tt class="xref py py-obj docutils literal"><span class="pre">legint</span></tt></a>(c[,&nbsp;m,&nbsp;k,&nbsp;lbnd,&nbsp;scl,&nbsp;axis])</td>
+<td>Integrate a Legendre series.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="algebra">
+<h2>Algebra<a class="headerlink" href="#algebra" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legadd.html#numpy.polynomial.legendre.legadd" title="numpy.polynomial.legendre.legadd"><tt class="xref py py-obj docutils literal"><span class="pre">legadd</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Add one Legendre series to another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legsub.html#numpy.polynomial.legendre.legsub" title="numpy.polynomial.legendre.legsub"><tt class="xref py py-obj docutils literal"><span class="pre">legsub</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Subtract one Legendre series from another.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legmul.html#numpy.polynomial.legendre.legmul" title="numpy.polynomial.legendre.legmul"><tt class="xref py py-obj docutils literal"><span class="pre">legmul</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Multiply one Legendre series by another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legmulx.html#numpy.polynomial.legendre.legmulx" title="numpy.polynomial.legendre.legmulx"><tt class="xref py py-obj docutils literal"><span class="pre">legmulx</span></tt></a>(c)</td>
+<td>Multiply a Legendre series by x.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legdiv.html#numpy.polynomial.legendre.legdiv" title="numpy.polynomial.legendre.legdiv"><tt class="xref py py-obj docutils literal"><span class="pre">legdiv</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Divide one Legendre series by another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legpow.html#numpy.polynomial.legendre.legpow" title="numpy.polynomial.legendre.legpow"><tt class="xref py py-obj docutils literal"><span class="pre">legpow</span></tt></a>(c,&nbsp;pow[,&nbsp;maxpower])</td>
+<td>Raise a Legendre series to a power.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="quadrature">
+<h2>Quadrature<a class="headerlink" href="#quadrature" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.leggauss.html#numpy.polynomial.legendre.leggauss" title="numpy.polynomial.legendre.leggauss"><tt class="xref py py-obj docutils literal"><span class="pre">leggauss</span></tt></a>(deg)</td>
+<td>Gauss-Legendre quadrature.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legweight.html#numpy.polynomial.legendre.legweight" title="numpy.polynomial.legendre.legweight"><tt class="xref py py-obj docutils literal"><span class="pre">legweight</span></tt></a>(x)</td>
+<td>Weight function of the Legendre polynomials.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legcompanion.html#numpy.polynomial.legendre.legcompanion" title="numpy.polynomial.legendre.legcompanion"><tt class="xref py py-obj docutils literal"><span class="pre">legcompanion</span></tt></a>(c)</td>
+<td>Return the scaled companion matrix of c.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legdomain.html#numpy.polynomial.legendre.legdomain" title="numpy.polynomial.legendre.legdomain"><tt class="xref py py-obj docutils literal"><span class="pre">legdomain</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legzero.html#numpy.polynomial.legendre.legzero" title="numpy.polynomial.legendre.legzero"><tt class="xref py py-obj docutils literal"><span class="pre">legzero</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legone.html#numpy.polynomial.legendre.legone" title="numpy.polynomial.legendre.legone"><tt class="xref py py-obj docutils literal"><span class="pre">legone</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legx.html#numpy.polynomial.legendre.legx" title="numpy.polynomial.legendre.legx"><tt class="xref py py-obj docutils literal"><span class="pre">legx</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legtrim.html#numpy.polynomial.legendre.legtrim" title="numpy.polynomial.legendre.legtrim"><tt class="xref py py-obj docutils literal"><span class="pre">legtrim</span></tt></a>(c[,&nbsp;tol])</td>
+<td>Remove &#8220;small&#8221; &#8220;trailing&#8221; coefficients from a polynomial.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.legline.html#numpy.polynomial.legendre.legline" title="numpy.polynomial.legendre.legline"><tt class="xref py py-obj docutils literal"><span class="pre">legline</span></tt></a>(off,&nbsp;scl)</td>
+<td>Legendre series whose graph is a straight line.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.leg2poly.html#numpy.polynomial.legendre.leg2poly" title="numpy.polynomial.legendre.leg2poly"><tt class="xref py py-obj docutils literal"><span class="pre">leg2poly</span></tt></a>(c)</td>
+<td>Convert a Legendre series to a polynomial.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.legendre.poly2leg.html#numpy.polynomial.legendre.poly2leg" title="numpy.polynomial.legendre.poly2leg"><tt class="xref py py-obj docutils literal"><span class="pre">poly2leg</span></tt></a>(pol)</td>
+<td>Convert a polynomial to a Legendre series.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

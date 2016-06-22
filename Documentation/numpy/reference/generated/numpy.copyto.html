@@ -1,0 +1,193 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.copyto &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Array manipulation routines" href="../routines.array-manipulation.html" />
+    <link rel="next" title="numpy.reshape" href="numpy.reshape.html" />
+    <link rel="prev" title="numpy.rot90" href="numpy.rot90.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.reshape.html" title="numpy.reshape"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.rot90.html" title="numpy.rot90"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.array-manipulation.html" accesskey="U">Array manipulation routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-copyto">
+<h1>numpy.copyto<a class="headerlink" href="#numpy-copyto" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.copyto">
+<tt class="descclassname">numpy.</tt><tt class="descname">copyto</tt><big>(</big><em>dst</em>, <em>src</em>, <em>casting='same_kind'</em>, <em>where=None</em>, <em>preservena=False</em><big>)</big><a class="headerlink" href="#numpy.copyto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies values from one array to another, broadcasting as necessary.</p>
+<p>Raises a TypeError if the <em class="xref py py-obj">casting</em> rule is violated, and if
+<a class="reference internal" href="numpy.where.html#numpy.where" title="numpy.where"><tt class="xref py py-obj docutils literal"><span class="pre">where</span></tt></a> is provided, it selects which elements to copy.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.7.0.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dst</strong> : ndarray</p>
+<blockquote>
+<div><p>The array into which values are copied.</p>
+</div></blockquote>
+<p><strong>src</strong> : array_like</p>
+<blockquote>
+<div><p>The array from which values are copied.</p>
+</div></blockquote>
+<p><strong>casting</strong> : {&#8216;no&#8217;, &#8216;equiv&#8217;, &#8216;safe&#8217;, &#8216;same_kind&#8217;, &#8216;unsafe&#8217;}, optional</p>
+<blockquote>
+<div><p>Controls what kind of data casting may occur when copying.</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8216;no&#8217; means the data types should not be cast at all.</li>
+<li>&#8216;equiv&#8217; means only byte-order changes are allowed.</li>
+<li>&#8216;safe&#8217; means only casts which can preserve values are allowed.</li>
+<li>&#8216;same_kind&#8217; means only safe casts or casts within a kind,
+like float64 to float32, are allowed.</li>
+<li>&#8216;unsafe&#8217; means any data conversions may be done.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>where</strong> : array_like of bool, optional</p>
+<blockquote>
+<div><p>A boolean array which is broadcasted to match the dimensions
+of <em class="xref py py-obj">dst</em>, and selects elements to copy from <em class="xref py py-obj">src</em> to <em class="xref py py-obj">dst</em>
+wherever it contains the value True.</p>
+</div></blockquote>
+<p><strong>preservena</strong> : bool, optional</p>
+<blockquote class="last">
+<div><p>If set to True, leaves any NA values in <em class="xref py py-obj">dst</em> untouched. This
+is similar to the &#8220;hard mask&#8221; feature in numpy.ma.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

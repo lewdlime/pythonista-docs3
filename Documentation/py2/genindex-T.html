@@ -1,0 +1,634 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Index &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+
+   <h1 id="index">Index &ndash; T</h1>
+
+<table style="width: 100%" class="indextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="ios/scene.html#scene.Scene.t">t (scene.Scene attribute)</a></dt>
+    <dt><a href="library/locale.html#locale.T_FMT">T_FMT (in module locale)</a></dt>
+    <dt><a href="library/locale.html#locale.T_FMT_AMPM">T_FMT_AMPM (in module locale)</a></dt>
+    <dt><a href="reference/lexical_analysis.html#index-7">tab</a></dt>
+    <dt><a href="library/exceptions.html#exceptions.TabError">TabError</a></dt>
+    <dt><a href="ios/ui.html#ui.TableView">TableView (class in ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.TableViewCell">TableViewCell (class in ui)</a></dt>
+    <dt><a href="library/tabnanny.html#module-tabnanny">tabnanny (module)</a></dt>
+    <dt>tabular</dt>
+    <dd><dl>
+      <dt><a href="library/csv.html#index-0">data</a></dt>
+  </dl></dd>
+    <dt><a href="ios/beautifulsoup_ref.html#bs4.Tag">Tag (class in bs4)</a></dt>
+    <dt><a href="library/xml.etree.elementtree.html#xml.etree.ElementTree.Element.tag">tag (xml.etree.ElementTree.Element attribute)</a></dt>
+    <dt><a href="ios/linguistictagger.html#linguistictagger.tag_string">tag_string() (in module linguistictagger)</a></dt>
+    <dt><a href="library/xml.dom.html#xml.dom.Element.tagName">tagName (xml.dom.Element attribute)</a></dt>
+    <dt><a href="library/xml.etree.elementtree.html#xml.etree.ElementTree.Element.tail">tail (xml.etree.ElementTree.Element attribute)</a></dt>
+    <dt><a href="library/itertools.html#itertools.takewhile">takewhile() (in module itertools)</a></dt>
+    <dt><a href="library/cmath.html#cmath.tan">tan() (in module cmath)</a></dt>
+    <dd><dl>
+      <dt><a href="library/math.html#math.tan">(in module math)</a></dt>
+  </dl></dd>
+    <dt><a href="library/cmath.html#cmath.tanh">tanh() (in module cmath)</a></dt>
+    <dd><dl>
+      <dt><a href="library/math.html#math.tanh">(in module math)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/ui.html#ui.ListDataSource.tapped_accessory_row">tapped_accessory_row (ui.ListDataSource attribute)</a></dt>
+    <dt><a href="library/tarfile.html#tarfile.TarError">TarError</a></dt>
+    <dt><a href="library/tarfile.html#tarfile.TarFile">TarFile (class in tarfile)</a>, <a href="library/tarfile.html#tarfile.TarFile">[1]</a></dt>
+    <dt><a href="library/tarfile.html#module-tarfile">tarfile (module)</a></dt>
+    <dt><a href="library/tarfile.html#tarfile.TarFileCompat">TarFileCompat (class in tarfile)</a></dt>
+    <dt><a href="library/tarfile.html#tarfile.TarFileCompat.TAR_GZIPPED">TarFileCompat.TAR_GZIPPED (in module tarfile)</a></dt>
+    <dt><a href="library/tarfile.html#tarfile.TarFileCompat.TAR_PLAIN">TarFileCompat.TAR_PLAIN (in module tarfile)</a></dt>
+    <dt><a href="reference/simple_stmts.html#index-5">target</a></dt>
+    <dd><dl>
+      <dt><a href="reference/simple_stmts.html#index-18">deletion</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-6">list</a>, <a href="reference/simple_stmts.html#index-5">[1]</a></dt>
+      <dt><a href="reference/simple_stmts.html#index-6">list assignment</a></dt>
+      <dt><a href="reference/simple_stmts.html#index-18">list, deletion</a></dt>
+      <dt><a href="reference/simple_stmts.html#index-35">loop control</a></dt>
+  </dl></dd>
+    <dt><a href="library/xml.dom.html#xml.dom.ProcessingInstruction.target">target (xml.dom.ProcessingInstruction attribute)</a></dt>
+    <dt><a href="library/tarfile.html#tarfile.TarInfo">TarInfo (class in tarfile)</a></dt>
+    <dt><a href="library/queue.html#Queue.Queue.task_done">task_done() (Queue.Queue method)</a></dt>
+    <dt><a href="reference/datamodel.html#index-68">tb_frame (traceback attribute)</a></dt>
+    <dt><a href="reference/datamodel.html#index-68">tb_lasti (traceback attribute)</a></dt>
+    <dt><a href="reference/datamodel.html#index-68">tb_lineno (traceback attribute)</a></dt>
+    <dt><a href="library/traceback.html#traceback.tb_lineno">tb_lineno() (in module traceback)</a></dt>
+    <dt><a href="reference/datamodel.html#index-68">tb_next (traceback attribute)</a></dt>
+    <dt><a href="library/os.html#os.tcgetpgrp">tcgetpgrp() (in module os)</a></dt>
+    <dt><a href="library/os.html#os.tcsetpgrp">tcsetpgrp() (in module os)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestCase.tearDown">tearDown() (unittest.TestCase method)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestCase.tearDownClass">tearDownClass() (unittest.TestCase method)</a></dt>
+    <dt><a href="library/itertools.html#itertools.tee">tee() (in module itertools)</a></dt>
+    <dt><a href="library/aifc.html#aifc.aifc.tell">tell() (aifc.aifc method)</a>, <a href="library/aifc.html#aifc.aifc.tell">[1]</a></dt>
+    <dd><dl>
+      <dt><a href="ios/Image.html#Image.Image.tell">(Image.Image method)</a></dt>
+      <dt><a href="library/bz2.html#bz2.BZ2File.tell">(bz2.BZ2File method)</a></dt>
+      <dt><a href="library/chunk.html#chunk.Chunk.tell">(chunk.Chunk method)</a></dt>
+      <dt><a href="library/stdtypes.html#file.tell">(file method)</a></dt>
+      <dt><a href="library/mmap.html#mmap.tell">(in module mmap)</a></dt>
+      <dt><a href="library/io.html#io.IOBase.tell">(io.IOBase method)</a></dt>
+      <dt><a href="library/io.html#io.TextIOBase.tell">(io.TextIOBase method)</a></dt>
+      <dt><a href="library/multifile.html#multifile.MultiFile.tell">(multifile.MultiFile method)</a></dt>
+      <dt><a href="library/sunau.html#sunau.AU_read.tell">(sunau.AU_read method)</a></dt>
+      <dt><a href="library/sunau.html#sunau.AU_write.tell">(sunau.AU_write method)</a></dt>
+      <dt><a href="library/wave.html#wave.Wave_read.tell">(wave.Wave_read method)</a></dt>
+      <dt><a href="library/wave.html#wave.Wave_write.tell">(wave.Wave_write method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/telnetlib.html#telnetlib.Telnet">Telnet (class in telnetlib)</a></dt>
+    <dt><a href="library/telnetlib.html#module-telnetlib">telnetlib (module)</a></dt>
+    <dt><a href="library/tempfile.html#index-2">TEMP</a></dt>
+    <dt><a href="library/tempfile.html#tempfile.tempdir">tempdir (in module tempfile)</a></dt>
+    <dt><a href="library/tempfile.html#module-tempfile">tempfile (module)</a></dt>
+    <dt><a href="library/pipes.html#pipes.Template">Template (class in pipes)</a></dt>
+    <dd><dl>
+      <dt><a href="library/string.html#string.Template">(class in string)</a></dt>
+  </dl></dd>
+    <dt><a href="library/tempfile.html#tempfile.template">template (in module tempfile)</a></dt>
+    <dd><dl>
+      <dt><a href="library/string.html#string.Template.template">(string.Template attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/bottle/api.html#bottle.template">template() (in module bottle)</a></dt>
+    <dt><a href="library/os.html#os.tempnam">tempnam() (in module os)</a></dt>
+    <dt>temporary</dt>
+    <dd><dl>
+      <dt><a href="library/tempfile.html#index-0">file</a></dt>
+      <dt><a href="library/tempfile.html#index-0">file name</a></dt>
+  </dl></dd>
+    <dt><a href="library/tempfile.html#tempfile.TemporaryFile">TemporaryFile() (in module tempfile)</a></dt>
+    <dt><a href="library/subprocess.html#subprocess.Popen.terminate">terminate() (subprocess.Popen method)</a></dt>
+    <dt><a href="reference/executionmodel.html#index-14">termination model</a></dt>
+    <dt>ternary</dt>
+    <dd><dl>
+      <dt><a href="reference/expressions.html#index-73">operator</a></dt>
+  </dl></dd>
+    <dt>test</dt>
+    <dd><dl>
+      <dt><a href="reference/expressions.html#index-68">identity</a></dt>
+      <dt><a href="reference/expressions.html#index-67">membership</a></dt>
+  </dl></dd>
+    <dt><a href="library/doctest.html#doctest.DocTestFailure.test">test (doctest.DocTestFailure attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="library/doctest.html#doctest.UnexpectedException.test">(doctest.UnexpectedException attribute)</a></dt>
+      <dt><a href="library/test.html#module-test">(module)</a></dt>
+  </dl></dd>
+    <dt><a href="library/cgi.html#cgi.test">test() (in module cgi)</a></dt>
+    <dd><dl>
+      <dt><a href="library/mutex.html#mutex.mutex.test">(mutex.mutex method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/test.html#module-test.test_support">test.test_support (module)</a></dt>
+    <dt><a href="library/mutex.html#mutex.mutex.testandset">testandset() (mutex.mutex method)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestCase">TestCase (class in unittest)</a></dt>
+    <dt><a href="library/test.html#test.test_support.TestFailed">TestFailed</a></dt>
+    <dt><a href="library/doctest.html#doctest.testfile">testfile() (in module doctest)</a></dt>
+    <dt><a href="library/test.html#test.test_support.TESTFN">TESTFN (in module test.test_support)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestLoader">TestLoader (class in unittest)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestLoader.testMethodPrefix">testMethodPrefix (unittest.TestLoader attribute)</a></dt>
+    <dt><a href="library/doctest.html#doctest.testmod">testmod() (in module doctest)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestResult">TestResult (class in unittest)</a></dt>
+    <dt><a href="library/imghdr.html#imghdr.tests">tests (in module imghdr)</a></dt>
+    <dt><a href="library/doctest.html#doctest.testsource">testsource() (in module doctest)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestResult.testsRun">testsRun (unittest.TestResult attribute)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestSuite">TestSuite (class in unittest)</a></dt>
+    <dt><a href="library/zipfile.html#zipfile.ZipFile.testzip">testzip() (zipfile.ZipFile method)</a></dt>
+    <dt><a href="ios/beautifulsoup_ref.html#bs4.Tag.text">text (bs4.Tag attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/requests.html#requests.Response.text">(requests.Response attribute)</a>, <a href="ios/requests.html#requests.Response.text">[1]</a></dt>
+      <dt><a href="ios/scene.html#scene.LabelNode.text">(scene.LabelNode attribute)</a></dt>
+      <dt><a href="ios/ui.html#ui.Label.text">(ui.Label attribute)</a></dt>
+      <dt><a href="ios/ui.html#ui.TextField.text">(ui.TextField attribute)</a></dt>
+      <dt><a href="ios/ui.html#ui.TextView.text">(ui.TextView attribute)</a></dt>
+      <dt><a href="library/xml.etree.elementtree.html#xml.etree.ElementTree.Element.text">(xml.etree.ElementTree.Element attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/ImageDraw.html#ImageDraw.ImageDraw.text">text() (ImageDraw.ImageDraw method)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/scene_drawing.html#scene_drawing.text">(in module scene_drawing)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/ui.html#ui.Label.text_color">text_color (ui.Label attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/ui.html#ui.ListDataSource.text_color">(ui.ListDataSource attribute)</a></dt>
+      <dt><a href="ios/ui.html#ui.TextField.text_color">(ui.TextField attribute)</a></dt>
+      <dt><a href="ios/ui.html#ui.TextView.text_color">(ui.TextView attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/dialogs.html#dialogs.text_dialog">text_dialog() (in module dialogs)</a></dt>
+    <dt><a href="library/sqlite3.html#sqlite3.Connection.text_factory">text_factory (sqlite3.Connection attribute)</a></dt>
+    <dt><a href="ios/ui.html#ui.TableViewCell.text_label">text_label (ui.TableViewCell attribute)</a></dt>
+    <dt><a href="library/calendar.html#calendar.TextCalendar">TextCalendar (class in calendar)</a></dt>
+    <dt><a href="library/gettext.html#gettext.textdomain">textdomain() (in module gettext)</a></dt>
+    <dt><a href="ios/ui.html#ui.TextField">TextField (class in ui)</a></dt>
+    <dt><a href="library/io.html#io.TextIOBase">TextIOBase (class in io)</a></dt>
+    <dt><a href="library/io.html#io.TextIOWrapper">TextIOWrapper (class in io)</a></dt>
+    <dt><a href="ios/ImageDraw.html#ImageDraw.ImageDraw.textsize">textsize() (ImageDraw.ImageDraw method)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TextTestResult">TextTestResult (class in unittest)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TextTestRunner">TextTestRunner (class in unittest)</a></dt>
+    <dt><a href="ios/scene.html#scene.Texture">Texture (class in scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.SpriteNode.texture">texture (scene.SpriteNode attribute)</a></dt>
+    <dt><a href="ios/ui.html#ui.TextView">TextView (class in ui)</a></dt>
+    <dt><a href="library/textwrap.html#module-textwrap">textwrap (module)</a></dt>
+    <dt><a href="library/textwrap.html#textwrap.TextWrapper">TextWrapper (class in textwrap)</a></dt>
+    <dt><a href="library/locale.html#locale.THOUSEP">THOUSEP (in module locale)</a></dt>
+    <dt><a href="library/threading.html#threading.Thread">Thread (class in threading)</a></dt>
+    <dt><a href="library/thread.html#module-thread">thread (module)</a></dt>
+    <dt><a href="library/imaplib.html#imaplib.IMAP4.thread">thread() (imaplib.IMAP4 method)</a></dt>
+    <dt><a href="library/threading.html#module-threading">threading (module)</a></dt>
+    <dt>threads</dt>
+    <dd><dl>
+      <dt><a href="library/thread.html#index-3">IRIX</a></dt>
+      <dt><a href="library/thread.html#index-1">POSIX</a></dt>
+  </dl></dd>
+    <dt><a href="library/2to3.html#2to3fixer-throw">throw (2to3 fixer)</a></dt>
+    <dt><a href="reference/expressions.html#generator.throw">throw() (generator method)</a></dt>
+    <dt><a href="ios/Image.html#Image.Image.thumbnail">thumbnail() (Image.Image method)</a>, <a href="ios/Image.html#Image.Image.thumbnail">[1]</a></dt>
+    <dt><a href="library/token.html#token.TILDE">TILDE (in module token)</a></dt>
+    <dt><a href="library/datetime.html#datetime.time">time (class in datetime)</a></dt>
+    <dd><dl>
+      <dt><a href="library/time.html#module-time">(module)</a></dt>
+  </dl></dd>
+    <dt><a href="library/datetime.html#datetime.datetime.time">time() (datetime.datetime method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/time.html#time.time">(in module time)</a></dt>
+  </dl></dd>
+    <dt><a href="library/imaplib.html#imaplib.Time2Internaldate">Time2Internaldate() (in module imaplib)</a></dt>
+    <dt><a href="ios/dialogs.html#dialogs.time_dialog">time_dialog() (in module dialogs)</a></dt>
+    <dt><a href="library/datetime.html#datetime.timedelta">timedelta (class in datetime)</a></dt>
+    <dt><a href="library/logging.handlers.html#logging.handlers.TimedRotatingFileHandler">TimedRotatingFileHandler (class in logging.handlers)</a></dt>
+    <dt><a href="library/calendar.html#calendar.timegm">timegm() (in module calendar)</a></dt>
+    <dt><a href="library/timeit.html#module-timeit">timeit (module)</a></dt>
+    <dt>timeit command line option</dt>
+    <dd><dl>
+      <dt><a href="library/timeit.html#cmdoption-timeit-c">-c, --clock</a></dt>
+      <dt><a href="library/timeit.html#cmdoption-timeit-h">-h, --help</a></dt>
+      <dt><a href="library/timeit.html#cmdoption-timeit-n">-n N, --number=N</a></dt>
+      <dt><a href="library/timeit.html#cmdoption-timeit-r">-r N, --repeat=N</a></dt>
+      <dt><a href="library/timeit.html#cmdoption-timeit-s">-s S, --setup=S</a></dt>
+      <dt><a href="library/timeit.html#cmdoption-timeit-t">-t, --time</a></dt>
+      <dt><a href="library/timeit.html#cmdoption-timeit-v">-v, --verbose</a></dt>
+  </dl></dd>
+    <dt><a href="library/timeit.html#timeit.timeit">timeit() (in module timeit)</a></dt>
+    <dd><dl>
+      <dt><a href="library/timeit.html#timeit.Timer.timeit">(timeit.Timer method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/socket.html#socket.timeout">timeout</a></dt>
+    <dd><dl>
+      <dt><a href="library/socketserver.html#SocketServer.BaseServer.timeout">(SocketServer.BaseServer attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/threading.html#threading.Timer">Timer (class in threading)</a></dt>
+    <dd><dl>
+      <dt><a href="library/timeit.html#timeit.Timer">(class in timeit)</a></dt>
+  </dl></dd>
+    <dt><a href="library/os.html#os.times">times() (in module os)</a></dt>
+    <dt><a href="ios/ui.html#ui.Touch.timestamp">timestamp (ui.Touch attribute)</a></dt>
+    <dt><a href="library/datetime.html#datetime.date.timetuple">timetuple() (datetime.date method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/datetime.html#datetime.datetime.timetuple">(datetime.datetime method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/datetime.html#datetime.datetime.timetz">timetz() (datetime.datetime method)</a></dt>
+    <dt><a href="library/time.html#time.timezone">timezone (in module time)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_BOUNCE_IN">TIMING_BOUNCE_IN (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_BOUNCE_IN_OUT">TIMING_BOUNCE_IN_OUT (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_BOUNCE_OUT">TIMING_BOUNCE_OUT (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_EASE_BACK_IN">TIMING_EASE_BACK_IN (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_EASE_BACK_IN_OUT">TIMING_EASE_BACK_IN_OUT (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_EASE_BACK_OUT">TIMING_EASE_BACK_OUT (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_EASE_IN">TIMING_EASE_IN (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_EASE_IN_2">TIMING_EASE_IN_2 (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_EASE_IN_OUT">TIMING_EASE_IN_OUT (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_EASE_OUT">TIMING_EASE_OUT (in module scene)</a></dt>
+</dl></td>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="ios/scene.html#scene.TIMING_EASE_OUT_2">TIMING_EASE_OUT_2 (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_ELASTIC_IN">TIMING_ELASTIC_IN (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_ELASTIC_IN_OUT">TIMING_ELASTIC_IN_OUT (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_ELASTIC_OUT">TIMING_ELASTIC_OUT (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_LINEAR">TIMING_LINEAR (in module scene)</a></dt>
+    <dt><a href="ios/scene.html#scene.Action.timing_mode">timing_mode (scene.Action attribute)</a></dt>
+    <dt><a href="ios/scene.html#scene.TIMING_SINODIAL">TIMING_SINODIAL (in module scene)</a></dt>
+    <dt><a href="ios/scene_drawing.html#scene_drawing.tint">tint() (in module scene_drawing)</a></dt>
+    <dt><a href="ios/ui.html#ui.ButtonItem.tint_color">tint_color (ui.ButtonItem attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/ui.html#ui.View.tint_color">(ui.View attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/photos.html#photos.AssetCollection.title">title (photos.AssetCollection attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/reminders.html#reminders.Calendar.title">(reminders.Calendar attribute)</a></dt>
+      <dt><a href="ios/reminders.html#reminders.Reminder.title">(reminders.Reminder attribute)</a></dt>
+      <dt><a href="ios/ui.html#ui.Button.title">(ui.Button attribute)</a></dt>
+      <dt><a href="ios/ui.html#ui.ButtonItem.title">(ui.ButtonItem attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/stdtypes.html#str.title">title() (str method)</a></dt>
+    <dt><a href="ios/ui.html#ui.NavigationView.title_color">title_color (ui.NavigationView attribute)</a></dt>
+    <dt><a href="library/ssl.html#index-1">TLS</a></dt>
+    <dt><a href="library/tempfile.html#index-3">TMP</a>, <a href="library/os.html#index-19">[1]</a></dt>
+    <dt><a href="library/os.html#os.TMP_MAX">TMP_MAX (in module os)</a></dt>
+    <dt><a href="library/tempfile.html#index-1">TMPDIR</a>, <a href="library/os.html#index-18">[1]</a></dt>
+    <dt><a href="library/os.html#os.tmpfile">tmpfile() (in module os)</a></dt>
+    <dt><a href="library/os.html#os.tmpnam">tmpnam() (in module os)</a></dt>
+    <dt><a href="library/decimal.html#decimal.Context.to_eng_string">to_eng_string() (decimal.Context method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/decimal.html#decimal.Decimal.to_eng_string">(decimal.Decimal method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/decimal.html#decimal.Decimal.to_integral">to_integral() (decimal.Decimal method)</a></dt>
+    <dt><a href="library/decimal.html#decimal.Context.to_integral_exact">to_integral_exact() (decimal.Context method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/decimal.html#decimal.Decimal.to_integral_exact">(decimal.Decimal method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/decimal.html#decimal.Decimal.to_integral_value">to_integral_value() (decimal.Decimal method)</a></dt>
+    <dt><a href="ios/ui.html#ui.Image.to_png">to_png() (ui.Image method)</a></dt>
+    <dt><a href="library/decimal.html#decimal.Context.to_sci_string">to_sci_string() (decimal.Context method)</a></dt>
+    <dt><a href="library/email.charset.html#email.charset.Charset.to_splittable">to_splittable() (email.charset.Charset method)</a></dt>
+    <dt><a href="library/codecs.html#encodings.idna.ToASCII">ToASCII() (in module encodings.idna)</a></dt>
+    <dt><a href="ios/Image.html#Image.Image.tobitmap">tobitmap() (Image.Image method)</a></dt>
+    <dt><a href="library/tarfile.html#tarfile.TarInfo.tobuf">tobuf() (tarfile.TarInfo method)</a></dt>
+    <dt><a href="library/stdtypes.html#memoryview.tobytes">tobytes() (memoryview method)</a></dt>
+    <dt><a href="library/popen2.html#popen2.Popen3.tochild">tochild (popen2.Popen3 attribute)</a></dt>
+    <dt><a href="library/datetime.html#datetime.date.today">today() (datetime.date class method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/datetime.html#datetime.datetime.today">(datetime.datetime class method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/array.html#array.array.tofile">tofile() (array.array method)</a></dt>
+    <dt><a href="library/token.html#token.tok_name">tok_name (in module token)</a></dt>
+    <dt><a href="reference/lexical_analysis.html#index-0">token</a></dt>
+    <dd><dl>
+      <dt><a href="library/token.html#module-token">(module)</a></dt>
+      <dt><a href="library/shlex.html#shlex.shlex.token">(shlex.shlex attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/tabnanny.html#tabnanny.tokeneater">tokeneater() (in module tabnanny)</a></dt>
+    <dt><a href="library/tokenize.html#module-tokenize">tokenize (module)</a></dt>
+    <dt><a href="library/tokenize.html#tokenize.tokenize">tokenize() (in module tokenize)</a></dt>
+    <dt><a href="library/array.html#array.array.tolist">tolist() (array.array method)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/ImagePath.html#ImagePath.path.tolist">(ImagePath.path method)</a>, <a href="ios/ImagePath.html#ImagePath.path.tolist">[1]</a></dt>
+      <dt><a href="library/stdtypes.html#memoryview.tolist">(memoryview method)</a></dt>
+      <dt><a href="library/parser.html#parser.ST.tolist">(parser.ST method)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/requests.html#requests.TooManyRedirects">TooManyRedirects</a></dt>
+    <dt><a href="library/datetime.html#datetime.date.toordinal">toordinal() (datetime.date method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/datetime.html#datetime.datetime.toordinal">(datetime.datetime method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/poplib.html#poplib.POP3.top">top() (poplib.POP3 method)</a></dt>
+    <dt><a href="library/xml.dom.minidom.html#xml.dom.minidom.Node.toprettyxml">toprettyxml() (xml.dom.minidom.Node method)</a></dt>
+    <dt><a href="library/array.html#array.array.tostring">tostring() (array.array method)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/Image.html#Image.Image.tostring">(Image.Image method)</a>, <a href="ios/Image.html#Image.Image.tostring">[1]</a></dt>
+      <dt><a href="library/xml.etree.elementtree.html#xml.etree.ElementTree.tostring">(in module xml.etree.ElementTree)</a></dt>
+  </dl></dd>
+    <dt><a href="library/xml.etree.elementtree.html#xml.etree.ElementTree.tostringlist">tostringlist() (in module xml.etree.ElementTree)</a></dt>
+    <dt><a href="library/sqlite3.html#sqlite3.Connection.total_changes">total_changes (sqlite3.Connection attribute)</a></dt>
+    <dt><a href="library/functools.html#functools.total_ordering">total_ordering() (in module functools)</a></dt>
+    <dt><a href="library/datetime.html#datetime.timedelta.total_seconds">total_seconds() (datetime.timedelta method)</a></dt>
+    <dt><a href="library/parser.html#parser.ST.totuple">totuple() (parser.ST method)</a></dt>
+    <dt><a href="ios/scene.html#scene.Touch">Touch (class in scene)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/ui.html#ui.Touch">(class in ui)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/scene.html#scene.Scene.touch_began">touch_began() (scene.Scene method)</a></dt>
+    <dt><a href="ios/ui.html#ui.View.touch_enabled">touch_enabled (ui.View attribute)</a></dt>
+    <dt><a href="ios/scene.html#scene.Scene.touch_ended">touch_ended() (scene.Scene method)</a></dt>
+    <dt><a href="ios/ui.html#ui.Touch.touch_id">touch_id (ui.Touch attribute)</a></dt>
+    <dt><a href="ios/scene.html#scene.Scene.touch_moved">touch_moved() (scene.Scene method)</a></dt>
+    <dt><a href="ios/scene.html#scene.Scene.touches">touches (scene.Scene attribute)</a></dt>
+    <dt><a href="library/array.html#array.array.tounicode">tounicode() (array.array method)</a></dt>
+    <dt><a href="library/codecs.html#encodings.idna.ToUnicode">ToUnicode() (in module encodings.idna)</a></dt>
+    <dt><a href="library/xml.dom.minidom.html#xml.dom.minidom.Node.toxml">toxml() (xml.dom.minidom.Node method)</a></dt>
+    <dt>trace</dt>
+    <dd><dl>
+      <dt><a href="reference/datamodel.html#index-67">stack</a></dt>
+  </dl></dd>
+    <dt><a href="library/trace.html#trace.Trace">Trace (class in trace)</a></dt>
+    <dt><a href="library/trace.html#module-trace">trace (module)</a></dt>
+    <dt>trace command line option</dt>
+    <dd><dl>
+      <dt><a href="library/trace.html#cmdoption-trace--help">--help</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace--ignore-dir">--ignore-dir=&lt;dir&gt;</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace--ignore-module">--ignore-module=&lt;mod&gt;</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace--version">--version</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-C">-C, --coverdir=&lt;dir&gt;</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-R">-R, --no-report</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-T">-T, --trackcalls</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-c">-c, --count</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-f">-f, --file=&lt;file&gt;</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-g">-g, --timing</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-l">-l, --listfuncs</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-m">-m, --missing</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-r">-r, --report</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-s">-s, --summary</a></dt>
+      <dt><a href="library/trace.html#cmdoption-trace-t">-t, --trace</a></dt>
+  </dl></dd>
+    <dt><a href="library/threading.html#index-1">trace function</a>, <a href="library/sys.html#index-3">[1]</a>, <a href="library/sys.html#index-13">[2]</a></dt>
+    <dt><a href="library/inspect.html#inspect.trace">trace() (in module inspect)</a></dt>
+    <dt><a href="library/bdb.html#bdb.Bdb.trace_dispatch">trace_dispatch() (bdb.Bdb method)</a></dt>
+    <dt>traceback</dt>
+    <dd><dl>
+      <dt><a href="library/traceback.html#index-0">object</a>, <a href="reference/compound_stmts.html#index-11">[1]</a>, <a href="reference/datamodel.html#index-67">[2]</a>, <a href="reference/simple_stmts.html#index-32">[3]</a>, <a href="library/sys.html#index-1">[4]</a></dt>
+  </dl></dd>
+    <dt><a href="library/traceback.html#module-traceback">traceback (module)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.handlers.BaseHandler.traceback_limit">traceback_limit (wsgiref.handlers.BaseHandler attribute)</a></dt>
+    <dt><a href="library/sys.html#sys.tracebacklimit">tracebacklimit (in module sys)</a></dt>
+    <dt>tracebacks</dt>
+    <dd><dl>
+      <dt><a href="library/cgitb.html#index-0">in CGI scripts</a></dt>
+  </dl></dd>
+    <dt><a href="library/types.html#types.TracebackType">TracebackType (in module types)</a></dt>
+    <dt><a href="ios/ui.html#ui.ScrollView.tracking">tracking (ui.ScrollView attribute)</a></dt>
+    <dt>trailing</dt>
+    <dd><dl>
+      <dt><a href="reference/simple_stmts.html#index-23">comma</a>, <a href="reference/expressions.html#index-78">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="library/ftplib.html#ftplib.FTP.transfercmd">transfercmd() (ftplib.FTP method)</a></dt>
+    <dt><a href="ios/ui.html#ui.Transform">Transform (class in ui)</a></dt>
+    <dt><a href="ios/ui.html#ui.View.transform">transform (ui.View attribute)</a></dt>
+    <dt><a href="ios/Image.html#Image.Image.transform">transform() (Image.Image method)</a>, <a href="ios/Image.html#Image.Image.transform">[1]</a>, <a href="ios/Image.html#Image.Image.transform">[2]</a>, <a href="ios/Image.html#Image.Image.transform">[3]</a>, <a href="ios/Image.html#Image.Image.transform">[4]</a>, <a href="ios/Image.html#Image.Image.transform">[5]</a>, <a href="ios/Image.html#Image.Image.transform">[6]</a>, <a href="ios/Image.html#Image.Image.transform">[7]</a>, <a href="ios/Image.html#Image.Image.transform">[8]</a>, <a href="ios/Image.html#Image.Image.transform">[9]</a>, <a href="ios/Image.html#Image.Image.transform">[10]</a>, <a href="ios/Image.html#Image.Image.transform">[11]</a></dt>
+    <dd><dl>
+      <dt><a href="ios/ImagePath.html#ImagePath.path.transform">(ImagePath.path method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/test.html#test.test_support.TransientResource">TransientResource (class in test.test_support)</a></dt>
+    <dt><a href="ios/canvas.html#canvas.translate">translate() (in module canvas)</a></dt>
+    <dd><dl>
+      <dt><a href="library/fnmatch.html#fnmatch.translate">(in module fnmatch)</a></dt>
+      <dt><a href="ios/scene_drawing.html#scene_drawing.translate">(in module scene_drawing)</a></dt>
+      <dt><a href="library/string.html#string.translate">(in module string)</a></dt>
+      <dt><a href="ios/scene.html#scene.Rect.translate">(scene.Rect method)</a></dt>
+      <dt><a href="library/stdtypes.html#str.translate">(str method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/gettext.html#gettext.translation">translation() (in module gettext)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/ui.html#ui.Transform.translation">(ui.Transform class method)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/paramiko.html#paramiko.Transport">Transport (class in paramiko)</a></dt>
+    <dt><a href="library/ssl.html#index-1">Transport Layer Security</a></dt>
+    <dt><a href="ios/Image.html#Image.Image.transpose">transpose() (Image.Image method)</a></dt>
+    <dt><a href="library/xml.etree.elementtree.html#xml.etree.ElementTree.TreeBuilder">TreeBuilder (class in xml.etree.ElementTree)</a></dt>
+    <dt><a href="ios/scene_drawing.html#scene_drawing.triangle_strip">triangle_strip() (in module scene_drawing)</a></dt>
+    <dt><a href="library/random.html#random.triangular">triangular() (in module random)</a></dt>
+    <dt><a href="glossary.html#term-triple-quoted-string">triple-quoted string</a>, <a href="reference/lexical_analysis.html#index-14">[1]</a></dt>
+    <dt><a href="reference/datamodel.html#index-13">True</a>, <a href="library/stdtypes.html#index-6">[1]</a>, <a href="library/stdtypes.html#index-42">[2]</a></dt>
+    <dt><a href="library/stdtypes.html#index-5">true</a></dt>
+    <dt><a href="library/constants.html#True">True (built-in variable)</a></dt>
+    <dt><a href="library/operator.html#operator.truediv">truediv() (in module operator)</a></dt>
+    <dt><a href="ios/ImageFont.html#ImageFont.truetype">truetype() (in module ImageFont)</a></dt>
+    <dt><a href="library/math.html#math.trunc">trunc() (in module math)</a>, <a href="library/stdtypes.html#index-18">[1]</a></dt>
+    <dt><a href="library/stdtypes.html#file.truncate">truncate() (file method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/io.html#io.IOBase.truncate">(io.IOBase method)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/requests.html#requests.Session.trust_env">trust_env (requests.Session attribute)</a></dt>
+    <dt>truth</dt>
+    <dd><dl>
+      <dt><a href="library/stdtypes.html#index-2">value</a></dt>
+  </dl></dd>
+    <dt><a href="library/operator.html#operator.truth">truth() (in module operator)</a></dt>
+    <dt>try</dt>
+    <dd><dl>
+      <dt><a href="reference/compound_stmts.html#index-10">statement</a>, <a href="reference/datamodel.html#index-68">[1]</a>, <a href="library/exceptions.html#index-0">[2]</a></dt>
+  </dl></dd>
+    <dt><a href="library/os.html#os.ttyname">ttyname() (in module os)</a></dt>
+    <dt>tuple</dt>
+    <dd><dl>
+      <dt><a href="reference/expressions.html#index-12">display</a></dt>
+      <dt><a href="reference/datamodel.html#index-24">empty</a>, <a href="reference/expressions.html#index-11">[1]</a></dt>
+      <dt><a href="reference/datamodel.html#index-24">object</a>, <a href="reference/expressions.html#index-32">[1]</a>, <a href="reference/expressions.html#index-35">[2]</a>, <a href="reference/expressions.html#index-77">[3]</a>, <a href="library/stdtypes.html#index-21">[4]</a></dt>
+      <dt><a href="reference/datamodel.html#index-24">singleton</a></dt>
+  </dl></dd>
+    <dt><a href="library/functions.html#tuple">tuple() (built-in function)</a></dt>
+    <dt><a href="library/parser.html#parser.tuple2st">tuple2st() (in module parser)</a></dt>
+    <dt><a href="library/2to3.html#2to3fixer-tuple_params">tuple_params (2to3 fixer)</a></dt>
+    <dt><a href="library/types.html#types.TupleType">TupleType (in module types)</a></dt>
+    <dt><a href="library/compiler.html#index-0">Tutt, Bill</a></dt>
+    <dt><a href="ios/twitter.html#module-twitter">twitter (module)</a></dt>
+    <dt><a href="reference/datamodel.html#index-4">type</a>, <a href="glossary.html#term-type">[1]</a></dt>
+    <dd><dl>
+      <dt><a href="library/functions.html#index-0">Boolean</a></dt>
+      <dt><a href="reference/datamodel.html#index-1">built-in function</a>, <a href="library/types.html#index-0">[1]</a>, <a href="library/stdtypes.html#index-41">[2]</a></dt>
+      <dt><a href="reference/datamodel.html#index-4">data</a></dt>
+      <dt><a href="reference/datamodel.html#index-4">hierarchy</a></dt>
+      <dt><a href="reference/expressions.html#index-9">immutable data</a></dt>
+      <dt><a href="library/functions.html#index-7">object</a></dt>
+      <dt><a href="library/stdtypes.html#index-32">operations on dictionary</a></dt>
+      <dt><a href="library/stdtypes.html#index-30">operations on list</a></dt>
+  </dl></dd>
+    <dt><a href="library/optparse.html#optparse.Option.type">type (optparse.Option attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/photos.html#photos.AssetCollection.type">(photos.AssetCollection attribute)</a></dt>
+      <dt><a href="library/socket.html#socket.socket.type">(socket.socket attribute)</a></dt>
+      <dt><a href="library/tarfile.html#tarfile.TarInfo.type">(tarfile.TarInfo attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="reference/datamodel.html#index-1">type of an object</a></dt>
+    <dt><a href="library/functions.html#type">type() (built-in function)</a></dt>
+    <dt><a href="library/optparse.html#optparse.Option.TYPE_CHECKER">TYPE_CHECKER (optparse.Option attribute)</a></dt>
+    <dt><a href="library/array.html#array.array.typecode">typecode (array.array attribute)</a></dt>
+    <dt><a href="library/optparse.html#optparse.Option.TYPED_ACTIONS">TYPED_ACTIONS (optparse.Option attribute)</a></dt>
+    <dt><a href="library/email.iterators.html#email.iterators.typed_subpart_iterator">typed_subpart_iterator() (in module email.iterators)</a></dt>
+    <dt><a href="library/exceptions.html#exceptions.TypeError">TypeError</a></dt>
+    <dd><dl>
+      <dt><a href="reference/expressions.html#index-51">exception</a></dt>
+  </dl></dd>
+    <dt>types</dt>
+    <dd><dl>
+      <dt><a href="library/stdtypes.html#index-0">built-in</a></dt>
+      <dt><a href="library/stdtypes.html#index-41">module</a></dt>
+      <dt><a href="library/stdtypes.html#index-29">mutable sequence</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">operations on integer</a></dt>
+      <dt><a href="library/stdtypes.html#index-32">operations on mapping</a></dt>
+      <dt><a href="library/stdtypes.html#index-16">operations on numeric</a></dt>
+      <dt><a href="library/stdtypes.html#index-22">operations on sequence</a>, <a href="library/stdtypes.html#index-30">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="library/2to3.html#2to3fixer-types">types (2to3 fixer)</a></dt>
+    <dd><dl>
+      <dt><a href="library/types.html#module-types">(module)</a></dt>
+  </dl></dd>
+    <dt><a href="library/optparse.html#optparse.Option.TYPES">TYPES (optparse.Option attribute)</a></dt>
+    <dt><a href="reference/datamodel.html#index-59">types, internal</a></dt>
+    <dt><a href="library/mimetypes.html#mimetypes.types_map">types_map (in module mimetypes)</a></dt>
+    <dd><dl>
+      <dt><a href="library/mimetypes.html#mimetypes.MimeTypes.types_map">(mimetypes.MimeTypes attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/mimetypes.html#mimetypes.MimeTypes.types_map_inv">types_map_inv (mimetypes.MimeTypes attribute)</a></dt>
+    <dt><a href="library/types.html#types.TypeType">TypeType (in module types)</a></dt>
+    <dt><a href="library/time.html#index-10">TZ</a>, <a href="library/time.html#index-11">[1]</a>, <a href="library/time.html#index-12">[2]</a>, <a href="library/time.html#index-13">[3]</a>, <a href="library/time.html#index-14">[4]</a></dt>
+    <dt><a href="library/datetime.html#datetime.tzinfo">tzinfo (class in datetime)</a></dt>
+    <dd><dl>
+      <dt><a href="library/datetime.html#datetime.datetime.tzinfo">(datetime.datetime attribute)</a></dt>
+      <dt><a href="library/datetime.html#datetime.time.tzinfo">(datetime.time attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/time.html#time.tzname">tzname (in module time)</a></dt>
+    <dt><a href="library/datetime.html#datetime.datetime.tzname">tzname() (datetime.datetime method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/datetime.html#datetime.time.tzname">(datetime.time method)</a></dt>
+      <dt><a href="library/datetime.html#datetime.tzinfo.tzname">(datetime.tzinfo method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/time.html#time.tzset">tzset() (in module time)</a></dt>
+</dl></td>
+</tr></table>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 11, 2016.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

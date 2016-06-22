@@ -1,0 +1,79 @@
+.. module:: requests
+
+Requests -- HTTP for Humans
+===========================
+
+This part of the documentation covers all the interfaces of Requests.
+
+.. note::
+    Pythonista's documentation only includes the core API documentation for :mod:`requests`. For a tutorial and more in-depth information, please visit the `requests website <http://docs.python-requests.org/en/latest/>`_.
+
+Main Interface
+--------------
+
+All of Request's functionality can be accessed by these 7 methods.
+They all return an instance of the :class:`Response <Response>` object.
+
+.. autofunction:: requests.request
+
+---------------------
+
+
+.. autoclass:: Response
+   :inherited-members:
+
+---------------------
+
+.. autofunction:: head
+.. autofunction:: get
+.. autofunction:: post
+.. autofunction:: put
+.. autofunction:: patch
+.. autofunction:: delete
+
+
+-----------------
+
+.. autofunction:: session
+
+
+
+Exceptions
+~~~~~~~~~~
+
+.. autoexception:: requests.RequestException
+.. autoexception:: requests.ConnectionError
+.. autoexception:: requests.HTTPError
+.. autoexception:: requests.URLRequired
+.. autoexception:: requests.TooManyRedirects
+
+
+.. _configurations:
+
+Configurations
+--------------
+
+.. automodule:: requests.defaults
+
+Internals
+---------
+
+These items are an internal component to Requests, and should never be
+seen by the end user (developer). This part of the API documentation
+exists for those who are extending the functionality of Requests.
+
+
+Classes
+~~~~~~~
+
+.. autoclass:: requests.Response
+   :inherited-members:
+
+.. autoclass:: requests.Request
+   :inherited-members:
+
+.. _sessionapi:
+
+.. autoclass:: requests.Session
+   :inherited-members:
+

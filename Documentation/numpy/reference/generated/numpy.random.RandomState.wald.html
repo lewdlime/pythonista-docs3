@@ -1,0 +1,226 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.random.RandomState.wald &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="numpy.random.RandomState" href="numpy.random.RandomState.html" />
+    <link rel="next" title="numpy.random.RandomState.weibull" href="numpy.random.RandomState.weibull.html" />
+    <link rel="prev" title="numpy.random.RandomState.vonmises" href="numpy.random.RandomState.vonmises.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.random.RandomState.weibull.html" title="numpy.random.RandomState.weibull"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.random.RandomState.vonmises.html" title="numpy.random.RandomState.vonmises"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.random.html" >Random sampling (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.random</span></tt>)</a> &raquo;</li>
+          <li><a href="numpy.random.RandomState.html" accesskey="U">numpy.random.RandomState</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-random-randomstate-wald">
+<h1>numpy.random.RandomState.wald<a class="headerlink" href="#numpy-random-randomstate-wald" title="Permalink to this headline">¶</a></h1>
+<dl class="method">
+<dt id="numpy.random.RandomState.wald">
+<tt class="descclassname">RandomState.</tt><tt class="descname">wald</tt><big>(</big><em>mean</em>, <em>scale</em>, <em>size=None</em><big>)</big><a class="headerlink" href="#numpy.random.RandomState.wald" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw samples from a Wald, or Inverse Gaussian, distribution.</p>
+<p>As the scale approaches infinity, the distribution becomes more like a
+Gaussian.</p>
+<p>Some references claim that the Wald is an Inverse Gaussian with mean=1, but
+this is by no means universal.</p>
+<p>The Inverse Gaussian distribution was first studied in relationship to
+Brownian motion. In 1956 M.C.K. Tweedie used the name Inverse Gaussian
+because there is an inverse relationship between the time to cover a unit
+distance and distance covered in unit time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mean</strong> : scalar</p>
+<blockquote>
+<div><p>Distribution mean, should be &gt; 0.</p>
+</div></blockquote>
+<p><strong>scale</strong> : scalar</p>
+<blockquote>
+<div><p>Scale parameter, should be &gt;= 0.</p>
+</div></blockquote>
+<p><strong>size</strong> : int or tuple of ints, optional</p>
+<blockquote>
+<div><p>Output shape. Default is None, in which case a single value is
+returned.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>samples</strong> : ndarray or scalar</p>
+<blockquote class="last">
+<div><p>Drawn sample, all greater than zero.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The probability density function for the Wald distribution is</p>
+<div class="math">
+<p><span class="math">P(x;mean,scale) = \sqrt{\frac{scale}{2\pi x^3}}e^
+\frac{-scale(x-mean)^2}{2\cdotp mean^2x}</span></p>
+</div><p>As noted above the Inverse Gaussian distribution first arise from attempts
+to model Brownian Motion. It is also a competitor to the Weibull for use in
+reliability modeling and modeling stock returns and interest rate
+processes.</p>
+<p class="rubric">References</p>
+<table class="docutils citation" frame="void" id="r176" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[R176]</a></td><td>Brighton Webs Ltd., Wald Distribution,
+<a class="reference external" href="http://www.brighton-webs.co.uk/distributions/wald.asp">http://www.brighton-webs.co.uk/distributions/wald.asp</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="r177" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[R177]</a></td><td>Chhikara, Raj S., and Folks, J. Leroy, &#8220;The Inverse Gaussian
+Distribution: Theory : Methodology, and Applications&#8221;, CRC Press,
+1988.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="r178" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[R178]</a></td><td>Wikipedia, &#8220;Wald distribution&#8221;
+<a class="reference external" href="http://en.wikipedia.org/wiki/Wald_distribution">http://en.wikipedia.org/wiki/Wald_distribution</a></td></tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Draw values from the distribution and plot the histogram:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">wald</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100000</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../../reference/generated/numpy-random-RandomState-wald-1.py">Source code</a>, <a class="reference external" href="../../reference/generated/numpy-random-RandomState-wald-1.png">png</a>, <a class="reference external" href="../../reference/generated/numpy-random-RandomState-wald-1.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../../_images/numpy-random-RandomState-wald-1.png" src="../../_images/numpy-random-RandomState-wald-1.png" />
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

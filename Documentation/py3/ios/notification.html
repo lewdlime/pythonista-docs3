@@ -1,0 +1,172 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>notification — Notifications on iOS &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-notification">
+<span id="notification-notifications-on-ios"></span><h1><a class="reference internal" href="#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> &#8212; Notifications on iOS<a class="headerlink" href="#module-notification" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> module allows you to schedule notification messages that are shown in the iOS Notification Center. Scheduled notifications are delivered even when your script (or even the entire app) is no longer running.</p>
+<p>It is also possible to attach a URL to a notification that is launched when the notification is activated (e.g. selected in Notification Center).</p>
+<p>Functions in the <a class="reference internal" href="#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> module:</p>
+<dl class="function">
+<dt id="notification.schedule">
+<tt class="descclassname">notification.</tt><tt class="descname">schedule</tt><big>(</big><em>message</em><span class="optional">[</span>, <em>delay</em>, <em>sound_name</em>, <em>action_url</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#notification.schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schedule a notification with the given message text.</p>
+<p>The return value is a <cite>dict</cite> that can be used as the <cite>notification</cite> parameter for the <a class="reference internal" href="#notification.cancel" title="notification.cancel"><tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt></a> function.</p>
+<p><cite>delay</cite> is the time interval in seconds until the notification is delivered.</p>
+<p><cite>sound_name</cite> can be any of the bundled sound effects that are also available via the <a class="reference internal" href="sound.html#module-sound" title="sound: Sound effects and music playback"><tt class="xref py py-mod docutils literal"><span class="pre">sound</span></tt></a> module. Use an empty string to schedule a silent notification. Using an non-existing sound effect (e.g. &#8216;default&#8217;) will result in the system&#8217;s standard alert sound being played.</p>
+<p>With the <cite>action_url</cite> parameter, you can specify a URL that is opened when the notification is activated (e.g. by tapping it in Notification Center). Which app is used to open the URL depends on the URL&#8217;s scheme, e.g. for <tt class="docutils literal"><span class="pre">http:</span></tt> URLs, Safari is used.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="notification.cancel">
+<tt class="descclassname">notification.</tt><tt class="descname">cancel</tt><big>(</big><em>notification</em><big>)</big><a class="headerlink" href="#notification.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel a notification that was previously scheduled.</p>
+<p>The <cite>notification</cite> parameter is a <cite>dict</cite> that was either retrieved via <a class="reference internal" href="#notification.get_scheduled" title="notification.get_scheduled"><tt class="xref py py-func docutils literal"><span class="pre">get_scheduled()</span></tt></a> or returned
+from the <a class="reference internal" href="#notification.schedule" title="notification.schedule"><tt class="xref py py-func docutils literal"><span class="pre">schedule()</span></tt></a> function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="notification.cancel_all">
+<tt class="descclassname">notification.</tt><tt class="descname">cancel_all</tt><big>(</big><big>)</big><a class="headerlink" href="#notification.cancel_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel all previously scheduled notifications.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="notification.get_scheduled">
+<tt class="descclassname">notification.</tt><tt class="descname">get_scheduled</tt><big>(</big><big>)</big><a class="headerlink" href="#notification.get_scheduled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of scheduled notifications.</p>
+<p>The entries in the list are dicts that can be used as parameters for the <a class="reference internal" href="#notification.cancel" title="notification.cancel"><tt class="xref py py-func docutils literal"><span class="pre">cancel()</span></tt></a> function.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

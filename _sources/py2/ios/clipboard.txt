@@ -1,0 +1,56 @@
+
+:mod:`clipboard` --- Copy and paste
+======================================================
+
+.. module:: clipboard
+   :synopsis: Provides copy and paste integration on iOS
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`clipboard` module defines two simple functions to read and write to the text clipboard (a.k.a. pasteboard) on iOS.
+
+Example::
+   
+    #Convert clipboard to uppercase/lowercase
+    import clipboard
+    text = clipboard.get()
+    if text == '':
+        print 'No text in clipboard'
+    else:
+        uppercase = text.upper()
+        if uppercase != text:
+            new_clip = uppercase
+        else:
+            #already uppercase, convert to lowercase
+            new_clip = text.lower()
+        clipboard.set(new_clip)
+        print new_clip
+
+
+Functions in the :mod:`clipboard` module:
+
+.. function:: get()
+
+   Returns the clipboard's content as a unicode string.
+
+
+.. function:: set(string)
+
+   Sets the clipboard's content to a new string or unicode string.
+
+.. function:: get_image(idx=0)
+   
+   Return an image from the clipboard as a :mod:`PIL` :class:`Image`.
+ 
+   If there are multiple images in the clipboard, the `idx` parameter can be
+   used to get an image at a given index. If the index is >= the number of
+   images in the clipboard, `None` is returned.
+
+.. function:: set_image(image, format='png', jpeg_quality=0.75)
+
+   Store a given :mod:`PIL` :class:`Image` in the clipboard.
+   
+   The `format` parameter can be 'png' or 'jpeg'.
+   
+   `jpeg_quality` is ignored if `format` is 'png', otherwise, it should be 
+   a float between 0.0 and 1.0.

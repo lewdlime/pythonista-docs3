@@ -1,0 +1,180 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.polynomial.laguerre.Laguerre.linspace &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="numpy.polynomial.laguerre.Laguerre" href="numpy.polynomial.laguerre.Laguerre.html" />
+    <link rel="next" title="numpy.polynomial.laguerre.Laguerre.mapparms" href="numpy.polynomial.laguerre.Laguerre.mapparms.html" />
+    <link rel="prev" title="numpy.polynomial.laguerre.Laguerre.integ" href="numpy.polynomial.laguerre.Laguerre.integ.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.polynomial.laguerre.Laguerre.mapparms.html" title="numpy.polynomial.laguerre.Laguerre.mapparms"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.polynomial.laguerre.Laguerre.integ.html" title="numpy.polynomial.laguerre.Laguerre.integ"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.polynomials.html" >Polynomials</a> &raquo;</li>
+          <li><a href="../routines.polynomials.package.html" >Polynomial Package</a> &raquo;</li>
+          <li><a href="../routines.polynomials.laguerre.html" >Laguerre Module (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.polynomial.laguerre</span></tt>)</a> &raquo;</li>
+          <li><a href="numpy.polynomial.laguerre.Laguerre.html" accesskey="U">numpy.polynomial.laguerre.Laguerre</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-polynomial-laguerre-laguerre-linspace">
+<h1>numpy.polynomial.laguerre.Laguerre.linspace<a class="headerlink" href="#numpy-polynomial-laguerre-laguerre-linspace" title="Permalink to this headline">¶</a></h1>
+<dl class="method">
+<dt id="numpy.polynomial.laguerre.Laguerre.linspace">
+<tt class="descclassname">Laguerre.</tt><tt class="descname">linspace</tt><big>(</big><em>n=100</em>, <em>domain=None</em><big>)</big><a class="headerlink" href="#numpy.polynomial.laguerre.Laguerre.linspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return x,y values at equally spaced points in domain.</p>
+<p>Returns x, y values at <em class="xref py py-obj">n</em> linearly spaced points across domain.
+Here y is the value of the polynomial at the points x. By default
+the domain is the same as that of the Laguerre instance.  This method
+is intended mostly as a plotting aid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n</strong> : int, optional</p>
+<blockquote>
+<div><p>Number of point pairs to return. The default value is 100.</p>
+</div></blockquote>
+<p><strong>domain</strong> : {None, array_like}</p>
+<blockquote>
+<div><p>If not None, the specified domain is used instead of that of
+the calling instance. It should be of the form <tt class="docutils literal"><span class="pre">[beg,end]</span></tt>.
+The default is None.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>x, y</strong> : ndarrays</p>
+<blockquote>
+<div><p><tt class="docutils literal"><span class="pre">x</span></tt> is equal to linspace(self.domain[0], self.domain[1], n)
+<tt class="docutils literal"><span class="pre">y</span></tt> is the polynomial evaluated at <tt class="docutils literal"><span class="pre">x</span></tt>.</p>
+</div></blockquote>
+<p class="last"><strong>.. versionadded:: 1.5.0</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,351 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SimpleTemplate Engine &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="simpletemplate-engine">
+<h1>SimpleTemplate Engine<a class="headerlink" href="#simpletemplate-engine" title="Permalink to this headline">¶</a></h1>
+<p>Bottle comes with a fast, powerful and easy to learn built-in template engine called <em>SimpleTemplate</em> or <em>stpl</em> for short. It is the default engine used by the <a class="reference internal" href="api.html#bottle.view" title="bottle.view"><tt class="xref py py-func docutils literal"><span class="pre">view()</span></tt></a> and <a class="reference internal" href="api.html#bottle.template" title="bottle.template"><tt class="xref py py-func docutils literal"><span class="pre">template()</span></tt></a> helpers but can be used as a stand-alone general purpose template engine too. This document explains the template syntax and shows examples for common use cases.</p>
+<p class="rubric">Basic API Usage:</p>
+<p><a class="reference internal" href="#bottle.SimpleTemplate" title="bottle.SimpleTemplate"><tt class="xref py py-class docutils literal"><span class="pre">SimpleTemplate</span></tt></a> implements the <a class="reference internal" href="api.html#bottle.BaseTemplate" title="bottle.BaseTemplate"><tt class="xref py py-class docutils literal"><span class="pre">BaseTemplate</span></tt></a> API:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">SimpleTemplate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tpl</span> <span class="o">=</span> <span class="n">SimpleTemplate</span><span class="p">(</span><span class="s">&#39;Hello {{name}}!&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tpl</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;World&#39;</span><span class="p">)</span>
+<span class="go">u&#39;Hello World!&#39;</span>
+</pre></div>
+</div>
+<p>In this document we use the <a class="reference internal" href="api.html#bottle.template" title="bottle.template"><tt class="xref py py-func docutils literal"><span class="pre">template()</span></tt></a> helper in examples for the sake of simplicity:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">template</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span><span class="p">(</span><span class="s">&#39;Hello {{name}}!&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;World&#39;</span><span class="p">)</span>
+<span class="go">u&#39;Hello World!&#39;</span>
+</pre></div>
+</div>
+<p>Just keep in mind that compiling and rendering templates are two different actions, even if the <a class="reference internal" href="api.html#bottle.template" title="bottle.template"><tt class="xref py py-func docutils literal"><span class="pre">template()</span></tt></a> helper hides this fact. Templates are usually compiled only once and cached internally, but rendered many times with different keyword arguments.</p>
+<div class="section" id="simpletemplate-syntax">
+<h2><a class="reference internal" href="#bottle.SimpleTemplate" title="bottle.SimpleTemplate"><tt class="xref py py-class docutils literal"><span class="pre">SimpleTemplate</span></tt></a> Syntax<a class="headerlink" href="#simpletemplate-syntax" title="Permalink to this headline">¶</a></h2>
+<p>Python is a very powerful language but its whitespace-aware syntax makes it difficult to use as a template language. SimpleTemplate removes some of these restrictions and allows you to write clean, readable and maintainable templates while preserving full access to the features, libraries and speed of the Python language.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The <a class="reference internal" href="#bottle.SimpleTemplate" title="bottle.SimpleTemplate"><tt class="xref py py-class docutils literal"><span class="pre">SimpleTemplate</span></tt></a> syntax compiles directly to python bytecode and is executed on each <a class="reference internal" href="#bottle.SimpleTemplate.render" title="bottle.SimpleTemplate.render"><tt class="xref py py-meth docutils literal"><span class="pre">SimpleTemplate.render()</span></tt></a> call. Do not render untrusted templates! They may contain and execute harmful python code.</p>
+</div>
+<div class="section" id="inline-expressions">
+<h3>Inline Expressions<a class="headerlink" href="#inline-expressions" title="Permalink to this headline">¶</a></h3>
+<p>You already learned the use of the <tt class="docutils literal"><span class="pre">{{...}}</span></tt> syntax from the &#8220;Hello World!&#8221; example above, but there is more: any python expression is allowed within the curly brackets as long as it evaluates to a string or something that has a string representation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">template</span><span class="p">(</span><span class="s">&#39;Hello {{name}}!&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;World&#39;</span><span class="p">)</span>
+<span class="go">u&#39;Hello World!&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span><span class="p">(</span><span class="s">&#39;Hello {{name.title() if name else &quot;stranger&quot;}}!&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="go">u&#39;Hello stranger!&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span><span class="p">(</span><span class="s">&#39;Hello {{name.title() if name else &quot;stranger&quot;}}!&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;mArC&#39;</span><span class="p">)</span>
+<span class="go">u&#39;Hello Marc!&#39;</span>
+</pre></div>
+</div>
+<p>The contained python expression is executed at render-time and has access to all keyword arguments passed to the <a class="reference internal" href="#bottle.SimpleTemplate.render" title="bottle.SimpleTemplate.render"><tt class="xref py py-meth docutils literal"><span class="pre">SimpleTemplate.render()</span></tt></a> method. HTML special characters are escaped automatically to prevent <a class="reference external" href="http://en.wikipedia.org/wiki/Cross-Site_Scripting">XSS</a> attacks. You can start the expression with an exclamation mark to disable escaping for that expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">template</span><span class="p">(</span><span class="s">&#39;Hello {{name}}!&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;&lt;b&gt;World&lt;/b&gt;&#39;</span><span class="p">)</span>
+<span class="go">u&#39;Hello &amp;lt;b&amp;gt;World&amp;lt;/b&amp;gt;!&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span><span class="p">(</span><span class="s">&#39;Hello {{!name}}!&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;&lt;b&gt;World&lt;/b&gt;&#39;</span><span class="p">)</span>
+<span class="go">u&#39;Hello &lt;b&gt;World&lt;/b&gt;!&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="embedded-python-code">
+<h3>Embedded python code<a class="headerlink" href="#embedded-python-code" title="Permalink to this headline">¶</a></h3>
+<p>The template engine allows you to embed lines or blocks of python code within your template. Code lines start with <tt class="docutils literal"><span class="pre">%</span></tt> and code blocks are surrounded by <tt class="docutils literal"><span class="pre">&lt;%</span></tt> and <tt class="docutils literal"><span class="pre">%&gt;</span></tt> tokens:</p>
+<div class="highlight-html+django"><pre>% name = "Bob"  # a line of python code
+&lt;p&gt;Some plain text in between&lt;/p&gt;
+&lt;%
+  # A block of python code
+  name = name.title().strip()
+%&gt;
+&lt;p&gt;More plain text&lt;/p&gt;</pre>
+</div>
+<p>Embedded python code follows regular python syntax, but with two additional syntax rules:</p>
+<ul class="simple">
+<li><strong>Indentation is ignored.</strong> You can put as much whitespace in front of statements as you want. This allows you to align your code with the surrounding markup and can greatly improve readability.</li>
+<li>Blocks that are normally indented now have to be closed explicitly with an <tt class="docutils literal"><span class="pre">end</span></tt> keyword.</li>
+</ul>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;ul&gt;</span>
+  % for item in basket:
+    <span class="nt">&lt;li&gt;</span><span class="cp">{{</span><span class="nv">item</span><span class="cp">}}</span><span class="nt">&lt;/li&gt;</span>
+  % end
+<span class="nt">&lt;/ul&gt;</span>
+</pre></div>
+</div>
+<p>Both the <tt class="docutils literal"><span class="pre">%</span></tt> and the <tt class="docutils literal"><span class="pre">&lt;%</span></tt> tokens are only recognized if they are the first non-whitespace characters in a line. You don&#8217;t have to escape them if they appear mid-text in your template markup. Only if a line of text starts with one of these tokens, you have to escape it with a backslash. In the rare case where the backslash + token combination appears in your markup at the beginning of a line, you can always help yourself with a string literal in an inline expression:</p>
+<div class="highlight-html+django"><pre>This line contains % and &lt;% but no python code.
+\% This text-line starts with the '%' token.
+\&lt;% Another line that starts with a token but is rendered as text.
+{{'\\%'}} this line starts with an escaped token.</pre>
+</div>
+<p>If you find yourself to escape a lot, consider using <em class="xref std std-ref">custom tokens</em>.</p>
+</div>
+<div class="section" id="whitespace-control">
+<h3>Whitespace Control<a class="headerlink" href="#whitespace-control" title="Permalink to this headline">¶</a></h3>
+<p>Code blocks and code lines always span the whole line. Whitespace in front of after a code segment is stripped away. You won&#8217;t see empty lines or dangling whitespace in your template because of embedded code:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;div&gt;</span>
+ % if True:
+  <span class="nt">&lt;span&gt;</span>content<span class="nt">&lt;/span&gt;</span>
+ % end
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+<p>This snippet renders to clean and compact html:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;div&gt;</span>
+  <span class="nt">&lt;span&gt;</span>content<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+<p>But embedding code still requires you to start a new line, which may not what you want to see in your rendered template. To skip the newline in front of a code segment, end the text line with a double-backslash:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;div&gt;</span>\\
+ %if True:
+<span class="nt">&lt;span&gt;</span>content<span class="nt">&lt;/span&gt;</span>\\
+ %end
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+<p>THis time the rendered template looks like this:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;div&gt;&lt;span&gt;</span>content<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
+</pre></div>
+</div>
+<p>This only works directly in front of code segments. In all other places you can control the whitespace yourself and don&#8217;t need any special syntax.</p>
+</div>
+</div>
+<div class="section" id="template-functions">
+<h2>Template Functions<a class="headerlink" href="#template-functions" title="Permalink to this headline">¶</a></h2>
+<p>Each template is preloaded with a bunch of functions that help with the most common use cases. These functions are always available. You don&#8217;t have to import or provide them yourself. For everything not covered here there are probably good python libraries available. Remember that you can <tt class="docutils literal"><span class="pre">import</span></tt> anything you want within your templates. They are python programs after all.</p>
+<p class="versionchanged">
+<span class="versionmodified">Changed in version 0.12: </span>Prior to this release, <a class="reference internal" href="#stpl.include" title="stpl.include"><tt class="xref py py-func docutils literal"><span class="pre">include()</span></tt></a> and <a class="reference internal" href="#stpl.rebase" title="stpl.rebase"><tt class="xref py py-func docutils literal"><span class="pre">rebase()</span></tt></a> were sytnax keywords, not functions.</p>
+<dl class="function">
+<dt id="stpl.include">
+<tt class="descclassname">stpl.</tt><tt class="descname">include</tt><big>(</big><em>sub_template</em>, <em>**variables</em><big>)</big><a class="headerlink" href="#stpl.include" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render a sub-template with the specified variables and insert the resulting text into the current template. The function returns a dictionary containing the local variables passed to or defined within the sub-template:</p>
+<div class="highlight-html+django"><div class="highlight"><pre>% include(&#39;header.tpl&#39;, title=&#39;Page Title&#39;)
+Page Content
+% include(&#39;foother.tpl&#39;)
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="stpl.rebase">
+<tt class="descclassname">stpl.</tt><tt class="descname">rebase</tt><big>(</big><em>name</em>, <em>**variables</em><big>)</big><a class="headerlink" href="#stpl.rebase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark the current template to be later included into a different template. After the current template is rendered, its resulting text is stored in a variable named <tt class="docutils literal"><span class="pre">base</span></tt> and passed to the base-template, which is then rendered. This can be used to <cite>wrap</cite> a template with surrounding text, or simulate the inheritance feature found in other template engines:</p>
+<div class="highlight-html+django"><div class="highlight"><pre>% rebase(&#39;base.tpl&#39;, title=&#39;Page Title&#39;)
+<span class="nt">&lt;p&gt;</span>Page Content ...<span class="nt">&lt;/p&gt;</span>
+</pre></div>
+</div>
+<p>This can be combined with the following <tt class="docutils literal"><span class="pre">base.tpl</span></tt>:</p>
+<div class="highlight-html+django"><div class="highlight"><pre><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span><span class="cp">{{</span><span class="nv">title</span> <span class="k">or</span> <span class="s1">&#39;No title&#39;</span><span class="cp">}}</span><span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="cp">{{</span><span class="nv">base</span><span class="cp">}}</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Accessing undefined variables in a template raises <a class="reference internal" href="../../library/exceptions.html#exceptions.NameError" title="exceptions.NameError"><tt class="xref py py-exc docutils literal"><span class="pre">NameError</span></tt></a> and
+stops rendering immediately. This is standard python behavior and nothing new,
+but vanilla python lacks an easy way to check the availability of a variable.
+This quickly gets annoying if you want to support flexible inputs or use the
+same template in different situations. These functions may help:</p>
+<dl class="function">
+<dt id="stpl.defined">
+<tt class="descclassname">stpl.</tt><tt class="descname">defined</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#stpl.defined" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the variable is defined in the current template namespace,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stpl.get">
+<tt class="descclassname">stpl.</tt><tt class="descname">get</tt><big>(</big><em>name</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#stpl.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the variable, or a default value.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="stpl.setdefault">
+<tt class="descclassname">stpl.</tt><tt class="descname">setdefault</tt><big>(</big><em>name</em>, <em>default</em><big>)</big><a class="headerlink" href="#stpl.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the variable is not defined, create it with the given default value.
+Return the variable.</p>
+</dd></dl>
+
+<p>Here is an example that uses all three functions to implement optional template
+variables in different ways:</p>
+<div class="highlight-html+django"><div class="highlight"><pre>% setdefault(&#39;text&#39;, &#39;No Text&#39;)
+<span class="nt">&lt;h1&gt;</span><span class="cp">{{</span><span class="nv">get</span><span class="o">(</span><span class="s1">&#39;title&#39;</span><span class="o">,</span> <span class="s1">&#39;No Title&#39;</span><span class="o">)</span><span class="cp">}}</span><span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span> <span class="cp">{{</span> <span class="nv">text</span> <span class="cp">}}</span> <span class="nt">&lt;/p&gt;</span>
+% if defined(&#39;author&#39;):
+  <span class="nt">&lt;p&gt;</span>By <span class="cp">{{</span> <span class="nv">author</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
+% end
+</pre></div>
+</div>
+</div>
+<div class="section" id="simpletemplate-api">
+<h2><a class="reference internal" href="#bottle.SimpleTemplate" title="bottle.SimpleTemplate"><tt class="xref py py-class docutils literal"><span class="pre">SimpleTemplate</span></tt></a> API<a class="headerlink" href="#simpletemplate-api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bottle.SimpleTemplate">
+<em class="property">class </em><tt class="descclassname">bottle.</tt><tt class="descname">SimpleTemplate</tt><big>(</big><em>source=None</em>, <em>name=None</em>, <em>lookup=</em><span class="optional">[</span><span class="optional">]</span>, <em>encoding='utf8'</em>, <em>**settings</em><big>)</big><a class="headerlink" href="#bottle.SimpleTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="bottle.SimpleTemplate.co">
+<tt class="descname">co</tt><a class="headerlink" href="#bottle.SimpleTemplate.co" title="Permalink to this definition">¶</a></dt>
+<dd><p>A property that is only computed once per instance and then replaces
+itself with an ordinary attribute. Deleting the attribute resets the
+property.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bottle.SimpleTemplate.code">
+<tt class="descname">code</tt><a class="headerlink" href="#bottle.SimpleTemplate.code" title="Permalink to this definition">¶</a></dt>
+<dd><p>A property that is only computed once per instance and then replaces
+itself with an ordinary attribute. Deleting the attribute resets the
+property.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bottle.SimpleTemplate.render">
+<tt class="descname">render</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bottle.SimpleTemplate.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the template using keyword arguments as local variables.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="bottle.SimpleTemplate.split_comment">
+<em class="property">classmethod </em><tt class="descname">split_comment</tt><big>(</big><em>code</em><big>)</big><a class="headerlink" href="#bottle.SimpleTemplate.split_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes comments (#...) from python code.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

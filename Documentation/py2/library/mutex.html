@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.9. mutex — Mutual exclusion support &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="8. Data Types" href="datatypes.html" />
+    <link rel="next" title="8.10. Queue — A synchronized queue class" href="queue.html" />
+    <link rel="prev" title="8.8. sched — Event scheduler" href="sched.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="queue.html" title="8.10. Queue — A synchronized queue class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sched.html" title="8.8. sched — Event scheduler"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="datatypes.html" accesskey="U">8. Data Types</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-mutex">
+<span id="mutex-mutual-exclusion-support"></span><h1>8.9. <a class="reference internal" href="#module-mutex" title="mutex: Lock and queue for mutual exclusion. (deprecated)"><tt class="xref py py-mod docutils literal"><span class="pre">mutex</span></tt></a> &#8212; Mutual exclusion support<a class="headerlink" href="#module-mutex" title="Permalink to this headline">¶</a></h1>
+<p class="deprecated">
+<span class="versionmodified">Deprecated since version 2.6: </span>The <a class="reference internal" href="#module-mutex" title="mutex: Lock and queue for mutual exclusion. (deprecated)"><tt class="xref py py-mod docutils literal"><span class="pre">mutex</span></tt></a> module has been removed in Python 3.</p>
+<p>The <a class="reference internal" href="#module-mutex" title="mutex: Lock and queue for mutual exclusion. (deprecated)"><tt class="xref py py-mod docutils literal"><span class="pre">mutex</span></tt></a> module defines a class that allows mutual-exclusion via
+acquiring and releasing locks. It does not require (or imply)
+<a class="reference internal" href="threading.html#module-threading" title="threading: Higher-level threading interface."><tt class="xref py py-mod docutils literal"><span class="pre">threading</span></tt></a> or multi-tasking, though it could be useful for those
+purposes.</p>
+<p>The <a class="reference internal" href="#module-mutex" title="mutex: Lock and queue for mutual exclusion. (deprecated)"><tt class="xref py py-mod docutils literal"><span class="pre">mutex</span></tt></a> module defines the following class:</p>
+<dl class="class">
+<dt id="mutex.mutex">
+<em class="property">class </em><tt class="descclassname">mutex.</tt><tt class="descname">mutex</tt><a class="headerlink" href="#mutex.mutex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new (unlocked) mutex.</p>
+<p>A mutex has two pieces of state &#8212; a &#8220;locked&#8221; bit and a queue. When the mutex
+is not locked, the queue is empty. Otherwise, the queue contains zero or more
+<tt class="docutils literal"><span class="pre">(function,</span> <span class="pre">argument)</span></tt> pairs representing functions (or methods) waiting to
+acquire the lock. When the mutex is unlocked while the queue is not empty, the
+first queue entry is removed and its  <tt class="docutils literal"><span class="pre">function(argument)</span></tt> pair called,
+implying it now has the lock.</p>
+<p>Of course, no multi-threading is implied &#8211; hence the funny interface for
+<a class="reference internal" href="#mutex.mutex.lock" title="mutex.mutex.lock"><tt class="xref py py-meth docutils literal"><span class="pre">lock()</span></tt></a>, where a function is called once the lock is acquired.</p>
+</dd></dl>
+
+<div class="section" id="mutex-objects">
+<span id="id1"></span><h2>8.9.1. Mutex Objects<a class="headerlink" href="#mutex-objects" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-mutex" title="mutex: Lock and queue for mutual exclusion. (deprecated)"><tt class="xref py py-class docutils literal"><span class="pre">mutex</span></tt></a> objects have following methods:</p>
+<dl class="method">
+<dt id="mutex.mutex.test">
+<tt class="descclassname">mutex.</tt><tt class="descname">test</tt><big>(</big><big>)</big><a class="headerlink" href="#mutex.mutex.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the mutex is locked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mutex.mutex.testandset">
+<tt class="descclassname">mutex.</tt><tt class="descname">testandset</tt><big>(</big><big>)</big><a class="headerlink" href="#mutex.mutex.testandset" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;Atomic&#8221; test-and-set, grab the lock if it is not set, and return <tt class="xref docutils literal"><span class="pre">True</span></tt>,
+otherwise, return <tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mutex.mutex.lock">
+<tt class="descclassname">mutex.</tt><tt class="descname">lock</tt><big>(</big><em>function</em>, <em>argument</em><big>)</big><a class="headerlink" href="#mutex.mutex.lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute <tt class="docutils literal"><span class="pre">function(argument)</span></tt>, unless the mutex is locked. In the case it is
+locked, place the function and argument on the queue. See <a class="reference internal" href="#mutex.mutex.unlock" title="mutex.mutex.unlock"><tt class="xref py py-meth docutils literal"><span class="pre">unlock()</span></tt></a> for
+explanation of when <tt class="docutils literal"><span class="pre">function(argument)</span></tt> is executed in that case.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mutex.mutex.unlock">
+<tt class="descclassname">mutex.</tt><tt class="descname">unlock</tt><big>(</big><big>)</big><a class="headerlink" href="#mutex.mutex.unlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unlock the mutex if queue is empty, otherwise execute the first element in the
+queue.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

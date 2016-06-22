@@ -1,0 +1,195 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>feedparser — Universal Feed Parser &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-feedparser">
+<span id="feedparser-universal-feed-parser"></span><h1><a class="reference internal" href="#module-feedparser" title="feedparser"><tt class="xref py py-mod docutils literal"><span class="pre">feedparser</span></tt></a> &#8212; Universal Feed Parser<a class="headerlink" href="#module-feedparser" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more comprehensive documentation, please visit the <a class="reference external" href="http://packages.python.org/feedparser/">feedparser website</a>.</p>
+</div>
+<p><cite>Universal Feed Parser</cite> is a <cite>Python</cite> module for downloading
+and parsing syndicated feeds.  It can handle RSS 0.90, Netscape RSS 0.91, Userland RSS 0.91,
+RSS 0.92, RSS 0.93, RSS 0.94, RSS 1.0, RSS 2.0, Atom 0.3, Atom 1.0,
+and CDF feeds.  It also parses several popular extension modules,
+including Dublin Core and Apple&#8217;s iTunes extensions.</p>
+<p>Universal Feed Parser is easy to use; the module is self-contained
+in a single file, <tt class="file docutils literal"><span class="pre">feedparser.py</span></tt>, and it has one primary public
+function, <a class="reference internal" href="#feedparser.parse" title="feedparser.parse"><tt class="xref py py-func docutils literal"><span class="pre">parse()</span></tt></a>.  <a class="reference internal" href="#feedparser.parse" title="feedparser.parse"><tt class="xref py py-func docutils literal"><span class="pre">parse()</span></tt></a> takes a number of arguments, but only one is
+required, and it can be a URL, a local filename, or a raw string containing feed data in any format.</p>
+<div class="section" id="parsing-a-feed-from-a-remote-url">
+<h2>Parsing a feed from a remote URL<a class="headerlink" href="#parsing-a-feed-from-a-remote-url" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">feedparser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">feedparser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&#39;http://feedparser.org/docs/examples/atom10.xml&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;feed&#39;</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span>
+<span class="go">u&#39;Sample Feed&#39;</span>
+</pre></div>
+</div>
+<p>The following example assumes you have saved a feed in <tt class="file docutils literal"><span class="pre">atom10.xml</span></tt>.</p>
+</div>
+<div class="section" id="parsing-a-feed-from-a-local-file">
+<h2>Parsing a feed from a local file<a class="headerlink" href="#parsing-a-feed-from-a-local-file" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">feedparser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">feedparser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">r&#39;atom10.xml&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;feed&#39;</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span>
+<span class="go">u&#39;Sample Feed&#39;</span>
+</pre></div>
+</div>
+<p><strong class="program">Universal Feed Parser</strong> can also parse a feed in memory.</p>
+</div>
+<div class="section" id="parsing-a-feed-from-a-string">
+<h2>Parsing a feed from a string<a class="headerlink" href="#parsing-a-feed-from-a-string" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">feedparser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rawdata</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;&lt;rss version=&quot;2.0&quot;&gt;</span>
+<span class="go">&lt;channel&gt;</span>
+<span class="go">&lt;title&gt;Sample Feed&lt;/title&gt;</span>
+<span class="go">&lt;/channel&gt;</span>
+<span class="go">&lt;/rss&gt;&quot;&quot;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">feedparser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">rawdata</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;feed&#39;</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span>
+<span class="go">u&#39;Sample Feed&#39;</span>
+</pre></div>
+</div>
+<p>Values are returned as Python Unicode strings (except when they&#8217;re
+not &#8211; see <a class="reference external" href="http://packages.python.org/feedparser/character-encoding.html">advanced encoding</a> for all the gory details).</p>
+<dl class="function">
+<dt id="feedparser.parse">
+<tt class="descclassname">feedparser.</tt><tt class="descname">parse</tt><big>(</big><em>url_file_stream_or_string</em>, <em>etag=None</em>, <em>modified=None</em>, <em>agent=None</em>, <em>referrer=None</em>, <em>handlers=None</em>, <em>request_headers=None</em>, <em>response_headers=None</em><big>)</big><a class="headerlink" href="#feedparser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a feed from a URL, file, stream, or string.</p>
+<p>request_headers, if given, is a dict from http header name to value to add
+to the request; this overrides internally generated values.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

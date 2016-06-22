@@ -1,0 +1,486 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>objc_util — Utilities for bridging Objective-C APIs &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-objc_util">
+<span id="objc-util-utilities-for-bridging-objective-c-apis"></span><h1><a class="reference internal" href="#module-objc_util" title="objc_util: Utility module for &quot;bridging&quot; a limited set of Objective-APIs to Python"><tt class="xref py py-mod docutils literal"><span class="pre">objc_util</span></tt></a> &#8212; Utilities for bridging Objective-C APIs<a class="headerlink" href="#module-objc_util" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-objc_util" title="objc_util: Utility module for &quot;bridging&quot; a limited set of Objective-APIs to Python"><tt class="xref py py-mod docutils literal"><span class="pre">objc_util</span></tt></a> module provides a &#8220;bridge&#8221; for using Objective-C APIs from Python.</p>
+<p>Based on <a class="reference internal" href="../library/ctypes.html#module-ctypes" title="ctypes: A foreign function library for Python."><tt class="xref py py-mod docutils literal"><span class="pre">ctypes</span></tt></a> and the Objective-C runtime library, <a class="reference internal" href="#module-objc_util" title="objc_util: Utility module for &quot;bridging&quot; a limited set of Objective-APIs to Python"><tt class="xref py py-mod docutils literal"><span class="pre">objc_util</span></tt></a> allows you to &#8220;wrap&#8221; existing Objective-C classes in a way that automatically converts Python method calls to corresponding Objective-C messages. As a simple example, this Objective-C code:</p>
+<div class="highlight-python"><pre>UIPasteboard *pasteboard = [UIPasteboard generalPasteboard]
+[pasteboard setString:@"Hello Objective-C"];</pre>
+</div>
+<p>can be translated to the following Python code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">objc_util</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">UIPasteboard</span> <span class="o">=</span> <span class="n">ObjCClass</span><span class="p">(</span><span class="s">&#39;UIPasteboard&#39;</span><span class="p">)</span>
+
+<span class="n">pasteboard</span> <span class="o">=</span> <span class="n">UIPasteboard</span><span class="o">.</span><span class="n">generalPasteboard</span><span class="p">()</span>
+<span class="n">pasteboard</span><span class="o">.</span><span class="n">setString_</span><span class="p">(</span><span class="s">&#39;Hello Objective-C&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can see that calling Objective-C APIs from Python doesn&#8217;t require significantly more code than you would need if you were writing native Objective-C code.</p>
+<p>Behind the scenes, <a class="reference internal" href="#module-objc_util" title="objc_util: Utility module for &quot;bridging&quot; a limited set of Objective-APIs to Python"><tt class="xref py py-mod docutils literal"><span class="pre">objc_util</span></tt></a> generates appropriate calls to <tt class="docutils literal"><span class="pre">objc_msgSend()</span></tt> etc. for translating the Python calls to Objective-C messages. Common Python types (e.g. strings in the example above, but also lists and dicts) are converted to their equivalent Foundation types automatically (<tt class="docutils literal"><span class="pre">NSString</span></tt>, <tt class="docutils literal"><span class="pre">NSMutableArray</span></tt>, <tt class="docutils literal"><span class="pre">NSMutableDictionary</span></tt> etc.) when calling a method.</p>
+<p>The conversion from an Objective-C selector to a Python method name is pretty straight-forward. You basically just have to replace colons (&#8216;:&#8217;) with underscores (&#8216;_&#8217;). For example, the selector <tt class="docutils literal"><span class="pre">doFoo:withBar:</span></tt> becomes the method <tt class="docutils literal"><span class="pre">doFoo_withBar_</span></tt> (note the trailing underscore!).</p>
+<p>In most cases, you can also use a slightly more &#8220;pythonic&#8221; syntax that uses keyword arguments as part of the ObjC selector name, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># From: UIColor *color = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0]</span>
+<span class="c"># ...to:</span>
+<span class="n">UIColor</span> <span class="o">=</span> <span class="n">ObjCClass</span><span class="p">(</span><span class="s">&#39;UIColor&#39;</span><span class="p">)</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">UIColor</span><span class="o">.</span><span class="n">colorWithRed</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">green</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">blue</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="c"># or even:</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">UIColor</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">red</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">green</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">blue</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This (more natural) syntax should work in most common cases, but there may be situations in which a given combination of method name and keyword arguments cannot be translated unambiguously to an ObjC method call. In these cases, simply use the call variant described above (replace colons with underscores, and don&#8217;t use keyword arguments).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As with <a class="reference internal" href="../library/ctypes.html#module-ctypes" title="ctypes: A foreign function library for Python."><tt class="xref py py-mod docutils literal"><span class="pre">ctypes</span></tt></a>, there are lots of ways to crash Python using this module. When you call Objective-C methods, you have to be very careful to provide the correct parameter types.</p>
+</div>
+<div class="section" id="example-1-setting-the-screen-brightness">
+<h2>Example 1 &#8211; Setting the screen brightness<a class="headerlink" href="#example-1-setting-the-screen-brightness" title="Permalink to this headline">¶</a></h2>
+<p>This simple example sets the screen brightness of your device:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">objc_util</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c"># &#39;Import&#39; an Objective-C class (generate a proxy for the class):</span>
+<span class="n">UIScreen</span> <span class="o">=</span> <span class="n">ObjCClass</span><span class="p">(</span><span class="s">&#39;UIScreen&#39;</span><span class="p">)</span>
+
+<span class="c"># Call a class method, this is equivalent to `[UIScreen mainScreen]` in Objective-C:</span>
+<span class="n">screen</span> <span class="o">=</span> <span class="n">UIScreen</span><span class="o">.</span><span class="n">mainScreen</span><span class="p">()</span>
+
+<span class="c"># `screen` is now an ObjCInstance that wraps an Objective-C object, and forwards messages to it.</span>
+
+<span class="c"># The following call is equivalent to `[screen setBrightness:0.6]`:</span>
+<span class="n">screen</span><span class="o">.</span><span class="n">setBrightness</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-2-accessing-the-current-song-in-music-ipod-app">
+<h2>Example 2 &#8211; Accessing the current song in Music/iPod app<a class="headerlink" href="#example-2-accessing-the-current-song-in-music-ipod-app" title="Permalink to this headline">¶</a></h2>
+<p>This code snippet prints the currently-playing song in the console (note that this only works for the built-in Music app, not for third-party audio players):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">objc_util</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">MPMusicPlayerController</span> <span class="o">=</span> <span class="n">ObjCClass</span><span class="p">(</span><span class="s">&#39;MPMusicPlayerController&#39;</span><span class="p">)</span>
+<span class="n">player</span> <span class="o">=</span> <span class="n">MPMusicPlayerController</span><span class="o">.</span><span class="n">systemMusicPlayer</span><span class="p">()</span>
+<span class="n">now_playing</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">nowPlayingItem</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">now_playing</span><span class="p">:</span>
+    <span class="n">artist</span> <span class="o">=</span> <span class="n">now_playing</span><span class="o">.</span><span class="n">valueForProperty_</span><span class="p">(</span><span class="s">&#39;artist&#39;</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">now_playing</span><span class="o">.</span><span class="n">valueForProperty_</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Now playing: </span><span class="si">%s</span><span class="s"> -- </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">artist</span><span class="p">,</span> <span class="n">title</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;No music playing&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="creating-new-objective-c-classes">
+<h3>Creating New Objective-C Classes<a class="headerlink" href="#creating-new-objective-c-classes" title="Permalink to this headline">¶</a></h3>
+<p>For more advanced uses of Objective-C APIs, you sometimes need to create your own Objective-C classes at runtime. The main two scenarios when you&#8217;d want to do this are:</p>
+<ul class="simple">
+<li>Implementing the commonly-used delegate pattern, i.e. providing a callback interface for a built-in Objective-C class.</li>
+<li>Subclassing Objective-C classes that are intended to be subclassed for customization. One example would be subclassing <tt class="docutils literal"><span class="pre">UIView</span></tt> in order to override <tt class="docutils literal"><span class="pre">-drawRect:</span></tt>.</li>
+</ul>
+<p>To accomplish this, the <a class="reference internal" href="#module-objc_util" title="objc_util: Utility module for &quot;bridging&quot; a limited set of Objective-APIs to Python"><tt class="xref py py-mod docutils literal"><span class="pre">objc_util</span></tt></a> module provides the <a class="reference internal" href="#objc_util.create_objc_class" title="objc_util.create_objc_class"><tt class="xref py py-func docutils literal"><span class="pre">create_objc_class()</span></tt></a> function, which uses the Objective-C runtime to allocate and register a new class, and then wraps the class in an <a class="reference internal" href="#objc_util.ObjCClass" title="objc_util.ObjCClass"><tt class="xref py py-class docutils literal"><span class="pre">ObjCClass</span></tt></a> object that you can use just like a built-in class in the examples above.</p>
+<p>To create an Objective-C class using <a class="reference internal" href="#objc_util.create_objc_class" title="objc_util.create_objc_class"><tt class="xref py py-func docutils literal"><span class="pre">create_objc_class()</span></tt></a>, you need the following things:</p>
+<p><strong>name</strong> &#8211; the name of the class to create, as a string. This should only consist of letters, numbers, and underscore characters. It may not begin with a number. Please note that the name of the class that actually gets created may be different from this because a class with the name may already exist. If that&#8217;s the case, a new name is chosen automatically, if the <cite>debug</cite> parameter is <cite>True</cite> (the default). If <cite>debug</cite> is <cite>False</cite>, the existing class will be returned, and all other parameters are ignored.</p>
+<p><strong>superclass</strong> &#8211; An <cite>ObjCClass</cite> object that determines the Objective-C class from which the new class inherits.</p>
+<p><strong>methods</strong> &#8211; A list of functions that are used to create the instance methods of the new class. To create an Objective-C method from a Python function, the Objective-C runtime needs additional metadata: the selector name, the type of the return value, and types for any arguments. As much as possible, <a class="reference internal" href="#objc_util.create_objc_class" title="objc_util.create_objc_class"><tt class="xref py py-func docutils literal"><span class="pre">create_objc_class()</span></tt></a> will try to derive this metadata automatically, please see the the discussion under <a class="reference internal" href="#objc_util.create_objc_class" title="objc_util.create_objc_class"><tt class="xref py py-func docutils literal"><span class="pre">create_objc_class()</span></tt></a> for details. Every Objective-C method needs at least two parameters that are hidden when calling it from Objective-C: <tt class="docutils literal"><span class="pre">_self</span></tt> is a pointer to the Objective-C object itself (note that this is not wrapped in an <a class="reference internal" href="#objc_util.ObjCInstance" title="objc_util.ObjCInstance"><tt class="xref py py-class docutils literal"><span class="pre">ObjCInstance</span></tt></a> object, so you have to do this manually if needed), and <tt class="docutils literal"><span class="pre">_cmd</span></tt>, a pointer to the selector (usually not needed). The names of these two &#8220;hidden&#8221; parameters don&#8217;t matter. Note that parameters are passed to Objective-C methods as &#8220;raw&#8221; pointers, not <cite>ObjCInstance</cite> objects, but you can convert object parameters easily by wrapping them manually, e.g. <tt class="docutils literal"><span class="pre">obj</span> <span class="pre">=</span> <span class="pre">ObjCInstance(_self)</span></tt>.</p>
+<p><strong>classmethods</strong> (optional) &#8211; same as <cite>methods</cite>, but for class methods (rarely needed).</p>
+<p><strong>protocols</strong> (optional) &#8211; a list of strings that is used for hinting type encodings for methods. If you implement a delegate (or other) protocol, you should include the protocol&#8217;s name (e.g. <tt class="docutils literal"><span class="pre">'UITableViewDataSource'</span></tt>) to make sure that the return and argument types for any methods can be inferred correctly.</p>
+<p>Here is an example of creating a simple class that acts as the delegate for an <tt class="docutils literal"><span class="pre">MFMailComposeViewController</span></tt> (which is used to show the standard iOS Mail sheet). A delegate is required to use this class because it is otherwise impossible to get rid of the Mail sheet (the delegate is notified when the sheet has finished, and it&#8217;s responsible for dismissing it).:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error</span>
+<span class="k">def</span> <span class="nf">mailComposeController_didFinishWithResult_error_</span><span class="p">(</span><span class="n">_self</span><span class="p">,</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Mail composer finished&#39;</span><span class="p">)</span>
+    <span class="c"># Wrap the controller parameter in an `ObjCInstance`, so we can send messages:</span>
+    <span class="n">mail_vc</span> <span class="o">=</span> <span class="n">ObjCInstance</span><span class="p">(</span><span class="n">controller</span><span class="p">)</span>
+    <span class="c"># Set delegate to nil, and release its memory:</span>
+    <span class="n">mail_vc</span><span class="o">.</span><span class="n">setMailComposeDelegate_</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+    <span class="n">ObjCInstance</span><span class="p">(</span><span class="n">_self</span><span class="p">)</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+    <span class="c"># Dismiss the sheet:</span>
+    <span class="n">mail_vc</span><span class="o">.</span><span class="n">dismissViewControllerAnimated_completion_</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+<span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">mailComposeController_didFinishWithResult_error_</span><span class="p">]</span>
+<span class="n">protocols</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;MFMailComposeViewControllerDelegate&#39;</span><span class="p">]</span>
+<span class="n">MyMailComposeDelegate</span> <span class="o">=</span> <span class="n">create_objc_class</span><span class="p">(</span><span class="s">&#39;MyMailComposeDelegate&#39;</span><span class="p">,</span> <span class="n">NSObject</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="n">methods</span><span class="p">,</span> <span class="n">protocols</span><span class="o">=</span><span class="n">protocols</span><span class="p">)</span>
+
+<span class="nd">@on_main_thread</span>
+<span class="k">def</span> <span class="nf">show_mail_sheet</span><span class="p">():</span>
+    <span class="n">MFMailComposeViewController</span> <span class="o">=</span> <span class="n">ObjCClass</span><span class="p">(</span><span class="s">&#39;MFMailComposeViewController&#39;</span><span class="p">)</span>
+    <span class="n">mail_composer</span> <span class="o">=</span> <span class="n">MFMailComposeViewController</span><span class="o">.</span><span class="n">alloc</span><span class="p">()</span><span class="o">.</span><span class="n">init</span><span class="p">()</span><span class="o">.</span><span class="n">autorelease</span><span class="p">()</span>
+    <span class="c"># Use our new delegate class:</span>
+    <span class="n">delegate</span> <span class="o">=</span> <span class="n">MyMailComposeDelegate</span><span class="o">.</span><span class="n">alloc</span><span class="p">()</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">mail_composer</span><span class="o">.</span><span class="n">setMailComposeDelegate_</span><span class="p">(</span><span class="n">delegate</span><span class="p">)</span>
+    <span class="c"># Present the mail sheet:</span>
+    <span class="n">root_vc</span> <span class="o">=</span> <span class="n">UIApplication</span><span class="o">.</span><span class="n">sharedApplication</span><span class="p">()</span><span class="o">.</span><span class="n">keyWindow</span><span class="p">()</span><span class="o">.</span><span class="n">rootViewController</span><span class="p">()</span>
+    <span class="n">root_vc</span><span class="o">.</span><span class="n">presentViewController_animated_completion_</span><span class="p">(</span><span class="n">mail_composer</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">show_mail_sheet</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="objc_util.ObjCClass">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">ObjCClass</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#objc_util.ObjCClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for an Objective-C class with the given name; acts as a proxy for calling Objective-C class methods.</p>
+<p>Method calls are converted to Objective-C messages on-the-fly &#8211; this is done by replacing underscores in the method name with colons in the selector name, and using the selector and arguments for a call to the low-level <tt class="docutils literal"><span class="pre">objc_msgSend()</span></tt> function in the Objective-C runtime.</p>
+<p>For example, calling <tt class="docutils literal"><span class="pre">NSDictionary.dictionaryWithObject_forKey_(obj,</span> <span class="pre">key)</span></tt> (Python) is effectively translated to <tt class="docutils literal"><span class="pre">[NSDictionary</span> <span class="pre">dictionaryWithObject:obj</span> <span class="pre">forKey:key]</span></tt> (Objective-C). If a method call returns an Objective-C object, it is wrapped in an ObjCInstance, so calls can be chained (<a class="reference internal" href="#objc_util.ObjCInstance" title="objc_util.ObjCInstance"><tt class="xref py py-class docutils literal"><span class="pre">ObjCInstance</span></tt></a> uses an equivalent proxy mechanism).</p>
+<p>Some commonly used classes are module members (see list at the bottom), for others, you simply &#8220;import&#8221; it using the class name, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">UIPasteboard</span> <span class="o">=</span> <span class="n">ObjCClass</span><span class="p">(</span><span class="s">&#39;UIPasteboard&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="objc_util.ObjCInstance">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">ObjCInstance</tt><big>(</big><em>ptr</em><big>)</big><a class="headerlink" href="#objc_util.ObjCInstance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for a pointer to an Objective-C object; acts as a proxy for sending messages to the object.</p>
+<p>Method calls are converted to Objective-C messages on-the-fly &#8211; this is done by replacing underscores in the method name with colons in the selector name, and using the selector and arguments for a call to the <tt class="docutils literal"><span class="pre">objc_msgSend()</span></tt> function in the Objective-C runtime. For example, calling <tt class="docutils literal"><span class="pre">obj.setFoo_withBar_(foo,</span> <span class="pre">bar)</span></tt> (Python) is effectively translated to <tt class="docutils literal"><span class="pre">[obj</span> <span class="pre">setFoo:foo</span> <span class="pre">withBar:bar]</span></tt> (Objective-C). If a method call returns an Objective-C object, it is also wrapped in an ObjCInstance, so calls can be chained.</p>
+<p><a class="reference internal" href="#objc_util.ObjCInstance" title="objc_util.ObjCInstance"><tt class="xref py py-class docutils literal"><span class="pre">ObjCInstance</span></tt></a> implements <tt class="docutils literal"><span class="pre">__str__</span></tt> and <tt class="docutils literal"><span class="pre">__repr__</span></tt> by calling the <tt class="docutils literal"><span class="pre">NSObject</span></tt> method <tt class="docutils literal"><span class="pre">description</span></tt>.</p>
+<p>If an instance wraps a common Objective-C collection type (<tt class="docutils literal"><span class="pre">NSArray</span></tt>, <tt class="docutils literal"><span class="pre">NSDictionary</span></tt>, <tt class="docutils literal"><span class="pre">NSSet</span></tt>), it behaves similar to a native Python collection in many ways. It can be iterated (<tt class="docutils literal"><span class="pre">for</span> <span class="pre">..</span> <span class="pre">in</span></tt>), you can access items by key/index, using square bracket notation (<tt class="docutils literal"><span class="pre">some_dict['key']</span></tt>, <tt class="docutils literal"><span class="pre">some_array[3]</span></tt>...), etc.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="objc_util.ObjCBlock">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">ObjCBlock</tt><big>(</big><em>func</em>, <em>restype=None</em>, <em>argtypes=None</em><big>)</big><a class="headerlink" href="#objc_util.ObjCBlock" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Block support is experimental. If you have the alternative of using an API that doesn&#8217;t require blocks, it is strongly recommended that you do so.</p>
+</div>
+<p><a class="reference internal" href="#objc_util.ObjCBlock" title="objc_util.ObjCBlock"><tt class="xref py py-class docutils literal"><span class="pre">ObjCBlock</span></tt></a> can be used to pass blocks (&#8220;closures&#8221;) to Objective-C methods. As mentioned above, this is experimental, and you should usually prefer to use APIs that don&#8217;t require blocks, if possible. Some APIs absolutely require the use of blocks though. For blocks that don&#8217;t have a return value and no arguments, you can pass a Python function, and it&#8217;ll be converted to an <a class="reference internal" href="#objc_util.ObjCBlock" title="objc_util.ObjCBlock"><tt class="xref py py-class docutils literal"><span class="pre">ObjCBlock</span></tt></a> automatically. In other cases, you need to specify the return and argumet types when creating the block explicitly.</p>
+<p>Example of a block with arguments (used to sort an NSMutableArray with a custom comparison function):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">objc_util</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">cheeses</span> <span class="o">=</span> <span class="n">ns</span><span class="p">([</span><span class="s">&#39;Camembert&#39;</span><span class="p">,</span> <span class="s">&#39;Feta&#39;</span><span class="p">,</span> <span class="s">&#39;Gorgonzola&#39;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cheeses</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="n">_cmd</span><span class="p">,</span> <span class="n">obj1_ptr</span><span class="p">,</span> <span class="n">obj2_ptr</span><span class="p">):</span>
+    <span class="n">obj1</span> <span class="o">=</span> <span class="n">ObjCInstance</span><span class="p">(</span><span class="n">obj1_ptr</span><span class="p">)</span>
+    <span class="n">obj2</span> <span class="o">=</span> <span class="n">ObjCInstance</span><span class="p">(</span><span class="n">obj2_ptr</span><span class="p">)</span>
+    <span class="c"># Sort the strings by length:</span>
+    <span class="k">return</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">obj1</span><span class="o">.</span><span class="n">length</span><span class="p">(),</span> <span class="n">obj2</span><span class="o">.</span><span class="n">length</span><span class="p">())</span>
+
+<span class="c"># Note: The first (hidden) argument `_cmd` is the block itself, so there are three arguments instead of two.</span>
+<span class="n">compare_block</span> <span class="o">=</span> <span class="n">ObjCBlock</span><span class="p">(</span><span class="n">compare</span><span class="p">,</span> <span class="n">restype</span><span class="o">=</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">argtypes</span><span class="o">=</span><span class="p">[</span><span class="n">c_void_p</span><span class="p">,</span> <span class="n">c_void_p</span><span class="p">,</span> <span class="n">c_void_p</span><span class="p">])</span>
+
+<span class="n">sorted_cheeses</span> <span class="o">=</span> <span class="n">cheeses</span><span class="o">.</span><span class="n">sortedArrayUsingComparator_</span><span class="p">(</span><span class="n">compare_block</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sorted_cheeses</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="objc_util.create_objc_class">
+<tt class="descclassname">objc_util.</tt><tt class="descname">create_objc_class</tt><big>(</big><em>name</em>, <em>superclass=NSObject</em>, <em>methods=</em><span class="optional">[</span><span class="optional">]</span>, <em>classmethods=</em><span class="optional">[</span><span class="optional">]</span>, <em>protocols=</em><span class="optional">[</span><span class="optional">]</span>, <em>debug=True</em><big>)</big><a class="headerlink" href="#objc_util.create_objc_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return a new <a class="reference internal" href="#objc_util.ObjCClass" title="objc_util.ObjCClass"><tt class="xref py py-class docutils literal"><span class="pre">ObjCClass</span></tt></a> that implements the given methods.</p>
+<ul>
+<li><p class="first">The selector name is derived from the name of the function. The function name can optionally be prefixed by the Objective-C class name. For example, these two functions result in an equivalent selector name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">MyClass_doSomething_withObject_</span><span class="p">(</span><span class="n">_self</span><span class="p">,</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="n">bar</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">doSomething_withObject_</span><span class="p">(</span><span class="n">_self</span><span class="p">,</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="n">bar</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c"># The selector name for both of these functions would be &#39;doSomething:withObject:&#39;.</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">To determine the return type and argument types, <a class="reference internal" href="#objc_util.create_objc_class" title="objc_util.create_objc_class"><tt class="xref py py-func docutils literal"><span class="pre">create_objc_class()</span></tt></a> checks if the superclass has a method with the same selector. If that&#8217;s the case, the types are inherited from the superclass&#8217;s method. This strategy works for overriding a method in a subclass. If this fails, the <cite>protocols</cite> parameter is used. <cite>protocols</cite> is a list of strings, for example <tt class="docutils literal"><span class="pre">['UIGestureRecognizerDelegate',</span> <span class="pre">'UITableViewDataSource']</span></tt> &#8211; these protocols are checked for methods with the same selector. This strategy works for example for implementing delegate protocols. Together, these strategies should determine the type information in most common cases. If they are not suitable in your case, you can set <tt class="docutils literal"><span class="pre">restype</span></tt>, <tt class="docutils literal"><span class="pre">argtypes</span></tt>, and <tt class="docutils literal"><span class="pre">encoding</span></tt> attributes on the function objects you pass.</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to use an <em>existing</em> Objective-C class, simply obtain a reference to it using <tt class="docutils literal"><span class="pre">ObjCClass(name)</span></tt>. This function is for creating <em>new</em> classes, e.g. to subclass an Objective-C class or implement a delegate protocol.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="objc_util.ns">
+<tt class="descclassname">objc_util.</tt><tt class="descname">ns</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#objc_util.ns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert common Python objects to their ObjC equivalents, i.e. <tt class="docutils literal"><span class="pre">str</span></tt> =&gt; <tt class="docutils literal"><span class="pre">NSString</span></tt>, <tt class="docutils literal"><span class="pre">int</span></tt>/<tt class="docutils literal"><span class="pre">float</span></tt> =&gt; <tt class="docutils literal"><span class="pre">NSNumber</span></tt>, <tt class="docutils literal"><span class="pre">list</span></tt> =&gt; <tt class="docutils literal"><span class="pre">NSMutableArray</span></tt>, <tt class="docutils literal"><span class="pre">dict</span></tt> =&gt; <tt class="docutils literal"><span class="pre">NSMutableDictionary</span></tt>, <tt class="docutils literal"><span class="pre">bytearray</span></tt> =&gt; <tt class="docutils literal"><span class="pre">NSData</span></tt>, <tt class="docutils literal"><span class="pre">set</span></tt> =&gt; <tt class="docutils literal"><span class="pre">NSMutableSet</span></tt>. Nested structures (<tt class="docutils literal"><span class="pre">list</span></tt>/<tt class="docutils literal"><span class="pre">dict</span></tt>/<tt class="docutils literal"><span class="pre">set</span></tt>) are supported. If an object is already an instance of <a class="reference internal" href="#objc_util.ObjCInstance" title="objc_util.ObjCInstance"><tt class="xref py py-class docutils literal"><span class="pre">ObjCInstance</span></tt></a>, it is left untouched.</p>
+<p>If an Objective-C method expects an object as a parameter, the Python object parameter is automatically converted using this function, so you can e.g. pass Python strings to Objective-C methods that expect an <tt class="docutils literal"><span class="pre">NSString</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="objc_util.nsurl">
+<tt class="descclassname">objc_util.</tt><tt class="descname">nsurl</tt><big>(</big><em>url_or_path</em><big>)</big><a class="headerlink" href="#objc_util.nsurl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a Python string to an <tt class="docutils literal"><span class="pre">NSURL</span></tt> object (wrapped in an <a class="reference internal" href="#objc_util.ObjCInstance" title="objc_util.ObjCInstance"><tt class="xref py py-class docutils literal"><span class="pre">ObjCInstance</span></tt></a>).</p>
+<p>If the string contains a colon (&#8216;:&#8217;), it is treated as a full URL and converted to an <tt class="docutils literal"><span class="pre">NSURL</span></tt> using <tt class="docutils literal"><span class="pre">+URLWithString:</span></tt>. Otherwise, a file URL is constructed using <tt class="docutils literal"><span class="pre">+fileURLWithPath:</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="objc_util.nsdata_to_bytes">
+<tt class="descclassname">objc_util.</tt><tt class="descname">nsdata_to_bytes</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#objc_util.nsdata_to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an <tt class="docutils literal"><span class="pre">NSData</span></tt> object (wrapped in an <a class="reference internal" href="#objc_util.ObjCInstance" title="objc_util.ObjCInstance"><tt class="xref py py-class docutils literal"><span class="pre">ObjCInstance</span></tt></a>) to a Python byte string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="objc_util.uiimage_to_png">
+<tt class="descclassname">objc_util.</tt><tt class="descname">uiimage_to_png</tt><big>(</big><em>img</em><big>)</big><a class="headerlink" href="#objc_util.uiimage_to_png" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">UIImage</span></tt> object (wrapped in an <a class="reference internal" href="#objc_util.ObjCInstance" title="objc_util.ObjCInstance"><tt class="xref py py-class docutils literal"><span class="pre">ObjCInstance</span></tt></a>) to a Python byte string that contains PNG data.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="objc_util.on_main_thread">
+<tt class="descclassname">objc_util.</tt><tt class="descname">on_main_thread</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#objc_util.on_main_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator function for calling another function on the UIKit main thread. A lot of Objective-C APIs (particularly in UIKit) require being called from the main thread. This is typically used to decorate another function, but it can also be used for dispatching a function call to the main thread ad-hoc, e.g. <tt class="docutils literal"><span class="pre">on_main_thread(my_function)(param1,</span> <span class="pre">param2)</span></tt></p>
+<p>Decorator example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">objc_util</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="nd">@on_main_thread</span>
+<span class="k">def</span> <span class="nf">post_notification</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">NSNotificationCenter</span> <span class="o">=</span> <span class="n">ObjCClass</span><span class="p">(</span><span class="s">&#39;NSNotificationCenter&#39;</span><span class="p">)</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="n">NSNotificationCenter</span><span class="o">.</span><span class="n">defaultCenter</span><span class="p">()</span>
+    <span class="n">center</span><span class="o">.</span><span class="n">postNotificationName_object_</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+<span class="c"># Every call of post_notification(...) will automagically happen on the main thread.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="objc_util.sel">
+<tt class="descclassname">objc_util.</tt><tt class="descname">sel</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#objc_util.sel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience wrapper for <tt class="docutils literal"><span class="pre">sel_registerName</span></tt> (converts a Python string to an Objective-C selector).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="objective-c-classes-structs">
+<h3>Objective-C Classes/Structs<a class="headerlink" href="#objective-c-classes-structs" title="Permalink to this headline">¶</a></h3>
+<p>For convenience, a few commonly-used Objective-C classes and structs are made available as module-level objects, so they don&#8217;t have to be wrapped explicitly. These are:</p>
+<dl class="class">
+<dt id="objc_util.CGPoint">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">CGPoint</tt><a class="headerlink" href="#objc_util.CGPoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.CGSize">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">CGSize</tt><a class="headerlink" href="#objc_util.CGSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.CGVector">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">CGVector</tt><a class="headerlink" href="#objc_util.CGVector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.CGRect">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">CGRect</tt><a class="headerlink" href="#objc_util.CGRect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.CGAffineTransform">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">CGAffineTransform</tt><a class="headerlink" href="#objc_util.CGAffineTransform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.UIEdgeInsets">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">UIEdgeInsets</tt><a class="headerlink" href="#objc_util.UIEdgeInsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSRange">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSRange</tt><a class="headerlink" href="#objc_util.NSRange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSDictionary">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSDictionary</tt><a class="headerlink" href="#objc_util.NSDictionary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSMutableDictionary">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSMutableDictionary</tt><a class="headerlink" href="#objc_util.NSMutableDictionary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSArray">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSArray</tt><a class="headerlink" href="#objc_util.NSArray" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSMutableArray">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSMutableArray</tt><a class="headerlink" href="#objc_util.NSMutableArray" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSSet">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSSet</tt><a class="headerlink" href="#objc_util.NSSet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSMutableSet">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSMutableSet</tt><a class="headerlink" href="#objc_util.NSMutableSet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSString">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSString</tt><a class="headerlink" href="#objc_util.NSString" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSMutableString">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSMutableString</tt><a class="headerlink" href="#objc_util.NSMutableString" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSData">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSData</tt><a class="headerlink" href="#objc_util.NSData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSMutableData">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSMutableData</tt><a class="headerlink" href="#objc_util.NSMutableData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSNumber">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSNumber</tt><a class="headerlink" href="#objc_util.NSNumber" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSURL">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSURL</tt><a class="headerlink" href="#objc_util.NSURL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="objc_util.NSEnumerator">
+<em class="property">class </em><tt class="descclassname">objc_util.</tt><tt class="descname">NSEnumerator</tt><a class="headerlink" href="#objc_util.NSEnumerator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 08, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.linalg.cholesky &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Linear algebra (numpy.linalg)" href="../routines.linalg.html" />
+    <link rel="next" title="numpy.linalg.qr" href="numpy.linalg.qr.html" />
+    <link rel="prev" title="numpy.kron" href="numpy.kron.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.linalg.qr.html" title="numpy.linalg.qr"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.kron.html" title="numpy.kron"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.linalg.html" accesskey="U">Linear algebra (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.linalg</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-linalg-cholesky">
+<h1>numpy.linalg.cholesky<a class="headerlink" href="#numpy-linalg-cholesky" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.linalg.cholesky">
+<tt class="descclassname">numpy.linalg.</tt><tt class="descname">cholesky</tt><big>(</big><em>a</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/linalg/linalg.py#L526"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.linalg.cholesky" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cholesky decomposition.</p>
+<p>Return the Cholesky decomposition, <em class="xref py py-obj">L * L.H</em>, of the square matrix <em class="xref py py-obj">a</em>,
+where <em class="xref py py-obj">L</em> is lower-triangular and .H is the conjugate transpose operator
+(which is the ordinary transpose if <em class="xref py py-obj">a</em> is real-valued).  <em class="xref py py-obj">a</em> must be
+Hermitian (symmetric if real-valued) and positive-definite.  Only <em class="xref py py-obj">L</em> is
+actually returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>a</strong> : (..., M, M) array_like</p>
+<blockquote>
+<div><p>Hermitian (symmetric if all elements are real), positive-definite
+input matrix.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>L</strong> : (..., M, M) array_like</p>
+<blockquote>
+<div><p>Upper or lower-triangular Cholesky factor of <em class="xref py py-obj">a</em>.  Returns a
+matrix object if <em class="xref py py-obj">a</em> is a matrix object.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>LinAlgError</strong> :</p>
+<blockquote class="last">
+<div><p>If the decomposition fails, for example, if <em class="xref py py-obj">a</em> is not
+positive-definite.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Broadcasting rules apply, see the <tt class="xref py py-obj docutils literal"><span class="pre">numpy.linalg</span></tt> documentation for
+details.</p>
+<p>The Cholesky decomposition is often used as a fast way of solving</p>
+<div class="math">
+<p><span class="math">A \mathbf{x} = \mathbf{b}</span></p>
+</div><p>(when <em class="xref py py-obj">A</em> is both Hermitian/symmetric and positive-definite).</p>
+<p>First, we solve for <span class="math">\mathbf{y}</span> in</p>
+<div class="math">
+<p><span class="math">L \mathbf{y} = \mathbf{b},</span></p>
+</div><p>and then for <span class="math">\mathbf{x}</span> in</p>
+<div class="math">
+<p><span class="math">L.H \mathbf{x} = \mathbf{y}.</span></p>
+</div><p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2j</span><span class="p">],[</span><span class="mi">2j</span><span class="p">,</span><span class="mi">5</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span>
+<span class="go">array([[ 1.+0.j,  0.-2.j],</span>
+<span class="go">       [ 0.+2.j,  5.+0.j]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span>
+<span class="go">array([[ 1.+0.j,  0.+0.j],</span>
+<span class="go">       [ 0.+2.j,  1.+0.j]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span> <span class="c"># verify that L * L.H = A</span>
+<span class="go">array([[ 1.+0.j,  0.-2.j],</span>
+<span class="go">       [ 0.+2.j,  5.+0.j]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2j</span><span class="p">],[</span><span class="mi">2j</span><span class="p">,</span><span class="mi">5</span><span class="p">]]</span> <span class="c"># what happens if A is only array_like?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="c"># an ndarray object is returned</span>
+<span class="go">array([[ 1.+0.j,  0.+0.j],</span>
+<span class="go">       [ 0.+2.j,  1.+0.j]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># But a matrix object is returned if A is a matrix object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">LA</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+<span class="go">matrix([[ 1.+0.j,  0.+0.j],</span>
+<span class="go">        [ 0.+2.j,  1.+0.j]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

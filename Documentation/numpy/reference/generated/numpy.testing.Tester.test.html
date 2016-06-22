@@ -1,0 +1,217 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.testing.Tester.test &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-testing-tester-test">
+<h1>numpy.testing.Tester.test<a class="headerlink" href="#numpy-testing-tester-test" title="Permalink to this headline">¶</a></h1>
+<dl class="method">
+<dt id="numpy.testing.Tester.test">
+<tt class="descclassname">Tester.</tt><tt class="descname">test</tt><big>(</big><em>label='fast'</em>, <em>verbose=1</em>, <em>extra_argv=None</em>, <em>doctests=False</em>, <em>coverage=False</em>, <em>raise_warnings=None</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/testing/nosetester.py#L277"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.testing.Tester.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run tests for module using nose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>label</strong> : {&#8216;fast&#8217;, &#8216;full&#8217;, &#8216;&#8217;, attribute identifier}, optional</p>
+<blockquote>
+<div><p>Identifies the tests to run. This can be a string to pass to
+the nosetests executable with the &#8216;-A&#8217; option, or one of several
+special values.  Special values are:
+* &#8216;fast&#8217; - the default - which corresponds to the <tt class="docutils literal"><span class="pre">nosetests</span> <span class="pre">-A</span></tt></p>
+<blockquote>
+<div><p>option of &#8216;not slow&#8217;.</p>
+</div></blockquote>
+<ul class="simple">
+<li>&#8216;full&#8217; - fast (as above) and slow tests as in the
+&#8216;no -A&#8217; option to nosetests - this is the same as &#8216;&#8217;.</li>
+<li>None or &#8216;&#8217; - run all tests.</li>
+</ul>
+<p>attribute_identifier - string passed directly to nosetests as &#8216;-A&#8217;.</p>
+</div></blockquote>
+<p><strong>verbose</strong> : int, optional</p>
+<blockquote>
+<div><p>Verbosity value for test outputs, in the range 1-10. Default is 1.</p>
+</div></blockquote>
+<p><strong>extra_argv</strong> : list, optional</p>
+<blockquote>
+<div><p>List with any extra arguments to pass to nosetests.</p>
+</div></blockquote>
+<p><strong>doctests</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True, run doctests in module. Default is False.</p>
+</div></blockquote>
+<p><strong>coverage</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True, report coverage of NumPy code. Default is False.
+(This requires the <a href="#id1"><span class="problematic" id="id2">`</span></a>coverage module:</p>
+<blockquote>
+<div><p>&lt;<a class="reference external" href="http://nedbatchelder.com/code/modules/coverage.html">http://nedbatchelder.com/code/modules/coverage.html</a>&gt;`_).</p>
+</div></blockquote>
+</div></blockquote>
+<p><strong>raise_warnings</strong> : str or sequence of warnings, optional</p>
+<blockquote>
+<div><p>This specifies which warnings to configure as &#8216;raise&#8217; instead
+of &#8216;warn&#8217; during the test execution.  Valid strings are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;develop&#8221; : equals <tt class="docutils literal"><span class="pre">(DeprecationWarning,</span> <span class="pre">RuntimeWarning)</span></tt></li>
+<li>&#8220;release&#8221; : equals <tt class="docutils literal"><span class="pre">()</span></tt>, don&#8217;t raise on any warnings.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> : object</p>
+<blockquote class="last">
+<div><p>Returns the result of running the tests as a
+<tt class="docutils literal"><span class="pre">nose.result.TextTestResult</span></tt> object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Each NumPy module exposes <a class="reference internal" href="#numpy.testing.Tester.test" title="numpy.testing.Tester.test"><tt class="xref py py-obj docutils literal"><span class="pre">test</span></tt></a> in its namespace to run all tests for it.
+For example, to run all tests for numpy.lib:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">test</span><span class="p">()</span> 
+</pre></div>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">test</span><span class="p">()</span> 
+<span class="go">Running unit tests for numpy.lib</span>
+<span class="gp">...</span>
+<span class="go">Ran 976 tests in 3.933s</span>
+</pre></div>
+</div>
+<p>OK</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">errors</span> 
+<span class="go">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">knownfail</span> 
+<span class="go">[]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

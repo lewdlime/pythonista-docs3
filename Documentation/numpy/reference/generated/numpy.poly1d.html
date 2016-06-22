@@ -1,0 +1,286 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.poly1d &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Poly1d" href="../routines.polynomials.poly1d.html" />
+    <link rel="next" title="numpy.poly1d.coeffs" href="numpy.poly1d.coeffs.html" />
+    <link rel="prev" title="numpy.RankWarning" href="numpy.RankWarning.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.poly1d.coeffs.html" title="numpy.poly1d.coeffs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.RankWarning.html" title="numpy.RankWarning"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.polynomials.html" >Polynomials</a> &raquo;</li>
+          <li><a href="../routines.polynomials.poly1d.html" accesskey="U">Poly1d</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-poly1d">
+<h1>numpy.poly1d<a class="headerlink" href="#numpy-poly1d" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy.poly1d">
+<em class="property">class </em><tt class="descclassname">numpy.</tt><tt class="descname">poly1d</tt><big>(</big><em>c_or_r</em>, <em>r=0</em>, <em>variable=None</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/lib/polynomial.py#L930"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.poly1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>A one-dimensional polynomial class.</p>
+<p>A convenience class, used to encapsulate &#8220;natural&#8221; operations on
+polynomials so that said operations may take on their customary
+form in code (see Examples).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>c_or_r</strong> : array_like</p>
+<blockquote>
+<div><p>The polynomial&#8217;s coefficients, in decreasing powers, or if
+the value of the second parameter is True, the polynomial&#8217;s
+roots (values where the polynomial evaluates to 0).  For example,
+<tt class="docutils literal"><span class="pre">poly1d([1,</span> <span class="pre">2,</span> <span class="pre">3])</span></tt> returns an object that represents
+<span class="math">x^2 + 2x + 3</span>, whereas <tt class="docutils literal"><span class="pre">poly1d([1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">True)</span></tt> returns
+one that represents <span class="math">(x-1)(x-2)(x-3) = x^3 - 6x^2 + 11x -6</span>.</p>
+</div></blockquote>
+<p><strong>r</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True, <em class="xref py py-obj">c_or_r</em> specifies the polynomial&#8217;s roots; the default
+is False.</p>
+</div></blockquote>
+<p><strong>variable</strong> : str, optional</p>
+<blockquote class="last">
+<div><p>Changes the variable used when printing <em class="xref py py-obj">p</em> from <em class="xref py py-obj">x</em> to <a class="reference internal" href="numpy.poly1d.variable.html#numpy.poly1d.variable" title="numpy.poly1d.variable"><tt class="xref py py-obj docutils literal"><span class="pre">variable</span></tt></a>
+(see Examples).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Construct the polynomial <span class="math">x^2 + 2x + 3</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="go">   2</span>
+<span class="go">1 x + 2 x + 3</span>
+</pre></div>
+</div>
+<p>Evaluate the polynomial at <span class="math">x = 0.5</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="go">4.25</span>
+</pre></div>
+</div>
+<p>Find the roots:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">r</span>
+<span class="go">array([-1.+1.41421356j, -1.-1.41421356j])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+<span class="go">array([ -4.44089210e-16+0.j,  -4.44089210e-16+0.j])</span>
+</pre></div>
+</div>
+<p>These numbers in the previous line represent (0, 0) to machine precision</p>
+<p>Show the coefficients:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">c</span>
+<span class="go">array([1, 2, 3])</span>
+</pre></div>
+</div>
+<p>Display the order (the leading zero-coefficients are removed):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">order</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>Show the coefficient of the k-th power in the polynomial
+(which is equivalent to <tt class="docutils literal"><span class="pre">p.c[-(i+1)]</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>Polynomials can be added, subtracted, multiplied, and divided
+(returns quotient and remainder):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">*</span> <span class="n">p</span>
+<span class="go">poly1d([ 1,  4, 10, 12,  9])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">p</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="n">p</span>
+<span class="go">(poly1d([  1.,   4.,  10.,  12.,   9.]), poly1d([ 4.]))</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">asarray(p)</span></tt> gives the coefficient array, so polynomials can be
+used in all functions that accept arrays:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">**</span><span class="mi">2</span> <span class="c"># square of polynomial</span>
+<span class="go">poly1d([ 1,  4, 10, 12,  9])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="c"># square of individual coefficients</span>
+<span class="go">array([1, 4, 9])</span>
+</pre></div>
+</div>
+<p>The variable used in the string representation of <em class="xref py py-obj">p</em> can be modified,
+using the <a class="reference internal" href="numpy.poly1d.variable.html#numpy.poly1d.variable" title="numpy.poly1d.variable"><tt class="xref py py-obj docutils literal"><span class="pre">variable</span></tt></a> parameter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">variable</span><span class="o">=</span><span class="s">&#39;z&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">p</span>
+<span class="go">   2</span>
+<span class="go">1 z + 2 z + 3</span>
+</pre></div>
+</div>
+<p>Construct a polynomial from its roots:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="bp">True</span><span class="p">)</span>
+<span class="go">poly1d([ 1, -3,  2])</span>
+</pre></div>
+</div>
+<p>This is the same polynomial as obtained by:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+<span class="go">poly1d([ 1, -3,  2])</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="numpy.poly1d.coeffs.html#numpy.poly1d.coeffs" title="numpy.poly1d.coeffs"><tt class="xref py py-obj docutils literal"><span class="pre">coeffs</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="numpy.poly1d.order.html#numpy.poly1d.order" title="numpy.poly1d.order"><tt class="xref py py-obj docutils literal"><span class="pre">order</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="numpy.poly1d.variable.html#numpy.poly1d.variable" title="numpy.poly1d.variable"><tt class="xref py py-obj docutils literal"><span class="pre">variable</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="numpy.poly1d.deriv.html#numpy.poly1d.deriv" title="numpy.poly1d.deriv"><tt class="xref py py-obj docutils literal"><span class="pre">deriv</span></tt></a>([m])</td>
+<td>Return a derivative of this polynomial.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="numpy.poly1d.integ.html#numpy.poly1d.integ" title="numpy.poly1d.integ"><tt class="xref py py-obj docutils literal"><span class="pre">integ</span></tt></a>([m,&nbsp;k])</td>
+<td>Return an antiderivative (indefinite integral) of this polynomial.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

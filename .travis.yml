@@ -1,9 +1,0 @@
-language: python
-python:
-- '2.7'
-install: pip install -r requirements.txt
-script:
-- mkdir _build
-- doc2dash -fv --name 'Pythonista3' -d _build -i icon.png -j -I index.html Pythonista
-- cp icon@2x.png _build/Pythonista3.docset
-- cd _build && tar --exclude='.DS_Store' -cvzf Pythonista3.tgz Pythonista3.docset

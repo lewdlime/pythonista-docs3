@@ -1,0 +1,298 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>editor — Functions for scripting Pythonista’s text editor &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-editor">
+<span id="editor-functions-for-scripting-pythonista-s-text-editor"></span><h1><a class="reference internal" href="#module-editor" title="editor: Scripting Pythonista's text editor"><tt class="xref py py-mod docutils literal"><span class="pre">editor</span></tt></a> &#8212; Functions for scripting Pythonista&#8217;s text editor<a class="headerlink" href="#module-editor" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-editor" title="editor: Scripting Pythonista's text editor"><tt class="xref py py-mod docutils literal"><span class="pre">editor</span></tt></a> module provides access to the script you&#8217;re currently editing.
+You can get and set the selected range and replace text in a given range.</p>
+<p>Please note: Invalid input values for the selection and text manipulation functions
+(e.g. ranges that are out of bounds) are silently ignored as of now. This may
+change in a future release.</p>
+<p>This module is especially useful in combination with the  customizable actions menu (new in v1.1).
+You can add any script from your library to the menu for quickly running it directly from the editor,
+regardless of which script you&#8217;re currently editing.
+The menu is editable from the settings (Editor &gt; Actions Menu).</p>
+<p>This enables a couple of very interesting possibilities to extend the capabilities of the
+Pythonista app itself. To give you some inspiration, here are a couple of snippets that you could
+use as actions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Search StackOverflow for selected text</span>
+
+<span class="kn">import</span> <span class="nn">editor</span>
+<span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_selection</span><span class="p">()</span>
+<span class="n">selection</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">quote</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+    <span class="n">search_url</span> <span class="o">=</span> <span class="s">&#39;http://stackoverflow.com/search?q=&#39;</span> <span class="o">+</span> <span class="n">q</span>
+    <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">search_url</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">console</span> <span class="kn">import</span> <span class="n">alert</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">alert</span><span class="p">(</span><span class="s">&#39;No Selection&#39;</span><span class="p">,</span> <span class="s">&#39;Do you want to open the StackOverflow homepage?&#39;</span><span class="p">,</span> <span class="s">&#39;StackOverflow&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;http://stackoverflow.com&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This sample searches the populer Q&amp;A site <a class="reference external" href="http://stackoverflow.com">StackOverflow</a> for the selected text.
+If no text is selected, it pops up a dialog, asking if the homepage should be opened instead.</p>
+<p>As an aside, the <a class="reference internal" href="../library/webbrowser.html#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module also works with custom app URL schemes, so you could, for example,
+open <a class="reference external" href="http://tapbots.com/software/tweetbot/">TweetBot</a> with <tt class="docutils literal"><span class="pre">webbrowser.open('tweetbot:///post?text=Hello)</span></tt>.</p>
+<p>The following sample shows how to comment/uncomment selected lines, using the <a class="reference internal" href="#editor.get_line_selection" title="editor.get_line_selection"><tt class="xref py py-func docutils literal"><span class="pre">get_line_selection()</span></tt></a>
+convenience function. It doesn&#8217;t require you to select the entirety of the lines you want to comment out,
+it will work on all lines that your selection is touching.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#Comment/Uncomment selected lines</span>
+
+<span class="kn">import</span> <span class="nn">editor</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+<span class="n">selection</span> <span class="o">=</span> <span class="n">editor</span><span class="o">.</span><span class="n">get_line_selection</span><span class="p">()</span>
+<span class="n">selected_text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">selection</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">is_comment</span> <span class="o">=</span> <span class="n">selected_text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">)</span>
+<span class="n">replacement</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">selected_text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">is_comment</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">):</span>
+            <span class="n">replacement</span> <span class="o">+=</span> <span class="n">line</span><span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">replacement</span> <span class="o">+=</span> <span class="n">line</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">replacement</span> <span class="o">+=</span> <span class="s">&#39;#&#39;</span> <span class="o">+</span> <span class="n">line</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="n">editor</span><span class="o">.</span><span class="n">replace_text</span><span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">selection</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">replacement</span><span class="p">)</span>
+<span class="n">editor</span><span class="o">.</span><span class="n">set_selection</span><span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">selection</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">replacement</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following functions are provided by the <a class="reference internal" href="#module-editor" title="editor: Scripting Pythonista's text editor"><tt class="xref py py-mod docutils literal"><span class="pre">editor</span></tt></a> module:</p>
+<dl class="function">
+<dt id="editor.get_path">
+<tt class="descclassname">editor.</tt><tt class="descname">get_path</tt><big>(</big><big>)</big><a class="headerlink" href="#editor.get_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the absolute file path of the script that is currently open in the editor.</p>
+<p>If no script is currently open, <cite>None</cite> is returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.get_text">
+<tt class="descclassname">editor.</tt><tt class="descname">get_text</tt><big>(</big><big>)</big><a class="headerlink" href="#editor.get_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the entire text of the script that is currently being edited.</p>
+<p>Note that this may be different from reading the file returned from <a class="reference internal" href="#editor.get_path" title="editor.get_path"><tt class="xref py py-func docutils literal"><span class="pre">get_path()</span></tt></a>, as not all
+changes may have been saved yet.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.get_selection">
+<tt class="descclassname">editor.</tt><tt class="descname">get_selection</tt><big>(</big><big>)</big><a class="headerlink" href="#editor.get_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the selected range as a tuple of the form <cite>(start, end)</cite>.</p>
+<p>If no file is currently open in the editor, <cite>None</cite> is returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.get_line_selection">
+<tt class="descclassname">editor.</tt><tt class="descname">get_line_selection</tt><big>(</big><big>)</big><a class="headerlink" href="#editor.get_line_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the range of all lines that are part of the current selection as a tuple of the form (start, end)</p>
+<p>If no file is currently open in the editor, <cite>None</cite> is returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.set_selection">
+<tt class="descclassname">editor.</tt><tt class="descname">set_selection</tt><big>(</big><em>start</em><span class="optional">[</span>, <em>end</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#editor.set_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the selected range in the editor.</p>
+<p><cite>start</cite> and <cite>end</cite> must be integers. If <cite>end</cite> is not given, the caret is positioned at <cite>start</cite> with
+no text selected.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.replace_text">
+<tt class="descclassname">editor.</tt><tt class="descname">replace_text</tt><big>(</big><em>start</em>, <em>end</em>, <em>replacement</em><big>)</big><a class="headerlink" href="#editor.replace_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the text in the given range with <cite>replacement</cite>.</p>
+<p>To insert/append text, a zero-length range can be used.</p>
+<p>All changes can be undone by the user (using the regular undo key). Each
+separate call is a single undo step, regardless of how many characters were
+affected.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.make_new_file">
+<tt class="descclassname">editor.</tt><tt class="descname">make_new_file</tt><big>(</big><span class="optional">[</span><em>name</em>, <em>content</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#editor.make_new_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new file and open it in the editor.</p>
+<p>If a file with the given name already exists, a numeric suffix is
+automatically appended.
+<cite>content</cite> should be a string with the content of the new file. If omitted,
+an empty file is created.</p>
+<p>The current file is automatically saved before opening the new one.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.open_file">
+<tt class="descclassname">editor.</tt><tt class="descname">open_file</tt><big>(</big><em>name</em>, <em>new_tab=False</em><big>)</big><a class="headerlink" href="#editor.open_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the file with the given name in the editor.</p>
+<p>Name can be a path filename relative to the script library&#8217;s root directory or an absolute path.</p>
+<p>The .py extension can be omitted. The file that is currently open
+in the editor will automatically be saved.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.apply_ui_theme">
+<tt class="descclassname">editor.</tt><tt class="descname">apply_ui_theme</tt><big>(</big><em>ui_view</em>, <em>theme_name=None</em><big>)</big><a class="headerlink" href="#editor.apply_ui_theme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Style a <a class="reference internal" href="ui.html#ui.View" title="ui.View"><tt class="xref py py-class docutils literal"><span class="pre">ui.View</span></tt></a> (and its descendents) with the given UI theme.</p>
+<p>If <cite>theme_name</cite> is <cite>None</cite> (the default), the currently selected theme is used. Otherwise, it should be the name of a theme as shown in the settings.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.present_themed">
+<tt class="descclassname">editor.</tt><tt class="descname">present_themed</tt><big>(</big><em>ui_view</em>, <em>theme_name=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#editor.present_themed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Style a <a class="reference internal" href="ui.html#ui.View" title="ui.View"><tt class="xref py py-class docutils literal"><span class="pre">ui.View</span></tt></a> (and its descendents) with the given UI theme (using <a class="reference internal" href="#editor.apply_ui_theme" title="editor.apply_ui_theme"><tt class="xref py py-func docutils literal"><span class="pre">apply_ui_theme()</span></tt></a>), and present the view.</p>
+<p>Keyword arguments are passed on to <a class="reference internal" href="ui.html#ui.View.present" title="ui.View.present"><tt class="xref py py-meth docutils literal"><span class="pre">ui.View.present()</span></tt></a>, except for <cite>title_bar_color</cite> and <cite>title_color</cite>, which are set automatically, based on the theme.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.annotate_line">
+<tt class="descclassname">editor.</tt><tt class="descname">annotate_line</tt><big>(</big><em>lineno</em>, <em>text=''</em>, <em>style='warning'</em>, <em>expanded=True</em>, <em>filename=None</em>, <em>scroll=False</em><big>)</big><a class="headerlink" href="#editor.annotate_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Annotate a line of code in the editor with a label.</p>
+<p><cite>lineno</cite> should be the 1-based line number in the file.</p>
+<p><cite>style</cite> can be <cite>&#8216;success&#8217;</cite>, <cite>&#8216;warning&#8217;</cite> or <cite>&#8216;error&#8217;</cite>.</p>
+<p>If <cite>expanded</cite> is <cite>False</cite>, only an icon is shown; tapping on the icon shows the text of the annotation. Otherwise, the text is shown immediately.</p>
+<p>If <cite>filename</cite> is <cite>None</cite>, the line is annotated in the file that is currently open in the editor.</p>
+<p>Invalid file names and line numbers are silently ignored.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="editor.clear_annotations">
+<tt class="descclassname">editor.</tt><tt class="descname">clear_annotations</tt><big>(</big><em>filename=None</em><big>)</big><a class="headerlink" href="#editor.clear_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all annotations that were added via <a class="reference internal" href="#editor.annotate_line" title="editor.annotate_line"><tt class="xref py py-func docutils literal"><span class="pre">annotate_line()</span></tt></a>.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 04, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

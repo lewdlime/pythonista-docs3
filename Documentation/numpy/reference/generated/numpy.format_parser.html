@@ -1,0 +1,224 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.format_parser &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Data type routines" href="../routines.dtype.html" />
+    <link rel="next" title="numpy.finfo" href="numpy.finfo.html" />
+    <link rel="prev" title="numpy.dtype.newbyteorder" href="numpy.dtype.newbyteorder.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.finfo.html" title="numpy.finfo"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.dtype.newbyteorder.html" title="numpy.dtype.newbyteorder"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.dtype.html" accesskey="U">Data type routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-format-parser">
+<h1>numpy.format_parser<a class="headerlink" href="#numpy-format-parser" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy.format_parser">
+<em class="property">class </em><tt class="descclassname">numpy.</tt><tt class="descname">format_parser</tt><big>(</big><em>formats</em>, <em>names</em>, <em>titles</em>, <em>aligned=False</em>, <em>byteorder=None</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/core/records.py#L85"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.format_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to convert formats, names, titles description to a dtype.</p>
+<p>After constructing the format_parser object, the dtype attribute is
+the converted data-type:
+<tt class="docutils literal"><span class="pre">dtype</span> <span class="pre">=</span> <span class="pre">format_parser(formats,</span> <span class="pre">names,</span> <span class="pre">titles).dtype</span></tt></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>formats</strong> : str or list of str</p>
+<blockquote>
+<div><p>The format description, either specified as a string with
+comma-separated format descriptions in the form <tt class="docutils literal"><span class="pre">'f8,</span> <span class="pre">i4,</span> <span class="pre">a5'</span></tt>, or
+a list of format description strings  in the form
+<tt class="docutils literal"><span class="pre">['f8',</span> <span class="pre">'i4',</span> <span class="pre">'a5']</span></tt>.</p>
+</div></blockquote>
+<p><strong>names</strong> : str or list/tuple of str</p>
+<blockquote>
+<div><p>The field names, either specified as a comma-separated string in the
+form <tt class="docutils literal"><span class="pre">'col1,</span> <span class="pre">col2,</span> <span class="pre">col3'</span></tt>, or as a list or tuple of strings in the
+form <tt class="docutils literal"><span class="pre">['col1',</span> <span class="pre">'col2',</span> <span class="pre">'col3']</span></tt>.
+An empty list can be used, in that case default field names
+(&#8216;f0&#8217;, &#8216;f1&#8217;, ...) are used.</p>
+</div></blockquote>
+<p><strong>titles</strong> : sequence</p>
+<blockquote>
+<div><p>Sequence of title strings. An empty list can be used to leave titles
+out.</p>
+</div></blockquote>
+<p><strong>aligned</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True, align the fields by padding as the C-compiler would.
+Default is False.</p>
+</div></blockquote>
+<p><strong>byteorder</strong> : str, optional</p>
+<blockquote class="last">
+<div><p>If specified, all the fields will be changed to the
+provided byte-order.  Otherwise, the default byte-order is
+used. For all available string specifiers, see <a class="reference internal" href="numpy.dtype.newbyteorder.html#numpy.dtype.newbyteorder" title="numpy.dtype.newbyteorder"><tt class="xref py py-obj docutils literal"><span class="pre">dtype.newbyteorder</span></tt></a>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="numpy.dtype.html#numpy.dtype" title="numpy.dtype"><tt class="xref py py-obj docutils literal"><span class="pre">dtype</span></tt></a>, <a class="reference internal" href="numpy.typename.html#numpy.typename" title="numpy.typename"><tt class="xref py py-obj docutils literal"><span class="pre">typename</span></tt></a>, <a class="reference internal" href="numpy.sctype2char.html#numpy.sctype2char" title="numpy.sctype2char"><tt class="xref py py-obj docutils literal"><span class="pre">sctype2char</span></tt></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">format_parser</span><span class="p">([</span><span class="s">&#39;f8&#39;</span><span class="p">,</span> <span class="s">&#39;i4&#39;</span><span class="p">,</span> <span class="s">&#39;a5&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;col1&#39;</span><span class="p">,</span> <span class="s">&#39;col2&#39;</span><span class="p">,</span> <span class="s">&#39;col3&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="p">[</span><span class="s">&#39;T1&#39;</span><span class="p">,</span> <span class="s">&#39;T2&#39;</span><span class="p">,</span> <span class="s">&#39;T3&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dtype</span>
+<span class="go">dtype([((&#39;T1&#39;, &#39;col1&#39;), &#39;&lt;f8&#39;), ((&#39;T2&#39;, &#39;col2&#39;), &#39;&lt;i4&#39;),</span>
+<span class="go">       ((&#39;T3&#39;, &#39;col3&#39;), &#39;|S5&#39;)])</span>
+</pre></div>
+</div>
+<p><em class="xref py py-obj">names</em> and/or <em class="xref py py-obj">titles</em> can be empty lists. If <em class="xref py py-obj">titles</em> is an empty list,
+titles will simply not appear. If <em class="xref py py-obj">names</em> is empty, default field names
+will be used.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">format_parser</span><span class="p">([</span><span class="s">&#39;f8&#39;</span><span class="p">,</span> <span class="s">&#39;i4&#39;</span><span class="p">,</span> <span class="s">&#39;a5&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;col1&#39;</span><span class="p">,</span> <span class="s">&#39;col2&#39;</span><span class="p">,</span> <span class="s">&#39;col3&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="p">[])</span><span class="o">.</span><span class="n">dtype</span>
+<span class="go">dtype([(&#39;col1&#39;, &#39;&lt;f8&#39;), (&#39;col2&#39;, &#39;&lt;i4&#39;), (&#39;col3&#39;, &#39;|S5&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">format_parser</span><span class="p">([</span><span class="s">&#39;f8&#39;</span><span class="p">,</span> <span class="s">&#39;i4&#39;</span><span class="p">,</span> <span class="s">&#39;a5&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[])</span><span class="o">.</span><span class="n">dtype</span>
+<span class="go">dtype([(&#39;f0&#39;, &#39;&lt;f8&#39;), (&#39;f1&#39;, &#39;&lt;i4&#39;), (&#39;f2&#39;, &#39;|S5&#39;)])</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="15%" />
+<col width="71%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>dtype</td>
+<td>dtype</td>
+<td>The converted data-type.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

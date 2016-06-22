@@ -1,0 +1,52 @@
+
+:mod:`webbrowser` --- Convenient Web-browser controller
+=======================================================
+
+.. module:: webbrowser
+   :synopsis: Easy-to-use controller for Web browsers.
+.. moduleauthor:: Ole Zorn
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`webbrowser` module provides a high-level interface to allow displaying
+Web-based documents to users. Under most circumstances, simply calling the
+:func:`.open` function from this module will do the right thing.
+
+**Please note:** Pythonista uses a custom version of this module that only
+supports the :func:`open` function. The behavior is different from other
+platforms in that web pages are opened in an embedded browser view within
+the app for `http(s)` and `file` URLs. For custom URL schemes that are
+registered by an app (e.g. `mailto:`), the registered app is opened. This also
+works for third-party apps.
+
+
+.. function:: open(url[, modal=False, stop_when_done=False])
+
+   Display *url* in an in-app browser, if the scheme of the URL is `http`,
+   `https` or `file`. Using other URL schemes can be used to open native
+   apps that are registered for these schemes.
+   
+   If you want to open http or https URLs in Safari instead of the built-in
+   browser, you can replace http(s) with safari-http(s) in your URL, e.g.
+   'safari-http://google.com'.
+   
+   If the URL is valid (regardless of if it could actually be loaded by the
+   browser) `True` is returned, otherwise `False`.
+   
+   The `modal` parameter controls whether the function should block until
+   the `Done` button is tapped in the browser. It defaults to `False`.
+   When this function is used to open an external app, the parameter is ignored.
+   
+   If the `stop_when_done` parameter is set to `True`, tapping the `Done` button
+   automatically stops the script.
+
+.. function:: can_open(url)
+
+   .. warning::
+       This function is deprecated and should not be used. For backwards-compatibility reasons, it will return `True` for any well-formed URL, regardless of whether an app is installed that can handle it. This change was necessary because of privacy-related changes in iOS 9.
+
+.. function:: add_to_reading_list(url, [title, preview_text])
+
+   Add a given URL with optional title and preview text to Safari's `Reading List`.
+   
+   Only http and https URLs are supported.

@@ -1,0 +1,49 @@
+The ImageFile Module
+====================
+
+.. module:: ImageFile
+
+The :mod:`ImageFile` module provides support functions for the image open and save functions.
+
+In addition, it provides a :class:`Parser` class which can be used to decode an image piece by piece (e.g. while receiving it over a network connection). This class implements the same consumer interface as the standard sgmllib and xmllib modules.
+
+Example
+-------
+Parse An Image::
+
+    import ImageFile
+
+    fp = open("lena.pgm", "rb")
+
+    p = ImageFile.Parser()
+
+    while 1:
+        s = fp.read(1024)
+        if not s:
+            break
+        p.feed(s)
+
+    im = p.close()
+
+    im.save("copy.jpg")
+
+Functions
+---------
+.. function:: Parser()
+
+    Creates a parser object. Parsers cannot be reused.
+
+Methods
+-------
+.. method:: parser.feed(data)
+
+    Feed a string of data to the parser. This method may raise an IOError exception.
+
+.. method:: parser.close()
+
+    Tells the parser to finish decoding. If the parser managed to decode an image, it returns an Image object. Otherwise, this method raises an IOError exception.
+
+    .. note::
+        If the file cannot be identified, the parser will raise an IOError exception in the close method. If the file can be identified, but not decoded (for example, if the data is damaged, or if it uses an unsupported compression method), the parser will raise an IOError exception as soon as possible, either in feed or close.
+
+        

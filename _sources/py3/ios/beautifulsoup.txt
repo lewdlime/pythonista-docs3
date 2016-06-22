@@ -1,0 +1,18 @@
+:mod:`bs4` --- BeautifulSoup 4
+==============================
+
+.. image:: 6.1.jpg
+   :align: right
+   :alt: "The Fish-Footman began by producing from under his arm a great letter, nearly as large as himself."
+
+`Beautiful Soup <http://www.crummy.com/software/BeautifulSoup/>`_ is a
+Python library for pulling data out of HTML and XML files. It works
+with your favorite parser to provide idiomatic ways of navigating,
+searching, and modifying the parse tree. It commonly saves programmers
+hours or days of work.
+
+.. toctree::
+    :maxdepth: 1
+    
+    beautifulsoup_guide.rst
+    beautifulsoup_ref.rst

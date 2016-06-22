@@ -1,0 +1,212 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.ma.cov &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Masked array operations" href="../routines.ma.html" />
+    <link rel="next" title="numpy.ma.cumsum" href="numpy.ma.cumsum.html" />
+    <link rel="prev" title="numpy.ma.corrcoef" href="numpy.ma.corrcoef.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.ma.cumsum.html" title="numpy.ma.cumsum"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.ma.corrcoef.html" title="numpy.ma.corrcoef"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.ma.html" accesskey="U">Masked array operations</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-ma-cov">
+<h1>numpy.ma.cov<a class="headerlink" href="#numpy-ma-cov" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.ma.cov">
+<tt class="descclassname">numpy.ma.</tt><tt class="descname">cov</tt><big>(</big><em>x</em>, <em>y=None</em>, <em>rowvar=True</em>, <em>bias=False</em>, <em>allow_masked=True</em>, <em>ddof=None</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/ma/extras.py#L1257"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.ma.cov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate the covariance matrix.</p>
+<p>Except for the handling of missing data this function does the same as
+<a class="reference internal" href="numpy.cov.html#numpy.cov" title="numpy.cov"><tt class="xref py py-obj docutils literal"><span class="pre">numpy.cov</span></tt></a>. For more details and examples, see <a class="reference internal" href="numpy.cov.html#numpy.cov" title="numpy.cov"><tt class="xref py py-obj docutils literal"><span class="pre">numpy.cov</span></tt></a>.</p>
+<p>By default, masked values are recognized as such. If <em class="xref py py-obj">x</em> and <em class="xref py py-obj">y</em> have the
+same shape, a common mask is allocated: if <tt class="docutils literal"><span class="pre">x[i,j]</span></tt> is masked, then
+<tt class="docutils literal"><span class="pre">y[i,j]</span></tt> will also be masked.
+Setting <em class="xref py py-obj">allow_masked</em> to False will raise an exception if values are
+missing in either of the input arrays.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>x</strong> : array_like</p>
+<blockquote>
+<div><p>A 1-D or 2-D array containing multiple variables and observations.
+Each row of <em class="xref py py-obj">x</em> represents a variable, and each column a single
+observation of all those variables. Also see <em class="xref py py-obj">rowvar</em> below.</p>
+</div></blockquote>
+<p><strong>y</strong> : array_like, optional</p>
+<blockquote>
+<div><p>An additional set of variables and observations. <em class="xref py py-obj">y</em> has the same
+form as <em class="xref py py-obj">x</em>.</p>
+</div></blockquote>
+<p><strong>rowvar</strong> : bool, optional</p>
+<blockquote>
+<div><p>If <em class="xref py py-obj">rowvar</em> is True (default), then each row represents a
+variable, with observations in the columns. Otherwise, the relationship
+is transposed: each column represents a variable, while the rows
+contain observations.</p>
+</div></blockquote>
+<p><strong>bias</strong> : bool, optional</p>
+<blockquote>
+<div><p>Default normalization (False) is by <tt class="docutils literal"><span class="pre">(N-1)</span></tt>, where <tt class="docutils literal"><span class="pre">N</span></tt> is the
+number of observations given (unbiased estimate). If <em class="xref py py-obj">bias</em> is True,
+then normalization is by <tt class="docutils literal"><span class="pre">N</span></tt>. This keyword can be overridden by
+the keyword <tt class="docutils literal"><span class="pre">ddof</span></tt> in numpy versions &gt;= 1.5.</p>
+</div></blockquote>
+<p><strong>allow_masked</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True, masked values are propagated pair-wise: if a value is masked
+in <em class="xref py py-obj">x</em>, the corresponding value is masked in <em class="xref py py-obj">y</em>.
+If False, raises a <em class="xref py py-obj">ValueError</em> exception when some values are missing.</p>
+</div></blockquote>
+<p><strong>ddof</strong> : {None, int}, optional</p>
+<blockquote>
+<div><div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.</span></p>
+</div>
+<p>If not <tt class="docutils literal"><span class="pre">None</span></tt> normalization is by <tt class="docutils literal"><span class="pre">(N</span> <span class="pre">-</span> <span class="pre">ddof)</span></tt>, where <tt class="docutils literal"><span class="pre">N</span></tt> is
+the number of observations; this overrides the value implied by
+<tt class="docutils literal"><span class="pre">bias</span></tt>. The default value is <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>ValueError</strong> :</p>
+<blockquote class="last">
+<div><p>Raised if some values are missing and <em class="xref py py-obj">allow_masked</em> is False.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="numpy.cov.html#numpy.cov" title="numpy.cov"><tt class="xref py py-obj docutils literal"><span class="pre">numpy.cov</span></tt></a></p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

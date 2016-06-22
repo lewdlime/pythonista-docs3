@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Polynomial Package &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Polynomials" href="routines.polynomials.html" />
+    <link rel="next" title="Using the Convenience Classes" href="routines.polynomials.classes.html" />
+    <link rel="prev" title="Polynomials" href="routines.polynomials.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="routines.polynomials.classes.html" title="Using the Convenience Classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="routines.polynomials.html" title="Polynomials"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" >Routines</a> &raquo;</li>
+          <li><a href="routines.polynomials.html" accesskey="U">Polynomials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="polynomial-package">
+<h1>Polynomial Package<a class="headerlink" href="#polynomial-package" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.4.0.</span></p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="routines.polynomials.classes.html">Using the Convenience Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.classes.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.classes.html#calculus">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.classes.html#other-polynomial-constructors">Other Polynomial Constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.classes.html#fitting">Fitting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routines.polynomials.polynomial.html">Polynomial Module (<tt class="docutils literal"><span class="pre">numpy.polynomial.polynomial</span></tt>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.polynomial.html#polynomial-class">Polynomial Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.polynomial.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.polynomial.html#fitting">Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.polynomial.html#calculus">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.polynomial.html#algebra">Algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.polynomial.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routines.polynomials.chebyshev.html">Chebyshev Module (<tt class="docutils literal"><span class="pre">numpy.polynomial.chebyshev</span></tt>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.chebyshev.html#chebyshev-class">Chebyshev Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.chebyshev.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.chebyshev.html#fitting">Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.chebyshev.html#calculus">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.chebyshev.html#algebra">Algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.chebyshev.html#quadrature">Quadrature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.chebyshev.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routines.polynomials.legendre.html">Legendre Module (<tt class="docutils literal"><span class="pre">numpy.polynomial.legendre</span></tt>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.legendre.html#legendre-class">Legendre Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.legendre.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.legendre.html#fitting">Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.legendre.html#calculus">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.legendre.html#algebra">Algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.legendre.html#quadrature">Quadrature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.legendre.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routines.polynomials.laguerre.html">Laguerre Module (<tt class="docutils literal"><span class="pre">numpy.polynomial.laguerre</span></tt>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.laguerre.html#laguerre-class">Laguerre Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.laguerre.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.laguerre.html#fitting">Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.laguerre.html#calculus">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.laguerre.html#algebra">Algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.laguerre.html#quadrature">Quadrature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.laguerre.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routines.polynomials.hermite.html">Hermite Module, &#8220;Physicists&#8217;&#8221; (<tt class="docutils literal"><span class="pre">numpy.polynomial.hermite</span></tt>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite.html#hermite-class">Hermite Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite.html#fitting">Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite.html#calculus">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite.html#algebra">Algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite.html#quadrature">Quadrature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routines.polynomials.hermite_e.html">HermiteE Module, &#8220;Probabilists&#8217;&#8221; (<tt class="docutils literal"><span class="pre">numpy.polynomial.hermite_e</span></tt>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite_e.html#hermitee-class">HermiteE Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite_e.html#basics">Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite_e.html#fitting">Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite_e.html#calculus">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite_e.html#algebra">Algebra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite_e.html#quadrature">Quadrature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routines.polynomials.hermite_e.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

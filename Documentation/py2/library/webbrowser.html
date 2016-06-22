@@ -1,0 +1,192 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>20.1. webbrowser — Convenient Web-browser controller &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="20. Internet Protocols and Support" href="internet.html" />
+    <link rel="next" title="20.2. cgi — Common Gateway Interface support" href="cgi.html" />
+    <link rel="prev" title="20. Internet Protocols and Support" href="internet.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cgi.html" title="20.2. cgi — Common Gateway Interface support"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="internet.html" title="20. Internet Protocols and Support"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="internet.html" accesskey="U">20. Internet Protocols and Support</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-webbrowser">
+<span id="webbrowser-convenient-web-browser-controller"></span><h1>20.1. <a class="reference internal" href="#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> &#8212; Convenient Web-browser controller<a class="headerlink" href="#module-webbrowser" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module provides a high-level interface to allow displaying
+Web-based documents to users. Under most circumstances, simply calling the
+<a class="reference internal" href="#webbrowser.open" title="webbrowser.open"><tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt></a> function from this module will do the right thing.</p>
+<p><strong>Please note:</strong> Pythonista uses a custom version of this module that only
+supports the <a class="reference internal" href="functions.html#open" title="open"><tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt></a> function. The behavior is different from other
+platforms in that web pages are opened in an embedded browser view within
+the app for <cite>http(s)</cite> and <cite>file</cite> URLs. For custom URL schemes that are
+registered by an app (e.g. <cite>mailto:</cite>), the registered app is opened. This also
+works for third-party apps.</p>
+<dl class="function">
+<dt id="webbrowser.open">
+<tt class="descclassname">webbrowser.</tt><tt class="descname">open</tt><big>(</big><em>url</em><span class="optional">[</span>, <em>modal=False</em>, <em>stop_when_done=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#webbrowser.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display <em>url</em> in an in-app browser, if the scheme of the URL is <cite>http</cite>,
+<cite>https</cite> or <cite>file</cite>. Using other URL schemes can be used to open native
+apps that are registered for these schemes.</p>
+<p>If you want to open http or https URLs in Safari instead of the built-in
+browser, you can replace http(s) with safari-http(s) in your URL, e.g.
+&#8216;safari-http://google.com&#8217;.</p>
+<p>If the URL is valid (regardless of if it could actually be loaded by the
+browser) <cite>True</cite> is returned, otherwise <cite>False</cite>.</p>
+<p>The <cite>modal</cite> parameter controls whether the function should block until
+the <cite>Done</cite> button is tapped in the browser. It defaults to <cite>False</cite>.
+When this function is used to open an external app, the parameter is ignored.</p>
+<p>If the <cite>stop_when_done</cite> parameter is set to <cite>True</cite>, tapping the <cite>Done</cite> button
+automatically stops the script.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="webbrowser.can_open">
+<tt class="descclassname">webbrowser.</tt><tt class="descname">can_open</tt><big>(</big><em>url</em><big>)</big><a class="headerlink" href="#webbrowser.can_open" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This function is deprecated and should not be used. For backwards-compatibility reasons, it will return <cite>True</cite> for any well-formed URL, regardless of whether an app is installed that can handle it. This change was necessary because of privacy-related changes in iOS 9.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="webbrowser.add_to_reading_list">
+<tt class="descclassname">webbrowser.</tt><tt class="descname">add_to_reading_list</tt><big>(</big><em>url</em><span class="optional">[</span>, <em>title</em>, <em>preview_text</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#webbrowser.add_to_reading_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a given URL with optional title and preview text to Safari&#8217;s <cite>Reading List</cite>.</p>
+<p>Only http and https URLs are supported.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

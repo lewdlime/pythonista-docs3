@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="#" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">NumPy v1.8 Manual</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Pythonista Documentation</h1>
+  <p>
+    <img src="_static/pythonista_icon.png" style="width: 104px; float: left; margin-right: 20px; margin-bottom: 20px;"/>
+    Welcome! This is the documentation for Pythonista. It is based on the official Python 3.5.1 documentation and includes information about additional modules that were developed specifically for Pythonista.
+  </p>
+  <p>If you have questions, feedback, or just want to share things you've made with Pythonista, please visit the <a href="http://omz-software.com/pythonista/forums">Community Forums</a>.</p>
+  
+<p>This part of the Pythonista documentation is only about NumPy, <a href="../index.html">click here</a> to go back to the documentation overview.</p>
+  <p><strong>Parts of the documentation:</strong></p>
+  <table class="contentstable" align="center"><tr>
+    <td width="50%">
+      <p class="biglink"><a class="biglink" href="user/index.html">Numpy User Guide</a><br/>
+         <span class="linkdescr">start here</span></p>
+      <p class="biglink"><a class="biglink" href="reference/index.html">Numpy Reference</a><br/>
+         <span class="linkdescr">reference documentation</span></p>
+      <p class="biglink"><a class="biglink" href="dev/index.html">Numpy Developer Guide</a><br/>
+         <span class="linkdescr">contributing to NumPy</span></p>
+    </td></tr>
+  </table>
+
+  <p><strong>Indices and tables:</strong></p>
+  <table class="contentstable" align="center"><tr>
+    <td width="50%">
+      <p class="biglink"><a class="biglink" href="genindex.html">General Index</a><br/>
+         <span class="linkdescr">all functions, classes, terms</span></p>
+      <p class="biglink"><a class="biglink" href="glossary.html">Glossary</a><br/>
+         <span class="linkdescr">the most important terms explained</span></p>
+    </td><td width="50%">
+      <p class="biglink"><a class="biglink" href="search.html">Search page</a><br/>
+         <span class="linkdescr">search this documentation</span></p>
+      <p class="biglink"><a class="biglink" href="contents.html">Complete Table of Contents</a><br/>
+         <span class="linkdescr">lists all sections and subsections</span></p>
+    </td></tr>
+  </table>
+
+  <p><strong>Meta information:</strong></p>
+  <table class="contentstable" align="center"><tr>
+    <td width="50%">
+      <p class="biglink"><a class="biglink" href="bugs.html">Reporting bugs</a></p>
+      <p class="biglink"><a class="biglink" href="about.html">About NumPy</a></p>
+    </td><td width="50%">
+      <p class="biglink"><a class="biglink" href="release.html">Release Notes</a></p>
+      <p class="biglink"><a class="biglink" href="license.html">License of Numpy</a></p>
+    </td></tr>
+  </table>
+
+  <h2>Acknowledgements</h2>
+  <p>
+    Large parts of this manual originate from Travis E. Oliphant's book
+    <a href="http://www.tramy.us/">"Guide to Numpy"</a> (which generously entered
+    Public Domain in August 2008). The reference documentation for many of
+    the functions are written by numerous contributors and developers of
+    Numpy, both prior to and during the
+    <a href="http://scipy.org/Developer_Zone/DocMarathon2008">Numpy Documentation Marathon</a>.
+  </p>
+  <p>
+    The Documentation Marathon is still ongoing. Please help us write
+    better documentation for Numpy by joining it! Instructions on how to
+    join and what to do can be found
+    <a href="http://scipy.org/Developer_Zone/DocMarathon2008">on the scipy.org website</a>.
+  </p>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

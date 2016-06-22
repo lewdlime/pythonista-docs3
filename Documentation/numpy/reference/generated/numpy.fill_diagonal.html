@@ -1,0 +1,238 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.fill_diagonal &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Indexing routines" href="../routines.indexing.html" />
+    <link rel="next" title="numpy.nditer" href="numpy.nditer.html" />
+    <link rel="prev" title="numpy.putmask" href="numpy.putmask.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.nditer.html" title="numpy.nditer"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.putmask.html" title="numpy.putmask"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.indexing.html" accesskey="U">Indexing routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-fill-diagonal">
+<h1>numpy.fill_diagonal<a class="headerlink" href="#numpy-fill-diagonal" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.fill_diagonal">
+<tt class="descclassname">numpy.</tt><tt class="descname">fill_diagonal</tt><big>(</big><em>a</em>, <em>val</em>, <em>wrap=False</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/lib/index_tricks.py#L645"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.fill_diagonal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the main diagonal of the given array of any dimensionality.</p>
+<p>For an array <em class="xref py py-obj">a</em> with <tt class="docutils literal"><span class="pre">a.ndim</span> <span class="pre">&gt;</span> <span class="pre">2</span></tt>, the diagonal is the list of
+locations with indices <tt class="docutils literal"><span class="pre">a[i,</span> <span class="pre">i,</span> <span class="pre">...,</span> <span class="pre">i]</span></tt> all identical. This function
+modifies the input array in-place, it does not return a value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>a</strong> : array, at least 2-D.</p>
+<blockquote>
+<div><p>Array whose diagonal is to be filled, it gets modified in-place.</p>
+</div></blockquote>
+<p><strong>val</strong> : scalar</p>
+<blockquote>
+<div><p>Value to be written on the diagonal, its type must be compatible with
+that of the array a.</p>
+</div></blockquote>
+<p><strong>wrap</strong> : bool</p>
+<blockquote class="last">
+<div><p>For tall matrices in NumPy version up to 1.6.2, the
+diagonal &#8220;wrapped&#8221; after N columns. You can have this behavior
+with this option. This affect only tall matrices.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="numpy.diag_indices.html#numpy.diag_indices" title="numpy.diag_indices"><tt class="xref py py-obj docutils literal"><span class="pre">diag_indices</span></tt></a>, <a class="reference internal" href="numpy.diag_indices_from.html#numpy.diag_indices_from" title="numpy.diag_indices_from"><tt class="xref py py-obj docutils literal"><span class="pre">diag_indices_from</span></tt></a></p>
+</div>
+<p class="rubric">Notes</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.4.0.</span></p>
+</div>
+<p>This functionality can be obtained via <a class="reference internal" href="numpy.diag_indices.html#numpy.diag_indices" title="numpy.diag_indices"><tt class="xref py py-obj docutils literal"><span class="pre">diag_indices</span></tt></a>, but internally
+this version uses a much faster implementation that never constructs the
+indices and uses simple slicing.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[5, 0, 0],</span>
+<span class="go">       [0, 5, 0],</span>
+<span class="go">       [0, 0, 5]])</span>
+</pre></div>
+</div>
+<p>The same function can operate on a 4-D array:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We only show a few blocks for clarity:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="go">array([[4, 0, 0],</span>
+<span class="go">       [0, 0, 0],</span>
+<span class="go">       [0, 0, 0]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="go">array([[0, 0, 0],</span>
+<span class="go">       [0, 4, 0],</span>
+<span class="go">       [0, 0, 0]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="go">array([[0, 0, 0],</span>
+<span class="go">       [0, 0, 0],</span>
+<span class="go">       [0, 0, 4]])</span>
+</pre></div>
+</div>
+<p># tall matrices no wrap
+&gt;&gt;&gt; a = np.zeros((5, 3),int)
+&gt;&gt;&gt; fill_diagonal(a, 4)
+array([[4, 0, 0],</p>
+<blockquote>
+<div>[0, 4, 0],
+[0, 0, 4],
+[0, 0, 0],
+[0, 0, 0]])</div></blockquote>
+<p># tall matrices wrap
+&gt;&gt;&gt; a = np.zeros((5, 3),int)
+&gt;&gt;&gt; fill_diagonal(a, 4)
+array([[4, 0, 0],</p>
+<blockquote>
+<div>[0, 4, 0],
+[0, 0, 4],
+[0, 0, 0],
+[4, 0, 0]])</div></blockquote>
+<p># wide matrices
+&gt;&gt;&gt; a = np.zeros((3, 5),int)
+&gt;&gt;&gt; fill_diagonal(a, 4)
+array([[4, 0, 0, 0, 0],</p>
+<blockquote>
+<div>[0, 4, 0, 0, 0],
+[0, 0, 4, 0, 0]])</div></blockquote>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

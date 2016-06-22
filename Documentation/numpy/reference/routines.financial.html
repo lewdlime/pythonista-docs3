@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Financial functions &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Routines" href="routines.html" />
+    <link rel="next" title="numpy.fv" href="generated/numpy.fv.html" />
+    <link rel="prev" title="numpy.fft.ifftshift" href="generated/numpy.fft.ifftshift.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="generated/numpy.fv.html" title="numpy.fv"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.fft.ifftshift.html" title="numpy.fft.ifftshift"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" accesskey="U">Routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="financial-functions">
+<h1>Financial functions<a class="headerlink" href="#financial-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="simple-financial-functions">
+<h2>Simple financial functions<a class="headerlink" href="#simple-financial-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.fv.html#numpy.fv" title="numpy.fv"><tt class="xref py py-obj docutils literal"><span class="pre">fv</span></tt></a>(rate,&nbsp;nper,&nbsp;pmt,&nbsp;pv[,&nbsp;when])</td>
+<td>Compute the future value.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.pv.html#numpy.pv" title="numpy.pv"><tt class="xref py py-obj docutils literal"><span class="pre">pv</span></tt></a>(rate,&nbsp;nper,&nbsp;pmt[,&nbsp;fv,&nbsp;when])</td>
+<td>Compute the present value.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.npv.html#numpy.npv" title="numpy.npv"><tt class="xref py py-obj docutils literal"><span class="pre">npv</span></tt></a>(rate,&nbsp;values)</td>
+<td>Returns the NPV (Net Present Value) of a cash flow series.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.pmt.html#numpy.pmt" title="numpy.pmt"><tt class="xref py py-obj docutils literal"><span class="pre">pmt</span></tt></a>(rate,&nbsp;nper,&nbsp;pv[,&nbsp;fv,&nbsp;when])</td>
+<td>Compute the payment against loan principal plus interest.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.ppmt.html#numpy.ppmt" title="numpy.ppmt"><tt class="xref py py-obj docutils literal"><span class="pre">ppmt</span></tt></a>(rate,&nbsp;per,&nbsp;nper,&nbsp;pv[,&nbsp;fv,&nbsp;when])</td>
+<td>Compute the payment against loan principal.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.ipmt.html#numpy.ipmt" title="numpy.ipmt"><tt class="xref py py-obj docutils literal"><span class="pre">ipmt</span></tt></a>(rate,&nbsp;per,&nbsp;nper,&nbsp;pv[,&nbsp;fv,&nbsp;when])</td>
+<td>Compute the interest portion of a payment.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.irr.html#numpy.irr" title="numpy.irr"><tt class="xref py py-obj docutils literal"><span class="pre">irr</span></tt></a>(values)</td>
+<td>Return the Internal Rate of Return (IRR).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.mirr.html#numpy.mirr" title="numpy.mirr"><tt class="xref py py-obj docutils literal"><span class="pre">mirr</span></tt></a>(values,&nbsp;finance_rate,&nbsp;reinvest_rate)</td>
+<td>Modified internal rate of return.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.nper.html#numpy.nper" title="numpy.nper"><tt class="xref py py-obj docutils literal"><span class="pre">nper</span></tt></a>(rate,&nbsp;pmt,&nbsp;pv[,&nbsp;fv,&nbsp;when])</td>
+<td>Compute the number of periodic payments.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.rate.html#numpy.rate" title="numpy.rate"><tt class="xref py py-obj docutils literal"><span class="pre">rate</span></tt></a>(nper,&nbsp;pmt,&nbsp;pv,&nbsp;fv[,&nbsp;when,&nbsp;guess,&nbsp;tol,&nbsp;...])</td>
+<td>Compute the rate of interest per period.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

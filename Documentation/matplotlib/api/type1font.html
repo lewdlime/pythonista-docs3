@@ -1,0 +1,210 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>matplotlib.type1font &mdash; Matplotlib 1.3.1 documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Matplotlib 1.3.1 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="top" title="Matplotlib 1.3.1 documentation" href="../index.html" />
+    <link rel="up" title="backends" href="index_backend_api.html" />
+    <link rel="next" title="cbook" href="cbook_api.html" />
+    <link rel="prev" title="matplotlib.dviread" href="dviread.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cbook_api.html" title="cbook"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dviread.html" title="matplotlib.dviread"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Matplotlib 1.3.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Matplotlib API</a> &raquo;</li>
+          <li><a href="index_backend_api.html" accesskey="U">backends</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-matplotlib.type1font">
+<span id="matplotlib-type1font"></span><h1><a class="reference internal" href="#module-matplotlib.type1font" title="matplotlib.type1font"><tt class="xref py py-mod docutils literal"><span class="pre">matplotlib.type1font</span></tt></a><a class="headerlink" href="#module-matplotlib.type1font" title="Permalink to this headline">¶</a></h1>
+<p>This module contains a class representing a Type 1 font.</p>
+<p>This version reads pfa and pfb files and splits them for embedding in
+pdf files. It also supports SlantFont and ExtendFont transformations,
+similarly to pdfTeX and friends. There is no support yet for
+subsetting.</p>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">font</span> <span class="o">=</span> <span class="n">Type1Font</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clear_part</span><span class="p">,</span> <span class="n">encrypted_part</span><span class="p">,</span> <span class="n">finale</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">parts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">slanted_font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">transform</span><span class="p">({</span><span class="s">&#39;slant&#39;</span><span class="p">:</span> <span class="mf">0.167</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extended_font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">transform</span><span class="p">({</span><span class="s">&#39;extend&#39;</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Sources:</p>
+<ul class="simple">
+<li>Adobe Technical Note #5040, Supporting Downloadable PostScript
+Language Fonts.</li>
+<li>Adobe Type 1 Font Format, Adobe Systems Incorporated, third printing,
+v1.1, 1993. ISBN 0-201-57044-0.</li>
+</ul>
+<dl class="class">
+<dt id="matplotlib.type1font.Type1Font">
+<em class="property">class </em><tt class="descclassname">matplotlib.type1font.</tt><tt class="descname">Type1Font</tt><big>(</big><em>input</em><big>)</big><a class="headerlink" href="#matplotlib.type1font.Type1Font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>A class representing a Type-1 font, for use by backends.</p>
+<dl class="attribute">
+<dt id="matplotlib.type1font.Type1Font.parts">
+<tt class="descname">parts</tt><a class="headerlink" href="#matplotlib.type1font.Type1Font.parts" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 3-tuple of the cleartext part, the encrypted part, and the
+finale of zeros.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="matplotlib.type1font.Type1Font.prop">
+<tt class="descname">prop</tt><a class="headerlink" href="#matplotlib.type1font.Type1Font.prop" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of font properties.</p>
+</dd></dl>
+
+<p>Initialize a Type-1 font. <em>input</em> can be either the file name of
+a pfb file or a 3-tuple of already-decoded Type-1 font parts.</p>
+<dl class="attribute">
+<dt>
+<tt class="descname">parts</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">prop</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="matplotlib.type1font.Type1Font.transform">
+<tt class="descname">transform</tt><big>(</big><em>effects</em><big>)</big><a class="headerlink" href="#matplotlib.type1font.Type1Font.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the font by slanting or extending. <em>effects</em> should
+be a dict where <tt class="docutils literal"><span class="pre">effects['slant']</span></tt> is the tangent of the
+angle that the font is to be slanted to the right (so negative
+values slant to the left) and <tt class="docutils literal"><span class="pre">effects['extend']</span></tt> is the
+multiplier by which the font is to be extended (so values less
+than 1.0 condense). Returns a new <a class="reference internal" href="#matplotlib.type1font.Type1Font" title="matplotlib.type1font.Type1Font"><tt class="xref py py-class docutils literal"><span class="pre">Type1Font</span></tt></a> object.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2002 - 2012 John Hunter, Darren Dale, Eric Firing, Michael Droettboom and the matplotlib development team; 2012 - 2013 The matplotlib development team.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

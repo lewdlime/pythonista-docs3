@@ -1,0 +1,216 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>markdown2 — A fast and complete implementation of Markdown in Python &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-markdown2">
+<span id="markdown2-a-fast-and-complete-implementation-of-markdown-in-python"></span><h1><a class="reference internal" href="#module-markdown2" title="markdown2: A fast and complete implementation of Markdown in Python"><tt class="xref py py-mod docutils literal"><span class="pre">markdown2</span></tt></a> &#8212; A fast and complete implementation of Markdown in Python<a class="headerlink" href="#module-markdown2" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The documentation for this module is an excerpt of the documentation available on the <a class="reference external" href="https://github.com/trentm/python-markdown2">markdown2 project page on GitHub</a>. Minor edits have been made to make the documentation fit on one page and to remove passages that are not relevant on iOS. Also, only a summary of available extras is included here, for more information on individual extras, please refer to the project page wiki.</p>
+</div>
+<p>Markdown is a light text markup format and a processor to convert that to HTML. The originator describes it as follows:</p>
+<p>&#8220;Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).&#8221;</p>
+<p>&#8211; <a class="reference external" href="http://daringfireball.net/projects/markdown/">http://daringfireball.net/projects/markdown/</a></p>
+<p>This (<a class="reference internal" href="#module-markdown2" title="markdown2: A fast and complete implementation of Markdown in Python"><tt class="xref py py-mod docutils literal"><span class="pre">markdown2</span></tt></a>) is a fast and complete Python implementation of Markdown. It was written to closely match the behaviour of the original Perl-implemented Markdown.pl. <a class="reference internal" href="#module-markdown2" title="markdown2: A fast and complete implementation of Markdown in Python"><tt class="xref py py-mod docutils literal"><span class="pre">markdown2</span></tt></a> also comes with a number of extensions (called &#8220;extras&#8221;) for things like syntax coloring, tables, header-ids. See the &#8220;Extras&#8221; section below.</p>
+<p>Quick usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">markdown2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdown2</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s">&quot;*boo!*&quot;</span><span class="p">)</span>  <span class="c"># or use `html = markdown_path(PATH)`</span>
+<span class="go">u&#39;&lt;p&gt;&lt;em&gt;boo!&lt;/em&gt;&lt;/p&gt;\n&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdowner</span> <span class="o">=</span> <span class="n">Markdown</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdowner</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&quot;*boo!*&quot;</span><span class="p">)</span>
+<span class="go">u&#39;&lt;p&gt;&lt;em&gt;boo!&lt;/em&gt;&lt;/p&gt;\n&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdowner</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&quot;**boom!**&quot;</span><span class="p">)</span>
+<span class="go">u&#39;&lt;p&gt;&lt;strong&gt;boom!&lt;/strong&gt;&lt;/p&gt;\n&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Permalink to this headline">¶</a></h2>
+<p>By default <a class="reference internal" href="#module-markdown2" title="markdown2: A fast and complete implementation of Markdown in Python"><tt class="xref py py-mod docutils literal"><span class="pre">markdown2</span></tt></a>&#8216;s processing attempts to produce output exactly as defined by <a class="reference external" href="http://daringfireball.net/projects/markdown/syntax">http://daringfireball.net/projects/markdown/syntax</a> &#8211; the &#8220;Markdown core.&#8221; However, a few optional extras are also provided.</p>
+<div class="section" id="implemented-extras">
+<h3>Implemented Extras<a class="headerlink" href="#implemented-extras" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>code-friendly:</strong> Disable _ and __ for em and strong.</li>
+<li><strong>code-color:</strong> (<strong>DEPRECATED</strong> Use fenced-code-blocks extra instead.) Pygments-based syntax coloring of &lt;code&gt; sections.</li>
+<li><strong>cuddled-lists:</strong> Allow lists to be cuddled to the preceding paragraph.</li>
+<li><strong>fenced-code-blocks:</strong> Allows a code block to not have to be indented by fencing it with &#8216;<tt class="docutils literal"><span class="pre">```</span></tt>&#8216; on a line before and after. Based on <a class="reference external" href="http://github.github.com/github-flavored-markdown/">http://github.github.com/github-flavored-markdown/</a> with support for syntax highlighting.</li>
+<li><strong>footnotes:</strong> support footnotes as in use on daringfireball.net and implemented in other Markdown processors (tho not in Markdown.pl v1.0.1).</li>
+<li><strong>header-ids:</strong> Adds &#8220;id&#8221; attributes to headers. The id value is a slug of the header text.</li>
+<li><strong>html-classes:</strong> Takes a dict mapping html tag names (lowercase) to a string to use for a &#8220;class&#8221; tag attribute. Currently only supports &#8220;pre&#8221; and &#8220;code&#8221; tags. Add an issue if you require this for other tags.</li>
+<li><strong>link-patterns:</strong> Auto-link given regex patterns in text (e.g. bug number references, revision number references).</li>
+<li><strong>markdown-in-html:</strong> Allow the use of markdown=&#8221;1&#8221; in a block HTML tag to have markdown processing be done on its contents. Similar to <a class="reference external" href="http://michelf.com/projects/php-markdown/extra/#markdown-attr">http://michelf.com/projects/php-markdown/extra/#markdown-attr</a> but with some limitations.</li>
+<li><strong>metadata:</strong> Extract metadata from a leading &#8216;&#8212;&#8217;-fenced block.</li>
+<li><strong>nofollow:</strong> Add rel=&#8221;nofollow&#8221; to add &lt;a&gt; tags with an href. See <a class="reference external" href="http://en.wikipedia.org/wiki/Nofollow">http://en.wikipedia.org/wiki/Nofollow</a>.</li>
+<li><strong>pyshell:</strong> Treats unindented Python interactive shell sessions as &lt;code&gt; blocks.</li>
+<li><strong>smarty-pants:</strong> Fancy quote, em-dash and ellipsis handling similar to <a class="reference external" href="http://daringfireball.net/projects/smartypants/">http://daringfireball.net/projects/smartypants/</a>. See old issue 42 for discussion.</li>
+<li><strong>toc:</strong> The returned HTML string gets a new &#8220;toc_html&#8221; attribute which is a Table of Contents for the document. (experimental)</li>
+<li><strong>wiki-tables:</strong> Google Code Wiki table syntax support.</li>
+<li><strong>xml:</strong> Passes one-liner processing instructions and namespaced XML tags.</li>
+</ul>
+</div>
+<div class="section" id="how-to-turn-on-extras">
+<h3>How to turn on extras<a class="headerlink" href="#how-to-turn-on-extras" title="Permalink to this headline">¶</a></h3>
+<p>Extras are all off by default and turned on as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">markdown2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">html</span> <span class="o">=</span> <span class="n">markdown2</span><span class="o">.</span><span class="n">markdown_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">extras</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;name1&quot;</span><span class="p">,</span> <span class="s">&quot;name2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">html</span> <span class="o">=</span> <span class="n">markdown2</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s">&quot;some markdown&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">extras</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;name1&quot;</span><span class="p">,</span> <span class="s">&quot;name2&quot;</span><span class="p">])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdowner</span> <span class="o">=</span> <span class="n">Markdown</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">extras</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;name1&quot;</span><span class="p">,</span> <span class="s">&quot;name2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdowner</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&quot;*boo!*&quot;</span><span class="p">)</span>
+<span class="go">&lt;em&gt;boo!&lt;/em&gt;</span>
+</pre></div>
+</div>
+<p>(New in v1.0.1.2) You can also now specify extras via the &#8220;markdown-extras&#8221; emacs-style local variable in the markdown text:</p>
+<div class="highlight-python"><pre>&lt;!-- markdown-extras: code-friendly, footnotes --&gt;
+This markdown text will be converted with the "code-friendly" and "footnotes"
+extras enabled.</pre>
+</div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="markdown2.markdown">
+<tt class="descclassname">markdown2.</tt><tt class="descname">markdown</tt><big>(</big><em>text</em>, <em>html4tags=False</em>, <em>tab_width=DEFAULT_TAB_WIDTH</em>, <em>safe_mode=None</em>, <em>extras=None</em>, <em>link_patterns=None</em>, <em>use_file_vars=False</em><big>)</big><a class="headerlink" href="#markdown2.markdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the markdown-formatted <cite>text</cite> to html with the given options.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="markdown2.markdown_path">
+<tt class="descclassname">markdown2.</tt><tt class="descname">markdown_path</tt><big>(</big><em>path</em>, <em>encoding=&quot;utf-8&quot;</em>, <em>html4tags=False</em>, <em>tab_width=DEFAULT_TAB_WIDTH</em>, <em>safe_mode=None</em>, <em>extras=None</em>, <em>link_patterns=None</em>, <em>use_file_vars=False</em><big>)</big><a class="headerlink" href="#markdown2.markdown_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as <a class="reference internal" href="markdown.html#module-markdown" title="markdown"><tt class="xref py py-func docutils literal"><span class="pre">markdown()</span></tt></a>, but use the text in a given file as input.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

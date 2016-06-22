@@ -1,0 +1,225 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18.8. MimeWriter — Generic MIME file writer &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="18. Internet Data Handling" href="netdata.html" />
+    <link rel="next" title="18.9. mimify — MIME processing of mail messages" href="mimify.html" />
+    <link rel="prev" title="18.7. mimetypes — Map filenames to MIME types" href="mimetypes.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mimify.html" title="18.9. mimify — MIME processing of mail messages"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mimetypes.html" title="18.7. mimetypes — Map filenames to MIME types"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="netdata.html" accesskey="U">18. Internet Data Handling</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-MimeWriter">
+<span id="mimewriter-generic-mime-file-writer"></span><h1>18.8. <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (deprecated)"><tt class="xref py py-mod docutils literal"><span class="pre">MimeWriter</span></tt></a> &#8212; Generic MIME file writer<a class="headerlink" href="#module-MimeWriter" title="Permalink to this headline">¶</a></h1>
+<p class="deprecated">
+<span class="versionmodified">Deprecated since version 2.3: </span>The <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages, including MIME documents."><tt class="xref py py-mod docutils literal"><span class="pre">email</span></tt></a> package should be used in preference to the <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (deprecated)"><tt class="xref py py-mod docutils literal"><span class="pre">MimeWriter</span></tt></a>
+module.  This module is present only to maintain backward compatibility.</p>
+<p>This module defines the class <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (deprecated)"><tt class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></tt></a>.  The <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (deprecated)"><tt class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></tt></a>
+class implements a basic formatter for creating MIME multi-part files.  It
+doesn&#8217;t seek around the output file nor does it use large amounts of buffer
+space. You must write the parts out in the order that they should occur in the
+final file. <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (deprecated)"><tt class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></tt></a> does buffer the headers you add, allowing you
+to rearrange their order.</p>
+<dl class="class">
+<dt id="MimeWriter.MimeWriter">
+<em class="property">class </em><tt class="descclassname">MimeWriter.</tt><tt class="descname">MimeWriter</tt><big>(</big><em>fp</em><big>)</big><a class="headerlink" href="#MimeWriter.MimeWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new instance of the <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (deprecated)"><tt class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></tt></a> class.  The only argument
+passed, <em>fp</em>, is a file object to be used for writing. Note that a
+<a class="reference internal" href="stringio.html#module-StringIO" title="StringIO: Read and write strings as if they were files."><tt class="xref py py-class docutils literal"><span class="pre">StringIO</span></tt></a> object could also be used.</p>
+</dd></dl>
+
+<div class="section" id="mimewriter-objects">
+<span id="id1"></span><h2>18.8.1. MimeWriter Objects<a class="headerlink" href="#mimewriter-objects" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (deprecated)"><tt class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></tt></a> instances have the following methods:</p>
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.addheader">
+<tt class="descclassname">MimeWriter.</tt><tt class="descname">addheader</tt><big>(</big><em>key</em>, <em>value</em><span class="optional">[</span>, <em>prefix</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#MimeWriter.MimeWriter.addheader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a header line to the MIME message. The <em>key</em> is the name of the header,
+where the <em>value</em> obviously provides the value of the header. The optional
+argument <em>prefix</em> determines where the header  is inserted; <tt class="docutils literal"><span class="pre">0</span></tt> means append
+at the end, <tt class="docutils literal"><span class="pre">1</span></tt> is insert at the start. The default is to append.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.flushheaders">
+<tt class="descclassname">MimeWriter.</tt><tt class="descname">flushheaders</tt><big>(</big><big>)</big><a class="headerlink" href="#MimeWriter.MimeWriter.flushheaders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Causes all headers accumulated so far to be written out (and forgotten). This is
+useful if you don&#8217;t need a body part at all, e.g. for a subpart of type
+<em class="mimetype">message/rfc822</em> that&#8217;s (mis)used to store some header-like
+information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.startbody">
+<tt class="descclassname">MimeWriter.</tt><tt class="descname">startbody</tt><big>(</big><em>ctype</em><span class="optional">[</span>, <em>plist</em><span class="optional">[</span>, <em>prefix</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#MimeWriter.MimeWriter.startbody" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a file-like object which can be used to write to the body of the
+message.  The content-type is set to the provided <em>ctype</em>, and the optional
+parameter <em>plist</em> provides additional parameters for the content-type
+declaration. <em>prefix</em> functions as in <a class="reference internal" href="#MimeWriter.MimeWriter.addheader" title="MimeWriter.MimeWriter.addheader"><tt class="xref py py-meth docutils literal"><span class="pre">addheader()</span></tt></a> except that the default
+is to insert at the start.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.startmultipartbody">
+<tt class="descclassname">MimeWriter.</tt><tt class="descname">startmultipartbody</tt><big>(</big><em>subtype</em><span class="optional">[</span>, <em>boundary</em><span class="optional">[</span>, <em>plist</em><span class="optional">[</span>, <em>prefix</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#MimeWriter.MimeWriter.startmultipartbody" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a file-like object which can be used to write to the body of the
+message.  Additionally, this method initializes the multi-part code, where
+<em>subtype</em> provides the multipart subtype, <em>boundary</em> may provide a user-defined
+boundary specification, and <em>plist</em> provides optional parameters for the
+subtype. <em>prefix</em> functions as in <a class="reference internal" href="#MimeWriter.MimeWriter.startbody" title="MimeWriter.MimeWriter.startbody"><tt class="xref py py-meth docutils literal"><span class="pre">startbody()</span></tt></a>.  Subparts should be created
+using <a class="reference internal" href="#MimeWriter.MimeWriter.nextpart" title="MimeWriter.MimeWriter.nextpart"><tt class="xref py py-meth docutils literal"><span class="pre">nextpart()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.nextpart">
+<tt class="descclassname">MimeWriter.</tt><tt class="descname">nextpart</tt><big>(</big><big>)</big><a class="headerlink" href="#MimeWriter.MimeWriter.nextpart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new instance of <a class="reference internal" href="#module-MimeWriter" title="MimeWriter: Write MIME format files. (deprecated)"><tt class="xref py py-class docutils literal"><span class="pre">MimeWriter</span></tt></a> which represents an individual
+part in a multipart message.  This may be used to write the  part as well as
+used for creating recursively complex multipart messages. The message must first
+be initialized with <a class="reference internal" href="#MimeWriter.MimeWriter.startmultipartbody" title="MimeWriter.MimeWriter.startmultipartbody"><tt class="xref py py-meth docutils literal"><span class="pre">startmultipartbody()</span></tt></a> before using <a class="reference internal" href="#MimeWriter.MimeWriter.nextpart" title="MimeWriter.MimeWriter.nextpart"><tt class="xref py py-meth docutils literal"><span class="pre">nextpart()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="MimeWriter.MimeWriter.lastpart">
+<tt class="descclassname">MimeWriter.</tt><tt class="descname">lastpart</tt><big>(</big><big>)</big><a class="headerlink" href="#MimeWriter.MimeWriter.lastpart" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is used to designate the last part of a multipart message, and should
+<em>always</em> be used when writing multipart messages.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

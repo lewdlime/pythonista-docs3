@@ -1,0 +1,22 @@
+BeautifulSoup 4 Reference
+=========================
+
+.. automodule:: bs4
+
+BeautifulSoup
+-------------
+.. autoclass:: BeautifulSoup
+    :members:
+
+PageElement
+-----------
+
+.. autoclass:: PageElement
+    :members:
+
+Tag
+---
+
+.. autoclass:: Tag
+    :members:
+

@@ -1,0 +1,271 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sound — Sound effects and music playback &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-sound">
+<span id="sound-sound-effects-and-music-playback"></span><h1><a class="reference internal" href="#module-sound" title="sound: Sound effects and music playback"><tt class="xref py py-mod docutils literal"><span class="pre">sound</span></tt></a> &#8212; Sound effects and music playback<a class="headerlink" href="#module-sound" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-sound" title="sound: Sound effects and music playback"><tt class="xref py py-mod docutils literal"><span class="pre">sound</span></tt></a> module contains functions for playing simple sound effects on iOS.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sound.play_effect">
+<tt class="descclassname">sound.</tt><tt class="descname">play_effect</tt><big>(</big><em>name</em><span class="optional">[</span>, <em>volume</em>, <em>pitch</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#sound.play_effect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Play the sound effect with the given name. You can access a list of built-in sound effect names using the asset picker ([+] button in the toolbar), but <cite>name</cite> can also be a file path if you want to use your own sound effects.</p>
+<p>Playback is asynchronous, i.e. the function returns before the sound has finished playing.
+The return value is an opaque identifier that can be used with the <a class="reference internal" href="#sound.stop_effect" title="sound.stop_effect"><tt class="xref py py-func docutils literal"><span class="pre">stop_effect()</span></tt></a> function.
+The <cite>volume</cite> and <cite>pitch</cite> arguments are optional, by default, the effect is played with the global volume, as set by <a class="reference internal" href="#sound.set_volume" title="sound.set_volume"><tt class="xref py py-func docutils literal"><span class="pre">set_volume()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sound.stop_effect">
+<tt class="descclassname">sound.</tt><tt class="descname">stop_effect</tt><big>(</big><em>effect_id</em><big>)</big><a class="headerlink" href="#sound.stop_effect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops playback of a sound effect. The <cite>effect_id</cite> is the return value of <a class="reference internal" href="#sound.play_effect" title="sound.play_effect"><tt class="xref py py-func docutils literal"><span class="pre">play_effect()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sound.set_volume">
+<tt class="descclassname">sound.</tt><tt class="descname">set_volume</tt><big>(</big><em>vol</em><big>)</big><a class="headerlink" href="#sound.set_volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the default volume for all sound effects (between 0.0 and 1.0, the default is 0.5).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sound.set_honors_silent_switch">
+<tt class="descclassname">sound.</tt><tt class="descname">set_honors_silent_switch</tt><big>(</big><em>flag</em><big>)</big><a class="headerlink" href="#sound.set_honors_silent_switch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines whether the silent (mute) switch is honored when playing sounds (<cite>True</cite> by default).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="player-class">
+<h2>Player Class<a class="headerlink" href="#player-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sound.Player">
+<em class="property">class </em><tt class="descclassname">sound.</tt><tt class="descname">Player</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#sound.Player" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#sound.Player" title="sound.Player"><tt class="xref py py-class docutils literal"><span class="pre">Player</span></tt></a> class provides an easy-to-use interface for playing audio files from disk. Using this class is recommended for music and other audio that doesn&#8217;t require very low latency. For sound effects in games, <a class="reference internal" href="#sound.play_effect" title="sound.play_effect"><tt class="xref py py-func docutils literal"><span class="pre">play_effect()</span></tt></a> is more suitable.</p>
+</dd></dl>
+
+<div class="section" id="player-methods">
+<h3>Player Methods<a class="headerlink" href="#player-methods" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="sound.Player.play">
+<tt class="descclassname">Player.</tt><tt class="descname">play</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.Player.play" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start playing audio.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sound.Player.stop">
+<tt class="descclassname">Player.</tt><tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.Player.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop playing audio and reset the playback position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sound.Player.pause">
+<tt class="descclassname">Player.</tt><tt class="descname">pause</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.Player.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop playing audio, but keep the current playback position.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="player-attributes">
+<h3>Player Attributes<a class="headerlink" href="#player-attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="sound.Player.duration">
+<tt class="descclassname">Player.</tt><tt class="descname">duration</tt><a class="headerlink" href="#sound.Player.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>The duration of the loaded audio track in seconds (read-only).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Player.current_time">
+<tt class="descclassname">Player.</tt><tt class="descname">current_time</tt><a class="headerlink" href="#sound.Player.current_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current playback position in seconds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descclassname">Player.</tt><tt class="descname">duration</tt></dt>
+<dd><p>The duration of the audio track (read-only).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Player.number_of_loops">
+<tt class="descclassname">Player.</tt><tt class="descname">number_of_loops</tt><a class="headerlink" href="#sound.Player.number_of_loops" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of times the audio track should be repeated. Set to -1 to repeat forever.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="midiplayer-class">
+<h2>MIDIPlayer Class<a class="headerlink" href="#midiplayer-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sound.MIDIPlayer">
+<em class="property">class </em><tt class="descclassname">sound.</tt><tt class="descname">MIDIPlayer</tt><big>(</big><em>file_path</em><span class="optional">[</span>, <em>sound_bank_path</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#sound.MIDIPlayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#sound.MIDIPlayer" title="sound.MIDIPlayer"><tt class="xref py py-class docutils literal"><span class="pre">MIDIPlayer</span></tt></a> provides simple playback functions for MIDI (.mid) files, using either the built-in &#8220;Merlin Silver&#8221; sound bank or one that you provide. If you provide a custom sound bank, it must be in sf2 format.</p>
+</dd></dl>
+
+<div class="section" id="midiplayer-methods">
+<h3>MIDIPlayer Methods<a class="headerlink" href="#midiplayer-methods" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="sound.MIDIPlayer.play">
+<tt class="descclassname">MIDIPlayer.</tt><tt class="descname">play</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.MIDIPlayer.play" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start playback.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sound.MIDIPlayer.stop">
+<tt class="descclassname">MIDIPlayer.</tt><tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.MIDIPlayer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop playback.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="midiplayer-attributes">
+<h3>MIDIPlayer Attributes<a class="headerlink" href="#midiplayer-attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="sound.MIDIPlayer.current_time">
+<tt class="descclassname">MIDIPlayer.</tt><tt class="descname">current_time</tt><a class="headerlink" href="#sound.MIDIPlayer.current_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current playback position.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.MIDIPlayer.duration">
+<tt class="descclassname">MIDIPlayer.</tt><tt class="descname">duration</tt><a class="headerlink" href="#sound.MIDIPlayer.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>The duration of the loaded MIDI file.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.MIDIPlayer.rate">
+<tt class="descclassname">MIDIPlayer.</tt><tt class="descname">rate</tt><a class="headerlink" href="#sound.MIDIPlayer.rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The playback rate (1.0 for normal speed).</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

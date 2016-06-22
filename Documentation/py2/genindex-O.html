@@ -1,0 +1,449 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Index &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+
+   <h1 id="index">Index &ndash; O</h1>
+
+<table style="width: 100%" class="indextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="library/os.html#os.O_APPEND">O_APPEND (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_ASYNC">O_ASYNC (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_BINARY">O_BINARY (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_CREAT">O_CREAT (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_DIRECT">O_DIRECT (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_DIRECTORY">O_DIRECTORY (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_DSYNC">O_DSYNC (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_EXCL">O_EXCL (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_EXLOCK">O_EXLOCK (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_NDELAY">O_NDELAY (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_NOATIME">O_NOATIME (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_NOCTTY">O_NOCTTY (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_NOFOLLOW">O_NOFOLLOW (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_NOINHERIT">O_NOINHERIT (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_NONBLOCK">O_NONBLOCK (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_RANDOM">O_RANDOM (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_RDONLY">O_RDONLY (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_RDWR">O_RDWR (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_RSYNC">O_RSYNC (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_SEQUENTIAL">O_SEQUENTIAL (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_SHLOCK">O_SHLOCK (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_SHORT_LIVED">O_SHORT_LIVED (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_SYNC">O_SYNC (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_TEMPORARY">O_TEMPORARY (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_TEXT">O_TEXT (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_TRUNC">O_TRUNC (in module os)</a></dt>
+    <dt><a href="library/os.html#os.O_WRONLY">O_WRONLY (in module os)</a></dt>
+    <dt><a href="ios/objc_util.html#module-objc_util">objc_util (module)</a></dt>
+    <dt><a href="ios/objc_util.html#objc_util.ObjCBlock">ObjCBlock (class in objc_util)</a></dt>
+    <dt><a href="ios/objc_util.html#objc_util.ObjCClass">ObjCClass (class in objc_util)</a></dt>
+    <dt><a href="ios/objc_util.html#objc_util.ObjCInstance">ObjCInstance (class in objc_util)</a></dt>
+    <dt><a href="reference/datamodel.html#index-0">object</a>, <a href="glossary.html#term-object">[1]</a></dt>
+    <dd><dl>
+      <dt><a href="reference/datamodel.html#index-13">Boolean</a>, <a href="library/stdtypes.html#index-13">[1]</a></dt>
+      <dt><a href="reference/datamodel.html#index-8">Ellipsis</a></dt>
+      <dt><a href="reference/datamodel.html#index-6">None</a>, <a href="reference/simple_stmts.html#index-2">[1]</a></dt>
+      <dt><a href="reference/datamodel.html#index-7">NotImplemented</a></dt>
+      <dt><a href="library/stdtypes.html#index-21">Unicode</a></dt>
+      <dt><a href="library/stdtypes.html#index-21">buffer</a></dt>
+      <dt><a href="reference/datamodel.html#index-44">built-in function</a>, <a href="reference/expressions.html#index-43">[1]</a></dt>
+      <dt><a href="reference/datamodel.html#index-45">built-in method</a>, <a href="reference/expressions.html#index-43">[1]</a></dt>
+      <dt><a href="library/stdtypes.html#index-21">bytearray</a></dt>
+      <dt><a href="reference/datamodel.html#index-35">callable</a>, <a href="reference/expressions.html#index-38">[1]</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-23">class</a>, <a href="reference/datamodel.html#index-46">[1]</a>, <a href="reference/datamodel.html#index-50">[2]</a>, <a href="reference/expressions.html#index-44">[3]</a></dt>
+      <dt><a href="reference/datamodel.html#index-46">class instance</a>, <a href="reference/datamodel.html#index-50">[1]</a>, <a href="reference/datamodel.html#index-54">[2]</a>, <a href="reference/expressions.html#index-45">[3]</a></dt>
+      <dt><a href="library/marshal.html#index-0">code</a>, <a href="reference/datamodel.html#index-60">[1]</a>, <a href="library/stdtypes.html#index-38">[2]</a></dt>
+      <dt><a href="reference/datamodel.html#index-16">complex</a></dt>
+      <dt><a href="library/stdtypes.html#index-13">complex number</a></dt>
+      <dt><a href="reference/datamodel.html#index-33">dictionary</a>, <a href="reference/datamodel.html#index-50">[1]</a>, <a href="reference/datamodel.html#index-81">[2]</a>, <a href="reference/simple_stmts.html#index-12">[3]</a>, <a href="reference/expressions.html#index-16">[4]</a>, <a href="reference/expressions.html#index-32">[5]</a>, <a href="library/stdtypes.html#index-32">[6]</a></dt>
+      <dt><a href="reference/toplevel_components.html#index-8">file</a>, <a href="reference/datamodel.html#index-58">[1]</a>, <a href="tutorial/inputoutput.html#index-0">[2]</a>, <a href="library/stdtypes.html#index-33">[3]</a></dt>
+      <dt><a href="reference/datamodel.html#index-15">floating point</a>, <a href="library/stdtypes.html#index-13">[1]</a></dt>
+      <dt><a href="reference/datamodel.html#index-64">frame</a></dt>
+      <dt><a href="reference/datamodel.html#index-31">frozenset</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-18">function</a>, <a href="reference/datamodel.html#index-36">[1]</a>, <a href="reference/datamodel.html#index-44">[2]</a>, <a href="reference/expressions.html#index-42">[3]</a>, <a href="reference/expressions.html#index-43">[4]</a></dt>
+      <dt><a href="reference/datamodel.html#index-62">generator</a>, <a href="reference/expressions.html#index-15">[1]</a>, <a href="reference/expressions.html#index-24">[2]</a></dt>
+      <dt><a href="reference/datamodel.html#index-20">immutable</a>, <a href="reference/expressions.html#index-9">[1]</a>, <a href="reference/expressions.html#index-17">[2]</a></dt>
+      <dt><a href="reference/datamodel.html#index-20">immutable sequence</a></dt>
+      <dt><a href="reference/datamodel.html#index-46">instance</a>, <a href="reference/datamodel.html#index-50">[1]</a>, <a href="reference/datamodel.html#index-54">[2]</a>, <a href="reference/expressions.html#index-45">[3]</a></dt>
+      <dt><a href="reference/datamodel.html#index-10">integer</a>, <a href="library/stdtypes.html#index-13">[1]</a></dt>
+      <dt><a href="reference/datamodel.html#index-26">list</a>, <a href="reference/simple_stmts.html#index-11">[1]</a>, <a href="reference/expressions.html#index-14">[2]</a>, <a href="reference/expressions.html#index-30">[3]</a>, <a href="reference/expressions.html#index-32">[4]</a>, <a href="reference/expressions.html#index-35">[5]</a>, <a href="library/stdtypes.html#index-21">[6]</a>, <a href="library/stdtypes.html#index-29">[7]</a></dt>
+      <dt><a href="reference/datamodel.html#index-12">long integer</a>, <a href="library/stdtypes.html#index-13">[1]</a></dt>
+      <dt><a href="reference/datamodel.html#index-32">mapping</a>, <a href="reference/datamodel.html#index-56">[1]</a>, <a href="reference/simple_stmts.html#index-12">[2]</a>, <a href="reference/expressions.html#index-32">[3]</a>, <a href="library/stdtypes.html#index-32">[4]</a></dt>
+      <dt><a href="reference/datamodel.html#index-38">method</a>, <a href="reference/datamodel.html#index-45">[1]</a>, <a href="tutorial/classes.html#index-0">[2]</a>, <a href="reference/expressions.html#index-43">[3]</a>, <a href="library/stdtypes.html#index-37">[4]</a></dt>
+      <dt><a href="reference/datamodel.html#index-47">module</a>, <a href="reference/expressions.html#index-30">[1]</a></dt>
+      <dt><a href="reference/datamodel.html#index-25">mutable</a>, <a href="reference/simple_stmts.html#index-3">[1]</a>, <a href="reference/simple_stmts.html#index-10">[2]</a></dt>
+      <dt><a href="reference/datamodel.html#index-25">mutable sequence</a></dt>
+      <dt><a href="reference/datamodel.html#index-9">numeric</a>, <a href="reference/datamodel.html#index-56">[1]</a>, <a href="library/stdtypes.html#index-10">[2]</a>, <a href="library/stdtypes.html#index-13">[3]</a></dt>
+      <dt><a href="reference/datamodel.html#index-11">plain integer</a></dt>
+      <dt><a href="reference/expressions.html#index-20">recursive</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-6">sequence</a>, <a href="reference/datamodel.html#index-17">[1]</a>, <a href="reference/datamodel.html#index-56">[2]</a>, <a href="reference/simple_stmts.html#index-11">[3]</a>, <a href="reference/expressions.html#index-32">[4]</a>, <a href="reference/expressions.html#index-35">[5]</a>, <a href="reference/expressions.html#index-67">[6]</a>, <a href="library/stdtypes.html#index-21">[7]</a></dt>
+      <dt><a href="reference/datamodel.html#index-30">set</a>, <a href="reference/expressions.html#index-18">[1]</a>, <a href="library/stdtypes.html#index-31">[2]</a></dt>
+      <dt><a href="reference/datamodel.html#index-29">set type</a></dt>
+      <dt><a href="reference/datamodel.html#index-89">slice</a></dt>
+      <dt><a href="library/socket.html#index-1">socket</a></dt>
+      <dt><a href="reference/datamodel.html#index-21">string</a>, <a href="reference/expressions.html#index-32">[1]</a>, <a href="reference/expressions.html#index-35">[2]</a>, <a href="library/stdtypes.html#index-21">[3]</a></dt>
+      <dt><a href="library/traceback.html#index-0">traceback</a>, <a href="reference/compound_stmts.html#index-11">[1]</a>, <a href="reference/datamodel.html#index-67">[2]</a>, <a href="reference/simple_stmts.html#index-32">[3]</a>, <a href="library/sys.html#index-1">[4]</a></dt>
+      <dt><a href="reference/datamodel.html#index-24">tuple</a>, <a href="reference/expressions.html#index-32">[1]</a>, <a href="reference/expressions.html#index-35">[2]</a>, <a href="reference/expressions.html#index-77">[3]</a>, <a href="library/stdtypes.html#index-21">[4]</a></dt>
+      <dt><a href="library/functions.html#index-7">type</a></dt>
+      <dt><a href="reference/datamodel.html#index-23">unicode</a></dt>
+      <dt><a href="reference/compound_stmts.html#index-18">user-defined function</a>, <a href="reference/datamodel.html#index-36">[1]</a>, <a href="reference/expressions.html#index-42">[2]</a></dt>
+      <dt><a href="reference/datamodel.html#index-38">user-defined method</a></dt>
+      <dt><a href="library/stdtypes.html#index-21">xrange</a>, <a href="library/stdtypes.html#index-28">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="library/exceptions.html#exceptions.UnicodeError.object">object (exceptions.UnicodeError attribute)</a></dt>
+    <dt><a href="library/functions.html#object">object() (built-in function)</a></dt>
+    <dt><a href="ios/beautifulsoup_ref.html#bs4.BeautifulSoup.object_was_parsed">object_was_parsed() (bs4.BeautifulSoup method)</a></dt>
+    <dt>objects</dt>
+    <dd><dl>
+      <dt><a href="library/stdtypes.html#index-10">comparing</a></dt>
+      <dt><a href="library/pickle.html#index-0">flattening</a></dt>
+      <dt><a href="library/pickle.html#index-0">marshalling</a></dt>
+      <dt><a href="library/pickle.html#index-0">persistent</a></dt>
+      <dt><a href="library/pickle.html#index-0">pickling</a></dt>
+      <dt><a href="library/pickle.html#index-0">serializing</a></dt>
+  </dl></dd>
+    <dt>oct</dt>
+    <dd><dl>
+      <dt><a href="reference/datamodel.html#index-95">built-in function</a></dt>
+  </dl></dd>
+    <dt><a href="library/functions.html#oct">oct() (built-in function)</a></dt>
+    <dt>octal</dt>
+    <dd><dl>
+      <dt><a href="library/stdtypes.html#index-14">literals</a></dt>
+  </dl></dd>
+    <dt><a href="reference/lexical_analysis.html#index-18">octal literal</a></dt>
+    <dt><a href="library/string.html#string.octdigits">octdigits (in module string)</a></dt>
+    <dt><a href="library/pyexpat.html#xml.parsers.expat.ExpatError.offset">offset (xml.parsers.expat.ExpatError attribute)</a></dt>
+    <dt><a href="ios/Image.html#Image.Image.offset">offset() (Image.Image method)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/ImageChops.html#ImageChops.offset">(in module ImageChops)</a>, <a href="ios/ImageChops.html#ImageChops.offset">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="library/rexec.html#rexec.RExec.ok_builtin_modules">ok_builtin_modules (rexec.RExec attribute)</a></dt>
+    <dt><a href="library/rexec.html#rexec.RExec.ok_file_types">ok_file_types (rexec.RExec attribute)</a></dt>
+    <dt><a href="library/rexec.html#rexec.RExec.ok_path">ok_path (rexec.RExec attribute)</a></dt>
+    <dt><a href="library/rexec.html#rexec.RExec.ok_posix_names">ok_posix_names (rexec.RExec attribute)</a></dt>
+    <dt><a href="library/rexec.html#rexec.RExec.ok_sys_names">ok_sys_names (rexec.RExec attribute)</a></dt>
+    <dt><a href="library/ctypes.html#ctypes.OleDLL">OleDLL (class in ctypes)</a></dt>
+    <dt><a href="ios/objc_util.html#objc_util.on_main_thread">on_main_thread() (in module objc_util)</a></dt>
+    <dt><a href="ios/ui.html#ui.View.on_screen">on_screen (ui.View attribute)</a></dt>
+    <dt><a href="library/cmd.html#cmd.Cmd.onecmd">onecmd() (cmd.Cmd method)</a></dt>
+    <dt><a href="library/token.html#token.OP">OP (in module token)</a></dt>
+    <dt>open</dt>
+    <dd><dl>
+      <dt><a href="reference/datamodel.html#index-58">built-in function</a>, <a href="tutorial/inputoutput.html#index-0">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="ios/bottle/api.html#bottle.ResourceManager.open">open() (bottle.ResourceManager method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/functions.html#open">(built-in function)</a></dt>
+      <dt><a href="library/imaplib.html#imaplib.IMAP4.open">(imaplib.IMAP4 method)</a></dt>
+      <dt><a href="ios/Image.html#Image.open">(in module Image)</a></dt>
+      <dt><a href="library/aifc.html#aifc.open">(in module aifc)</a></dt>
+      <dt><a href="library/anydbm.html#anydbm.open">(in module anydbm)</a></dt>
+      <dt><a href="library/codecs.html#codecs.open">(in module codecs)</a></dt>
+      <dt><a href="library/dumbdbm.html#dumbdbm.open">(in module dumbdbm)</a></dt>
+      <dt><a href="library/gzip.html#gzip.open">(in module gzip)</a></dt>
+      <dt><a href="library/io.html#io.open">(in module io)</a></dt>
+      <dt><a href="library/os.html#os.open">(in module os)</a></dt>
+      <dt><a href="library/posixfile.html#posixfile.open">(in module posixfile)</a></dt>
+      <dt><a href="library/shelve.html#shelve.open">(in module shelve)</a></dt>
+      <dt><a href="library/sunau.html#sunau.open">(in module sunau)</a></dt>
+      <dt><a href="library/tarfile.html#tarfile.open">(in module tarfile)</a></dt>
+      <dt><a href="library/wave.html#wave.open">(in module wave)</a></dt>
+      <dt><a href="library/webbrowser.html#webbrowser.open">(in module webbrowser)</a></dt>
+      <dt><a href="library/pipes.html#pipes.Template.open">(pipes.Template method)</a></dt>
+      <dt><a href="library/tarfile.html#tarfile.TarFile.open">(tarfile.TarFile method)</a></dt>
+      <dt><a href="library/telnetlib.html#telnetlib.Telnet.open">(telnetlib.Telnet method)</a></dt>
+      <dt><a href="library/urllib.html#urllib.URLopener.open">(urllib.URLopener method)</a></dt>
+      <dt><a href="library/urllib2.html#urllib2.OpenerDirector.open">(urllib2.OpenerDirector method)</a></dt>
+      <dt><a href="library/zipfile.html#zipfile.ZipFile.open">(zipfile.ZipFile method)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/editor.html#editor.open_file">open_file() (in module editor)</a></dt>
+</dl></td>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="ios/console.html#console.open_in">open_in() (in module console)</a></dt>
+    <dt><a href="library/urllib.html#urllib.URLopener.open_unknown">open_unknown() (urllib.URLopener method)</a></dt>
+    <dt><a href="library/dircache.html#dircache.opendir">opendir() (in module dircache)</a></dt>
+    <dt><a href="library/urllib2.html#urllib2.OpenerDirector">OpenerDirector (class in urllib2)</a></dt>
+    <dt><a href="library/mhlib.html#mhlib.MH.openfolder">openfolder() (mhlib.MH method)</a></dt>
+    <dt><a href="library/sunau.html#sunau.openfp">openfp() (in module sunau)</a></dt>
+    <dd><dl>
+      <dt><a href="library/wave.html#wave.openfp">(in module wave)</a></dt>
+  </dl></dd>
+    <dt><a href="library/mhlib.html#mhlib.Message.openmessage">openmessage() (mhlib.Message method)</a></dt>
+    <dt><a href="library/os.html#os.openpty">openpty() (in module os)</a></dt>
+    <dt>OpenSSL</dt>
+    <dd><dl>
+      <dt><a href="library/hashlib.html#index-2">(use in module hashlib)</a></dt>
+      <dt><a href="library/ssl.html#index-0">(use in module ssl)</a></dt>
+  </dl></dd>
+    <dt><a href="library/ssl.html#ssl.OPENSSL_VERSION">OPENSSL_VERSION (in module ssl)</a></dt>
+    <dt><a href="library/ssl.html#ssl.OPENSSL_VERSION_INFO">OPENSSL_VERSION_INFO (in module ssl)</a></dt>
+    <dt><a href="library/ssl.html#ssl.OPENSSL_VERSION_NUMBER">OPENSSL_VERSION_NUMBER (in module ssl)</a></dt>
+    <dt>operation</dt>
+    <dd><dl>
+      <dt><a href="reference/expressions.html#index-69">Boolean</a></dt>
+      <dt><a href="reference/expressions.html#index-52">binary arithmetic</a></dt>
+      <dt><a href="reference/expressions.html#index-60">binary bitwise</a></dt>
+      <dt><a href="library/stdtypes.html#index-22">concatenation</a></dt>
+      <dt><a href="library/stdtypes.html#index-22">extended slice</a></dt>
+      <dt><a href="reference/simple_stmts.html#index-17">null</a></dt>
+      <dt><a href="library/stdtypes.html#index-22">repetition</a></dt>
+      <dt><a href="reference/expressions.html#index-58">shifting</a></dt>
+      <dt><a href="library/stdtypes.html#index-22">slice</a></dt>
+      <dt><a href="library/stdtypes.html#index-22">subscript</a></dt>
+      <dt><a href="reference/expressions.html#index-47">unary arithmetic</a></dt>
+      <dt><a href="reference/expressions.html#index-47">unary bitwise</a></dt>
+  </dl></dd>
+    <dt>operations</dt>
+    <dd><dl>
+      <dt><a href="library/stdtypes.html#index-2">Boolean</a>, <a href="library/stdtypes.html#index-7">[1]</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">bitwise</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">masking</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">shifting</a></dt>
+  </dl></dd>
+    <dt>operations on</dt>
+    <dd><dl>
+      <dt><a href="library/stdtypes.html#index-32">dictionary type</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">integer types</a></dt>
+      <dt><a href="library/stdtypes.html#index-30">list type</a></dt>
+      <dt><a href="library/stdtypes.html#index-32">mapping types</a></dt>
+      <dt><a href="library/stdtypes.html#index-16">numeric types</a></dt>
+      <dt><a href="library/stdtypes.html#index-22">sequence types</a>, <a href="library/stdtypes.html#index-30">[1]</a></dt>
+  </dl></dd>
+    <dt>operator</dt>
+    <dd><dl>
+      <dt><a href="library/stdtypes.html#index-9">!=</a></dt>
+      <dt><a href="library/stdtypes.html#index-15">%</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">&amp;</a></dt>
+      <dt><a href="library/stdtypes.html#index-15">*</a></dt>
+      <dt><a href="library/stdtypes.html#index-15">**</a></dt>
+      <dt><a href="library/stdtypes.html#index-15">+</a></dt>
+      <dt><a href="library/stdtypes.html#index-15">-</a></dt>
+      <dt><a href="library/stdtypes.html#index-15">/</a></dt>
+      <dt><a href="library/stdtypes.html#index-15">//</a></dt>
+      <dt><a href="library/stdtypes.html#index-9">&lt;</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">&lt;&lt;</a></dt>
+      <dt><a href="library/stdtypes.html#index-9">&lt;=</a></dt>
+      <dt><a href="library/stdtypes.html#index-9">==</a></dt>
+      <dt><a href="library/stdtypes.html#index-9">&gt;</a></dt>
+      <dt><a href="library/stdtypes.html#index-9">&gt;=</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">&gt;&gt;</a></dt>
+      <dt><a href="library/stdtypes.html#index-19">^</a></dt>
+      <dt><a href="reference/expressions.html#index-71">and</a>, <a href="library/stdtypes.html#index-6">[1]</a>, <a href="library/stdtypes.html#index-8">[2]</a></dt>
+      <dt><a href="library/stdtypes.html#index-9">comparison</a></dt>
+      <dt><a href="reference/expressions.html#index-67">in</a>, <a href="library/stdtypes.html#index-12">[1]</a>, <a href="library/stdtypes.html#index-22">[2]</a></dt>
+      <dt><a href="reference/expressions.html#index-68">is</a>, <a href="library/stdtypes.html#index-9">[1]</a></dt>
+      <dt><a href="reference/expressions.html#index-68">is not</a>, <a href="library/stdtypes.html#index-9">[1]</a></dt>
+      <dt><a href="reference/expressions.html#index-70">not</a>, <a href="library/stdtypes.html#index-8">[1]</a></dt>
+      <dt><a href="reference/expressions.html#index-67">not in</a>, <a href="library/stdtypes.html#index-12">[1]</a>, <a href="library/stdtypes.html#index-22">[2]</a></dt>
+      <dt><a href="reference/expressions.html#index-72">or</a>, <a href="library/stdtypes.html#index-6">[1]</a>, <a href="library/stdtypes.html#index-8">[2]</a></dt>
+      <dt><a href="reference/datamodel.html#index-72">overloading</a></dt>
+      <dt><a href="reference/expressions.html#index-80">precedence</a></dt>
+      <dt><a href="reference/expressions.html#index-73">ternary</a></dt>
+  </dl></dd>
+    <dt><a href="library/operator.html#module-operator">operator (module)</a></dt>
+    <dt><a href="reference/lexical_analysis.html#index-19">operators</a></dt>
+    <dt><a href="library/dis.html#dis.opmap">opmap (in module dis)</a></dt>
+    <dt><a href="library/dis.html#dis.opname">opname (in module dis)</a></dt>
+    <dt><a href="library/pickletools.html#pickletools.optimize">optimize() (in module pickletools)</a></dt>
+    <dt><a href="library/optparse.html#optparse.OptionGroup">OptionGroup (class in optparse)</a></dt>
+    <dt><a href="library/optparse.html#optparse.OptionParser">OptionParser (class in optparse)</a></dt>
+    <dt><a href="library/doctest.html#doctest.Example.options">options (doctest.Example attribute)</a></dt>
+    <dt><a href="library/configparser.html#ConfigParser.RawConfigParser.options">options() (ConfigParser.RawConfigParser method)</a></dt>
+    <dd><dl>
+      <dt><a href="ios/requests.html#requests.Session.options">(requests.Session method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/configparser.html#ConfigParser.RawConfigParser.optionxform">optionxform() (ConfigParser.RawConfigParser method)</a></dt>
+    <dt><a href="library/optparse.html#module-optparse">optparse (module)</a></dt>
+    <dt>or</dt>
+    <dd><dl>
+      <dt><a href="reference/expressions.html#index-63">bitwise</a></dt>
+      <dt><a href="reference/expressions.html#index-62">exclusive</a></dt>
+      <dt><a href="reference/expressions.html#index-63">inclusive</a></dt>
+      <dt><a href="reference/expressions.html#index-72">operator</a>, <a href="library/stdtypes.html#index-6">[1]</a>, <a href="library/stdtypes.html#index-8">[2]</a></dt>
+  </dl></dd>
+    <dt><a href="library/operator.html#operator.or_">or_() (in module operator)</a></dt>
+    <dt>ord</dt>
+    <dd><dl>
+      <dt><a href="reference/datamodel.html#index-21">built-in function</a>, <a href="reference/datamodel.html#index-22">[1]</a>, <a href="reference/datamodel.html#index-23">[2]</a></dt>
+  </dl></dd>
+    <dt><a href="library/functions.html#ord">ord() (built-in function)</a></dt>
+    <dt>order</dt>
+    <dd><dl>
+      <dt><a href="reference/expressions.html#index-79">evaluation</a></dt>
+  </dl></dd>
+    <dt><a href="library/pyexpat.html#xml.parsers.expat.xmlparser.ordered_attributes">ordered_attributes (xml.parsers.expat.xmlparser attribute)</a></dt>
+    <dt><a href="library/collections.html#collections.OrderedDict">OrderedDict (class in collections)</a></dt>
+    <dt><a href="ios/contacts.html#contacts.Person.organization">organization (contacts.Person attribute)</a></dt>
+    <dt><a href="ios/scene.html#scene.Rect.origin">origin (scene.Rect attribute)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.handlers.BaseHandler.origin_server">origin_server (wsgiref.handlers.BaseHandler attribute)</a></dt>
+    <dt>os</dt>
+    <dd><dl>
+      <dt><a href="library/stdtypes.html#index-33">module</a>, <a href="library/posix.html#index-0">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="library/os.html#module-os">os (module)</a></dt>
+    <dt><a href="library/os.path.html#module-os.path">os.path (module)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.handlers.BaseHandler.os_environ">os_environ (wsgiref.handlers.BaseHandler attribute)</a></dt>
+    <dt><a href="library/exceptions.html#exceptions.OSError">OSError</a></dt>
+    <dt><a href="reference/simple_stmts.html#index-2">output</a>, <a href="reference/simple_stmts.html#index-23">[1]</a></dt>
+    <dd><dl>
+      <dt><a href="reference/simple_stmts.html#index-2">standard</a>, <a href="reference/simple_stmts.html#index-24">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="ios/bottle/api.html#bottle.HTTPResponse.output">output (bottle.HTTPResponse attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="library/subprocess.html#subprocess.CalledProcessError.output">(subprocess.CalledProcessError attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/cookie.html#Cookie.BaseCookie.output">output() (Cookie.BaseCookie method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/cookie.html#Cookie.Morsel.output">(Cookie.Morsel method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/email.charset.html#email.charset.Charset.output_charset">output_charset (email.charset.Charset attribute)</a></dt>
+    <dt><a href="library/gettext.html#gettext.NullTranslations.output_charset">output_charset() (gettext.NullTranslations method)</a></dt>
+    <dt><a href="library/email.charset.html#email.charset.Charset.output_codec">output_codec (email.charset.Charset attribute)</a></dt>
+    <dt><a href="library/doctest.html#doctest.OutputChecker.output_difference">output_difference() (doctest.OutputChecker method)</a></dt>
+    <dt><a href="library/doctest.html#doctest.OutputChecker">OutputChecker (class in doctest)</a></dt>
+    <dt><a href="library/cookie.html#Cookie.Morsel.OutputString">OutputString() (Cookie.Morsel method)</a></dt>
+    <dt><a href="library/stringio.html#cStringIO.OutputType">OutputType (in module cStringIO)</a></dt>
+    <dt><a href="ios/ui.html#ui.Path.oval">oval() (ui.Path class method)</a></dt>
+    <dt><a href="library/decimal.html#decimal.Overflow">Overflow (class in decimal)</a></dt>
+    <dt><a href="library/exceptions.html#exceptions.OverflowError">OverflowError</a></dt>
+    <dd><dl>
+      <dt><a href="reference/datamodel.html#index-11">(built-in exception)</a></dt>
+  </dl></dd>
+    <dt>overloading</dt>
+    <dd><dl>
+      <dt><a href="reference/datamodel.html#index-72">operator</a></dt>
+  </dl></dd>
+</dl></td>
+</tr></table>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 11, 2016.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

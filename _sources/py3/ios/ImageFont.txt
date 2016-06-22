@@ -1,0 +1,61 @@
+The ImageFont Module
+====================
+
+.. module:: ImageFont
+
+The :mod:`ImageFont` module defines a class with the same name. Instances of this class store bitmap fonts, and are used with the text method of the ImageDraw class.
+
+PIL uses its own font file format to store bitmap fonts. You can use the pilfont utility to convert BDF and PCF font descriptors (X window font formats) to this format.
+
+Starting with version 1.1.4, PIL can be configured to support TrueType and OpenType fonts (as well as other font formats supported by the FreeType library). For earlier versions, TrueType support is only available as part of the imToolkit package.
+
+.. note::
+    In Pythonista, the :func:`truetype` function can be used to load built-in system fonts, e.g. ``font = ImageFont.truetype('Helvetica', 20)``.
+
+Examples
+--------
+Here’s a simple example::
+
+    import ImageFont, ImageDraw
+
+    draw = ImageDraw.Draw(image)
+
+    # use a truetype font
+    font = ImageFont.truetype("Helvetica", 15)
+
+    draw.text((10, 10), "Hello World", font=font)
+
+Functions
+---------
+.. function:: load(file)
+
+    Loads a font from the given file, and returns the corresponding font object. If this function fails, it raises an IOError exception.
+
+.. function:: load_path(file)
+
+    Same as :func:`load`, but searches for the file along sys.path if it’s not found in the current directory.
+
+.. function:: truetype(file, size)
+
+    Load a TrueType or OpenType font file, and create a font object. This function loads a font object from the given file, and creates a font object for a font of the given size.
+
+    On Windows, if the given file name does not exist, the loader also looks in Windows fonts directory.
+
+.. function:: load_default()
+
+    (New in 1.1.4) Load a “better than nothing” default font.
+    
+Methods
+-------
+.. method:: font.getsize(text)
+
+    Returns the width and height of the given text, as a 2-tuple.
+
+.. method:: font.getmask(text, mode='')
+
+    Returns a bitmap for the text. The bitmap should be an internal PIL storage memory instance (as defined by the Image.core interface module).
+
+    If the font uses antialiasing, the bitmap should have mode “L” and use a maximum value of 255. Otherwise, it should have mode “1”.
+
+    (New in 1.1.5) The optional mode argument is used by some graphics drivers to indicate what mode the driver prefers; if empty, the renderer may return either mode. Note that the mode is always a string, to simplify C-level implementations.
+

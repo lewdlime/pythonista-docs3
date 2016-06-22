@@ -1,0 +1,107 @@
+
+:mod:`sound` --- Sound effects and music playback
+======================================================
+
+.. module:: sound
+   :synopsis: Sound effects and music playback
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`sound` module contains functions for playing simple sound effects on iOS.
+
+Functions
+---------
+
+.. function:: play_effect(name[, volume, pitch])
+   
+    Play the sound effect with the given name. You can access a list of built-in sound effect names using the asset picker ([+] button in the toolbar), but `name` can also be a file path if you want to use your own sound effects.
+   
+    Playback is asynchronous, i.e. the function returns before the sound has finished playing.
+    The return value is an opaque identifier that can be used with the :func:`stop_effect` function.
+    The `volume` and `pitch` arguments are optional, by default, the effect is played with the global volume, as set by :func:`set_volume`.
+
+.. function:: stop_effect(effect_id)
+
+    Stops playback of a sound effect. The `effect_id` is the return value of :func:`play_effect`.
+
+.. function:: set_volume(vol)
+
+    Sets the default volume for all sound effects (between 0.0 and 1.0, the default is 0.5).
+
+.. function:: set_honors_silent_switch(flag)
+
+    Determines whether the silent (mute) switch is honored when playing sounds (`True` by default).
+
+Player Class
+------------
+
+.. class:: Player(file_path)
+
+    The :class:`Player` class provides an easy-to-use interface for playing audio files from disk. Using this class is recommended for music and other audio that doesn't require very low latency. For sound effects in games, :func:`play_effect` is more suitable.
+    
+Player Methods
+^^^^^^^^^^^^^^
+
+.. method:: Player.play()
+
+    Start playing audio.
+
+.. method:: Player.stop()
+
+    Stop playing audio and reset the playback position.
+
+.. method:: Player.pause()
+
+    Stop playing audio, but keep the current playback position.
+
+Player Attributes
+^^^^^^^^^^^^^^^^^
+
+.. attribute:: Player.duration
+
+    The duration of the loaded audio track in seconds (read-only).
+
+.. attribute:: Player.current_time
+    
+    The current playback position in seconds.
+
+.. attribute:: Player.duration
+
+    The duration of the audio track (read-only).
+
+.. attribute:: Player.number_of_loops
+
+    The number of times the audio track should be repeated. Set to -1 to repeat forever.
+
+MIDIPlayer Class
+----------------
+
+.. class:: MIDIPlayer(file_path[, sound_bank_path])
+
+    A :class:`MIDIPlayer` provides simple playback functions for MIDI (.mid) files, using either the built-in "Merlin Silver" sound bank or one that you provide. If you provide a custom sound bank, it must be in sf2 format.
+
+MIDIPlayer Methods
+^^^^^^^^^^^^^^^^^^
+
+.. method:: MIDIPlayer.play()
+
+    Start playback.
+
+.. method:: MIDIPlayer.stop()
+
+    Stop playback.
+
+MIDIPlayer Attributes
+^^^^^^^^^^^^^^^^^^^^^
+
+.. attribute:: MIDIPlayer.current_time
+
+    The current playback position.
+
+.. attribute:: MIDIPlayer.duration
+
+    The duration of the loaded MIDI file.
+
+.. attribute:: MIDIPlayer.rate
+
+    The playback rate (1.0 for normal speed).

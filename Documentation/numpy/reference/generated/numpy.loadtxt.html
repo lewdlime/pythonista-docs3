@@ -1,0 +1,254 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.loadtxt &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Input and output" href="../routines.io.html" />
+    <link rel="next" title="numpy.savetxt" href="numpy.savetxt.html" />
+    <link rel="prev" title="numpy.savez_compressed" href="numpy.savez_compressed.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.savetxt.html" title="numpy.savetxt"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.savez_compressed.html" title="numpy.savez_compressed"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.io.html" accesskey="U">Input and output</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-loadtxt">
+<h1>numpy.loadtxt<a class="headerlink" href="#numpy-loadtxt" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.loadtxt">
+<tt class="descclassname">numpy.</tt><tt class="descname">loadtxt</tt><big>(</big><em>fname</em>, <em>dtype=&lt;type 'float'&gt;</em>, <em>comments='#'</em>, <em>delimiter=None</em>, <em>converters=None</em>, <em>skiprows=0</em>, <em>usecols=None</em>, <em>unpack=False</em>, <em>ndmin=0</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/lib/npyio.py#L624"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.loadtxt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load data from a text file.</p>
+<p>Each row in the text file must have the same number of values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fname</strong> : file or str</p>
+<blockquote>
+<div><p>File, filename, or generator to read.  If the filename extension is
+<tt class="docutils literal"><span class="pre">.gz</span></tt> or <tt class="docutils literal"><span class="pre">.bz2</span></tt>, the file is first decompressed. Note that
+generators should return byte strings for Python 3k.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : data-type, optional</p>
+<blockquote>
+<div><p>Data-type of the resulting array; default: float.  If this is a
+record data-type, the resulting array will be 1-dimensional, and
+each row will be interpreted as an element of the array.  In this
+case, the number of columns used must match the number of fields in
+the data-type.</p>
+</div></blockquote>
+<p><strong>comments</strong> : str, optional</p>
+<blockquote>
+<div><p>The character used to indicate the start of a comment;
+default: &#8216;#&#8217;.</p>
+</div></blockquote>
+<p><strong>delimiter</strong> : str, optional</p>
+<blockquote>
+<div><p>The string used to separate values.  By default, this is any
+whitespace.</p>
+</div></blockquote>
+<p><strong>converters</strong> : dict, optional</p>
+<blockquote>
+<div><p>A dictionary mapping column number to a function that will convert
+that column to a float.  E.g., if column 0 is a date string:
+<tt class="docutils literal"><span class="pre">converters</span> <span class="pre">=</span> <span class="pre">{0:</span> <span class="pre">datestr2num}</span></tt>.  Converters can also be used to
+provide a default value for missing data (but see also <a class="reference internal" href="numpy.genfromtxt.html#numpy.genfromtxt" title="numpy.genfromtxt"><tt class="xref py py-obj docutils literal"><span class="pre">genfromtxt</span></tt></a>):
+<tt class="docutils literal"><span class="pre">converters</span> <span class="pre">=</span> <span class="pre">{3:</span> <span class="pre">lambda</span> <span class="pre">s:</span> <span class="pre">float(s.strip()</span> <span class="pre">or</span> <span class="pre">0)}</span></tt>.  Default: None.</p>
+</div></blockquote>
+<p><strong>skiprows</strong> : int, optional</p>
+<blockquote>
+<div><p>Skip the first <em class="xref py py-obj">skiprows</em> lines; default: 0.</p>
+</div></blockquote>
+<p><strong>usecols</strong> : sequence, optional</p>
+<blockquote>
+<div><p>Which columns to read, with 0 being the first.  For example,
+<tt class="docutils literal"><span class="pre">usecols</span> <span class="pre">=</span> <span class="pre">(1,4,5)</span></tt> will extract the 2nd, 5th and 6th columns.
+The default, None, results in all columns being read.</p>
+</div></blockquote>
+<p><strong>unpack</strong> : bool, optional</p>
+<blockquote>
+<div><p>If True, the returned array is transposed, so that arguments may be
+unpacked using <tt class="docutils literal"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z</span> <span class="pre">=</span> <span class="pre">loadtxt(...)</span></tt>.  When used with a record
+data-type, arrays are returned for each field.  Default is False.</p>
+</div></blockquote>
+<p><strong>ndmin</strong> : int, optional</p>
+<blockquote>
+<div><p>The returned array will have at least <em class="xref py py-obj">ndmin</em> dimensions.
+Otherwise mono-dimensional axes will be squeezed.
+Legal values: 0 (default), 1 or 2.
+.. versionadded:: 1.6.0</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : ndarray</p>
+<blockquote class="last">
+<div><p>Data read from the text file.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference internal" href="numpy.load.html#numpy.load" title="numpy.load"><tt class="xref py py-obj docutils literal"><span class="pre">load</span></tt></a>, <a class="reference internal" href="numpy.fromstring.html#numpy.fromstring" title="numpy.fromstring"><tt class="xref py py-obj docutils literal"><span class="pre">fromstring</span></tt></a>, <a class="reference internal" href="numpy.fromregex.html#numpy.fromregex" title="numpy.fromregex"><tt class="xref py py-obj docutils literal"><span class="pre">fromregex</span></tt></a></p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="numpy.genfromtxt.html#numpy.genfromtxt" title="numpy.genfromtxt"><tt class="xref py py-obj docutils literal"><span class="pre">genfromtxt</span></tt></a></dt>
+<dd>Load data with missing values handled as specified.</dd>
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">scipy.io.loadmat</span></tt></dt>
+<dd>reads MATLAB data files</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This function aims to be a fast reader for simply formatted files.  The
+<a class="reference internal" href="numpy.genfromtxt.html#numpy.genfromtxt" title="numpy.genfromtxt"><tt class="xref py py-obj docutils literal"><span class="pre">genfromtxt</span></tt></a> function provides more sophisticated handling of, e.g.,
+lines with missing values.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>   <span class="c"># StringIO behaves like a file object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&quot;0 1</span><span class="se">\n</span><span class="s">2 3&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="go">array([[ 0.,  1.],</span>
+<span class="go">       [ 2.,  3.]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&quot;M 21 72</span><span class="se">\n</span><span class="s">F 35 58&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;names&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">&#39;gender&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="s">&#39;weight&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                     <span class="s">&#39;formats&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">&#39;S1&#39;</span><span class="p">,</span> <span class="s">&#39;i4&#39;</span><span class="p">,</span> <span class="s">&#39;f4&#39;</span><span class="p">)})</span>
+<span class="go">array([(&#39;M&#39;, 21, 72.0), (&#39;F&#39;, 35, 58.0)],</span>
+<span class="go">      dtype=[(&#39;gender&#39;, &#39;|S1&#39;), (&#39;age&#39;, &#39;&lt;i4&#39;), (&#39;weight&#39;, &#39;&lt;f4&#39;)])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&quot;1,0,2</span><span class="se">\n</span><span class="s">3,0,4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">unpack</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">array([ 1.,  3.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span>
+<span class="go">array([ 2.,  4.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

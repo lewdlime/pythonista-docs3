@@ -1,0 +1,237 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.polynomial.legendre.Legendre.fit &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="numpy.polynomial.legendre.Legendre" href="numpy.polynomial.legendre.Legendre.html" />
+    <link rel="next" title="numpy.polynomial.legendre.Legendre.fromroots" href="numpy.polynomial.legendre.Legendre.fromroots.html" />
+    <link rel="prev" title="numpy.polynomial.legendre.Legendre.deriv" href="numpy.polynomial.legendre.Legendre.deriv.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.polynomial.legendre.Legendre.fromroots.html" title="numpy.polynomial.legendre.Legendre.fromroots"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.polynomial.legendre.Legendre.deriv.html" title="numpy.polynomial.legendre.Legendre.deriv"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.polynomials.html" >Polynomials</a> &raquo;</li>
+          <li><a href="../routines.polynomials.package.html" >Polynomial Package</a> &raquo;</li>
+          <li><a href="../routines.polynomials.legendre.html" >Legendre Module (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.polynomial.legendre</span></tt>)</a> &raquo;</li>
+          <li><a href="numpy.polynomial.legendre.Legendre.html" accesskey="U">numpy.polynomial.legendre.Legendre</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-polynomial-legendre-legendre-fit">
+<h1>numpy.polynomial.legendre.Legendre.fit<a class="headerlink" href="#numpy-polynomial-legendre-legendre-fit" title="Permalink to this headline">¶</a></h1>
+<dl class="staticmethod">
+<dt id="numpy.polynomial.legendre.Legendre.fit">
+<em class="property">static </em><tt class="descclassname">Legendre.</tt><tt class="descname">fit</tt><big>(</big><em>x, y, deg, domain=None, rcond=None, full=False, w=None, window=[-1, 1]</em><big>)</big><a class="headerlink" href="#numpy.polynomial.legendre.Legendre.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Least squares fit to data.</p>
+<p>Return a <a class="reference internal" href="numpy.polynomial.legendre.Legendre.html#numpy.polynomial.legendre.Legendre" title="numpy.polynomial.legendre.Legendre"><tt class="xref py py-obj docutils literal"><span class="pre">Legendre</span></tt></a> instance that is the least squares fit to the data
+<em class="xref py py-obj">y</em> sampled at <em class="xref py py-obj">x</em>. Unlike <a class="reference internal" href="numpy.polynomial.legendre.legfit.html#numpy.polynomial.legendre.legfit" title="numpy.polynomial.legendre.legfit"><tt class="xref py py-obj docutils literal"><span class="pre">legfit</span></tt></a>, the domain of the returned
+instance can be specified and this will often result in a superior
+fit with less chance of ill conditioning. Support for NA was added
+in version 1.7.0. See <a class="reference internal" href="numpy.polynomial.legendre.legfit.html#numpy.polynomial.legendre.legfit" title="numpy.polynomial.legendre.legfit"><tt class="xref py py-obj docutils literal"><span class="pre">legfit</span></tt></a> for full documentation of the
+implementation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>x</strong> : array_like, shape (M,)</p>
+<blockquote>
+<div><p>x-coordinates of the M sample points <tt class="docutils literal"><span class="pre">(x[i],</span> <span class="pre">y[i])</span></tt>.</p>
+</div></blockquote>
+<p><strong>y</strong> : array_like, shape (M,) or (M, K)</p>
+<blockquote>
+<div><p>y-coordinates of the sample points. Several data sets of sample
+points sharing the same x-coordinates can be fitted at once by
+passing in a 2D-array that contains one dataset per column.</p>
+</div></blockquote>
+<p><strong>deg</strong> : int</p>
+<blockquote>
+<div><p>Degree of the fitting polynomial.</p>
+</div></blockquote>
+<p><strong>domain</strong> : {None, [beg, end], []}, optional</p>
+<blockquote>
+<div><p>Domain to use for the returned Legendre instance. If <tt class="docutils literal"><span class="pre">None</span></tt>,
+then a minimal domain that covers the points <em class="xref py py-obj">x</em> is chosen.  If
+<tt class="docutils literal"><span class="pre">[]</span></tt> the default domain <tt class="docutils literal"><span class="pre">[-1,1]</span></tt> is used. The default
+value is [-1,1] in numpy 1.4.x and <tt class="docutils literal"><span class="pre">None</span></tt> in later versions.
+The <tt class="docutils literal"><span class="pre">'[]</span></tt> value was added in numpy 1.5.0.</p>
+</div></blockquote>
+<p><strong>rcond</strong> : float, optional</p>
+<blockquote>
+<div><p>Relative condition number of the fit. Singular values smaller
+than this relative to the largest singular value will be
+ignored. The default value is len(x)*eps, where eps is the
+relative precision of the float type, about 2e-16 in most
+cases.</p>
+</div></blockquote>
+<p><strong>full</strong> : bool, optional</p>
+<blockquote>
+<div><p>Switch determining nature of return value. When it is False
+(the default) just the coefficients are returned, when True
+diagnostic information from the singular value decomposition is
+also returned.</p>
+</div></blockquote>
+<p><strong>w</strong> : array_like, shape (M,), optional</p>
+<blockquote>
+<div><p>Weights. If not None the contribution of each point
+<tt class="docutils literal"><span class="pre">(x[i],y[i])</span></tt> to the fit is weighted by <em class="xref py py-obj">w[i]</em>. Ideally the
+weights are chosen so that the errors of the products
+<tt class="docutils literal"><span class="pre">w[i]*y[i]</span></tt> all have the same variance.  The default value is
+None.
+.. versionadded:: 1.5.0</p>
+</div></blockquote>
+<p><strong>window</strong> : {[beg, end]}, optional</p>
+<blockquote>
+<div><p>Window to use for the returned Legendre instance. The default
+value is <tt class="docutils literal"><span class="pre">[-1,1]</span></tt>
+.. versionadded:: 1.6.0</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>least_squares_fit</strong> : instance of Legendre</p>
+<blockquote>
+<div><p>The Legendre instance is the least squares fit to the data and
+has the domain specified in the call.</p>
+</div></blockquote>
+<p><strong>[residuals, rank, singular_values, rcond]</strong> : only if <em class="xref py py-obj">full</em> = True</p>
+<blockquote class="last">
+<div><p>Residuals of the least squares fit, the effective rank of the
+scaled Vandermonde matrix and its singular values, and the
+specified value of <em class="xref py py-obj">rcond</em>. For more details, see
+<em class="xref py py-obj">linalg.lstsq</em>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="numpy.polynomial.legendre.legfit.html#numpy.polynomial.legendre.legfit" title="numpy.polynomial.legendre.legfit"><tt class="xref py py-obj docutils literal"><span class="pre">legfit</span></tt></a></dt>
+<dd>similar function</dd>
+</dl>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

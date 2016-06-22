@@ -1,0 +1,208 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.fromregex &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Input and output" href="../routines.io.html" />
+    <link rel="next" title="numpy.fromstring" href="numpy.fromstring.html" />
+    <link rel="prev" title="numpy.genfromtxt" href="numpy.genfromtxt.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.fromstring.html" title="numpy.fromstring"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.genfromtxt.html" title="numpy.genfromtxt"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.io.html" accesskey="U">Input and output</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-fromregex">
+<h1>numpy.fromregex<a class="headerlink" href="#numpy-fromregex" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.fromregex">
+<tt class="descclassname">numpy.</tt><tt class="descname">fromregex</tt><big>(</big><em>file</em>, <em>regexp</em>, <em>dtype</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/lib/npyio.py#L1071"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.fromregex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an array from a text file, using regular expression parsing.</p>
+<p>The returned array is always a structured array, and is constructed from
+all matches of the regular expression in the file. Groups in the regular
+expression are converted to fields of the structured array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>file</strong> : str or file</p>
+<blockquote>
+<div><p>File name or file object to read.</p>
+</div></blockquote>
+<p><strong>regexp</strong> : str or regexp</p>
+<blockquote>
+<div><p>Regular expression used to parse the file.
+Groups in the regular expression correspond to fields in the dtype.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : dtype or list of dtypes</p>
+<blockquote>
+<div><p>Dtype for the structured array.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>output</strong> : ndarray</p>
+<blockquote>
+<div><p>The output array, containing the part of the content of <em class="xref py py-obj">file</em> that
+was matched by <em class="xref py py-obj">regexp</em>. <em class="xref py py-obj">output</em> is always a structured array.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>TypeError</strong> :</p>
+<blockquote class="last">
+<div><p>When <a class="reference internal" href="numpy.dtype.html#numpy.dtype" title="numpy.dtype"><tt class="xref py py-obj docutils literal"><span class="pre">dtype</span></tt></a> is not a valid dtype for a structured array.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="numpy.fromstring.html#numpy.fromstring" title="numpy.fromstring"><tt class="xref py py-obj docutils literal"><span class="pre">fromstring</span></tt></a>, <a class="reference internal" href="numpy.loadtxt.html#numpy.loadtxt" title="numpy.loadtxt"><tt class="xref py py-obj docutils literal"><span class="pre">loadtxt</span></tt></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>Dtypes for structured arrays can be specified in several forms, but all
+forms specify at least the data type and field name. For details see
+<a class="reference internal" href="../../user/basics.rec.html#module-numpy.doc.structured_arrays" title="numpy.doc.structured_arrays"><tt class="xref py py-obj docutils literal"><span class="pre">doc.structured_arrays</span></tt></a>.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.dat&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;1312 foo</span><span class="se">\n</span><span class="s">1534  bar</span><span class="se">\n</span><span class="s">444   qux&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">regexp</span> <span class="o">=</span> <span class="s">r&quot;(\d+)\s+(...)&quot;</span>  <span class="c"># match [digits, whitespace, anything]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromregex</span><span class="p">(</span><span class="s">&#39;test.dat&#39;</span><span class="p">,</span> <span class="n">regexp</span><span class="p">,</span>
+<span class="gp">... </span>                      <span class="p">[(</span><span class="s">&#39;num&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;key&#39;</span><span class="p">,</span> <span class="s">&#39;S3&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span>
+<span class="go">array([(1312L, &#39;foo&#39;), (1534L, &#39;bar&#39;), (444L, &#39;qux&#39;)],</span>
+<span class="go">      dtype=[(&#39;num&#39;, &#39;&lt;i8&#39;), (&#39;key&#39;, &#39;|S3&#39;)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="p">[</span><span class="s">&#39;num&#39;</span><span class="p">]</span>
+<span class="go">array([1312, 1534,  444], dtype=int64)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

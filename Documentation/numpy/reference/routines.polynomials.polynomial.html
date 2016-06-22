@@ -1,0 +1,297 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Polynomial Module (numpy.polynomial.polynomial) &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Polynomial Package" href="routines.polynomials.package.html" />
+    <link rel="next" title="numpy.polynomial.polynomial.Polynomial" href="generated/numpy.polynomial.polynomial.Polynomial.html" />
+    <link rel="prev" title="Using the Convenience Classes" href="routines.polynomials.classes.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="generated/numpy.polynomial.polynomial.Polynomial.html" title="numpy.polynomial.polynomial.Polynomial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="routines.polynomials.classes.html" title="Using the Convenience Classes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" >Routines</a> &raquo;</li>
+          <li><a href="routines.polynomials.html" >Polynomials</a> &raquo;</li>
+          <li><a href="routines.polynomials.package.html" accesskey="U">Polynomial Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="polynomial-module-numpy-polynomial-polynomial">
+<h1>Polynomial Module (<tt class="xref py py-mod docutils literal"><span class="pre">numpy.polynomial.polynomial</span></tt>)<a class="headerlink" href="#polynomial-module-numpy-polynomial-polynomial" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.4.0.</span></p>
+</div>
+<p>This module provides a number of objects (mostly functions) useful for
+dealing with Polynomial series, including a <a class="reference internal" href="generated/numpy.polynomial.polynomial.Polynomial.html#numpy.polynomial.polynomial.Polynomial" title="numpy.polynomial.polynomial.Polynomial"><tt class="xref py py-obj docutils literal"><span class="pre">Polynomial</span></tt></a> class that
+encapsulates the usual arithmetic operations.  (General information
+on how this module represents and works with such polynomials is in the
+docstring for its &#8220;parent&#8221; sub-package, <tt class="xref py py-obj docutils literal"><span class="pre">numpy.polynomial</span></tt>).</p>
+<div class="section" id="polynomial-class">
+<h2>Polynomial Class<a class="headerlink" href="#polynomial-class" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.Polynomial.html#numpy.polynomial.polynomial.Polynomial" title="numpy.polynomial.polynomial.Polynomial"><tt class="xref py py-obj docutils literal"><span class="pre">Polynomial</span></tt></a>(coef[,&nbsp;domain,&nbsp;window])</td>
+<td>A Polynomial series class.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyval.html#numpy.polynomial.polynomial.polyval" title="numpy.polynomial.polynomial.polyval"><tt class="xref py py-obj docutils literal"><span class="pre">polyval</span></tt></a>(x,&nbsp;c[,&nbsp;tensor])</td>
+<td>Evaluate a polynomial at points x.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyval2d.html#numpy.polynomial.polynomial.polyval2d" title="numpy.polynomial.polynomial.polyval2d"><tt class="xref py py-obj docutils literal"><span class="pre">polyval2d</span></tt></a>(x,&nbsp;y,&nbsp;c)</td>
+<td>Evaluate a 2-D polynomial at points (x, y).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyval3d.html#numpy.polynomial.polynomial.polyval3d" title="numpy.polynomial.polynomial.polyval3d"><tt class="xref py py-obj docutils literal"><span class="pre">polyval3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;c)</td>
+<td>Evaluate a 3-D polynomial at points (x, y, z).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polygrid2d.html#numpy.polynomial.polynomial.polygrid2d" title="numpy.polynomial.polynomial.polygrid2d"><tt class="xref py py-obj docutils literal"><span class="pre">polygrid2d</span></tt></a>(x,&nbsp;y,&nbsp;c)</td>
+<td>Evaluate a 2-D polynomial on the Cartesian product of x and y.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polygrid3d.html#numpy.polynomial.polynomial.polygrid3d" title="numpy.polynomial.polynomial.polygrid3d"><tt class="xref py py-obj docutils literal"><span class="pre">polygrid3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;c)</td>
+<td>Evaluate a 3-D polynomial on the Cartesian product of x, y and z.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyroots.html#numpy.polynomial.polynomial.polyroots" title="numpy.polynomial.polynomial.polyroots"><tt class="xref py py-obj docutils literal"><span class="pre">polyroots</span></tt></a>(c)</td>
+<td>Compute the roots of a polynomial.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyfromroots.html#numpy.polynomial.polynomial.polyfromroots" title="numpy.polynomial.polynomial.polyfromroots"><tt class="xref py py-obj docutils literal"><span class="pre">polyfromroots</span></tt></a>(roots)</td>
+<td>Generate a monic polynomial with given roots.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="fitting">
+<h2>Fitting<a class="headerlink" href="#fitting" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyfit.html#numpy.polynomial.polynomial.polyfit" title="numpy.polynomial.polynomial.polyfit"><tt class="xref py py-obj docutils literal"><span class="pre">polyfit</span></tt></a>(x,&nbsp;y,&nbsp;deg[,&nbsp;rcond,&nbsp;full,&nbsp;w])</td>
+<td>Least-squares fit of a polynomial to data.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyvander.html#numpy.polynomial.polynomial.polyvander" title="numpy.polynomial.polynomial.polyvander"><tt class="xref py py-obj docutils literal"><span class="pre">polyvander</span></tt></a>(x,&nbsp;deg)</td>
+<td>Vandermonde matrix of given degree.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyvander2d.html#numpy.polynomial.polynomial.polyvander2d" title="numpy.polynomial.polynomial.polyvander2d"><tt class="xref py py-obj docutils literal"><span class="pre">polyvander2d</span></tt></a>(x,&nbsp;y,&nbsp;deg)</td>
+<td>Pseudo-Vandermonde matrix of given degrees.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyvander3d.html#numpy.polynomial.polynomial.polyvander3d" title="numpy.polynomial.polynomial.polyvander3d"><tt class="xref py py-obj docutils literal"><span class="pre">polyvander3d</span></tt></a>(x,&nbsp;y,&nbsp;z,&nbsp;deg)</td>
+<td>Pseudo-Vandermonde matrix of given degrees.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="calculus">
+<h2>Calculus<a class="headerlink" href="#calculus" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyder.html#numpy.polynomial.polynomial.polyder" title="numpy.polynomial.polynomial.polyder"><tt class="xref py py-obj docutils literal"><span class="pre">polyder</span></tt></a>(c[,&nbsp;m,&nbsp;scl,&nbsp;axis])</td>
+<td>Differentiate a polynomial.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyint.html#numpy.polynomial.polynomial.polyint" title="numpy.polynomial.polynomial.polyint"><tt class="xref py py-obj docutils literal"><span class="pre">polyint</span></tt></a>(c[,&nbsp;m,&nbsp;k,&nbsp;lbnd,&nbsp;scl,&nbsp;axis])</td>
+<td>Integrate a polynomial.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="algebra">
+<h2>Algebra<a class="headerlink" href="#algebra" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyadd.html#numpy.polynomial.polynomial.polyadd" title="numpy.polynomial.polynomial.polyadd"><tt class="xref py py-obj docutils literal"><span class="pre">polyadd</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Add one polynomial to another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polysub.html#numpy.polynomial.polynomial.polysub" title="numpy.polynomial.polynomial.polysub"><tt class="xref py py-obj docutils literal"><span class="pre">polysub</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Subtract one polynomial from another.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polymul.html#numpy.polynomial.polynomial.polymul" title="numpy.polynomial.polynomial.polymul"><tt class="xref py py-obj docutils literal"><span class="pre">polymul</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Multiply one polynomial by another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polymulx.html#numpy.polynomial.polynomial.polymulx" title="numpy.polynomial.polynomial.polymulx"><tt class="xref py py-obj docutils literal"><span class="pre">polymulx</span></tt></a>(c)</td>
+<td>Multiply a polynomial by x.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polydiv.html#numpy.polynomial.polynomial.polydiv" title="numpy.polynomial.polynomial.polydiv"><tt class="xref py py-obj docutils literal"><span class="pre">polydiv</span></tt></a>(c1,&nbsp;c2)</td>
+<td>Divide one polynomial by another.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polypow.html#numpy.polynomial.polynomial.polypow" title="numpy.polynomial.polynomial.polypow"><tt class="xref py py-obj docutils literal"><span class="pre">polypow</span></tt></a>(c,&nbsp;pow[,&nbsp;maxpower])</td>
+<td>Raise a polynomial to a power.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polycompanion.html#numpy.polynomial.polynomial.polycompanion" title="numpy.polynomial.polynomial.polycompanion"><tt class="xref py py-obj docutils literal"><span class="pre">polycompanion</span></tt></a>(c)</td>
+<td>Return the companion matrix of c.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polydomain.html#numpy.polynomial.polynomial.polydomain" title="numpy.polynomial.polynomial.polydomain"><tt class="xref py py-obj docutils literal"><span class="pre">polydomain</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyzero.html#numpy.polynomial.polynomial.polyzero" title="numpy.polynomial.polynomial.polyzero"><tt class="xref py py-obj docutils literal"><span class="pre">polyzero</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyone.html#numpy.polynomial.polynomial.polyone" title="numpy.polynomial.polynomial.polyone"><tt class="xref py py-obj docutils literal"><span class="pre">polyone</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyx.html#numpy.polynomial.polynomial.polyx" title="numpy.polynomial.polynomial.polyx"><tt class="xref py py-obj docutils literal"><span class="pre">polyx</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polytrim.html#numpy.polynomial.polynomial.polytrim" title="numpy.polynomial.polynomial.polytrim"><tt class="xref py py-obj docutils literal"><span class="pre">polytrim</span></tt></a>(c[,&nbsp;tol])</td>
+<td>Remove &#8220;small&#8221; &#8220;trailing&#8221; coefficients from a polynomial.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.polynomial.polynomial.polyline.html#numpy.polynomial.polynomial.polyline" title="numpy.polynomial.polynomial.polyline"><tt class="xref py py-obj docutils literal"><span class="pre">polyline</span></tt></a>(off,&nbsp;scl)</td>
+<td>Returns an array representing a linear polynomial.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

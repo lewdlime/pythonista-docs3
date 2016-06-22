@@ -1,0 +1,247 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.random.RandomState.hypergeometric &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="numpy.random.RandomState" href="numpy.random.RandomState.html" />
+    <link rel="next" title="numpy.random.RandomState.laplace" href="numpy.random.RandomState.laplace.html" />
+    <link rel="prev" title="numpy.random.RandomState.gumbel" href="numpy.random.RandomState.gumbel.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.random.RandomState.laplace.html" title="numpy.random.RandomState.laplace"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.random.RandomState.gumbel.html" title="numpy.random.RandomState.gumbel"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.random.html" >Random sampling (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.random</span></tt>)</a> &raquo;</li>
+          <li><a href="numpy.random.RandomState.html" accesskey="U">numpy.random.RandomState</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-random-randomstate-hypergeometric">
+<h1>numpy.random.RandomState.hypergeometric<a class="headerlink" href="#numpy-random-randomstate-hypergeometric" title="Permalink to this headline">¶</a></h1>
+<dl class="method">
+<dt id="numpy.random.RandomState.hypergeometric">
+<tt class="descclassname">RandomState.</tt><tt class="descname">hypergeometric</tt><big>(</big><em>ngood</em>, <em>nbad</em>, <em>nsample</em>, <em>size=None</em><big>)</big><a class="headerlink" href="#numpy.random.RandomState.hypergeometric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw samples from a Hypergeometric distribution.</p>
+<p>Samples are drawn from a Hypergeometric distribution with specified
+parameters, ngood (ways to make a good selection), nbad (ways to make
+a bad selection), and nsample = number of items sampled, which is less
+than or equal to the sum ngood + nbad.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ngood</strong> : int or array_like</p>
+<blockquote>
+<div><p>Number of ways to make a good selection.  Must be nonnegative.</p>
+</div></blockquote>
+<p><strong>nbad</strong> : int or array_like</p>
+<blockquote>
+<div><p>Number of ways to make a bad selection.  Must be nonnegative.</p>
+</div></blockquote>
+<p><strong>nsample</strong> : int or array_like</p>
+<blockquote>
+<div><p>Number of items sampled.  Must be at least 1 and at most
+<tt class="docutils literal"><span class="pre">ngood</span> <span class="pre">+</span> <span class="pre">nbad</span></tt>.</p>
+</div></blockquote>
+<p><strong>size</strong> : int or tuple of int</p>
+<blockquote>
+<div><p>Output shape.  If the given shape is, e.g., <tt class="docutils literal"><span class="pre">(m,</span> <span class="pre">n,</span> <span class="pre">k)</span></tt>, then
+<tt class="docutils literal"><span class="pre">m</span> <span class="pre">*</span> <span class="pre">n</span> <span class="pre">*</span> <span class="pre">k</span></tt> samples are drawn.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>samples</strong> : ndarray or scalar</p>
+<blockquote class="last">
+<div><p>The values are all integers in  [0, n].</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">scipy.stats.distributions.hypergeom</span></tt></dt>
+<dd>probability density function, distribution or cumulative density function, etc.</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>The probability density for the Hypergeometric distribution is</p>
+<div class="math">
+<p><span class="math">P(x) = \frac{\binom{m}{n}\binom{N-m}{n-x}}{\binom{N}{n}},</span></p>
+</div><p>where <span class="math">0 \le x \le m</span> and <span class="math">n+m-N \le x \le n</span></p>
+<p>for P(x) the probability of x successes, n = ngood, m = nbad, and
+N = number of samples.</p>
+<p>Consider an urn with black and white marbles in it, ngood of them
+black and nbad are white. If you draw nsample balls without
+replacement, then the Hypergeometric distribution describes the
+distribution of black balls in the drawn sample.</p>
+<p>Note that this distribution is very similar to the Binomial
+distribution, except that in this case, samples are drawn without
+replacement, whereas in the Binomial case samples are drawn with
+replacement (or the sample space is infinite). As the sample space
+becomes large, this distribution approaches the Binomial.</p>
+<p class="rubric">References</p>
+<table class="docutils citation" frame="void" id="r137" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[R137]</a></td><td>Lentner, Marvin, &#8220;Elementary Applied Statistics&#8221;, Bogden
+and Quigley, 1972.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="r138" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[R138]</a></td><td>Weisstein, Eric W. &#8220;Hypergeometric Distribution.&#8221; From
+MathWorld&#8211;A Wolfram Web Resource.
+<a class="reference external" href="http://mathworld.wolfram.com/HypergeometricDistribution.html">http://mathworld.wolfram.com/HypergeometricDistribution.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="r139" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[R139]</a></td><td>Wikipedia, &#8220;Hypergeometric-distribution&#8221;,
+<a class="reference external" href="http://en.wikipedia.org/wiki/Hypergeometric-distribution">http://en.wikipedia.org/wiki/Hypergeometric-distribution</a></td></tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Draw samples from the distribution:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ngood</span><span class="p">,</span> <span class="n">nbad</span><span class="p">,</span> <span class="n">nsamp</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span>
+<span class="go"># number of good, number of bad, and number of samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">hypergeometric</span><span class="p">(</span><span class="n">ngood</span><span class="p">,</span> <span class="n">nbad</span><span class="p">,</span> <span class="n">nsamp</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hist</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">#   note that it is very unlikely to grab both bad items</span>
+</pre></div>
+</div>
+<p>Suppose you have an urn with 15 white and 15 black marbles.
+If you pull 15 marbles at random, how likely is it that
+12 or more of them are one color?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">hypergeometric</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">100000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">s</span><span class="o">&gt;=</span><span class="mi">12</span><span class="p">)</span><span class="o">/</span><span class="mf">100000.</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">s</span><span class="o">&lt;=</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mf">100000.</span>
+<span class="go">#   answer = 0.003 ... pretty unlikely!</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

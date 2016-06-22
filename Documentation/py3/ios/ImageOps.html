@@ -1,0 +1,226 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ImageOps Module &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ImageOps">
+<span id="the-imageops-module"></span><h1>The ImageOps Module<a class="headerlink" href="#module-ImageOps" title="Permalink to this headline">¶</a></h1>
+<p>(New in 1.1.3) The <a class="reference internal" href="#module-ImageOps" title="ImageOps"><tt class="xref py py-mod docutils literal"><span class="pre">ImageOps</span></tt></a> module contains a number of ‘ready-made’ image processing operations. This module is somewhat experimental, and most operators only work on L and RGB images.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ImageOps.autocontrast">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">autocontrast</tt><big>(</big><em>image</em>, <em>cutoff=0</em><big>)</big><a class="headerlink" href="#ImageOps.autocontrast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximize (normalize) image contrast. This function calculates a histogram of the input image, removes cutoff percent of the lightest and darkest pixels from the histogram, and remaps the image so that the darkest remaining pixel becomes black (0), and the lightest becomes white (255).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.colorize">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">colorize</tt><big>(</big><em>image</em>, <em>black</em>, <em>white</em><big>)</big><a class="headerlink" href="#ImageOps.colorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Colorize grayscale image. The black and white arguments should be RGB tuples or color names; this function calculates a colour wedge mapping all black pixels in the source image to the first colour, and all white pixels to the second colour.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.crop">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">crop</tt><big>(</big><em>image</em>, <em>border=0</em><big>)</big><a class="headerlink" href="#ImageOps.crop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove border pixels from all four edges. This function works on all image modes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.deform">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">deform</tt><big>(</big><em>image</em>, <em>deformer</em>, <em>filter=Image.BILINEAR</em><big>)</big><a class="headerlink" href="#ImageOps.deform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deform the image using the given deformer object. The deformer should provide a getmesh method, which returns a MESH list suitable for the Image transform method. See the transform method for details.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.equalize">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">equalize</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageOps.equalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equalize the image histogram. This function applies a non-linear mapping to the input image, in order to create a uniform distribution of grayscale values in the output image.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.expand">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">expand</tt><big>(</big><em>image</em>, <em>border=0</em>, <em>fill=0</em><big>)</big><a class="headerlink" href="#ImageOps.expand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add border pixels of border to the image, at all four edges.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.fit">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">fit</tt><big>(</big><big>)</big><a class="headerlink" href="#ImageOps.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a sized and cropped version of the image, cropped to the requested aspect ratio and size. The size argument is the requested output size in pixels, given as a (width, height) tuple.</p>
+<p>The method argument is what resampling method to use. The default is Image.NEAREST (nearest neighbour).</p>
+<p>The bleed argument allows you to remove a border around the outside the image (from all four edges). The value is a decimal percentage (use 0.01 for one percent). The default value is 0 (no border).</p>
+<p>The centering argument is used to control the cropping position. (0.5, 0.5) is center cropping (i.e. if cropping the width, take 50% off of the left side (and therefore 50% off the right side), and same with top/bottom).</p>
+<p>(0.0, 0.0) will crop from the top left corner (i.e. if cropping the width, take all of the crop off of the right side, and if cropping the height, take all of it off the bottom).</p>
+<p>(1.0, 0.0) will crop from the bottom left corner, etc. (i.e. if cropping the width, take all of the crop off the left side, and if cropping the height take none from the top (and therefore all off the bottom)).</p>
+<p>The fit function was contributed by Kevin Cazabon.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.flip">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">flip</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageOps.flip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flip the image vertically (top to bottom).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.grayscale">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">grayscale</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageOps.grayscale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the image to grayscale.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.invert">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">invert</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageOps.invert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert (negate) the image.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.mirror">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">mirror</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageOps.mirror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flip image horizontally (left to right).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.posterize">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">posterize</tt><big>(</big><em>image</em>, <em>bits</em><big>)</big><a class="headerlink" href="#ImageOps.posterize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduce the number of bits for each colour channel.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ImageOps.solarize">
+<tt class="descclassname">ImageOps.</tt><tt class="descname">solarize</tt><big>(</big><em>image</em>, <em>threshold=128</em><big>)</big><a class="headerlink" href="#ImageOps.solarize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert all pixel values above the given threshold.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

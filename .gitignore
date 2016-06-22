@@ -49,6 +49,7 @@ $RECYCLE.BIN/
 [._]s[a-w][a-z]
 __pycache__/
 _build/
+_extra/
 build/
 coverage.xml
 Desktop.ini
@@ -75,3 +76,4 @@ target/
 Temporary Items
 Thumbs.db
 var/
+venv/

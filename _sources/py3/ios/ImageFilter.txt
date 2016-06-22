@@ -1,0 +1,51 @@
+The ImageFilter Module
+======================
+
+.. module:: ImageFilter
+
+The :mod:`ImageFilter` module contains definitions for a pre-defined set of filters, which can be be used with the filter method of the :class:`Image` class.
+
+Example
+-------
+Filter an Image::
+
+    import ImageFilter
+
+    im1 = im.filter(ImageFilter.BLUR)
+
+    im2 = im.filter(ImageFilter.MinFilter(3))
+    im3 = im.filter(ImageFilter.MinFilter) # same as MinFilter(3)
+
+Filters
+-------
+The current version of the library provides the following set of predefined image enhancement filters:
+
+BLUR, CONTOUR, DETAIL, EDGE_ENHANCE, EDGE_ENHANCE_MORE, EMBOSS, FIND_EDGES, SMOOTH, SMOOTH_MORE, and SHARPEN.
+
+.. function:: Kernel(size, kernel, scale=None, offset=0)
+
+    (New in 1.1.5) Creates a convolution kernel of the given size. In the current version, size must be either (3, 3) or (5, 5), and the kernel argument must be a sequence containing 9 or 25 integer or floating point weights.
+
+    If scale is given, the result of applying the kernel to each pixel is divided by the scale value. The default is the sum of the kernel weights.
+
+    If offset is given, this value is added to the result, after it has been divided by scale.
+
+.. function:: RankFilter(size, rank)
+
+    (New in 1.1.5) Creates a rank filter of the given size. For each pixel in the input image, the rank filter sorts all pixels in a (size, size) environment by pixel value, and copies the rank‘th value to the output image.
+    
+.. function:: MinFilter(size=3)
+
+    (New in 1.1.5) Creates a min filter of the given size. For each pixel in the input image, this filter copies the smallest pixel value from a (size, size) environment to the output image.
+
+.. function:: MedianFilter(size=3)
+
+    (New in 1.1.5) Creates a median filter of the given size. For each pixel in the input image, this filter copies the median pixel value from a (size, size) environment to the output image.
+
+.. function:: MaxFilter(size=3)
+
+    (New in 1.1.5) Creates a max filter of the given size. For each pixel in the input image, this filter copies the largest pixel value from a (size, size) environment to the output image.
+
+.. function:: ModeFilter(size=3)
+    
+    (New in 1.1.5) Creates a mode filter of the given size. For each pixel in the input image, this filter copies the most common pixel value in a (size, size) environment to the output image. If no pixel value occurs more than once, the original pixel value is used.

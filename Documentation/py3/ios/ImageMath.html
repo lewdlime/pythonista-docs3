@@ -1,0 +1,199 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ImageMath Module &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ImageMath">
+<span id="the-imagemath-module"></span><h1>The ImageMath Module<a class="headerlink" href="#module-ImageMath" title="Permalink to this headline">¶</a></h1>
+<p>(New in 1.1.6) The ImageMath module can be used to evaluate “image expressions”. The module provides a single eval function, which takes an expression string and one or more images.</p>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Using the ImageMath module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">Image</span><span class="o">,</span> <span class="nn">ImageMath</span>
+
+<span class="n">im1</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;image1.jpg&quot;</span><span class="p">)</span>
+<span class="n">im2</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;image2.jpg&quot;</span><span class="p">)</span>
+
+<span class="n">out</span> <span class="o">=</span> <span class="n">ImageMath</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s">&quot;convert(min(a, b), &#39;L&#39;)&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">im1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">im2</span><span class="p">)</span>
+<span class="n">out</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;result.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ImageMath.eval">
+<tt class="descclassname">ImageMath.</tt><tt class="descname">eval</tt><big>(</big><em>expression</em>, <em>environment</em><big>)</big><a class="headerlink" href="#ImageMath.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate expression in the given environment.</p>
+<p>The expression argument is a string which uses the standard Python expression syntax. In addition to the standard operators, you can also use the functions described below.</p>
+<p>The environment argument is a dictionary that maps image names to Image instances. You can use one or more keyword arguments instead of a dictionary, as shown in the above example. Note that the names must be valid Python identifiers.</p>
+<p>In the current version, ImageMath only supports single-layer images. To process multi-band images, use the split and merge functions.</p>
+<p>This function returns an image, an integer value, a floating point value, or a pixel tuple, depending on the expression.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="expression-syntax">
+<h2>Expression Syntax<a class="headerlink" href="#expression-syntax" title="Permalink to this headline">¶</a></h2>
+<p>Expressions are standard Python expressions, but they’re evaluated in a non-standard environment. You can use PIL methods as usual, plus the following set of operators and functions:</p>
+<div class="section" id="standard-operators">
+<h3>Standard Operators<a class="headerlink" href="#standard-operators" title="Permalink to this headline">¶</a></h3>
+<p>You can use standard arithmetical operators for addition (+), subtraction (-), multiplication (*), and division (/).</p>
+<p>The module also supports unary minus (-), modulo (%), and power (**) operators.</p>
+<p>Note that all operations are done with 32-bit integers or 32-bit floating point values, as necessary. For example, if you add two 8-bit images, the result will be a 32-bit integer image. If you add a floating point constant to an 8-bit image, the result will be a 32-bit floating point image.</p>
+<p>You can force conversion using the convert, float, and int functions described below.</p>
+</div>
+<div class="section" id="bitwise-operators">
+<h3>Bitwise Operators<a class="headerlink" href="#bitwise-operators" title="Permalink to this headline">¶</a></h3>
+<p>The module also provides operations that operate on individual bits. This includes and (&amp;), or (|), and exclusive or (^). You can also invert (~) all pixel bits.</p>
+<p>Note that the operands are converted to 32-bit signed integers before the bitwise operation is applied. This means that you’ll get negative values if you invert an ordinary greyscale image. You can use the and (&amp;) operator to mask off unwanted bits.</p>
+<p>Bitwise operators don’t work on floating point images.</p>
+</div>
+<div class="section" id="logical-operators">
+<h3>Logical Operators<a class="headerlink" href="#logical-operators" title="Permalink to this headline">¶</a></h3>
+<p>Logical operators like and, or, and not work on entire images, rather than individual pixels.</p>
+<p>An empty image (all pixels zero) is treated as false. All other images are treated as true.</p>
+<p>Note that and and or return the last evaluated operand, while not always returns a boolean value.</p>
+</div>
+<div class="section" id="built-in-functions">
+<h3>Built-in Functions<a class="headerlink" href="#built-in-functions" title="Permalink to this headline">¶</a></h3>
+<p>These functions are applied to each individual pixel.</p>
+<p><strong>abs(image):</strong> Absolute value.</p>
+<p><strong>convert(image, mode):</strong> Convert image to the given mode. The mode must be given as a string constant.</p>
+<p><strong>float(image):</strong> Convert image to 32-bit floating point. This is equivalent to <tt class="docutils literal"><span class="pre">convert(image,</span> <span class="pre">'F')</span></tt>.</p>
+<p><strong>int(image):</strong> Convert image to 32-bit integer. This is equivalent to <tt class="docutils literal"><span class="pre">convert(image,</span> <span class="pre">'I')</span></tt>.</p>
+<p>Note that 1-bit and 8-bit images are automatically converted to 32-bit integers if necessary to get a correct result.</p>
+<p><strong>max(image1, image2):</strong> Maximum value</p>
+<p><strong>min(image1, image2):</strong> Minimum value</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

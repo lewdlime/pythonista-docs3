@@ -1,0 +1,327 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>11.4. shelve — Python object persistence &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="up" title="11. Data Persistence" href="persistence.html" />
+    <link rel="next" title="11.5. marshal — Internal Python object serialization" href="marshal.html" />
+    <link rel="prev" title="11.3. copy_reg — Register pickle support functions" href="copy_reg.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="marshal.html" title="11.5. marshal — Internal Python object serialization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="copy_reg.html" title="11.3. copy_reg — Register pickle support functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+
+          <li><a href="index.html" >The Python Standard Library</a> &raquo;</li>
+          <li><a href="persistence.html" accesskey="U">11. Data Persistence</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-shelve">
+<span id="shelve-python-object-persistence"></span><h1>11.4. <a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a> &#8212; Python object persistence<a class="headerlink" href="#module-shelve" title="Permalink to this headline">¶</a></h1>
+<p id="index-0"><strong>Source code:</strong> <a class="reference external" href="http://hg.python.org/cpython/file/2.7/Lib/shelve.py">Lib/shelve.py</a></p>
+<hr class="docutils" />
+<p>A &#8220;shelf&#8221; is a persistent, dictionary-like object.  The difference with &#8220;dbm&#8221;
+databases is that the values (not the keys!) in a shelf can be essentially
+arbitrary Python objects &#8212; anything that the <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> module can handle.
+This includes most class instances, recursive data types, and objects containing
+lots of shared  sub-objects.  The keys are ordinary strings.</p>
+<dl class="function">
+<dt id="shelve.open">
+<tt class="descclassname">shelve.</tt><tt class="descname">open</tt><big>(</big><em>filename</em>, <em>flag='c'</em>, <em>protocol=None</em>, <em>writeback=False</em><big>)</big><a class="headerlink" href="#shelve.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a persistent dictionary.  The filename specified is the base filename for
+the underlying database.  As a side-effect, an extension may be added to the
+filename and more than one file may be created.  By default, the underlying
+database file is opened for reading and writing.  The optional <em>flag</em> parameter
+has the same interpretation as the <em>flag</em> parameter of <a class="reference internal" href="anydbm.html#anydbm.open" title="anydbm.open"><tt class="xref py py-func docutils literal"><span class="pre">anydbm.open()</span></tt></a>.</p>
+<p>By default, version 0 pickles are used to serialize values.  The version of the
+pickle protocol can be specified with the <em>protocol</em> parameter.</p>
+<p class="versionchanged">
+<span class="versionmodified">Changed in version 2.3: </span>The <em>protocol</em> parameter was added.</p>
+<p>Because of Python semantics, a shelf cannot know when a mutable
+persistent-dictionary entry is modified.  By default modified objects are
+written <em>only</em> when assigned to the shelf (see <a class="reference internal" href="#shelve-example"><em>Example</em></a>).  If the
+optional <em>writeback</em> parameter is set to <em>True</em>, all entries accessed are also
+cached in memory, and written back on <a class="reference internal" href="#shelve.Shelf.sync" title="shelve.Shelf.sync"><tt class="xref py py-meth docutils literal"><span class="pre">sync()</span></tt></a> and
+<a class="reference internal" href="#shelve.Shelf.close" title="shelve.Shelf.close"><tt class="xref py py-meth docutils literal"><span class="pre">close()</span></tt></a>; this can make it handier to mutate mutable entries in
+the persistent dictionary, but, if many entries are accessed, it can consume
+vast amounts of memory for the cache, and it can make the close operation
+very slow since all accessed entries are written back (there is no way to
+determine which accessed entries are mutable, nor which ones were actually
+mutated).</p>
+<p>Like file objects, shelve objects should be closed explicitly to ensure
+that the persistent data is flushed to disk.</p>
+<p>Since the <a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a> module stores objects using <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>, the same
+security precautions apply.  Accordingly, you should avoid loading a shelf
+from an untrusted source.</p>
+</dd></dl>
+
+<p>Shelf objects support all methods supported by dictionaries.  This eases the
+transition from dictionary based scripts to those requiring persistent storage.</p>
+<p>Two additional methods are supported:</p>
+<dl class="method">
+<dt id="shelve.Shelf.sync">
+<tt class="descclassname">Shelf.</tt><tt class="descname">sync</tt><big>(</big><big>)</big><a class="headerlink" href="#shelve.Shelf.sync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write back all entries in the cache if the shelf was opened with <em>writeback</em>
+set to <a class="reference internal" href="constants.html#True" title="True"><tt class="xref py py-const xref docutils literal"><span class="pre">True</span></tt></a>.  Also empty the cache and synchronize the persistent
+dictionary on disk, if feasible.  This is called automatically when the shelf
+is closed with <a class="reference internal" href="#shelve.Shelf.close" title="shelve.Shelf.close"><tt class="xref py py-meth docutils literal"><span class="pre">close()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="shelve.Shelf.close">
+<tt class="descclassname">Shelf.</tt><tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#shelve.Shelf.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Synchronize and close the persistent <em>dict</em> object.  Operations on a closed
+shelf will fail with a <a class="reference internal" href="exceptions.html#exceptions.ValueError" title="exceptions.ValueError"><tt class="xref py py-exc docutils literal"><span class="pre">ValueError</span></tt></a>.</p>
+</dd></dl>
+
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://code.activestate.com/recipes/576642/">Persistent dictionary recipe</a>
+with widely supported storage formats and having the speed of native
+dictionaries.</p>
+</div>
+<div class="section" id="restrictions">
+<h2>11.4.1. Restrictions<a class="headerlink" href="#restrictions" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div></div></blockquote>
+<ul class="simple" id="index-1">
+<li>The choice of which database package will be used (such as <tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt>,
+<tt class="xref py py-mod docutils literal"><span class="pre">gdbm</span></tt> or <tt class="xref py py-mod docutils literal"><span class="pre">bsddb</span></tt>) depends on which interface is available.  Therefore
+it is not safe to open the database directly using <tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt>.  The database is
+also (unfortunately) subject to the limitations of <tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt>, if it is used &#8212;
+this means that (the pickled representation of) the objects stored in the
+database should be fairly small, and in rare cases key collisions may cause the
+database to refuse updates.</li>
+<li>The <a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a> module does not support <em>concurrent</em> read/write access to
+shelved objects.  (Multiple simultaneous read accesses are safe.)  When a
+program has a shelf open for writing, no other program should have it open for
+reading or writing.  Unix file locking can be used to solve this, but this
+differs across Unix versions and requires knowledge about the database
+implementation used.</li>
+</ul>
+<dl class="class">
+<dt id="shelve.Shelf">
+<em class="property">class </em><tt class="descclassname">shelve.</tt><tt class="descname">Shelf</tt><big>(</big><em>dict</em>, <em>protocol=None</em>, <em>writeback=False</em><big>)</big><a class="headerlink" href="#shelve.Shelf" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="userdict.html#UserDict.DictMixin" title="UserDict.DictMixin"><tt class="xref py py-class docutils literal"><span class="pre">UserDict.DictMixin</span></tt></a> which stores pickled values in the
+<em>dict</em> object.</p>
+<p>By default, version 0 pickles are used to serialize values.  The version of the
+pickle protocol can be specified with the <em>protocol</em> parameter. See the
+<a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a> documentation for a discussion of the pickle protocols.</p>
+<p class="versionchanged">
+<span class="versionmodified">Changed in version 2.3: </span>The <em>protocol</em> parameter was added.</p>
+<p>If the <em>writeback</em> parameter is <tt class="xref docutils literal"><span class="pre">True</span></tt>, the object will hold a cache of all
+entries accessed and write them back to the <em>dict</em> at sync and close times.
+This allows natural operations on mutable entries, but can consume much more
+memory and make sync and close take a long time.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="shelve.BsdDbShelf">
+<em class="property">class </em><tt class="descclassname">shelve.</tt><tt class="descname">BsdDbShelf</tt><big>(</big><em>dict</em>, <em>protocol=None</em>, <em>writeback=False</em><big>)</big><a class="headerlink" href="#shelve.BsdDbShelf" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#shelve.Shelf" title="shelve.Shelf"><tt class="xref py py-class docutils literal"><span class="pre">Shelf</span></tt></a> which exposes <tt class="xref py py-meth docutils literal"><span class="pre">first()</span></tt>, <tt class="xref py py-meth docutils literal"><span class="pre">next()</span></tt>,
+<tt class="xref py py-meth docutils literal"><span class="pre">previous()</span></tt>, <tt class="xref py py-meth docutils literal"><span class="pre">last()</span></tt> and <tt class="xref py py-meth docutils literal"><span class="pre">set_location()</span></tt> which are available in
+the <tt class="xref py py-mod docutils literal"><span class="pre">bsddb</span></tt> module but not in other database modules.  The <em>dict</em> object
+passed to the constructor must support those methods.  This is generally
+accomplished by calling one of <tt class="xref py py-func docutils literal"><span class="pre">bsddb.hashopen()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">bsddb.btopen()</span></tt> or
+<tt class="xref py py-func docutils literal"><span class="pre">bsddb.rnopen()</span></tt>.  The optional <em>protocol</em> and <em>writeback</em> parameters have
+the same interpretation as for the <a class="reference internal" href="#shelve.Shelf" title="shelve.Shelf"><tt class="xref py py-class docutils literal"><span class="pre">Shelf</span></tt></a> class.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="shelve.DbfilenameShelf">
+<em class="property">class </em><tt class="descclassname">shelve.</tt><tt class="descname">DbfilenameShelf</tt><big>(</big><em>filename</em>, <em>flag='c'</em>, <em>protocol=None</em>, <em>writeback=False</em><big>)</big><a class="headerlink" href="#shelve.DbfilenameShelf" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#shelve.Shelf" title="shelve.Shelf"><tt class="xref py py-class docutils literal"><span class="pre">Shelf</span></tt></a> which accepts a <em>filename</em> instead of a dict-like
+object.  The underlying file will be opened using <a class="reference internal" href="anydbm.html#anydbm.open" title="anydbm.open"><tt class="xref py py-func docutils literal"><span class="pre">anydbm.open()</span></tt></a>.  By
+default, the file will be created and opened for both read and write.  The
+optional <em>flag</em> parameter has the same interpretation as for the <a class="reference internal" href="#shelve.open" title="shelve.open"><tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt></a>
+function.  The optional <em>protocol</em> and <em>writeback</em> parameters have the same
+interpretation as for the <a class="reference internal" href="#shelve.Shelf" title="shelve.Shelf"><tt class="xref py py-class docutils literal"><span class="pre">Shelf</span></tt></a> class.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="example">
+<span id="shelve-example"></span><h2>11.4.2. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>To summarize the interface (<tt class="docutils literal"><span class="pre">key</span></tt> is a string, <tt class="docutils literal"><span class="pre">data</span></tt> is an arbitrary
+object):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">shelve</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="c"># open -- file may get suffix added by low-level</span>
+                          <span class="c"># library</span>
+
+<span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>   <span class="c"># store data at key (overwrites old data if</span>
+                <span class="c"># using an existing key)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>   <span class="c"># retrieve a COPY of data at key (raise KeyError if no</span>
+                <span class="c"># such key)</span>
+<span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>      <span class="c"># delete data stored at key (raises KeyError</span>
+                <span class="c"># if no such key)</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>   <span class="c"># true if the key exists</span>
+<span class="n">klist</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="c"># a list of all existing keys (slow!)</span>
+
+<span class="c"># as d was opened WITHOUT writeback=True, beware:</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;xx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>  <span class="c"># this works as expected, but...</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;xx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>   <span class="c"># *this doesn&#39;t!* -- d[&#39;xx&#39;] is STILL range(4)!</span>
+
+<span class="c"># having opened d without writeback=True, you need to code carefully:</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;xx&#39;</span><span class="p">]</span>      <span class="c"># extracts the copy</span>
+<span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>      <span class="c"># mutates the copy</span>
+<span class="n">d</span><span class="p">[</span><span class="s">&#39;xx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>      <span class="c"># stores the copy right back, to persist it</span>
+
+<span class="c"># or, d=shelve.open(filename,writeback=True) would let you just code</span>
+<span class="c"># d[&#39;xx&#39;].append(5) and have it work as expected, BUT it would also</span>
+<span class="c"># consume more memory and make the d.close() operation slower.</span>
+
+<span class="n">d</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>       <span class="c"># close it</span>
+</pre></div>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Module <a class="reference internal" href="anydbm.html#module-anydbm" title="anydbm: Generic interface to DBM-style database modules."><tt class="xref py py-mod docutils literal"><span class="pre">anydbm</span></tt></a></dt>
+<dd>Generic interface to <tt class="docutils literal"><span class="pre">dbm</span></tt>-style databases.</dd>
+<dt>Module <tt class="xref py py-mod docutils literal"><span class="pre">bsddb</span></tt></dt>
+<dd>BSD <tt class="docutils literal"><span class="pre">db</span></tt> database interface.</dd>
+<dt>Module <tt class="xref py py-mod docutils literal"><span class="pre">dbhash</span></tt></dt>
+<dd>Thin layer around the <tt class="xref py py-mod docutils literal"><span class="pre">bsddb</span></tt> which provides an <tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt>
+function like the other database modules.</dd>
+<dt>Module <tt class="xref py py-mod docutils literal"><span class="pre">dbm</span></tt></dt>
+<dd>Standard Unix database interface.</dd>
+<dt>Module <a class="reference internal" href="dumbdbm.html#module-dumbdbm" title="dumbdbm: Portable implementation of the simple DBM interface."><tt class="xref py py-mod docutils literal"><span class="pre">dumbdbm</span></tt></a></dt>
+<dd>Portable implementation of the <tt class="docutils literal"><span class="pre">dbm</span></tt> interface.</dd>
+<dt>Module <tt class="xref py py-mod docutils literal"><span class="pre">gdbm</span></tt></dt>
+<dd>GNU database interface, based on the <tt class="docutils literal"><span class="pre">dbm</span></tt> interface.</dd>
+<dt>Module <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a></dt>
+<dd>Object serialization used by <a class="reference internal" href="#module-shelve" title="shelve: Python object persistence."><tt class="xref py py-mod docutils literal"><span class="pre">shelve</span></tt></a>.</dd>
+<dt>Module <a class="reference internal" href="pickle.html#module-cPickle" title="cPickle: Faster version of pickle, but not subclassable."><tt class="xref py py-mod docutils literal"><span class="pre">cPickle</span></tt></a></dt>
+<dd>High-performance version of <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><tt class="xref py py-mod docutils literal"><span class="pre">pickle</span></tt></a>.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

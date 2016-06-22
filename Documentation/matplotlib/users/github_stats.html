@@ -1,0 +1,1170 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Github stats &mdash; Matplotlib 1.3.1 documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Matplotlib 1.3.1 documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="top" title="Matplotlib 1.3.1 documentation" href="../index.html" />
+    <link rel="up" title="User’s Guide" href="index.html" />
+    <link rel="next" title="License" href="license.html" />
+    <link rel="prev" title="What’s new in matplotlib" href="whats_new.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="license.html" title="License"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="whats_new.html" title="What’s new in matplotlib"
+             accesskey="P">previous</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Matplotlib 1.3.1 documentation</a> &raquo;</li>
+
+          <li><a href="index.html" accesskey="U">User&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>Github stats<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>GitHub stats for 2012/11/08 - 2013/05/29 (tag: v1.2.0)</p>
+<p>These lists are automatically generated, and may be incomplete or contain duplicates.</p>
+<p>The following 85 authors contributed 1428 commits.</p>
+<ul class="simple">
+<li>Adam Ginsburg</li>
+<li>Adrian Price-Whelan</li>
+<li>Alejandro Dubrovsky</li>
+<li>Amit Aronovitch</li>
+<li>Andrew Dawson</li>
+<li>Anton Akhmerov</li>
+<li>Antony Lee</li>
+<li>Ben Root</li>
+<li>Binglin Chang</li>
+<li>Bradley M. Froehle</li>
+<li>Brian Mattern</li>
+<li>Cameron Bates</li>
+<li>Carl Michal</li>
+<li>Chris Beaumont</li>
+<li>Christoph Gohlke</li>
+<li>Cimarron Mittelsteadt</li>
+<li>Damon McDougall</li>
+<li>Daniel Hyams</li>
+<li>David Trémouilles</li>
+<li>Eric Firing</li>
+<li>Francesco Montesano</li>
+<li>Geoffroy Billotey</li>
+<li>Ian Thomas</li>
+<li>Jae-Joon Lee</li>
+<li>Jake Vanderplas</li>
+<li>James R. Evans</li>
+<li>Jan-Philip Gehrcke</li>
+<li>Jeff Bingham</li>
+<li>Jeffrey Bingham</li>
+<li>Jens H. Nielsen</li>
+<li>Jens Hedegaard Nielsen</li>
+<li>Joe Kington</li>
+<li>Julien Schueller</li>
+<li>Julien Woillez</li>
+<li>Kevin Davies</li>
+<li>Leo Singer</li>
+<li>Lodato Luciano</li>
+<li>Martin Spacek</li>
+<li>Martin Teichmann</li>
+<li>Martin Ueding</li>
+<li>Matt Giuca</li>
+<li>Maximilian Albert</li>
+<li>Michael Droettboom</li>
+<li>Michael Welter</li>
+<li>Michiel de Hoon</li>
+<li>Min RK</li>
+<li>MinRK</li>
+<li>Nelle Varoquaux</li>
+<li>Nic Eggert</li>
+<li>Pascal Bugnion</li>
+<li>Paul Hobson</li>
+<li>Paul Ivanov</li>
+<li>Pauli Virtanen</li>
+<li>Peter Würtz</li>
+<li>Phil Elson</li>
+<li>Pierre Haessig</li>
+<li>Piti Ongmongkolkul</li>
+<li>Ryan Dale</li>
+<li>Ryan May</li>
+<li>Sandro Tosi</li>
+<li>Sebastian Pinnau</li>
+<li>Sergey Koposov</li>
+<li>Takeshi Kanmae</li>
+<li>Thomas A Caswell</li>
+<li>Thomas Kluyver</li>
+<li>Thomas Robitaille</li>
+<li>Till Stensitzki</li>
+<li>Tobias Megies</li>
+<li>Todd Jennings</li>
+<li>Tomas Kazmar</li>
+<li>Tony S Yu</li>
+<li>Víctor Terrón</li>
+<li>Wes Campaigne</li>
+<li>aseagram</li>
+<li>burrbull</li>
+<li>dhyams</li>
+<li>drevicko</li>
+<li>endolith</li>
+<li>gitj</li>
+<li>jschueller</li>
+<li>krischer</li>
+<li>montefra</li>
+<li>pelson</li>
+<li>pwuertz</li>
+<li>torfbolt</li>
+</ul>
+<p>We closed a total of 924 issues, 326 pull requests and 598 regular issues;
+this is the full list (generated with the script
+<tt class="file docutils literal"><span class="pre">tools/github_stats.py</span></tt>):</p>
+<p>Pull Requests (326):</p>
+<ul class="simple">
+<li><a href="#id2"><span class="problematic" id="id3">:ghpull:`2082`</span></a>: Data limits (on 1.3.x)</li>
+<li><a href="#id4"><span class="problematic" id="id5">:ghpull:`2070`</span></a>: incorrect bbox of text</li>
+<li><a href="#id6"><span class="problematic" id="id7">:ghpull:`2080`</span></a>: Fixed failing test on python3.</li>
+<li><a href="#id8"><span class="problematic" id="id9">:ghpull:`2079`</span></a>: added some comments</li>
+<li><a href="#id10"><span class="problematic" id="id11">:ghpull:`2077`</span></a>: changed URL to the current CSV API for yahoo finance</li>
+<li><a href="#id12"><span class="problematic" id="id13">:ghpull:`2076`</span></a>: Build the _windowing extension</li>
+<li><a href="#id14"><span class="problematic" id="id15">:ghpull:`2066`</span></a>: [DOC] Mathtext and matshow examples</li>
+<li><a href="#id16"><span class="problematic" id="id17">:ghpull:`2024`</span></a>: Update homepage image</li>
+<li><a href="#id18"><span class="problematic" id="id19">:ghpull:`2074`</span></a>: backend gtk and gtk3: destroy figure save dialog after use; closes #2073</li>
+<li><a href="#id20"><span class="problematic" id="id21">:ghpull:`2050`</span></a>: Added the from_levels_and_colors function.</li>
+<li><a href="#id22"><span class="problematic" id="id23">:ghpull:`454`</span></a>: Use a subdirectory of $XDG_CONFIG_HOME instead of ~/.matplotlibrc on Linux</li>
+<li><a href="#id24"><span class="problematic" id="id25">:ghpull:`1813`</span></a>: GTK segfault with GTK3 and mpl_toolkits</li>
+<li><a href="#id26"><span class="problematic" id="id27">:ghpull:`2069`</span></a>: BUG: pass kwargs to TimedAnimation</li>
+<li><a href="#id28"><span class="problematic" id="id29">:ghpull:`2063`</span></a>: Let _pcolorargs check C for consistency with X and Y; closes #1688</li>
+<li><a href="#id30"><span class="problematic" id="id31">:ghpull:`2065`</span></a>: mlab.FIFOBuffer: remove fossil line referring to nonexistent method</li>
+<li><a href="#id32"><span class="problematic" id="id33">:ghpull:`1975`</span></a>: MixedModeRenderer non-72-dpi fixes &amp; Pgf mixed rendering</li>
+<li><a href="#id34"><span class="problematic" id="id35">:ghpull:`2004`</span></a>: Make wx and wxagg work with wx 2.9.x on Mac.</li>
+<li><a href="#id36"><span class="problematic" id="id37">:ghpull:`2044`</span></a>: Svg rasterize (rebased)</li>
+<li><a href="#id38"><span class="problematic" id="id39">:ghpull:`2056`</span></a>: backend_gtk: don&#8217;t hide FileChooserDialog; closes #1530</li>
+<li><a href="#id40"><span class="problematic" id="id41">:ghpull:`2053`</span></a>: sphinxext.ipython_directive broken</li>
+<li><a href="#id42"><span class="problematic" id="id43">:ghpull:`2017`</span></a>: qt4_editor formlayout now works with colour tuples (fixes Issue #1690)</li>
+<li><a href="#id44"><span class="problematic" id="id45">:ghpull:`2057`</span></a>: pep8 fixes in animation.py</li>
+<li><a href="#id46"><span class="problematic" id="id47">:ghpull:`2055`</span></a>: Deprecated the set_colorbar method on a scalar mappable.</li>
+<li><a href="#id48"><span class="problematic" id="id49">:ghpull:`1945`</span></a>: PEP8 testing</li>
+<li><a href="#id50"><span class="problematic" id="id51">:ghpull:`2042`</span></a>: Ensure that PY_ARRAY_UNIQUE_SYMBOL is uniquely defined for each extension</li>
+<li><a href="#id52"><span class="problematic" id="id53">:ghpull:`2041`</span></a>: Fix a number of issues in the doc build</li>
+<li><a href="#id54"><span class="problematic" id="id55">:ghpull:`2049`</span></a>: Fix parallel testing by using the multi-process safe cbook.mkdirs</li>
+<li><a href="#id56"><span class="problematic" id="id57">:ghpull:`2047`</span></a>: Fixed typos in legend docs.</li>
+<li><a href="#id58"><span class="problematic" id="id59">:ghpull:`2048`</span></a>: Tweak image path</li>
+<li><a href="#id60"><span class="problematic" id="id61">:ghpull:`1889`</span></a>: Fixed handling of <tt class="xref py py-obj docutils literal"><span class="pre">bar(..,</span> <span class="pre">bottom=None,</span> <span class="pre">log=True)</span></tt></li>
+<li><a href="#id62"><span class="problematic" id="id63">:ghpull:`2036`</span></a>: Fix missing ticks on inverted log axis</li>
+<li><a href="#id64"><span class="problematic" id="id65">:ghpull:`2038`</span></a>: Added parameters to the xkcd function. Fixed deprecation warning on Path.</li>
+<li><a href="#id66"><span class="problematic" id="id67">:ghpull:`2028`</span></a>: Add a what&#8217;s new entry for the WebAgg backend</li>
+<li><a href="#id68"><span class="problematic" id="id69">:ghpull:`2002`</span></a>: Added support for providing 1 or 2 extra colours to the contour routines to easily specify the under and over colors.</li>
+<li><a href="#id70"><span class="problematic" id="id71">:ghpull:`2011`</span></a>: Added the &#8220;cleared&#8221; method to Path, and updated the path module&#8217;s documentation.</li>
+<li><a href="#id72"><span class="problematic" id="id73">:ghpull:`2033`</span></a>: fix pstoeps function in backend_ps.py</li>
+<li><a href="#id74"><span class="problematic" id="id75">:ghpull:`2026`</span></a>: Deprecations and housecleaning</li>
+<li><a href="#id76"><span class="problematic" id="id77">:ghpull:`2032`</span></a>: &#8216;annotate&#8217; ignores path_effects argument.</li>
+<li><a href="#id78"><span class="problematic" id="id79">:ghpull:`2030`</span></a>: Image pep8</li>
+<li><a href="#id80"><span class="problematic" id="id81">:ghpull:`2029`</span></a>: Type correction: float -&gt; double</li>
+<li><a href="#id82"><span class="problematic" id="id83">:ghpull:`1753`</span></a>: Resolving Issue #1737 - MacOSX backend unicode problems in python 3.3</li>
+<li><a href="#id84"><span class="problematic" id="id85">:ghpull:`1925`</span></a>: Supported datetimes with microseconds, and those with long time series (&gt;160 years).</li>
+<li><a href="#id86"><span class="problematic" id="id87">:ghpull:`1951`</span></a>: parallelize_tests</li>
+<li><a href="#id88"><span class="problematic" id="id89">:ghpull:`2020`</span></a>: Fixed call to path.Path.contains_point from pnpoly.</li>
+<li><a href="#id90"><span class="problematic" id="id91">:ghpull:`2019`</span></a>: Build: avoid win32-incompatible functions</li>
+<li><a href="#id92"><span class="problematic" id="id93">:ghpull:`1919`</span></a>: Issue warning if too many figures are open</li>
+<li><a href="#id94"><span class="problematic" id="id95">:ghpull:`1993`</span></a>: PS backend fails to savefig() pcolormesh with gouraud shading</li>
+<li><a href="#id96"><span class="problematic" id="id97">:ghpull:`2005`</span></a>: Fail to export properly to svg and pdf with interactive paths</li>
+<li><a href="#id98"><span class="problematic" id="id99">:ghpull:`2016`</span></a>: Crash when using character with umlaut</li>
+<li><a href="#id100"><span class="problematic" id="id101">:ghpull:`2015`</span></a>: Wrong text baseline with usetex.</li>
+<li><a href="#id102"><span class="problematic" id="id103">:ghpull:`2012`</span></a>: texmanager doesn&#8217;t handle list of names for <tt class="xref py py-obj docutils literal"><span class="pre">font.family</span></tt></li>
+<li><a href="#id104"><span class="problematic" id="id105">:ghpull:`2010`</span></a>: Allow Paths to be marked as readonly</li>
+<li><a href="#id106"><span class="problematic" id="id107">:ghpull:`2003`</span></a>: Fixed hatch clipping.</li>
+<li><a href="#id108"><span class="problematic" id="id109">:ghpull:`2006`</span></a>: ValueError: stretch is invalid</li>
+<li><a href="#id110"><span class="problematic" id="id111">:ghpull:`956`</span></a>: Shared axes colorbars &amp; finer location control</li>
+<li><a href="#id112"><span class="problematic" id="id113">:ghpull:`1329`</span></a>: Add a &#8220;sketch&#8221; path filter</li>
+<li><a href="#id114"><span class="problematic" id="id115">:ghpull:`1999`</span></a>: Setting dashes to (0,0) results in infinite loop for agg backends</li>
+<li><a href="#id116"><span class="problematic" id="id117">:ghpull:`1092`</span></a>: Better handling of scalars to plt.subplot(). Fixes #880</li>
+<li><a href="#id118"><span class="problematic" id="id119">:ghpull:`1950`</span></a>: Tidy up the matplotlib.__init__ documentation.</li>
+<li><a href="#id120"><span class="problematic" id="id121">:ghpull:`1770`</span></a>: strange output from wx and wxagg when trying to render to JPEG or TIFF</li>
+<li><a href="#id122"><span class="problematic" id="id123">:ghpull:`1998`</span></a>: Wx backend broken</li>
+<li><a href="#id124"><span class="problematic" id="id125">:ghpull:`1917`</span></a>: Make <tt class="xref py py-obj docutils literal"><span class="pre">axis.set_scale</span></tt> private</li>
+<li><a href="#id126"><span class="problematic" id="id127">:ghpull:`1927`</span></a>: Workaround for Python 3 with pyparsing &lt;= 2.0.0</li>
+<li><a href="#id128"><span class="problematic" id="id129">:ghpull:`1885`</span></a>: text is not properly clipped in 1.2.1</li>
+<li><a href="#id130"><span class="problematic" id="id131">:ghpull:`1955`</span></a>: Honouring the alpha attribute when creating composite images.</li>
+<li><a href="#id132"><span class="problematic" id="id133">:ghpull:`1136`</span></a>: Configuring automatic use of tight_layout</li>
+<li><a href="#id134"><span class="problematic" id="id135">:ghpull:`1953`</span></a>: New doc build failure</li>
+<li><a href="#id136"><span class="problematic" id="id137">:ghpull:`1896`</span></a>: Doc build is full of lots of irrelevant warnings</li>
+<li><a href="#id138"><span class="problematic" id="id139">:ghpull:`1902`</span></a>: Default quit keymap - support for cmd+w on OSX</li>
+<li><a href="#id140"><span class="problematic" id="id141">:ghpull:`1954`</span></a>: Supporting different alphas for face and edge colours</li>
+<li><a href="#id142"><span class="problematic" id="id143">:ghpull:`1964`</span></a>: Fixes issue #1960. Account for right/top spine data offset on transform ...</li>
+<li><a href="#id144"><span class="problematic" id="id145">:ghpull:`1988`</span></a>: Added bar plot pickle support.</li>
+<li><a href="#id146"><span class="problematic" id="id147">:ghpull:`1989`</span></a>: Log scale pickle</li>
+<li><a href="#id148"><span class="problematic" id="id149">:ghpull:`1990`</span></a>: Fixed tight_layout pickle support.</li>
+<li><a href="#id150"><span class="problematic" id="id151">:ghpull:`1991`</span></a>: bugfix for matplotlib/ticker.py (python 3.3)</li>
+<li><a href="#id152"><span class="problematic" id="id153">:ghpull:`1833`</span></a>: Change hist behavior when normed and stacked to something more sensible</li>
+<li><a href="#id154"><span class="problematic" id="id155">:ghpull:`1985`</span></a>: horizontal histogramm doesn&#8217;t work in 1.2 branch</li>
+<li><a href="#id156"><span class="problematic" id="id157">:ghpull:`1984`</span></a>: colors.rgb_to_hsv does not work properly with array of int dtype</li>
+<li><a href="#id158"><span class="problematic" id="id159">:ghpull:`1982`</span></a>: Fix bug in SpanSelector, introduced in commit #dd325759</li>
+<li><a href="#id160"><span class="problematic" id="id161">:ghpull:`1978`</span></a>: Setting font type using rcParams does not work under Python 3.*</li>
+<li><a href="#id162"><span class="problematic" id="id163">:ghpull:`1976`</span></a>: Replace usage of Lena image in the gallery.</li>
+<li><a href="#id164"><span class="problematic" id="id165">:ghpull:`1977`</span></a>: Fix <tt class="xref py py-obj docutils literal"><span class="pre">backend_driver.py</span></tt></li>
+<li><a href="#id166"><span class="problematic" id="id167">:ghpull:`1972`</span></a>: SubplotBase._make_twin_axes always creates a new subplot instance</li>
+<li><a href="#id168"><span class="problematic" id="id169">:ghpull:`1787`</span></a>: Path.contains_points() incorrect return</li>
+<li><a href="#id170"><span class="problematic" id="id171">:ghpull:`1973`</span></a>: Collection&#8217;s contains method doesn&#8217;t honour offset_position attribute</li>
+<li><a href="#id172"><span class="problematic" id="id173">:ghpull:`1956`</span></a>: imsave should preserve alpha channel</li>
+<li><a href="#id174"><span class="problematic" id="id175">:ghpull:`1967`</span></a>: svg double hyphen in plot title &#8211;</li>
+<li><a href="#id176"><span class="problematic" id="id177">:ghpull:`1929`</span></a>: Fixed failing bbox_inches=&#8217;tight&#8217; case when a contour collection is empty</li>
+<li><a href="#id178"><span class="problematic" id="id179">:ghpull:`1968`</span></a>: Rotated text element misalignment in Agg</li>
+<li><a href="#id180"><span class="problematic" id="id181">:ghpull:`1868`</span></a>: Fixed background colour of PNGs saved with a non-zero opacity.</li>
+<li><a href="#id182"><span class="problematic" id="id183">:ghpull:`1965`</span></a>: Make the travis output quieter on v1.2.x</li>
+<li><a href="#id184"><span class="problematic" id="id185">:ghpull:`1946`</span></a>: re-arrange mplDeprecation imports</li>
+<li><a href="#id186"><span class="problematic" id="id187">:ghpull:`1949`</span></a>: Build failes under ubuntu 13.04</li>
+<li><a href="#id188"><span class="problematic" id="id189">:ghpull:`1918`</span></a>: Tidied up some of the documentation.</li>
+<li><a href="#id190"><span class="problematic" id="id191">:ghpull:`1924`</span></a>: MEP 12: Gallery cleanup and reorganization (rebase)</li>
+<li><a href="#id192"><span class="problematic" id="id193">:ghpull:`1884`</span></a>: incorrect linkage if system PyCXX is found</li>
+<li><a href="#id194"><span class="problematic" id="id195">:ghpull:`1936`</span></a>: add pkgconfig to homebrew install instruction</li>
+<li><a href="#id196"><span class="problematic" id="id197">:ghpull:`1941`</span></a>: Use freetype-config if pkg-config is not installed</li>
+<li><a href="#id198"><span class="problematic" id="id199">:ghpull:`1940`</span></a>: Cleanup and what&#8217;s new item added for jpeg quality rcParam feature.</li>
+<li><a href="#id200"><span class="problematic" id="id201">:ghpull:`1771`</span></a>: Jpeg quality 95 by default with rendering with PIL</li>
+<li><a href="#id202"><span class="problematic" id="id203">:ghpull:`1935`</span></a>: 1836 latex docs fail</li>
+<li><a href="#id204"><span class="problematic" id="id205">:ghpull:`1932`</span></a>: DOC - two modules link appeared in the documentation</li>
+<li><a href="#id206"><span class="problematic" id="id207">:ghpull:`1810`</span></a>: Cairo + plot_date = misaligned x-axis labels</li>
+<li><a href="#id208"><span class="problematic" id="id209">:ghpull:`1905`</span></a>: Prevent Qt4 from stopping the interpreter</li>
+<li><a href="#id210"><span class="problematic" id="id211">:ghpull:`1861`</span></a>: Added a find_all method to the RcParams dictionary.</li>
+<li><a href="#id212"><span class="problematic" id="id213">:ghpull:`1921`</span></a>: Fix filename decoding when calling fc-match</li>
+<li><a href="#id214"><span class="problematic" id="id215">:ghpull:`1757`</span></a>: DOC improves documentation on the pyplot module and the bar method</li>
+<li><a href="#id216"><span class="problematic" id="id217">:ghpull:`1858`</span></a>: backend_pgf: clip paths within the backend (fixes #1857)</li>
+<li><a href="#id218"><span class="problematic" id="id219">:ghpull:`1913`</span></a>: Fix for issue #1812</li>
+<li><a href="#id220"><span class="problematic" id="id221">:ghpull:`1916`</span></a>: Normalize all &#8216;e.g.&#8217; instances. Addresses issue #1423.</li>
+<li><a href="#id222"><span class="problematic" id="id223">:ghpull:`1908`</span></a>: added rcParam for x and y margin</li>
+<li><a href="#id224"><span class="problematic" id="id225">:ghpull:`1903`</span></a>: Switching b and c in _transformation_converter to fix issue #1886</li>
+<li><a href="#id226"><span class="problematic" id="id227">:ghpull:`1897`</span></a>: Doc build failure - unicode error in generate_example_rst</li>
+<li><a href="#id228"><span class="problematic" id="id229">:ghpull:`1915`</span></a>: Corrected a wrong numpy record name in documentation.</li>
+<li><a href="#id230"><span class="problematic" id="id231">:ghpull:`1914`</span></a>: Fix texmanager.dvipng_hack_alpha() to correctly use Popen.</li>
+<li><a href="#id232"><span class="problematic" id="id233">:ghpull:`1906`</span></a>: Spectral plot unit tests</li>
+<li><a href="#id234"><span class="problematic" id="id235">:ghpull:`1824`</span></a>: Support environments without a home dir or writable file system</li>
+<li><a href="#id236"><span class="problematic" id="id237">:ghpull:`1878`</span></a>: Webagg changes</li>
+<li><a href="#id238"><span class="problematic" id="id239">:ghpull:`1894`</span></a>: Exporting figure as pdf using savefig() messes up axis background in OS X</li>
+<li><a href="#id240"><span class="problematic" id="id241">:ghpull:`1887`</span></a>: Clarify documentation for FuncAnimation</li>
+<li><a href="#id242"><span class="problematic" id="id243">:ghpull:`1890`</span></a>: Restored inkscape installing on travis-ci.</li>
+<li><a href="#id244"><span class="problematic" id="id245">:ghpull:`1874`</span></a>: Building Matplotlib on Ubuntu</li>
+<li><a href="#id246"><span class="problematic" id="id247">:ghpull:`1186`</span></a>: Make default arrow head width sensible</li>
+<li><a href="#id248"><span class="problematic" id="id249">:ghpull:`1875`</span></a>: [EHN] Add frameon and savefig.frameon to rcParams</li>
+<li><a href="#id250"><span class="problematic" id="id251">:ghpull:`1865`</span></a>: Fix manual contour label positions on sparse contours</li>
+<li><a href="#id252"><span class="problematic" id="id253">:ghpull:`1210`</span></a>: Add dateutil kwargs to csv2rec</li>
+<li><a href="#id254"><span class="problematic" id="id255">:ghpull:`1383`</span></a>: More fixes for doc building with python 3</li>
+<li><a href="#id256"><span class="problematic" id="id257">:ghpull:`1864`</span></a>: fix legend w/ &#8216;expand&#8217; mode which fails for a single item.</li>
+<li><a href="#id258"><span class="problematic" id="id259">:ghpull:`1448`</span></a>: <tt class="docutils literal"><span class="pre">`bbox_inches=&quot;tight&quot;`</span></tt> support for <em>all</em> figure artists.</li>
+<li><a href="#id260"><span class="problematic" id="id261">:ghpull:`1869`</span></a>: Installed inkscape on the travis-ci vm.</li>
+<li><a href="#id262"><span class="problematic" id="id263">:ghpull:`1870`</span></a>: Testing documentation isn&#8217;t clear about which files to copy</li>
+<li><a href="#id264"><span class="problematic" id="id265">:ghpull:`1866`</span></a>: fix the pyplot version of rc_context</li>
+<li><a href="#id266"><span class="problematic" id="id267">:ghpull:`1860`</span></a>: Bug with PatchCollection in PDF output</li>
+<li><a href="#id268"><span class="problematic" id="id269">:ghpull:`1862`</span></a>: Matplotlib savefig() closes BytesIO object when saving in postscript format</li>
+<li><a href="#id270"><span class="problematic" id="id271">:ghpull:`1841`</span></a>: Fixes issue #1259 - Added modifier key handling for macosx backend</li>
+<li><a href="#id272"><span class="problematic" id="id273">:ghpull:`1816`</span></a>: Avoid macosx backend slowdown; issue 1563</li>
+<li><a href="#id274"><span class="problematic" id="id275">:ghpull:`1796`</span></a>: axes.grid lines using lines.marker settings?</li>
+<li><a href="#id276"><span class="problematic" id="id277">:ghpull:`1846`</span></a>: Fix the clippath renderering so that it uses no-clip unsigned chars</li>
+<li><a href="#id278"><span class="problematic" id="id279">:ghpull:`1853`</span></a>: fill_betweenx signature fixed</li>
+<li><a href="#id280"><span class="problematic" id="id281">:ghpull:`1854`</span></a>: BF - prevent a TypeError for lists of vertices</li>
+<li><a href="#id282"><span class="problematic" id="id283">:ghpull:`1843`</span></a>: test_backend_pgf: TypeError</li>
+<li><a href="#id284"><span class="problematic" id="id285">:ghpull:`1848`</span></a>: add flushing of stdout to update on key event</li>
+<li><a href="#id286"><span class="problematic" id="id287">:ghpull:`1802`</span></a>: Step linestyle</li>
+<li><a href="#id288"><span class="problematic" id="id289">:ghpull:`1127`</span></a>: Change spectral to nipy_spectral, update docs, leave aliases</li>
+<li><a href="#id290"><span class="problematic" id="id291">:ghpull:`1804`</span></a>: MEP10 - documentation improvements on set_xlabel and text of axes.py</li>
+<li><a href="#id292"><span class="problematic" id="id293">:ghpull:`1764`</span></a>: Make loc come after fontdict in set_title. Closes #1759</li>
+<li><a href="#id294"><span class="problematic" id="id295">:ghpull:`1825`</span></a>: Work around missing subprocess members on Google App Engine</li>
+<li><a href="#id296"><span class="problematic" id="id297">:ghpull:`1826`</span></a>: backend_ps: Do not write to a temporary file unless using an external distiller</li>
+<li><a href="#id298"><span class="problematic" id="id299">:ghpull:`1827`</span></a>: MEP10 - documentation improvements on many common plots: scatter plots, ...</li>
+<li><a href="#id300"><span class="problematic" id="id301">:ghpull:`1834`</span></a>: finance: Fixed making directories for explicit cachename</li>
+<li><a href="#id302"><span class="problematic" id="id303">:ghpull:`1832`</span></a>: BF - correct return type for Axes.get_title</li>
+<li><a href="#id304"><span class="problematic" id="id305">:ghpull:`1803`</span></a>: Markers module: PEP8 fixes and MEP10 documentation fixes</li>
+<li><a href="#id306"><span class="problematic" id="id307">:ghpull:`1795`</span></a>: MEP10 - refactored hlines and vlines documentation</li>
+<li><a href="#id308"><span class="problematic" id="id309">:ghpull:`1822`</span></a>: Improved triinterp_demo pylab example</li>
+<li><a href="#id310"><span class="problematic" id="id311">:ghpull:`1811`</span></a>: MultiCursor with additionnal optionnal horizontal bar</li>
+<li><a href="#id312"><span class="problematic" id="id313">:ghpull:`1817`</span></a>: Improved test_triinterp_colinear</li>
+<li><a href="#id314"><span class="problematic" id="id315">:ghpull:`1799`</span></a>: Corrupt/invalid PDF and EPS files when saving a logscaled plot made with negative values</li>
+<li><a href="#id316"><span class="problematic" id="id317">:ghpull:`1800`</span></a>: Agg snapping fixes (for the last time...?) :)</li>
+<li><a href="#id318"><span class="problematic" id="id319">:ghpull:`1786`</span></a>: Cubic interpolation for triangular grids</li>
+<li><a href="#id320"><span class="problematic" id="id321">:ghpull:`1808`</span></a>: DOC: typo, break lines &gt;80 char, add link to cmaps list</li>
+<li><a href="#id322"><span class="problematic" id="id323">:ghpull:`1801`</span></a>: Add .directory files to .gitignore</li>
+<li><a href="#id324"><span class="problematic" id="id325">:ghpull:`1724`</span></a>: Re-write stacked step histogram</li>
+<li><a href="#id326"><span class="problematic" id="id327">:ghpull:`1790`</span></a>: Fixes problem raised in #1431 (<tt class="docutils literal"><span class="pre">`get_transform`</span></tt> should not affect <tt class="docutils literal"><span class="pre">`is_transform_set`</span></tt>)</li>
+<li><a href="#id328"><span class="problematic" id="id329">:ghpull:`1779`</span></a>: Bug in postscript backend in Python 3</li>
+<li><a href="#id330"><span class="problematic" id="id331">:ghpull:`1797`</span></a>: PEP8 on colors module</li>
+<li><a href="#id332"><span class="problematic" id="id333">:ghpull:`1291`</span></a>: Fix image comparison</li>
+<li><a href="#id334"><span class="problematic" id="id335">:ghpull:`1791`</span></a>: Symbol not found: _CGAffineTransformIdentity on MacOS 10.6</li>
+<li><a href="#id336"><span class="problematic" id="id337">:ghpull:`1794`</span></a>: Fix for #1792</li>
+<li><a href="#id338"><span class="problematic" id="id339">:ghpull:`1454`</span></a>: Retool the setup.py infrastructure</li>
+<li><a href="#id340"><span class="problematic" id="id341">:ghpull:`1785`</span></a>: Fix test_bbox_inches_tight</li>
+<li><a href="#id342"><span class="problematic" id="id343">:ghpull:`1784`</span></a>: Attempt to fix Travis &#8220;permission denied&#8221; error for Python 3</li>
+<li><a href="#id344"><span class="problematic" id="id345">:ghpull:`1775`</span></a>: Issue #1763</li>
+<li><a href="#id346"><span class="problematic" id="id347">:ghpull:`1615`</span></a>: Offset is empty with usetex when offset is equal to 1</li>
+<li><a href="#id348"><span class="problematic" id="id349">:ghpull:`1778`</span></a>: Fix clip_path_to_rect, add convenience method on Path object for it</li>
+<li><a href="#id350"><span class="problematic" id="id351">:ghpull:`1669`</span></a>: Add EventCollection and eventplot</li>
+<li><a href="#id352"><span class="problematic" id="id353">:ghpull:`1725`</span></a>: Fix compiler warnings</li>
+<li><a href="#id354"><span class="problematic" id="id355">:ghpull:`1756`</span></a>: Remove broken printing_in_wx.py example.</li>
+<li><a href="#id356"><span class="problematic" id="id357">:ghpull:`1762`</span></a>: Make cbook safe to import while removing duplicate is_string_like;</li>
+<li><a href="#id358"><span class="problematic" id="id359">:ghpull:`1252`</span></a>: Properly passing on horiz-/vertOn to Cursor()</li>
+<li><a href="#id360"><span class="problematic" id="id361">:ghpull:`1686`</span></a>: Fix lost ticks</li>
+<li><a href="#id362"><span class="problematic" id="id363">:ghpull:`1640`</span></a>: Fix bugs in legend positioning with loc=&#8217;best&#8217;</li>
+<li><a href="#id364"><span class="problematic" id="id365">:ghpull:`1687`</span></a>: Update lib/matplotlib/backends/backend_cairo.py</li>
+<li><a href="#id366"><span class="problematic" id="id367">:ghpull:`1760`</span></a>: Improved the subplot function documentation and fixed the autogeneration from boilerplate.</li>
+<li><a href="#id368"><span class="problematic" id="id369">:ghpull:`1716`</span></a>: PEP8 fixes on the figure module</li>
+<li><a href="#id370"><span class="problematic" id="id371">:ghpull:`1643`</span></a>: Clean up code in cbook</li>
+<li><a href="#id372"><span class="problematic" id="id373">:ghpull:`1755`</span></a>: Update examples/pylab_examples/histogram_demo_extended.py</li>
+<li><a href="#id374"><span class="problematic" id="id375">:ghpull:`1497`</span></a>: Fix for empty collection check in axes.add_collection</li>
+<li><a href="#id376"><span class="problematic" id="id377">:ghpull:`1685`</span></a>: Add default savefig directory</li>
+<li><a href="#id378"><span class="problematic" id="id379">:ghpull:`1698`</span></a>: Fix bug updating WeakKeyDictionary during iteration</li>
+<li><a href="#id380"><span class="problematic" id="id381">:ghpull:`1743`</span></a>: slight tweak to the documentation of <tt class="xref py py-obj docutils literal"><span class="pre">errorbar</span></tt></li>
+<li><a href="#id382"><span class="problematic" id="id383">:ghpull:`1748`</span></a>: Typo in &#8220;Annotation&#8221; docstring.</li>
+<li><a href="#id384"><span class="problematic" id="id385">:ghpull:`1750`</span></a>: Name missmatch in filetypes.rgba and print_rgb of backend_bases.py</li>
+<li><a href="#id386"><span class="problematic" id="id387">:ghpull:`1722`</span></a>: Fix sign of infstr in exceltools.rec2exel</li>
+<li><a href="#id388"><span class="problematic" id="id389">:ghpull:`1726`</span></a>: stackplot_test_baseline has different results on 32-bit and 64-bit platforms</li>
+<li><a href="#id390"><span class="problematic" id="id391">:ghpull:`1577`</span></a>: PEP8 fixes on the line module</li>
+<li><a href="#id392"><span class="problematic" id="id393">:ghpull:`1728`</span></a>: Macosx backend: tweak to coordinates position</li>
+<li><a href="#id394"><span class="problematic" id="id395">:ghpull:`1718`</span></a>: Fix set dashes for line collections</li>
+<li><a href="#id396"><span class="problematic" id="id397">:ghpull:`1721`</span></a>: rcParams.keys() is not Python 3 compatible</li>
+<li><a href="#id398"><span class="problematic" id="id399">:ghpull:`1699`</span></a>: Enable to switch off the removal of comments in csv2rec.</li>
+<li><a href="#id400"><span class="problematic" id="id401">:ghpull:`1710`</span></a>: Mixing Arial with mathtext on Windows 8 fails</li>
+<li><a href="#id402"><span class="problematic" id="id403">:ghpull:`1705`</span></a>: Qt closeevent fixes for  v1.2.x</li>
+<li><a href="#id404"><span class="problematic" id="id405">:ghpull:`1671`</span></a>: Feature stack base</li>
+<li><a href="#id406"><span class="problematic" id="id407">:ghpull:`1684`</span></a>: Fix hist for log=True and histtype=&#8217;step&#8217;</li>
+<li><a href="#id408"><span class="problematic" id="id409">:ghpull:`1708`</span></a>: Fix breaking doc build</li>
+<li><a href="#id410"><span class="problematic" id="id411">:ghpull:`1644`</span></a>: NF - Left and right side axes titles</li>
+<li><a href="#id412"><span class="problematic" id="id413">:ghpull:`1666`</span></a>: Fix USE_FONTCONFIG=True mode</li>
+<li><a href="#id414"><span class="problematic" id="id415">:ghpull:`1691`</span></a>: Fix svg flipping (again)</li>
+<li><a href="#id416"><span class="problematic" id="id417">:ghpull:`1695`</span></a>: Alpha kwarg fix</li>
+<li><a href="#id418"><span class="problematic" id="id419">:ghpull:`1696`</span></a>: Fixed doc dependency on numpy_ext.numpydoc</li>
+<li><a href="#id420"><span class="problematic" id="id421">:ghpull:`1665`</span></a>: MEP10: adding numpydoc and activating autosummary</li>
+<li><a href="#id422"><span class="problematic" id="id423">:ghpull:`1660`</span></a>: Explain that matplotlib must be built before the HTML documentation</li>
+<li><a href="#id424"><span class="problematic" id="id425">:ghpull:`1694`</span></a>: fixes Issue #1693</li>
+<li><a href="#id426"><span class="problematic" id="id427">:ghpull:`1682`</span></a>: Fixed the expected output from test_arrow_patches.test_fancyarrow.</li>
+<li><a href="#id428"><span class="problematic" id="id429">:ghpull:`1663`</span></a>: Fix suptitle</li>
+<li><a href="#id430"><span class="problematic" id="id431">:ghpull:`1675`</span></a>: fix &#8220;alpha&#8221; kwarg in errorbar plot</li>
+<li><a href="#id432"><span class="problematic" id="id433">:ghpull:`1678`</span></a>: added QtGui.QMainWindow.closeEvent() to make sure the close event</li>
+<li><a href="#id434"><span class="problematic" id="id435">:ghpull:`1674`</span></a>: Fix SVG flip when svg.image_noscale is True</li>
+<li><a href="#id436"><span class="problematic" id="id437">:ghpull:`1680`</span></a>: Ignore lib/dateutil</li>
+<li><a href="#id438"><span class="problematic" id="id439">:ghpull:`1626`</span></a>: Add framealpha argument for legend</li>
+<li><a href="#id440"><span class="problematic" id="id441">:ghpull:`1642`</span></a>: remove <tt class="xref py py-obj docutils literal"><span class="pre">import</span> <span class="pre">new</span></tt> from cbook.py</li>
+<li><a href="#id442"><span class="problematic" id="id443">:ghpull:`1534`</span></a>: Make <tt class="xref py py-obj docutils literal"><span class="pre">rc_context</span></tt> available via pyplot interface</li>
+<li><a href="#id444"><span class="problematic" id="id445">:ghpull:`1672`</span></a>: Nuke Travis python 3.1 testing</li>
+<li><a href="#id446"><span class="problematic" id="id447">:ghpull:`1670`</span></a>: Deprecate mpl</li>
+<li><a href="#id448"><span class="problematic" id="id449">:ghpull:`1635`</span></a>: Recompute Wedge path after change of attributes.</li>
+<li><a href="#id450"><span class="problematic" id="id451">:ghpull:`1498`</span></a>: use QMainWindow.closeEvent for close events</li>
+<li><a href="#id452"><span class="problematic" id="id453">:ghpull:`1617`</span></a>: Legend: Also calc the bbox of the legend when the frame is not drawn. (1.2.x)</li>
+<li><a href="#id454"><span class="problematic" id="id455">:ghpull:`1585`</span></a>: Fix Qt canvas resize_event</li>
+<li><a href="#id456"><span class="problematic" id="id457">:ghpull:`1611`</span></a>: change handling of legend labels which are None</li>
+<li><a href="#id458"><span class="problematic" id="id459">:ghpull:`1657`</span></a>: Add EventCollection and eventplot</li>
+<li><a href="#id460"><span class="problematic" id="id461">:ghpull:`1641`</span></a>: PEP8 fixes on the rcsetup module</li>
+<li><a href="#id462"><span class="problematic" id="id463">:ghpull:`1650`</span></a>: _png.read_png crashes on Python 3 with urllib.request object</li>
+<li><a href="#id464"><span class="problematic" id="id465">:ghpull:`1568`</span></a>: removed deprecated methods from the axes module.</li>
+<li><a href="#id466"><span class="problematic" id="id467">:ghpull:`1589`</span></a>: Fix shifted ylabels (Issue #1571)</li>
+<li><a href="#id468"><span class="problematic" id="id469">:ghpull:`1634`</span></a>: add scatterpoints to  rcParam</li>
+<li><a href="#id470"><span class="problematic" id="id471">:ghpull:`1654`</span></a>: added explicit &#8216;zorder&#8217; kwarg to <tt class="xref py py-obj docutils literal"><span class="pre">Colection</span></tt> and <tt class="xref py py-obj docutils literal"><span class="pre">LineCollection</span></tt>.</li>
+<li><a href="#id472"><span class="problematic" id="id473">:ghpull:`1653`</span></a>: Fix #570 - Reversing a 3d axis should now work properly.</li>
+<li><a href="#id474"><span class="problematic" id="id475">:ghpull:`1651`</span></a>: WebAgg: pylab compatibility</li>
+<li><a href="#id476"><span class="problematic" id="id477">:ghpull:`1505`</span></a>: Issue 1504: changed how <tt class="xref py py-obj docutils literal"><span class="pre">draw</span></tt> handles alpha in <tt class="xref py py-obj docutils literal"><span class="pre">markerfacecolor</span></tt></li>
+<li><a href="#id478"><span class="problematic" id="id479">:ghpull:`1655`</span></a>: add get_segments method to collections.LineCollection</li>
+<li><a href="#id480"><span class="problematic" id="id481">:ghpull:`1652`</span></a>: Ignore kdevelop4 project files</li>
+<li><a href="#id482"><span class="problematic" id="id483">:ghpull:`1613`</span></a>: Using a stricter check to see if Python was installed as a framework.</li>
+<li><a href="#id484"><span class="problematic" id="id485">:ghpull:`1599`</span></a>:  Ada Lovelace and Grace Murray Hopper images in place of Lena</li>
+<li><a href="#id486"><span class="problematic" id="id487">:ghpull:`1582`</span></a>: Linear tri interpolator</li>
+<li><a href="#id488"><span class="problematic" id="id489">:ghpull:`1637`</span></a>: change cbook to relative import</li>
+<li><a href="#id490"><span class="problematic" id="id491">:ghpull:`1618`</span></a>: Mplot3d/crashfixes</li>
+<li><a href="#id492"><span class="problematic" id="id493">:ghpull:`1636`</span></a>: hexbin log scale is broken in matplotlib 1.2.0</li>
+<li><a href="#id494"><span class="problematic" id="id495">:ghpull:`1624`</span></a>: implemented inverse transform for Mollweide axes</li>
+<li><a href="#id496"><span class="problematic" id="id497">:ghpull:`1630`</span></a>: A disconnected callback cannot be reconnected</li>
+<li><a href="#id498"><span class="problematic" id="id499">:ghpull:`1139`</span></a>: Make Axes.stem take at least one argument.</li>
+<li><a href="#id500"><span class="problematic" id="id501">:ghpull:`1426`</span></a>: WebAgg backend</li>
+<li><a href="#id502"><span class="problematic" id="id503">:ghpull:`1606`</span></a>: Document the C/C++ code guidelines</li>
+<li><a href="#id504"><span class="problematic" id="id505">:ghpull:`1628`</span></a>: Fix errorbar zorder v1.2</li>
+<li><a href="#id506"><span class="problematic" id="id507">:ghpull:`1620`</span></a>: Fix bug in _AnnotationBase</li>
+<li><a href="#id508"><span class="problematic" id="id509">:ghpull:`1587`</span></a>: Mac OS X 10.5 needs an autoreleasepool here to avoid memory leaks. Newer...</li>
+<li><a href="#id510"><span class="problematic" id="id511">:ghpull:`1597`</span></a>: new MatplotlibDeprecationWarning class (against master)</li>
+<li><a href="#id512"><span class="problematic" id="id513">:ghpull:`1596`</span></a>: new MatplotlibDeprecationWarning class (against 1.2.x)</li>
+<li><a href="#id514"><span class="problematic" id="id515">:ghpull:`1532`</span></a>: CXX/Python2/cxx_extensions.cxx:1320: Assertion <a href="#id516"><span class="problematic" id="id517">`</span></a>ob_refcnt == 0&#8217;</li>
+<li><a href="#id518"><span class="problematic" id="id519">:ghpull:`1604`</span></a>: Make font_manager ignore KeyErrors for bad fonts</li>
+<li><a href="#id520"><span class="problematic" id="id521">:ghpull:`1605`</span></a>: Change printed -&gt; pretty-printed</li>
+<li><a href="#id522"><span class="problematic" id="id523">:ghpull:`1557`</span></a>: inverting an axis shouldn&#8217;t affect the autoscaling setting</li>
+<li><a href="#id524"><span class="problematic" id="id525">:ghpull:`1603`</span></a>: ylim=0.0 is not well handled in polar plots</li>
+<li><a href="#id526"><span class="problematic" id="id527">:ghpull:`1583`</span></a>: Crash with text.usetex=True and plt.annotate</li>
+<li><a href="#id528"><span class="problematic" id="id529">:ghpull:`1602`</span></a>: Fixed typos in docs (squashed version of #1600)</li>
+<li><a href="#id530"><span class="problematic" id="id531">:ghpull:`1592`</span></a>: Fix a syntax error in examples (movie_demo.py)</li>
+<li><a href="#id532"><span class="problematic" id="id533">:ghpull:`1590`</span></a>: Positional argument specifiers are required by Python 2.6</li>
+<li><a href="#id534"><span class="problematic" id="id535">:ghpull:`1579`</span></a>: Updated custom_projection_example.py to work with v1.2 and newer</li>
+<li><a href="#id536"><span class="problematic" id="id537">:ghpull:`1578`</span></a>: Fixed blitting in Gtk3Agg backend</li>
+<li><a href="#id538"><span class="problematic" id="id539">:ghpull:`1573`</span></a>: fix issue #1572 caused by PR #1081</li>
+<li><a href="#id540"><span class="problematic" id="id541">:ghpull:`1562`</span></a>: Mac OS X Backend: Removing clip that is no longer needed</li>
+<li><a href="#id542"><span class="problematic" id="id543">:ghpull:`1574`</span></a>: Improvements to Sankey class</li>
+<li><a href="#id544"><span class="problematic" id="id545">:ghpull:`1536`</span></a>: ENH: add AVConv movie writer for animations</li>
+<li><a href="#id546"><span class="problematic" id="id547">:ghpull:`1570`</span></a>: PEP8 fixes on the tests of the dates module</li>
+<li><a href="#id548"><span class="problematic" id="id549">:ghpull:`1569`</span></a>: FIX Removes code that does work from the axes module</li>
+<li><a href="#id550"><span class="problematic" id="id551">:ghpull:`1531`</span></a>: fix rendering slowdown with big invisible lines (issue #1256)</li>
+<li><a href="#id552"><span class="problematic" id="id553">:ghpull:`1398`</span></a>: PEP8 fixes on dates.py</li>
+<li><a href="#id554"><span class="problematic" id="id555">:ghpull:`1564`</span></a>: PEP8-compliance on axes.py (patch 4 / 4)</li>
+<li><a href="#id556"><span class="problematic" id="id557">:ghpull:`1559`</span></a>: Workaround for QT cursor bug in dock areas</li>
+<li><a href="#id558"><span class="problematic" id="id559">:ghpull:`1560`</span></a>: Remove python2.5 support from texmanager.py</li>
+<li><a href="#id560"><span class="problematic" id="id561">:ghpull:`1555`</span></a>: Geo projections getting clobbered by 2to3 when used when python3</li>
+<li><a href="#id562"><span class="problematic" id="id563">:ghpull:`1477`</span></a>: alternate fix for issue #997</li>
+<li><a href="#id564"><span class="problematic" id="id565">:ghpull:`1522`</span></a>: PEP8-compliance on axes.py (patch 3 / 4)</li>
+<li><a href="#id566"><span class="problematic" id="id567">:ghpull:`1550`</span></a>: PEP8 fixes on the module texmanager</li>
+<li><a href="#id568"><span class="problematic" id="id569">:ghpull:`1289`</span></a>: Autoscaling and limits in mplot3d.</li>
+<li><a href="#id570"><span class="problematic" id="id571">:ghpull:`1551`</span></a>: PEP8 fixes on the spines module</li>
+<li><a href="#id572"><span class="problematic" id="id573">:ghpull:`1537`</span></a>: Fix savefig.extension == &#8220;auto&#8221;</li>
+<li><a href="#id574"><span class="problematic" id="id575">:ghpull:`1297`</span></a>: pyplot.plotfile. gridon option added with default from rcParam.</li>
+<li><a href="#id576"><span class="problematic" id="id577">:ghpull:`1538`</span></a>: Remove unnecessary clip from Cairo backend; squashed commit</li>
+<li><a href="#id578"><span class="problematic" id="id579">:ghpull:`1544`</span></a>: str.format() doesn&#8217;t work on python 2.6</li>
+<li><a href="#id580"><span class="problematic" id="id581">:ghpull:`1549`</span></a>: Add citation page to website</li>
+<li><a href="#id582"><span class="problematic" id="id583">:ghpull:`1514`</span></a>: Fix streamplot when color argument has NaNs</li>
+<li><a href="#id584"><span class="problematic" id="id585">:ghpull:`1081`</span></a>: Propagate mpl.text.Text instances to the backends and fix documentation</li>
+<li><a href="#id586"><span class="problematic" id="id587">:ghpull:`1533`</span></a>: ENH: raise a more informative error</li>
+<li><a href="#id588"><span class="problematic" id="id589">:ghpull:`1540`</span></a>: Changed mailinglist archive link.</li>
+<li><a href="#id590"><span class="problematic" id="id591">:ghpull:`1493`</span></a>: check <tt class="xref py py-obj docutils literal"><span class="pre">ret</span> <span class="pre">==</span> <span class="pre">False</span></tt> in Timer._on_timer</li>
+<li><a href="#id592"><span class="problematic" id="id593">:ghpull:`1523`</span></a>: DOC: github ribbon does not cover up index link</li>
+<li><a href="#id594"><span class="problematic" id="id595">:ghpull:`1515`</span></a>: set_cmap should not require an active image</li>
+<li><a href="#id596"><span class="problematic" id="id597">:ghpull:`1489`</span></a>: Documentation update for specgram</li>
+<li><a href="#id598"><span class="problematic" id="id599">:ghpull:`1527`</span></a>: fix 2 html color names</li>
+<li><a href="#id600"><span class="problematic" id="id601">:ghpull:`1524`</span></a>: Make README.txt consistent reStructuredText</li>
+<li><a href="#id602"><span class="problematic" id="id603">:ghpull:`1525`</span></a>: pgf: documentation enhancements</li>
+<li><a href="#id604"><span class="problematic" id="id605">:ghpull:`1510`</span></a>: pgf: documentation enhancements</li>
+<li><a href="#id606"><span class="problematic" id="id607">:ghpull:`1512`</span></a>: Reorganize the developer docs</li>
+<li><a href="#id608"><span class="problematic" id="id609">:ghpull:`1518`</span></a>: PEP8 compliance on the delaunay module</li>
+<li><a href="#id610"><span class="problematic" id="id611">:ghpull:`1357`</span></a>: PEP8 fixes on text.py</li>
+<li><a href="#id612"><span class="problematic" id="id613">:ghpull:`1469`</span></a>: PEP8-compliance on axes.py (patch 2 / 4)</li>
+<li><a href="#id614"><span class="problematic" id="id615">:ghpull:`1470`</span></a>: Add <tt class="docutils literal"><span class="pre">test</span></tt> and <tt class="docutils literal"><span class="pre">test-coverage</span></tt> to Makefile</li>
+<li><a href="#id616"><span class="problematic" id="id617">:ghpull:`1442`</span></a>: Add savefig_kwargs to Animation.save() method</li>
+<li><a href="#id618"><span class="problematic" id="id619">:ghpull:`1503`</span></a>: DOC: &#8216;inout&#8217; option for tick_params direction</li>
+<li><a href="#id620"><span class="problematic" id="id621">:ghpull:`1494`</span></a>: Added sphinx documentation for Triangulation</li>
+<li><a href="#id622"><span class="problematic" id="id623">:ghpull:`1480`</span></a>: Remove dead code in patches</li>
+<li><a href="#id624"><span class="problematic" id="id625">:ghpull:`1496`</span></a>: Correct scatter docstring</li>
+<li><a href="#id626"><span class="problematic" id="id627">:ghpull:`1472`</span></a>: FIX extra comma in Sankey.add</li>
+<li><a href="#id628"><span class="problematic" id="id629">:ghpull:`1471`</span></a>: Improved checking logic of _check_xyz in contour.py</li>
+<li><a href="#id630"><span class="problematic" id="id631">:ghpull:`1491`</span></a>: Reintroduce examples.directory rc parameter</li>
+<li><a href="#id632"><span class="problematic" id="id633">:ghpull:`1405`</span></a>: Add angle kwarg to patches.Rectangle</li>
+<li><a href="#id634"><span class="problematic" id="id635">:ghpull:`1278`</span></a>: Make arrow docstring mention data transform</li>
+<li><a href="#id636"><span class="problematic" id="id637">:ghpull:`1355`</span></a>: Add sym-log normalization.</li>
+<li><a href="#id638"><span class="problematic" id="id639">:ghpull:`1474`</span></a>: use an imagemap for the &#8220;fork me on github&#8221; ribbon</li>
+<li><a href="#id640"><span class="problematic" id="id641">:ghpull:`1485`</span></a>: Fix leak of gc&#8217;s in gtkagg backend</li>
+<li><a href="#id642"><span class="problematic" id="id643">:ghpull:`1374`</span></a>: PEP8 fixes on widgets.py</li>
+<li><a href="#id644"><span class="problematic" id="id645">:ghpull:`1379`</span></a>: PEP8 fixes on quiver.py</li>
+<li><a href="#id646"><span class="problematic" id="id647">:ghpull:`1399`</span></a>: PEP8 fixes on patches</li>
+<li><a href="#id648"><span class="problematic" id="id649">:ghpull:`1395`</span></a>: PEP8 fixes on contour.py</li>
+<li><a href="#id650"><span class="problematic" id="id651">:ghpull:`1464`</span></a>: PEP8-compliance on axes.py (patch 1 / 4)</li>
+<li><a href="#id652"><span class="problematic" id="id653">:ghpull:`1400`</span></a>: PEP8 fixes on offsetbox.py</li>
+<li><a href="#id654"><span class="problematic" id="id655">:ghpull:`1463`</span></a>: Document the Gtk3 backends</li>
+</ul>
+<p>Issues (598):</p>
+<ul class="simple">
+<li><a href="#id656"><span class="problematic" id="id657">:ghissue:`2075`</span></a>: Test failure in matplotlib.tests.test_colors.test_cmap_and_norm_from_levels_and_colors2</li>
+<li><a href="#id658"><span class="problematic" id="id659">:ghissue:`2061`</span></a>: hist(..., histtype=&#8217;step&#8217;) does not set ylim properly.</li>
+<li><a href="#id660"><span class="problematic" id="id661">:ghissue:`2081`</span></a>: AutoDateLocator interval bug</li>
+<li><a href="#id662"><span class="problematic" id="id663">:ghissue:`2082`</span></a>: Data limits (on 1.3.x)</li>
+<li><a href="#id664"><span class="problematic" id="id665">:ghissue:`854`</span></a>: Bug in Axes.relim when the first line is y_isdata=False and possible fix</li>
+<li><a href="#id666"><span class="problematic" id="id667">:ghissue:`2070`</span></a>: incorrect bbox of text</li>
+<li><a href="#id668"><span class="problematic" id="id669">:ghissue:`1063`</span></a>: PyQt: fill_between =&gt; Singular matrix</li>
+<li><a href="#id670"><span class="problematic" id="id671">:ghissue:`2072`</span></a>: PEP8 conformance tests complain about missing files</li>
+<li><a href="#id672"><span class="problematic" id="id673">:ghissue:`2080`</span></a>: Fixed failing test on python3.</li>
+<li><a href="#id674"><span class="problematic" id="id675">:ghissue:`2079`</span></a>: added some comments</li>
+<li><a href="#id676"><span class="problematic" id="id677">:ghissue:`1876`</span></a>: [WIP] Steppath and Line2D</li>
+<li><a href="#id678"><span class="problematic" id="id679">:ghissue:`296`</span></a>: 2D imagemap for 3D scatter plot</li>
+<li><a href="#id680"><span class="problematic" id="id681">:ghissue:`667`</span></a>: hexbin lacks a weights argument</li>
+<li><a href="#id682"><span class="problematic" id="id683">:ghissue:`2077`</span></a>: changed URL to the current CSV API for yahoo finance</li>
+<li><a href="#id684"><span class="problematic" id="id685">:ghissue:`602`</span></a>: axisartist incompatible with autofmt_xdate</li>
+<li><a href="#id686"><span class="problematic" id="id687">:ghissue:`609`</span></a>: Large values in histograms not showing</li>
+<li><a href="#id688"><span class="problematic" id="id689">:ghissue:`654`</span></a>: autofmt_xdate cropping graph wrongly</li>
+<li><a href="#id690"><span class="problematic" id="id691">:ghissue:`615`</span></a>: Cannot set label text size or family using axisartist</li>
+<li><a href="#id692"><span class="problematic" id="id693">:ghissue:`343`</span></a>: Response Spectra Tripartite Plot</li>
+<li><a href="#id694"><span class="problematic" id="id695">:ghissue:`325`</span></a>: EMF backend does not support bitmaps</li>
+<li><a href="#id696"><span class="problematic" id="id697">:ghissue:`281`</span></a>: scatter and plot should have the same kwards</li>
+<li><a href="#id698"><span class="problematic" id="id699">:ghissue:`318`</span></a>: ability to unshare axis</li>
+<li><a href="#id700"><span class="problematic" id="id701">:ghissue:`227`</span></a>: Set cap and join styles for patches</li>
+<li><a href="#id702"><span class="problematic" id="id703">:ghissue:`222`</span></a>: Support for amsmath in TexManager</li>
+<li><a href="#id704"><span class="problematic" id="id705">:ghissue:`214`</span></a>: add quote charater support to csv related functions.</li>
+<li><a href="#id706"><span class="problematic" id="id707">:ghissue:`161`</span></a>: one pixel error with gtkagg and blitting</li>
+<li><a href="#id708"><span class="problematic" id="id709">:ghissue:`157`</span></a>: Sphinx plot extension source/build directory issues</li>
+<li><a href="#id710"><span class="problematic" id="id711">:ghissue:`2076`</span></a>: Build the _windowing extension</li>
+<li><a href="#id712"><span class="problematic" id="id713">:ghissue:`2066`</span></a>: [DOC] Mathtext and matshow examples</li>
+<li><a href="#id714"><span class="problematic" id="id715">:ghissue:`2024`</span></a>: Update homepage image</li>
+<li><a href="#id716"><span class="problematic" id="id717">:ghissue:`2074`</span></a>: backend gtk and gtk3: destroy figure save dialog after use; closes #2073</li>
+<li><a href="#id718"><span class="problematic" id="id719">:ghissue:`2073`</span></a>: Gtk file save dialog doesn&#8217;t go ahead when clicking &#8220;Save&#8221; or &#8220;Cancel&#8221;</li>
+<li><a href="#id720"><span class="problematic" id="id721">:ghissue:`2037`</span></a>: PGF backend doesn&#8217;t fire draw_event when not being used as the &#8220;primary&#8221; backend</li>
+<li><a href="#id722"><span class="problematic" id="id723">:ghissue:`2050`</span></a>: Added the from_levels_and_colors function.</li>
+<li><a href="#id724"><span class="problematic" id="id725">:ghissue:`454`</span></a>: Use a subdirectory of $XDG_CONFIG_HOME instead of ~/.matplotlibrc on Linux</li>
+<li><a href="#id726"><span class="problematic" id="id727">:ghissue:`2043`</span></a>: Use subplots in examples (rebase)</li>
+<li><a href="#id728"><span class="problematic" id="id729">:ghissue:`1813`</span></a>: GTK segfault with GTK3 and mpl_toolkits</li>
+<li><a href="#id730"><span class="problematic" id="id731">:ghissue:`2069`</span></a>: BUG: pass kwargs to TimedAnimation</li>
+<li><a href="#id732"><span class="problematic" id="id733">:ghissue:`2063`</span></a>: Let _pcolorargs check C for consistency with X and Y; closes #1688</li>
+<li><a href="#id734"><span class="problematic" id="id735">:ghissue:`1688`</span></a>: _pcolorargs should check consistency of argument shapes</li>
+<li><a href="#id736"><span class="problematic" id="id737">:ghissue:`2065`</span></a>: mlab.FIFOBuffer: remove fossil line referring to nonexistent method</li>
+<li><a href="#id738"><span class="problematic" id="id739">:ghissue:`2067`</span></a>: Font issue while trying to save PS/EPS/SVG but not PDF</li>
+<li><a href="#id740"><span class="problematic" id="id741">:ghissue:`1975`</span></a>: MixedModeRenderer non-72-dpi fixes &amp; Pgf mixed rendering</li>
+<li><a href="#id742"><span class="problematic" id="id743">:ghissue:`1821`</span></a>: WxAgg hangs in interactive mode</li>
+<li><a href="#id744"><span class="problematic" id="id745">:ghissue:`162`</span></a>: twinx and plot_date</li>
+<li><a href="#id746"><span class="problematic" id="id747">:ghissue:`1609`</span></a>: test_pcolormesh hangs</li>
+<li><a href="#id748"><span class="problematic" id="id749">:ghissue:`1598`</span></a>: Use sublots in examples</li>
+<li><a href="#id750"><span class="problematic" id="id751">:ghissue:`1185`</span></a>: Svg rasterize resolution fix</li>
+<li><a href="#id752"><span class="problematic" id="id753">:ghissue:`2004`</span></a>: Make wx and wxagg work with wx 2.9.x on Mac.</li>
+<li><a href="#id754"><span class="problematic" id="id755">:ghissue:`1530`</span></a>: saving a figure triggers (very) excessive IO activity</li>
+<li><a href="#id756"><span class="problematic" id="id757">:ghissue:`2044`</span></a>: Svg rasterize (rebased)</li>
+<li><a href="#id758"><span class="problematic" id="id759">:ghissue:`2056`</span></a>: backend_gtk: don&#8217;t hide FileChooserDialog; closes #1530</li>
+<li><a href="#id760"><span class="problematic" id="id761">:ghissue:`1926`</span></a>: Unable to pickle histogram figure</li>
+<li><a href="#id762"><span class="problematic" id="id763">:ghissue:`1690`</span></a>: Edit figure parameters: TypeError: argument 1 has unexpected type &#8216;list&#8217;</li>
+<li><a href="#id764"><span class="problematic" id="id765">:ghissue:`2053`</span></a>: sphinxext.ipython_directive broken</li>
+<li><a href="#id766"><span class="problematic" id="id767">:ghissue:`1997`</span></a>: eps files stump evince</li>
+<li><a href="#id768"><span class="problematic" id="id769">:ghissue:`2017`</span></a>: qt4_editor formlayout now works with colour tuples (fixes Issue #1690)</li>
+<li><a href="#id770"><span class="problematic" id="id771">:ghissue:`2057`</span></a>: pep8 fixes in animation.py</li>
+<li><a href="#id772"><span class="problematic" id="id773">:ghissue:`2055`</span></a>: Deprecated the set_colorbar method on a scalar mappable.</li>
+<li><a href="#id774"><span class="problematic" id="id775">:ghissue:`2058`</span></a>: mplot3d: backend_pdf.py problem with last release not present in 1.2.1rc1</li>
+<li><a href="#id776"><span class="problematic" id="id777">:ghissue:`1391`</span></a>: AutoDateLocator should handle sub-second intervals</li>
+<li><a href="#id778"><span class="problematic" id="id779">:ghissue:`308`</span></a>: Emf backend should support math text</li>
+<li><a href="#id780"><span class="problematic" id="id781">:ghissue:`1945`</span></a>: PEP8 testing</li>
+<li><a href="#id782"><span class="problematic" id="id783">:ghissue:`740`</span></a>: plt.pcolormesh and shape mismatch</li>
+<li><a href="#id784"><span class="problematic" id="id785">:ghissue:`1734`</span></a>: Y-axis labels are impossible to align by baseline</li>
+<li><a href="#id786"><span class="problematic" id="id787">:ghissue:`2039`</span></a>: PY_ARRAY_UNIQUE_SYMBOL not unique enough</li>
+<li><a href="#id788"><span class="problematic" id="id789">:ghissue:`2042`</span></a>: Ensure that PY_ARRAY_UNIQUE_SYMBOL is uniquely defined for each extension</li>
+<li><a href="#id790"><span class="problematic" id="id791">:ghissue:`2041`</span></a>: Fix a number of issues in the doc build</li>
+<li><a href="#id792"><span class="problematic" id="id793">:ghissue:`1223`</span></a>: dpi= for bitmaps not handled correctly</li>
+<li><a href="#id794"><span class="problematic" id="id795">:ghissue:`2049`</span></a>: Fix parallel testing by using the multi-process safe cbook.mkdirs</li>
+<li><a href="#id796"><span class="problematic" id="id797">:ghissue:`1324`</span></a>: backend_pgf: open file handles on Windows</li>
+<li><a href="#id798"><span class="problematic" id="id799">:ghissue:`2047`</span></a>: Fixed typos in legend docs.</li>
+<li><a href="#id800"><span class="problematic" id="id801">:ghissue:`2048`</span></a>: Tweak image path</li>
+<li><a href="#id802"><span class="problematic" id="id803">:ghissue:`1904`</span></a>: Legend kwarg scatteroffsets vs. scatteryoffsets</li>
+<li><a href="#id804"><span class="problematic" id="id805">:ghissue:`1807`</span></a>: Regression: odd rendering of zordered areas on twinx axes in 1.2 (release) versus 1.1</li>
+<li><a href="#id806"><span class="problematic" id="id807">:ghissue:`1882`</span></a>: Possible regression in 1.2.1 vs 1.2.0 re bar plot with log=True</li>
+<li><a href="#id808"><span class="problematic" id="id809">:ghissue:`2031`</span></a>: Update screenshots page</li>
+<li><a href="#id810"><span class="problematic" id="id811">:ghissue:`1889`</span></a>: Fixed handling of <tt class="xref py py-obj docutils literal"><span class="pre">bar(..,</span> <span class="pre">bottom=None,</span> <span class="pre">log=True)</span></tt></li>
+<li><a href="#id812"><span class="problematic" id="id813">:ghissue:`2036`</span></a>: Fix missing ticks on inverted log axis</li>
+<li><a href="#id814"><span class="problematic" id="id815">:ghissue:`2040`</span></a>: Cannot align subplot yaxis labels with PGF backend</li>
+<li><a href="#id816"><span class="problematic" id="id817">:ghissue:`2038`</span></a>: Added parameters to the xkcd function. Fixed deprecation warning on Path.</li>
+<li><a href="#id818"><span class="problematic" id="id819">:ghissue:`2028`</span></a>: Add a what&#8217;s new entry for the WebAgg backend</li>
+<li><a href="#id820"><span class="problematic" id="id821">:ghissue:`2009`</span></a>: Deprecate C++ functions in _path.cpp that are imported in path.py</li>
+<li><a href="#id822"><span class="problematic" id="id823">:ghissue:`1961`</span></a>: All included backends should work or be removed</li>
+<li><a href="#id824"><span class="problematic" id="id825">:ghissue:`1966`</span></a>: Remove deprecated code we threatened to remove for 1.3.x</li>
+<li><a href="#id826"><span class="problematic" id="id827">:ghissue:`2002`</span></a>: Added support for providing 1 or 2 extra colours to the contour routines to easily specify the under and over colors.</li>
+<li><a href="#id828"><span class="problematic" id="id829">:ghissue:`2011`</span></a>: Added the &#8220;cleared&#8221; method to Path, and updated the path module&#8217;s documentation.</li>
+<li><a href="#id830"><span class="problematic" id="id831">:ghissue:`2033`</span></a>: fix pstoeps function in backend_ps.py</li>
+<li><a href="#id832"><span class="problematic" id="id833">:ghissue:`2026`</span></a>: Deprecations and housecleaning</li>
+<li><a href="#id834"><span class="problematic" id="id835">:ghissue:`2032`</span></a>: &#8216;annotate&#8217; ignores path_effects argument.</li>
+<li><a href="#id836"><span class="problematic" id="id837">:ghissue:`2030`</span></a>: Image pep8</li>
+<li><a href="#id838"><span class="problematic" id="id839">:ghissue:`1720`</span></a>: Can&#8217;t pickle RendererAgg in tight_layout figures</li>
+<li><a href="#id840"><span class="problematic" id="id841">:ghissue:`2029`</span></a>: Type correction: float -&gt; double</li>
+<li><a href="#id842"><span class="problematic" id="id843">:ghissue:`1737`</span></a>: MacOSX backend unicode problems in python 3.3</li>
+<li><a href="#id844"><span class="problematic" id="id845">:ghissue:`1753`</span></a>: Resolving Issue #1737 - MacOSX backend unicode problems in python 3.3</li>
+<li><a href="#id846"><span class="problematic" id="id847">:ghissue:`1925`</span></a>: Supported datetimes with microseconds, and those with long time series (&gt;160 years).</li>
+<li><a href="#id848"><span class="problematic" id="id849">:ghissue:`2023`</span></a>: imshow&#8217;s &#8220;nearest&#8221; and &#8220;none&#8221; interpolations produce smoothed images</li>
+<li><a href="#id850"><span class="problematic" id="id851">:ghissue:`1951`</span></a>: parallelize_tests</li>
+<li><a href="#id852"><span class="problematic" id="id853">:ghissue:`2020`</span></a>: Fixed call to path.Path.contains_point from pnpoly.</li>
+<li><a href="#id854"><span class="problematic" id="id855">:ghissue:`2019`</span></a>: Build: avoid win32-incompatible functions</li>
+<li><a href="#id856"><span class="problematic" id="id857">:ghissue:`2018`</span></a>: can&#8217;t create single legend line with different point types</li>
+<li><a href="#id858"><span class="problematic" id="id859">:ghissue:`1919`</span></a>: Issue warning if too many figures are open</li>
+<li><a href="#id860"><span class="problematic" id="id861">:ghissue:`1993`</span></a>: PS backend fails to savefig() pcolormesh with gouraud shading</li>
+<li><a href="#id862"><span class="problematic" id="id863">:ghissue:`2005`</span></a>: Fail to export properly to svg and pdf with interactive paths</li>
+<li><a href="#id864"><span class="problematic" id="id865">:ghissue:`2016`</span></a>: Crash when using character with umlaut</li>
+<li><a href="#id866"><span class="problematic" id="id867">:ghissue:`2015`</span></a>: Wrong text baseline with usetex.</li>
+<li><a href="#id868"><span class="problematic" id="id869">:ghissue:`2012`</span></a>: texmanager doesn&#8217;t handle list of names for <tt class="xref py py-obj docutils literal"><span class="pre">font.family</span></tt></li>
+<li><a href="#id870"><span class="problematic" id="id871">:ghissue:`2010`</span></a>: Allow Paths to be marked as readonly</li>
+<li><a href="#id872"><span class="problematic" id="id873">:ghissue:`2003`</span></a>: Fixed hatch clipping.</li>
+<li><a href="#id874"><span class="problematic" id="id875">:ghissue:`2006`</span></a>: ValueError: stretch is invalid</li>
+<li><a href="#id876"><span class="problematic" id="id877">:ghissue:`2014`</span></a>: Possible error in animate.py after commit cc617006f7f0a18396cecf4a9f1e222f1ee5204e</li>
+<li><a href="#id878"><span class="problematic" id="id879">:ghissue:`2013`</span></a>: Histogram output in PDF is mashed</li>
+<li><a href="#id880"><span class="problematic" id="id881">:ghissue:`1934`</span></a>: Specifying dictionary argument with dict() or braces matters in set_bbox</li>
+<li><a href="#id882"><span class="problematic" id="id883">:ghissue:`2000`</span></a>: Plots show up completely white</li>
+<li><a href="#id884"><span class="problematic" id="id885">:ghissue:`1994`</span></a>: Make wx and wxagg work with wx 2.9.x on Mac.</li>
+<li><a href="#id886"><span class="problematic" id="id887">:ghissue:`956`</span></a>: Shared axes colorbars &amp; finer location control</li>
+<li><a href="#id888"><span class="problematic" id="id889">:ghissue:`1329`</span></a>: Add a &#8220;sketch&#8221; path filter</li>
+<li><a href="#id890"><span class="problematic" id="id891">:ghissue:`1999`</span></a>: Setting dashes to (0,0) results in infinite loop for agg backends</li>
+<li><a href="#id892"><span class="problematic" id="id893">:ghissue:`2001`</span></a>: Fixed hatch clipping.</li>
+<li><a href="#id894"><span class="problematic" id="id895">:ghissue:`1199`</span></a>: New boxplot features</li>
+<li><a href="#id896"><span class="problematic" id="id897">:ghissue:`1898`</span></a>: Hatch clipping</li>
+<li><a href="#id898"><span class="problematic" id="id899">:ghissue:`1092`</span></a>: Better handling of scalars to plt.subplot(). Fixes #880</li>
+<li><a href="#id900"><span class="problematic" id="id901">:ghissue:`1950`</span></a>: Tidy up the matplotlib.__init__ documentation.</li>
+<li><a href="#id902"><span class="problematic" id="id903">:ghissue:`1855`</span></a>: BUG: fixed weird case where boxplot whiskers went inside box</li>
+<li><a href="#id904"><span class="problematic" id="id905">:ghissue:`1831`</span></a>: Unimplemented comparison method for Line3DCollection</li>
+<li><a href="#id906"><span class="problematic" id="id907">:ghissue:`1909`</span></a>: patheffects for Line2d object : rebase of #1015</li>
+<li><a href="#id908"><span class="problematic" id="id909">:ghissue:`1770`</span></a>: strange output from wx and wxagg when trying to render to JPEG or TIFF</li>
+<li><a href="#id910"><span class="problematic" id="id911">:ghissue:`1998`</span></a>: Wx backend broken</li>
+<li><a href="#id912"><span class="problematic" id="id913">:ghissue:`1871`</span></a>: set_scale and set_xscale</li>
+<li><a href="#id914"><span class="problematic" id="id915">:ghissue:`1917`</span></a>: Make <tt class="xref py py-obj docutils literal"><span class="pre">axis.set_scale</span></tt> private</li>
+<li><a href="#id916"><span class="problematic" id="id917">:ghissue:`1927`</span></a>: Workaround for Python 3 with pyparsing &lt;= 2.0.0</li>
+<li><a href="#id918"><span class="problematic" id="id919">:ghissue:`1885`</span></a>: text is not properly clipped in 1.2.1</li>
+<li><a href="#id920"><span class="problematic" id="id921">:ghissue:`1955`</span></a>: Honouring the alpha attribute when creating composite images.</li>
+<li><a href="#id922"><span class="problematic" id="id923">:ghissue:`1290`</span></a>: Debundle pyparsing</li>
+<li><a href="#id924"><span class="problematic" id="id925">:ghissue:`1040`</span></a>: Make &#8216;rstride&#8217;, &#8216;cstride&#8217; default values smarter.</li>
+<li><a href="#id926"><span class="problematic" id="id927">:ghissue:`1016`</span></a>: Object oriented way of setting rc parameters, enabling elegant Pythonic syntax.</li>
+<li><a href="#id928"><span class="problematic" id="id929">:ghissue:`1136`</span></a>: Configuring automatic use of tight_layout</li>
+<li><a href="#id930"><span class="problematic" id="id931">:ghissue:`1856`</span></a>: Raise exception when user tries to use set_xlim or set_ylim on a geographic projection</li>
+<li><a href="#id932"><span class="problematic" id="id933">:ghissue:`1953`</span></a>: New doc build failure</li>
+<li><a href="#id934"><span class="problematic" id="id935">:ghissue:`1896`</span></a>: Doc build is full of lots of irrelevant warnings</li>
+<li><a href="#id936"><span class="problematic" id="id937">:ghissue:`1974`</span></a>: wx backend changes for wxPython Phoenix</li>
+<li><a href="#id938"><span class="problematic" id="id939">:ghissue:`1900`</span></a>: Fix building when Gtk doesn&#8217;t support version check</li>
+<li><a href="#id940"><span class="problematic" id="id941">:ghissue:`1902`</span></a>: Default quit keymap - support for cmd+w on OSX</li>
+<li><a href="#id942"><span class="problematic" id="id943">:ghissue:`1899`</span></a>: Different alphas for lines and fills.</li>
+<li><a href="#id944"><span class="problematic" id="id945">:ghissue:`1954`</span></a>: Supporting different alphas for face and edge colours</li>
+<li><a href="#id946"><span class="problematic" id="id947">:ghissue:`1938`</span></a>: Updated patch to not override alpha on edgecolor if set to none</li>
+<li><a href="#id948"><span class="problematic" id="id949">:ghissue:`1964`</span></a>: Fixes issue #1960. Account for right/top spine data offset on transform ...</li>
+<li><a href="#id950"><span class="problematic" id="id951">:ghissue:`1539`</span></a>: Pickling of log axes</li>
+<li><a href="#id952"><span class="problematic" id="id953">:ghissue:`1828`</span></a>: AttributeError with big float Value(s)</li>
+<li><a href="#id954"><span class="problematic" id="id955">:ghissue:`1971`</span></a>: Fix initialization problem with useblit on SpanSelector instance creatio...</li>
+<li><a href="#id956"><span class="problematic" id="id957">:ghissue:`1988`</span></a>: Added bar plot pickle support.</li>
+<li><a href="#id958"><span class="problematic" id="id959">:ghissue:`1989`</span></a>: Log scale pickle</li>
+<li><a href="#id960"><span class="problematic" id="id961">:ghissue:`1990`</span></a>: Fixed tight_layout pickle support.</li>
+<li><a href="#id962"><span class="problematic" id="id963">:ghissue:`1991`</span></a>: bugfix for matplotlib/ticker.py (python 3.3)</li>
+<li><a href="#id964"><span class="problematic" id="id965">:ghissue:`1833`</span></a>: Change hist behavior when normed and stacked to something more sensible</li>
+<li><a href="#id966"><span class="problematic" id="id967">:ghissue:`1979`</span></a>: developper&#8217;s guide: what is the best workflow to test modifications</li>
+<li><a href="#id968"><span class="problematic" id="id969">:ghissue:`1985`</span></a>: horizontal histogramm doesn&#8217;t work in 1.2 branch</li>
+<li><a href="#id970"><span class="problematic" id="id971">:ghissue:`1984`</span></a>: colors.rgb_to_hsv does not work properly with array of int dtype</li>
+<li><a href="#id972"><span class="problematic" id="id973">:ghissue:`1982`</span></a>: Fix bug in SpanSelector, introduced in commit #dd325759</li>
+<li><a href="#id974"><span class="problematic" id="id975">:ghissue:`1978`</span></a>: Setting font type using rcParams does not work under Python 3.*</li>
+<li><a href="#id976"><span class="problematic" id="id977">:ghissue:`1970`</span></a>: Build: allow local static png dependency</li>
+<li><a href="#id978"><span class="problematic" id="id979">:ghissue:`1976`</span></a>: Replace usage of Lena image in the gallery.</li>
+<li><a href="#id980"><span class="problematic" id="id981">:ghissue:`1977`</span></a>: Fix <tt class="xref py py-obj docutils literal"><span class="pre">backend_driver.py</span></tt></li>
+<li><a href="#id982"><span class="problematic" id="id983">:ghissue:`1944`</span></a>: ValueError exception in drag_zoom (tk backend)</li>
+<li><a href="#id984"><span class="problematic" id="id985">:ghissue:`1957`</span></a>: matplotlib 1.2 / pylab_examples example code: multiple_yaxis_with_spines.py</li>
+<li><a href="#id986"><span class="problematic" id="id987">:ghissue:`1972`</span></a>: SubplotBase._make_twin_axes always creates a new subplot instance</li>
+<li><a href="#id988"><span class="problematic" id="id989">:ghissue:`1787`</span></a>: Path.contains_points() incorrect return</li>
+<li><a href="#id990"><span class="problematic" id="id991">:ghissue:`1973`</span></a>: Collection&#8217;s contains method doesn&#8217;t honour offset_position attribute</li>
+<li><a href="#id992"><span class="problematic" id="id993">:ghissue:`1956`</span></a>: imsave should preserve alpha channel</li>
+<li><a href="#id994"><span class="problematic" id="id995">:ghissue:`1967`</span></a>: svg double hyphen in plot title &#8211;</li>
+<li><a href="#id996"><span class="problematic" id="id997">:ghissue:`1969`</span></a>: SubplotBase._make_twin_axes always creates a new subplot instance.</li>
+<li><a href="#id998"><span class="problematic" id="id999">:ghissue:`1837`</span></a>: html documentation: modules table and prev-next links</li>
+<li><a href="#id1000"><span class="problematic" id="id1001">:ghissue:`1892`</span></a>: possible 1.2.1 regression in ax.axhline</li>
+<li><a href="#id1002"><span class="problematic" id="id1003">:ghissue:`1929`</span></a>: Fixed failing bbox_inches=&#8217;tight&#8217; case when a contour collection is empty</li>
+<li><a href="#id1004"><span class="problematic" id="id1005">:ghissue:`1968`</span></a>: Rotated text element misalignment in Agg</li>
+<li><a href="#id1006"><span class="problematic" id="id1007">:ghissue:`1868`</span></a>: Fixed background colour of PNGs saved with a non-zero opacity.</li>
+<li><a href="#id1008"><span class="problematic" id="id1009">:ghissue:`1965`</span></a>: Make the travis output quieter on v1.2.x</li>
+<li><a href="#id1010"><span class="problematic" id="id1011">:ghissue:`1946`</span></a>: re-arrange mplDeprecation imports</li>
+<li><a href="#id1012"><span class="problematic" id="id1013">:ghissue:`1948`</span></a>: Unable to import pylab (matplotlib._png)</li>
+<li><a href="#id1014"><span class="problematic" id="id1015">:ghissue:`1949`</span></a>: Build failes under ubuntu 13.04</li>
+<li><a href="#id1016"><span class="problematic" id="id1017">:ghissue:`1918`</span></a>: Tidied up some of the documentation.</li>
+<li><a href="#id1018"><span class="problematic" id="id1019">:ghissue:`1924`</span></a>: MEP 12: Gallery cleanup and reorganization (rebase)</li>
+<li><a href="#id1020"><span class="problematic" id="id1021">:ghissue:`1884`</span></a>: incorrect linkage if system PyCXX is found</li>
+<li><a href="#id1022"><span class="problematic" id="id1023">:ghissue:`1936`</span></a>: add pkgconfig to homebrew install instruction</li>
+<li><a href="#id1024"><span class="problematic" id="id1025">:ghissue:`1941`</span></a>: Use freetype-config if pkg-config is not installed</li>
+<li><a href="#id1026"><span class="problematic" id="id1027">:ghissue:`1940`</span></a>: Cleanup and what&#8217;s new item added for jpeg quality rcParam feature.</li>
+<li><a href="#id1028"><span class="problematic" id="id1029">:ghissue:`1937`</span></a>: All text only partially displayed</li>
+<li><a href="#id1030"><span class="problematic" id="id1031">:ghissue:`1771`</span></a>: Jpeg quality 95 by default with rendering with PIL</li>
+<li><a href="#id1032"><span class="problematic" id="id1033">:ghissue:`1836`</span></a>: LaTeX docs build blows up</li>
+<li><a href="#id1034"><span class="problematic" id="id1035">:ghissue:`1935`</span></a>: 1836 latex docs fail</li>
+<li><a href="#id1036"><span class="problematic" id="id1037">:ghissue:`1932`</span></a>: DOC - two modules link appeared in the documentation</li>
+<li><a href="#id1038"><span class="problematic" id="id1039">:ghissue:`1930`</span></a>: FIX Latex documentation now builds properly</li>
+<li><a href="#id1040"><span class="problematic" id="id1041">:ghissue:`1928`</span></a>: Fixed polygon3d rendering bug issue #178</li>
+<li><a href="#id1042"><span class="problematic" id="id1043">:ghissue:`1810`</span></a>: Cairo + plot_date = misaligned x-axis labels</li>
+<li><a href="#id1044"><span class="problematic" id="id1045">:ghissue:`1623`</span></a>: MEP 12: Gallery cleanup and reorganization</li>
+<li><a href="#id1046"><span class="problematic" id="id1047">:ghissue:`1905`</span></a>: Prevent Qt4 from stopping the interpreter</li>
+<li><a href="#id1048"><span class="problematic" id="id1049">:ghissue:`1923`</span></a>: fix Travis failures on 2.6 and 2.7</li>
+<li><a href="#id1050"><span class="problematic" id="id1051">:ghissue:`1922`</span></a>: Commit 2415c6200ebdba75a0571d71a4569f18153fff57 introduces syntax error</li>
+<li><a href="#id1052"><span class="problematic" id="id1053">:ghissue:`1861`</span></a>: Added a find_all method to the RcParams dictionary.</li>
+<li><a href="#id1054"><span class="problematic" id="id1055">:ghissue:`1879`</span></a>: Decode subprocess output to utf-8 or regex will fail</li>
+<li><a href="#id1056"><span class="problematic" id="id1057">:ghissue:`1921`</span></a>: Fix filename decoding when calling fc-match</li>
+<li><a href="#id1058"><span class="problematic" id="id1059">:ghissue:`1859`</span></a>: Fixed a bug in offsetbox</li>
+<li><a href="#id1060"><span class="problematic" id="id1061">:ghissue:`1757`</span></a>: DOC improves documentation on the pyplot module and the bar method</li>
+<li><a href="#id1062"><span class="problematic" id="id1063">:ghissue:`1767`</span></a>: bytes regex matching issue in font_manager.py around 1283 (line number)</li>
+<li><a href="#id1064"><span class="problematic" id="id1065">:ghissue:`1857`</span></a>: pgf backend doesn&#8217;t work well with very large numbers</li>
+<li><a href="#id1066"><span class="problematic" id="id1067">:ghissue:`1858`</span></a>: backend_pgf: clip paths within the backend (fixes #1857)</li>
+<li><a href="#id1068"><span class="problematic" id="id1069">:ghissue:`1812`</span></a>: Error when setting arrowstyle</li>
+<li><a href="#id1070"><span class="problematic" id="id1071">:ghissue:`1913`</span></a>: Fix for issue #1812</li>
+<li><a href="#id1072"><span class="problematic" id="id1073">:ghissue:`1423`</span></a>: Normalize e.g. instances, or reduce them?</li>
+<li><a href="#id1074"><span class="problematic" id="id1075">:ghissue:`1916`</span></a>: Normalize all &#8216;e.g.&#8217; instances. Addresses issue #1423.</li>
+<li><a href="#id1076"><span class="problematic" id="id1077">:ghissue:`1766`</span></a>: add rcParam to set the margin</li>
+<li><a href="#id1078"><span class="problematic" id="id1079">:ghissue:`1908`</span></a>: added rcParam for x and y margin</li>
+<li><a href="#id1080"><span class="problematic" id="id1081">:ghissue:`691`</span></a>: Inner colorbar &amp; Outer colorbar</li>
+<li><a href="#id1082"><span class="problematic" id="id1083">:ghissue:`1886`</span></a>: MacOSX backend incorrectly displays plot/scatter under Affine2D transform</li>
+<li><a href="#id1084"><span class="problematic" id="id1085">:ghissue:`1903`</span></a>: Switching b and c in _transformation_converter to fix issue #1886</li>
+<li><a href="#id1086"><span class="problematic" id="id1087">:ghissue:`1897`</span></a>: Doc build failure - unicode error in generate_example_rst</li>
+<li><a href="#id1088"><span class="problematic" id="id1089">:ghissue:`1915`</span></a>: Corrected a wrong numpy record name in documentation.</li>
+<li><a href="#id1090"><span class="problematic" id="id1091">:ghissue:`1911`</span></a>: dvipng_hack_alpha version check is broken</li>
+<li><a href="#id1092"><span class="problematic" id="id1093">:ghissue:`1914`</span></a>: Fix texmanager.dvipng_hack_alpha() to correctly use Popen.</li>
+<li><a href="#id1094"><span class="problematic" id="id1095">:ghissue:`1823`</span></a>: Cannot import matplotlib on Google App Engine dev appserver</li>
+<li><a href="#id1096"><span class="problematic" id="id1097">:ghissue:`1906`</span></a>: Spectral plot unit tests</li>
+<li><a href="#id1098"><span class="problematic" id="id1099">:ghissue:`1824`</span></a>: Support environments without a home dir or writable file system</li>
+<li><a href="#id1100"><span class="problematic" id="id1101">:ghissue:`1015`</span></a>: patheffects for Line2d object</li>
+<li><a href="#id1102"><span class="problematic" id="id1103">:ghissue:`1878`</span></a>: Webagg changes</li>
+<li><a href="#id1104"><span class="problematic" id="id1105">:ghissue:`1818`</span></a>: Updated some of the documentation information.</li>
+<li><a href="#id1106"><span class="problematic" id="id1107">:ghissue:`1894`</span></a>: Exporting figure as pdf using savefig() messes up axis background in OS X</li>
+<li><a href="#id1108"><span class="problematic" id="id1109">:ghissue:`1887`</span></a>: Clarify documentation for FuncAnimation</li>
+<li><a href="#id1110"><span class="problematic" id="id1111">:ghissue:`1893`</span></a>: bar plot sets axhline(0) for log plots, mpl 1.2.1 disapproves</li>
+<li><a href="#id1112"><span class="problematic" id="id1113">:ghissue:`1890`</span></a>: Restored inkscape installing on travis-ci.</li>
+<li><a href="#id1114"><span class="problematic" id="id1115">:ghissue:`1310`</span></a>: Drops last tick label for some ranges</li>
+<li><a href="#id1116"><span class="problematic" id="id1117">:ghissue:`1874`</span></a>: Building Matplotlib on Ubuntu</li>
+<li><a href="#id1118"><span class="problematic" id="id1119">:ghissue:`1186`</span></a>: Make default arrow head width sensible</li>
+<li><a href="#id1120"><span class="problematic" id="id1121">:ghissue:`1875`</span></a>: [EHN] Add frameon and savefig.frameon to rcParams</li>
+<li><a href="#id1122"><span class="problematic" id="id1123">:ghissue:`1865`</span></a>: Fix manual contour label positions on sparse contours</li>
+<li><a href="#id1124"><span class="problematic" id="id1125">:ghissue:`208`</span></a>: csv2rec imports dates incorrectly and has no option</li>
+<li><a href="#id1126"><span class="problematic" id="id1127">:ghissue:`1356`</span></a>: Docs don&#8217;t build with Python3 (make.py except)</li>
+<li><a href="#id1128"><span class="problematic" id="id1129">:ghissue:`1210`</span></a>: Add dateutil kwargs to csv2rec</li>
+<li><a href="#id1130"><span class="problematic" id="id1131">:ghissue:`1383`</span></a>: More fixes for doc building with python 3</li>
+<li><a href="#id1132"><span class="problematic" id="id1133">:ghissue:`1864`</span></a>: fix legend w/ &#8216;expand&#8217; mode which fails for a single item.</li>
+<li><a href="#id1134"><span class="problematic" id="id1135">:ghissue:`1763`</span></a>: Matplotlib 1.2.0 no longer respects the &#8220;bottom&#8221; argument for horizontal histograms</li>
+<li><a href="#id1136"><span class="problematic" id="id1137">:ghissue:`1448`</span></a>: <tt class="docutils literal"><span class="pre">`bbox_inches=&quot;tight&quot;`</span></tt> support for <em>all</em> figure artists.</li>
+<li><a href="#id1138"><span class="problematic" id="id1139">:ghissue:`1869`</span></a>: Installed inkscape on the travis-ci vm.</li>
+<li><a href="#id1140"><span class="problematic" id="id1141">:ghissue:`1008`</span></a>: Saving animation with coloured background</li>
+<li><a href="#id1142"><span class="problematic" id="id1143">:ghissue:`1870`</span></a>: Testing documentation isn&#8217;t clear about which files to copy</li>
+<li><a href="#id1144"><span class="problematic" id="id1145">:ghissue:`1528`</span></a>: Fonts rendered are 25% larger than requested on SVG backend</li>
+<li><a href="#id1146"><span class="problematic" id="id1147">:ghissue:`1256`</span></a>: rendering slowdown with big invisible lines</li>
+<li><a href="#id1148"><span class="problematic" id="id1149">:ghissue:`1287`</span></a>: compare_images computes RMS incorrectly</li>
+<li><a href="#id1150"><span class="problematic" id="id1151">:ghissue:`1866`</span></a>: fix the pyplot version of rc_context</li>
+<li><a href="#id1152"><span class="problematic" id="id1153">:ghissue:`1631`</span></a>: histstack looks bad with alpha.</li>
+<li><a href="#id1154"><span class="problematic" id="id1155">:ghissue:`1867`</span></a>: QT backend changes locale</li>
+<li><a href="#id1156"><span class="problematic" id="id1157">:ghissue:`1860`</span></a>: Bug with PatchCollection in PDF output</li>
+<li><a href="#id1158"><span class="problematic" id="id1159">:ghissue:`1862`</span></a>: Matplotlib savefig() closes BytesIO object when saving in postscript format</li>
+<li><a href="#id1160"><span class="problematic" id="id1161">:ghissue:`1259`</span></a>: MacOS backend modifier keys</li>
+<li><a href="#id1162"><span class="problematic" id="id1163">:ghissue:`1841`</span></a>: Fixes issue #1259 - Added modifier key handling for macosx backend</li>
+<li><a href="#id1164"><span class="problematic" id="id1165">:ghissue:`1563`</span></a>: macosx backend slowdown with 1.2.0</li>
+<li><a href="#id1166"><span class="problematic" id="id1167">:ghissue:`1816`</span></a>: Avoid macosx backend slowdown; issue 1563</li>
+<li><a href="#id1168"><span class="problematic" id="id1169">:ghissue:`1729`</span></a>: request for plotting variable bin size with imshow</li>
+<li><a href="#id1170"><span class="problematic" id="id1171">:ghissue:`1839`</span></a>: matplotlib 1.2.0 doesn&#8217;t compile with Solaris Studio 12.3 CC</li>
+<li><a href="#id1172"><span class="problematic" id="id1173">:ghissue:`1796`</span></a>: axes.grid lines using lines.marker settings?</li>
+<li><a href="#id1174"><span class="problematic" id="id1175">:ghissue:`1846`</span></a>: Fix the clippath renderering so that it uses no-clip unsigned chars</li>
+<li><a href="#id1176"><span class="problematic" id="id1177">:ghissue:`1844`</span></a>: 1.2.0 regression: custom scale not working</li>
+<li><a href="#id1178"><span class="problematic" id="id1179">:ghissue:`1768`</span></a>: Build fails on travisCI</li>
+<li><a href="#id1180"><span class="problematic" id="id1181">:ghissue:`1851`</span></a>: Fix for the custom scale example</li>
+<li><a href="#id1182"><span class="problematic" id="id1183">:ghissue:`1853`</span></a>: fill_betweenx signature fixed</li>
+<li><a href="#id1184"><span class="problematic" id="id1185">:ghissue:`1854`</span></a>: BF - prevent a TypeError for lists of vertices</li>
+<li><a href="#id1186"><span class="problematic" id="id1187">:ghissue:`1840`</span></a>: BF - prevent a TypeError for lists of vertices in set_marker</li>
+<li><a href="#id1188"><span class="problematic" id="id1189">:ghissue:`1842`</span></a>: test_backend_pgf errors</li>
+<li><a href="#id1190"><span class="problematic" id="id1191">:ghissue:`1850`</span></a>: fill_betweenx signature fixed</li>
+<li><a href="#id1192"><span class="problematic" id="id1193">:ghissue:`1843`</span></a>: test_backend_pgf: TypeError</li>
+<li><a href="#id1194"><span class="problematic" id="id1195">:ghissue:`1830`</span></a>: Keyboard shortcuts work when toolbar not displayed</li>
+<li><a href="#id1196"><span class="problematic" id="id1197">:ghissue:`1848`</span></a>: add flushing of stdout to update on key event</li>
+<li><a href="#id1198"><span class="problematic" id="id1199">:ghissue:`1802`</span></a>: Step linestyle</li>
+<li><a href="#id1200"><span class="problematic" id="id1201">:ghissue:`879`</span></a>: Two colormaps named &#8220;spectral&#8221;</li>
+<li><a href="#id1202"><span class="problematic" id="id1203">:ghissue:`1127`</span></a>: Change spectral to nipy_spectral, update docs, leave aliases</li>
+<li><a href="#id1204"><span class="problematic" id="id1205">:ghissue:`1804`</span></a>: MEP10 - documentation improvements on set_xlabel and text of axes.py</li>
+<li><a href="#id1206"><span class="problematic" id="id1207">:ghissue:`1764`</span></a>: Make loc come after fontdict in set_title. Closes #1759</li>
+<li><a href="#id1208"><span class="problematic" id="id1209">:ghissue:`1759`</span></a>: Axes3d error on set_title</li>
+<li><a href="#id1210"><span class="problematic" id="id1211">:ghissue:`800`</span></a>: Still another Agg snapping issue.</li>
+<li><a href="#id1212"><span class="problematic" id="id1213">:ghissue:`1727`</span></a>: &#8216;stepfilled&#8217; histogram is not filled properly when setting yscale(&#8216;log&#8217;)</li>
+<li><a href="#id1214"><span class="problematic" id="id1215">:ghissue:`1612`</span></a>: setupegg is broken on windows</li>
+<li><a href="#id1216"><span class="problematic" id="id1217">:ghissue:`1591`</span></a>: Image being snapped erroneously</li>
+<li><a href="#id1218"><span class="problematic" id="id1219">:ghissue:`1845`</span></a>: Agg clip rendering fix</li>
+<li><a href="#id1220"><span class="problematic" id="id1221">:ghissue:`1838`</span></a>: plot_surface and transposed arrays</li>
+<li><a href="#id1222"><span class="problematic" id="id1223">:ghissue:`1825`</span></a>: Work around missing subprocess members on Google App Engine</li>
+<li><a href="#id1224"><span class="problematic" id="id1225">:ghissue:`1826`</span></a>: backend_ps: Do not write to a temporary file unless using an external distiller</li>
+<li><a href="#id1226"><span class="problematic" id="id1227">:ghissue:`1827`</span></a>: MEP10 - documentation improvements on many common plots: scatter plots, ...</li>
+<li><a href="#id1228"><span class="problematic" id="id1229">:ghissue:`1834`</span></a>: finance: Fixed making directories for explicit cachename</li>
+<li><a href="#id1230"><span class="problematic" id="id1231">:ghissue:`1714`</span></a>: qt4_editor broken: <tt class="xref py py-obj docutils literal"><span class="pre">TransformNode</span> <span class="pre">instances</span> <span class="pre">can</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">copied</span></tt></li>
+<li><a href="#id1232"><span class="problematic" id="id1233">:ghissue:`1832`</span></a>: BF - correct return type for Axes.get_title</li>
+<li><a href="#id1234"><span class="problematic" id="id1235">:ghissue:`324`</span></a>: ability to change curves, axes, labels attributes via UI</li>
+<li><a href="#id1236"><span class="problematic" id="id1237">:ghissue:`1803`</span></a>: Markers module: PEP8 fixes and MEP10 documentation fixes</li>
+<li><a href="#id1238"><span class="problematic" id="id1239">:ghissue:`1795`</span></a>: MEP10 - refactored hlines and vlines documentation</li>
+<li><a href="#id1240"><span class="problematic" id="id1241">:ghissue:`1819`</span></a>: Option for disregarding matplotlibrc, for reproducible batch production of plots</li>
+<li><a href="#id1242"><span class="problematic" id="id1243">:ghissue:`1822`</span></a>: Improved triinterp_demo pylab example</li>
+<li><a href="#id1244"><span class="problematic" id="id1245">:ghissue:`1820`</span></a>: griddata: Allow for easy switching between interpolation mechanisms</li>
+<li><a href="#id1246"><span class="problematic" id="id1247">:ghissue:`1811`</span></a>: MultiCursor with additionnal optionnal horizontal bar</li>
+<li><a href="#id1248"><span class="problematic" id="id1249">:ghissue:`1817`</span></a>: Improved test_triinterp_colinear</li>
+<li><a href="#id1250"><span class="problematic" id="id1251">:ghissue:`1799`</span></a>: Corrupt/invalid PDF and EPS files when saving a logscaled plot made with negative values</li>
+<li><a href="#id1252"><span class="problematic" id="id1253">:ghissue:`1800`</span></a>: Agg snapping fixes (for the last time...?) :)</li>
+<li><a href="#id1254"><span class="problematic" id="id1255">:ghissue:`1521`</span></a>: Triangular grid interpolation and refinement</li>
+<li><a href="#id1256"><span class="problematic" id="id1257">:ghissue:`1786`</span></a>: Cubic interpolation for triangular grids</li>
+<li><a href="#id1258"><span class="problematic" id="id1259">:ghissue:`1808`</span></a>: DOC: typo, break lines &gt;80 char, add link to cmaps list</li>
+<li><a href="#id1260"><span class="problematic" id="id1261">:ghissue:`1798`</span></a>: MEP10 - documentation improvements on set_xlabel and text of axes.py</li>
+<li><a href="#id1262"><span class="problematic" id="id1263">:ghissue:`1801`</span></a>: Add .directory files to .gitignore</li>
+<li><a href="#id1264"><span class="problematic" id="id1265">:ghissue:`1765`</span></a>: Unable to Generate Docs</li>
+<li><a href="#id1266"><span class="problematic" id="id1267">:ghissue:`1744`</span></a>: bottom keyword doesn&#8217;t work for non-stacked histograms</li>
+<li><a href="#id1268"><span class="problematic" id="id1269">:ghissue:`1679`</span></a>: matplotlib-1.2.0: regression in histogram with barstacked drawing?</li>
+<li><a href="#id1270"><span class="problematic" id="id1271">:ghissue:`1724`</span></a>: Re-write stacked step histogram</li>
+<li><a href="#id1272"><span class="problematic" id="id1273">:ghissue:`1790`</span></a>: Fixes problem raised in #1431 (<tt class="docutils literal"><span class="pre">`get_transform`</span></tt> should not affect <tt class="docutils literal"><span class="pre">`is_transform_set`</span></tt>)</li>
+<li><a href="#id1274"><span class="problematic" id="id1275">:ghissue:`1779`</span></a>: Bug in postscript backend in Python 3</li>
+<li><a href="#id1276"><span class="problematic" id="id1277">:ghissue:`1797`</span></a>: PEP8 on colors module</li>
+<li><a href="#id1278"><span class="problematic" id="id1279">:ghissue:`1291`</span></a>: Fix image comparison</li>
+<li><a href="#id1280"><span class="problematic" id="id1281">:ghissue:`1788`</span></a>: Lower minimum pyparsing version to 1.5.2</li>
+<li><a href="#id1282"><span class="problematic" id="id1283">:ghissue:`1789`</span></a>: imshow() subplots with shared axes generate unwanted white spaces</li>
+<li><a href="#id1284"><span class="problematic" id="id1285">:ghissue:`1793`</span></a>: font_manager unittest errors</li>
+<li><a href="#id1286"><span class="problematic" id="id1287">:ghissue:`1791`</span></a>: Symbol not found: _CGAffineTransformIdentity on MacOS 10.6</li>
+<li><a href="#id1288"><span class="problematic" id="id1289">:ghissue:`1772`</span></a>: Python 3.3 build failure</li>
+<li><a href="#id1290"><span class="problematic" id="id1291">:ghissue:`1794`</span></a>: Fix for #1792</li>
+<li><a href="#id1292"><span class="problematic" id="id1293">:ghissue:`1781`</span></a>: Issues with installing matplotlib on Travis with Python 3</li>
+<li><a href="#id1294"><span class="problematic" id="id1295">:ghissue:`1792`</span></a>: Matplotlib fails to install pyparsing with Python 2</li>
+<li><a href="#id1296"><span class="problematic" id="id1297">:ghissue:`1454`</span></a>: Retool the setup.py infrastructure</li>
+<li><a href="#id1298"><span class="problematic" id="id1299">:ghissue:`1776`</span></a>: Documentation style suggestion</li>
+<li><a href="#id1300"><span class="problematic" id="id1301">:ghissue:`1785`</span></a>: Fix test_bbox_inches_tight</li>
+<li><a href="#id1302"><span class="problematic" id="id1303">:ghissue:`1784`</span></a>: Attempt to fix Travis &#8220;permission denied&#8221; error for Python 3</li>
+<li><a href="#id1304"><span class="problematic" id="id1305">:ghissue:`1775`</span></a>: Issue #1763</li>
+<li><a href="#id1306"><span class="problematic" id="id1307">:ghissue:`1615`</span></a>: Offset is empty with usetex when offset is equal to 1</li>
+<li><a href="#id1308"><span class="problematic" id="id1309">:ghissue:`1782`</span></a>: fix copy-to-clipboard in example</li>
+<li><a href="#id1310"><span class="problematic" id="id1311">:ghissue:`1778`</span></a>: Fix clip_path_to_rect, add convenience method on Path object for it</li>
+<li><a href="#id1312"><span class="problematic" id="id1313">:ghissue:`1777`</span></a>: PyList_SetItem return value bug in clip_path_to_rect (_path.cpp).</li>
+<li><a href="#id1314"><span class="problematic" id="id1315">:ghissue:`1773`</span></a>: emf backend doesn&#8217;t work with StringIO</li>
+<li><a href="#id1316"><span class="problematic" id="id1317">:ghissue:`1669`</span></a>: Add EventCollection and eventplot</li>
+<li><a href="#id1318"><span class="problematic" id="id1319">:ghissue:`1774`</span></a>: ignore singleton dimensions in ndarrays passed to imshow</li>
+<li><a href="#id1320"><span class="problematic" id="id1321">:ghissue:`1619`</span></a>: Arrow with &#8220;simple&#8221; style is not robust.  Code fix included.</li>
+<li><a href="#id1322"><span class="problematic" id="id1323">:ghissue:`1725`</span></a>: Fix compiler warnings</li>
+<li><a href="#id1324"><span class="problematic" id="id1325">:ghissue:`1756`</span></a>: Remove broken printing_in_wx.py example.</li>
+<li><a href="#id1326"><span class="problematic" id="id1327">:ghissue:`1094`</span></a>: Feature request - make it simpler to use full OO interface</li>
+<li><a href="#id1328"><span class="problematic" id="id1329">:ghissue:`1457`</span></a>: Better object-oriented interface for users</li>
+<li><a href="#id1330"><span class="problematic" id="id1331">:ghissue:`1762`</span></a>: Make cbook safe to import while removing duplicate is_string_like;</li>
+<li><a href="#id1332"><span class="problematic" id="id1333">:ghissue:`1019`</span></a>: Repeated is_string_like function</li>
+<li><a href="#id1334"><span class="problematic" id="id1335">:ghissue:`1761`</span></a>: plot_wireframe does not accept vmin, vmax</li>
+<li><a href="#id1336"><span class="problematic" id="id1337">:ghissue:`300`</span></a>: subplot args desription confusing</li>
+<li><a href="#id1338"><span class="problematic" id="id1339">:ghissue:`1252`</span></a>: Properly passing on horiz-/vertOn to Cursor()</li>
+<li><a href="#id1340"><span class="problematic" id="id1341">:ghissue:`1632`</span></a>: Fix build on Ubuntu 12.10</li>
+<li><a href="#id1342"><span class="problematic" id="id1343">:ghissue:`1686`</span></a>: Fix lost ticks</li>
+<li><a href="#id1344"><span class="problematic" id="id1345">:ghissue:`1640`</span></a>: Fix bugs in legend positioning with loc=&#8217;best&#8217;</li>
+<li><a href="#id1346"><span class="problematic" id="id1347">:ghissue:`1687`</span></a>: Update lib/matplotlib/backends/backend_cairo.py</li>
+<li><a href="#id1348"><span class="problematic" id="id1349">:ghissue:`1760`</span></a>: Improved the subplot function documentation and fixed the autogeneration from boilerplate.</li>
+<li><a href="#id1350"><span class="problematic" id="id1351">:ghissue:`1647`</span></a>: WIP: Deprecation of the cbook module</li>
+<li><a href="#id1352"><span class="problematic" id="id1353">:ghissue:`1662`</span></a>: is_string_like existed both in matplotlib and matplotlib.cbook</li>
+<li><a href="#id1354"><span class="problematic" id="id1355">:ghissue:`1716`</span></a>: PEP8 fixes on the figure module</li>
+<li><a href="#id1356"><span class="problematic" id="id1357">:ghissue:`1643`</span></a>: Clean up code in cbook</li>
+<li><a href="#id1358"><span class="problematic" id="id1359">:ghissue:`953`</span></a>: subplot docstring improvement (re #300)</li>
+<li><a href="#id1360"><span class="problematic" id="id1361">:ghissue:`1112`</span></a>: Bad kwargs to savefig</li>
+<li><a href="#id1362"><span class="problematic" id="id1363">:ghissue:`1755`</span></a>: Update examples/pylab_examples/histogram_demo_extended.py</li>
+<li><a href="#id1364"><span class="problematic" id="id1365">:ghissue:`1754`</span></a>: Fixed a typo in histogram example code</li>
+<li><a href="#id1366"><span class="problematic" id="id1367">:ghissue:`1490`</span></a>: empty scatter messes up the limits</li>
+<li><a href="#id1368"><span class="problematic" id="id1369">:ghissue:`1497`</span></a>: Fix for empty collection check in axes.add_collection</li>
+<li><a href="#id1370"><span class="problematic" id="id1371">:ghissue:`1685`</span></a>: Add default savefig directory</li>
+<li><a href="#id1372"><span class="problematic" id="id1373">:ghissue:`1698`</span></a>: Fix bug updating WeakKeyDictionary during iteration</li>
+<li><a href="#id1374"><span class="problematic" id="id1375">:ghissue:`1743`</span></a>: slight tweak to the documentation of <tt class="xref py py-obj docutils literal"><span class="pre">errorbar</span></tt></li>
+<li><a href="#id1376"><span class="problematic" id="id1377">:ghissue:`1748`</span></a>: Typo in &#8220;Annotation&#8221; docstring.</li>
+<li><a href="#id1378"><span class="problematic" id="id1379">:ghissue:`1750`</span></a>: Name missmatch in filetypes.rgba and print_rgb of backend_bases.py</li>
+<li><a href="#id1380"><span class="problematic" id="id1381">:ghissue:`1749`</span></a>: Incompatibility with latest stable Numpy build (v1.7)</li>
+<li><a href="#id1382"><span class="problematic" id="id1383">:ghissue:`1722`</span></a>: Fix sign of infstr in exceltools.rec2exel</li>
+<li><a href="#id1384"><span class="problematic" id="id1385">:ghissue:`1126`</span></a>: Qt4 save dialog not functional on CentOS-5</li>
+<li><a href="#id1386"><span class="problematic" id="id1387">:ghissue:`1740`</span></a>: alpha is not set correctly when using eps format</li>
+<li><a href="#id1388"><span class="problematic" id="id1389">:ghissue:`1741`</span></a>: pcolormesh memory leak</li>
+<li><a href="#id1390"><span class="problematic" id="id1391">:ghissue:`1726`</span></a>: stackplot_test_baseline has different results on 32-bit and 64-bit platforms</li>
+<li><a href="#id1392"><span class="problematic" id="id1393">:ghissue:`1577`</span></a>: PEP8 fixes on the line module</li>
+<li><a href="#id1394"><span class="problematic" id="id1395">:ghissue:`1728`</span></a>: Macosx backend: tweak to coordinates position</li>
+<li><a href="#id1396"><span class="problematic" id="id1397">:ghissue:`1701`</span></a>: dash setting in LineCollection is broken</li>
+<li><a href="#id1398"><span class="problematic" id="id1399">:ghissue:`1704`</span></a>: Contour does not pass a list of linestyles to LineCollection</li>
+<li><a href="#id1400"><span class="problematic" id="id1401">:ghissue:`1718`</span></a>: Fix set dashes for line collections</li>
+<li><a href="#id1402"><span class="problematic" id="id1403">:ghissue:`1721`</span></a>: rcParams.keys() is not Python 3 compatible</li>
+<li><a href="#id1404"><span class="problematic" id="id1405">:ghissue:`1723`</span></a>: Re-write stacked histogram (fixes bugs)</li>
+<li><a href="#id1406"><span class="problematic" id="id1407">:ghissue:`1706`</span></a>: Fix bugs in stacked histograms</li>
+<li><a href="#id1408"><span class="problematic" id="id1409">:ghissue:`1401`</span></a>: RuntimeError: dictionary changed size during iteration from colors.py, 3.3 but not 3.2</li>
+<li><a href="#id1410"><span class="problematic" id="id1411">:ghissue:`1699`</span></a>: Enable to switch off the removal of comments in csv2rec.</li>
+<li><a href="#id1412"><span class="problematic" id="id1413">:ghissue:`1710`</span></a>: Mixing Arial with mathtext on Windows 8 fails</li>
+<li><a href="#id1414"><span class="problematic" id="id1415">:ghissue:`1683`</span></a>: Remove figure from Gcf when it is closed</li>
+<li><a href="#id1416"><span class="problematic" id="id1417">:ghissue:`1705`</span></a>: Qt closeevent fixes for  v1.2.x</li>
+<li><a href="#id1418"><span class="problematic" id="id1419">:ghissue:`1504`</span></a>: markerfacecolor/markeredgecolor alpha issue</li>
+<li><a href="#id1420"><span class="problematic" id="id1421">:ghissue:`1671`</span></a>: Feature stack base</li>
+<li><a href="#id1422"><span class="problematic" id="id1423">:ghissue:`1075`</span></a>: fix hist limit issue for step* for both linear and log scale</li>
+<li><a href="#id1424"><span class="problematic" id="id1425">:ghissue:`1659`</span></a>: super hacky fix to issue #1310</li>
+<li><a href="#id1426"><span class="problematic" id="id1427">:ghissue:`196`</span></a>: Axes.hist(...log=True) mishandles y-axis minimum value</li>
+<li><a href="#id1428"><span class="problematic" id="id1429">:ghissue:`1029`</span></a>: Implemented fix to issue 196 on github for log=True and histtype=&#8217;step&#8217;</li>
+<li><a href="#id1430"><span class="problematic" id="id1431">:ghissue:`1684`</span></a>: Fix hist for log=True and histtype=&#8217;step&#8217;</li>
+<li><a href="#id1432"><span class="problematic" id="id1433">:ghissue:`1707`</span></a>: Docs build failure</li>
+<li><a href="#id1434"><span class="problematic" id="id1435">:ghissue:`1708`</span></a>: Fix breaking doc build</li>
+<li><a href="#id1436"><span class="problematic" id="id1437">:ghissue:`289`</span></a>: reproducible research: sys.argv[0] in plot footer</li>
+<li><a href="#id1438"><span class="problematic" id="id1439">:ghissue:`1633`</span></a>: Add rcParam option for number of scatterplot symbols</li>
+<li><a href="#id1440"><span class="problematic" id="id1441">:ghissue:`1113`</span></a>: Bug in ax.arrow()</li>
+<li><a href="#id1442"><span class="problematic" id="id1443">:ghissue:`987`</span></a>: angle/rotate keyword for rectangle</li>
+<li><a href="#id1444"><span class="problematic" id="id1445">:ghissue:`775`</span></a>: TypeError in Axes.get_legend_handles_labels</li>
+<li><a href="#id1446"><span class="problematic" id="id1447">:ghissue:`331`</span></a>: stem function ability to take one argument</li>
+<li><a href="#id1448"><span class="problematic" id="id1449">:ghissue:`1644`</span></a>: NF - Left and right side axes titles</li>
+<li><a href="#id1450"><span class="problematic" id="id1451">:ghissue:`1666`</span></a>: Fix USE_FONTCONFIG=True mode</li>
+<li><a href="#id1452"><span class="problematic" id="id1453">:ghissue:`1697`</span></a>: Fix bug updating WeakKeyDictionary during iteration</li>
+<li><a href="#id1454"><span class="problematic" id="id1455">:ghissue:`1691`</span></a>: Fix svg flipping (again)</li>
+<li><a href="#id1456"><span class="problematic" id="id1457">:ghissue:`1695`</span></a>: Alpha kwarg fix</li>
+<li><a href="#id1458"><span class="problematic" id="id1459">:ghissue:`1696`</span></a>: Fixed doc dependency on numpy_ext.numpydoc</li>
+<li><a href="#id1460"><span class="problematic" id="id1461">:ghissue:`1665`</span></a>: MEP10: adding numpydoc and activating autosummary</li>
+<li><a href="#id1462"><span class="problematic" id="id1463">:ghissue:`1660`</span></a>: Explain that matplotlib must be built before the HTML documentation</li>
+<li><a href="#id1464"><span class="problematic" id="id1465">:ghissue:`1693`</span></a>: saving to <a href="#id1466"><span class="problematic" id="id1467">*</span></a>.eps broken on master</li>
+<li><a href="#id1468"><span class="problematic" id="id1469">:ghissue:`1694`</span></a>: fixes Issue #1693</li>
+<li><a href="#id1470"><span class="problematic" id="id1471">:ghissue:`1689`</span></a>: SVG flip issue</li>
+<li><a href="#id1472"><span class="problematic" id="id1473">:ghissue:`1681`</span></a>: Fancy arrow tests are failing</li>
+<li><a href="#id1474"><span class="problematic" id="id1475">:ghissue:`1682`</span></a>: Fixed the expected output from test_arrow_patches.test_fancyarrow.</li>
+<li><a href="#id1476"><span class="problematic" id="id1477">:ghissue:`1262`</span></a>: Using figure.suptitle puts another suptitle on top of any existing one.</li>
+<li><a href="#id1478"><span class="problematic" id="id1479">:ghissue:`1663`</span></a>: Fix suptitle</li>
+<li><a href="#id1480"><span class="problematic" id="id1481">:ghissue:`1675`</span></a>: fix &#8220;alpha&#8221; kwarg in errorbar plot</li>
+<li><a href="#id1482"><span class="problematic" id="id1483">:ghissue:`1610`</span></a>: plotting legends none</li>
+<li><a href="#id1484"><span class="problematic" id="id1485">:ghissue:`1676`</span></a>: Qt close events don&#8217;t cascade properly.</li>
+<li><a href="#id1486"><span class="problematic" id="id1487">:ghissue:`1678`</span></a>: added QtGui.QMainWindow.closeEvent() to make sure the close event</li>
+<li><a href="#id1488"><span class="problematic" id="id1489">:ghissue:`1673`</span></a>: Images saved as SVG get upside down when <tt class="xref py py-obj docutils literal"><span class="pre">svg.image_noscale</span></tt> is True.</li>
+<li><a href="#id1490"><span class="problematic" id="id1491">:ghissue:`1674`</span></a>: Fix SVG flip when svg.image_noscale is True</li>
+<li><a href="#id1492"><span class="problematic" id="id1493">:ghissue:`1680`</span></a>: Ignore lib/dateutil</li>
+<li><a href="#id1494"><span class="problematic" id="id1495">:ghissue:`1677`</span></a>: add changelog for #1626</li>
+<li><a href="#id1496"><span class="problematic" id="id1497">:ghissue:`1626`</span></a>: Add framealpha argument for legend</li>
+<li><a href="#id1498"><span class="problematic" id="id1499">:ghissue:`1608`</span></a>: Incorrect ylabel placement in twinx</li>
+<li><a href="#id1500"><span class="problematic" id="id1501">:ghissue:`1642`</span></a>: remove <tt class="xref py py-obj docutils literal"><span class="pre">import</span> <span class="pre">new</span></tt> from cbook.py</li>
+<li><a href="#id1502"><span class="problematic" id="id1503">:ghissue:`1534`</span></a>: Make <tt class="xref py py-obj docutils literal"><span class="pre">rc_context</span></tt> available via pyplot interface</li>
+<li><a href="#id1504"><span class="problematic" id="id1505">:ghissue:`1672`</span></a>: Nuke Travis python 3.1 testing</li>
+<li><a href="#id1506"><span class="problematic" id="id1507">:ghissue:`1535`</span></a>: Deprecate mpl.py (was Remove mpl.py)</li>
+<li><a href="#id1508"><span class="problematic" id="id1509">:ghissue:`1670`</span></a>: Deprecate mpl</li>
+<li><a href="#id1510"><span class="problematic" id="id1511">:ghissue:`1517`</span></a>: ENH: Add baseline feature to stackplot.</li>
+<li><a href="#id1512"><span class="problematic" id="id1513">:ghissue:`1635`</span></a>: Recompute Wedge path after change of attributes.</li>
+<li><a href="#id1514"><span class="problematic" id="id1515">:ghissue:`1488`</span></a>: Continue propagating resize event up the chain</li>
+<li><a href="#id1516"><span class="problematic" id="id1517">:ghissue:`1498`</span></a>: use QMainWindow.closeEvent for close events</li>
+<li><a href="#id1518"><span class="problematic" id="id1519">:ghissue:`1617`</span></a>: Legend: Also calc the bbox of the legend when the frame is not drawn. (1.2.x)</li>
+<li><a href="#id1520"><span class="problematic" id="id1521">:ghissue:`1585`</span></a>: Fix Qt canvas resize_event</li>
+<li><a href="#id1522"><span class="problematic" id="id1523">:ghissue:`1629`</span></a>: Update x,y.z values for an existing Line3D object</li>
+<li><a href="#id1524"><span class="problematic" id="id1525">:ghissue:`1611`</span></a>: change handling of legend labels which are None</li>
+<li><a href="#id1526"><span class="problematic" id="id1527">:ghissue:`1657`</span></a>: Add EventCollection and eventplot</li>
+<li><a href="#id1528"><span class="problematic" id="id1529">:ghissue:`1641`</span></a>: PEP8 fixes on the rcsetup module</li>
+<li><a href="#id1530"><span class="problematic" id="id1531">:ghissue:`1650`</span></a>: _png.read_png crashes on Python 3 with urllib.request object</li>
+<li><a href="#id1532"><span class="problematic" id="id1533">:ghissue:`1568`</span></a>: removed deprecated methods from the axes module.</li>
+<li><a href="#id1534"><span class="problematic" id="id1535">:ghissue:`1571`</span></a>: Y-labels shifted</li>
+<li><a href="#id1536"><span class="problematic" id="id1537">:ghissue:`1589`</span></a>: Fix shifted ylabels (Issue #1571)</li>
+<li><a href="#id1538"><span class="problematic" id="id1539">:ghissue:`1276`</span></a>: Fix overwriting suptitle</li>
+<li><a href="#id1540"><span class="problematic" id="id1541">:ghissue:`1661`</span></a>: Fix travis install failure on py31</li>
+<li><a href="#id1542"><span class="problematic" id="id1543">:ghissue:`1634`</span></a>: add scatterpoints to  rcParam</li>
+<li><a href="#id1544"><span class="problematic" id="id1545">:ghissue:`1654`</span></a>: added explicit &#8216;zorder&#8217; kwarg to <tt class="xref py py-obj docutils literal"><span class="pre">Colection</span></tt> and <tt class="xref py py-obj docutils literal"><span class="pre">LineCollection</span></tt>.</li>
+<li><a href="#id1546"><span class="problematic" id="id1547">:ghissue:`570`</span></a>: mplot3d reverse axis behavior</li>
+<li><a href="#id1548"><span class="problematic" id="id1549">:ghissue:`1653`</span></a>: Fix #570 - Reversing a 3d axis should now work properly.</li>
+<li><a href="#id1550"><span class="problematic" id="id1551">:ghissue:`1651`</span></a>: WebAgg: pylab compatibility</li>
+<li><a href="#id1552"><span class="problematic" id="id1553">:ghissue:`1638`</span></a>: web_backend is not installed</li>
+<li><a href="#id1554"><span class="problematic" id="id1555">:ghissue:`1505`</span></a>: Issue 1504: changed how <tt class="xref py py-obj docutils literal"><span class="pre">draw</span></tt> handles alpha in <tt class="xref py py-obj docutils literal"><span class="pre">markerfacecolor</span></tt></li>
+<li><a href="#id1556"><span class="problematic" id="id1557">:ghissue:`1655`</span></a>: add get_segments method to collections.LineCollection</li>
+<li><a href="#id1558"><span class="problematic" id="id1559">:ghissue:`1649`</span></a>: add get_segments method to collections.LineCollection</li>
+<li><a href="#id1560"><span class="problematic" id="id1561">:ghissue:`1593`</span></a>: NameError: global name &#8216;iterable&#8217; is not defined</li>
+<li><a href="#id1562"><span class="problematic" id="id1563">:ghissue:`1652`</span></a>: Ignore kdevelop4 project files</li>
+<li><a href="#id1564"><span class="problematic" id="id1565">:ghissue:`665`</span></a>: Mac OSX backend keyboard focus stays in terminal</li>
+<li><a href="#id1566"><span class="problematic" id="id1567">:ghissue:`1613`</span></a>: Using a stricter check to see if Python was installed as a framework.</li>
+<li><a href="#id1568"><span class="problematic" id="id1569">:ghissue:`1581`</span></a>: Provide an alternative to lena.png for two examples that use it.</li>
+<li><a href="#id1570"><span class="problematic" id="id1571">:ghissue:`1599`</span></a>:  Ada Lovelace and Grace Murray Hopper images in place of Lena</li>
+<li><a href="#id1572"><span class="problematic" id="id1573">:ghissue:`1582`</span></a>: Linear tri interpolator</li>
+<li><a href="#id1574"><span class="problematic" id="id1575">:ghissue:`1637`</span></a>: change cbook to relative import</li>
+<li><a href="#id1576"><span class="problematic" id="id1577">:ghissue:`1645`</span></a>: add get_segments method to collections.LineCollection - updated</li>
+<li><a href="#id1578"><span class="problematic" id="id1579">:ghissue:`1639`</span></a>: Rename web_static to web_backend in setup.py</li>
+<li><a href="#id1580"><span class="problematic" id="id1581">:ghissue:`1618`</span></a>: Mplot3d/crashfixes</li>
+<li><a href="#id1582"><span class="problematic" id="id1583">:ghissue:`1636`</span></a>: hexbin log scale is broken in matplotlib 1.2.0</li>
+<li><a href="#id1584"><span class="problematic" id="id1585">:ghissue:`1624`</span></a>: implemented inverse transform for Mollweide axes</li>
+<li><a href="#id1586"><span class="problematic" id="id1587">:ghissue:`1630`</span></a>: A disconnected callback cannot be reconnected</li>
+<li><a href="#id1588"><span class="problematic" id="id1589">:ghissue:`1139`</span></a>: Make Axes.stem take at least one argument.</li>
+<li><a href="#id1590"><span class="problematic" id="id1591">:ghissue:`1426`</span></a>: WebAgg backend</li>
+<li><a href="#id1592"><span class="problematic" id="id1593">:ghissue:`1606`</span></a>: Document the C/C++ code guidelines</li>
+<li><a href="#id1594"><span class="problematic" id="id1595">:ghissue:`1622`</span></a>: zorder is not respected by all parts of <tt class="xref py py-obj docutils literal"><span class="pre">errorbar</span></tt></li>
+<li><a href="#id1596"><span class="problematic" id="id1597">:ghissue:`1628`</span></a>: Fix errorbar zorder v1.2</li>
+<li><a href="#id1598"><span class="problematic" id="id1599">:ghissue:`1625`</span></a>: saving pgf to a stream is not supported</li>
+<li><a href="#id1600"><span class="problematic" id="id1601">:ghissue:`1588`</span></a>: Annotations appear in incorrect locations</li>
+<li><a href="#id1602"><span class="problematic" id="id1603">:ghissue:`1620`</span></a>: Fix bug in _AnnotationBase</li>
+<li><a href="#id1604"><span class="problematic" id="id1605">:ghissue:`1621`</span></a>: Package for python 3.3 on OS X</li>
+<li><a href="#id1606"><span class="problematic" id="id1607">:ghissue:`1616`</span></a>: Legend: Also calc the bbox of the legend when the frame is not drawn.</li>
+<li><a href="#id1608"><span class="problematic" id="id1609">:ghissue:`1587`</span></a>: Mac OS X 10.5 needs an autoreleasepool here to avoid memory leaks. Newer...</li>
+<li><a href="#id1610"><span class="problematic" id="id1611">:ghissue:`1597`</span></a>: new MatplotlibDeprecationWarning class (against master)</li>
+<li><a href="#id1612"><span class="problematic" id="id1613">:ghissue:`1596`</span></a>: new MatplotlibDeprecationWarning class (against 1.2.x)</li>
+<li><a href="#id1614"><span class="problematic" id="id1615">:ghissue:`1532`</span></a>: CXX/Python2/cxx_extensions.cxx:1320: Assertion <a href="#id1616"><span class="problematic" id="id1617">`</span></a>ob_refcnt == 0&#8217;</li>
+<li><a href="#id1618"><span class="problematic" id="id1619">:ghissue:`1601`</span></a>: invalid/misconfigured fonts cause the font manager to fail</li>
+<li><a href="#id1620"><span class="problematic" id="id1621">:ghissue:`1604`</span></a>: Make font_manager ignore KeyErrors for bad fonts</li>
+<li><a href="#id1622"><span class="problematic" id="id1623">:ghissue:`1605`</span></a>: Change printed -&gt; pretty-printed</li>
+<li><a href="#id1624"><span class="problematic" id="id1625">:ghissue:`1553`</span></a>: invert_xaxis() accidentially disables autoscaling</li>
+<li><a href="#id1626"><span class="problematic" id="id1627">:ghissue:`1557`</span></a>: inverting an axis shouldn&#8217;t affect the autoscaling setting</li>
+<li><a href="#id1628"><span class="problematic" id="id1629">:ghissue:`1603`</span></a>: ylim=0.0 is not well handled in polar plots</li>
+<li><a href="#id1630"><span class="problematic" id="id1631">:ghissue:`1583`</span></a>: Crash with text.usetex=True and plt.annotate</li>
+<li><a href="#id1632"><span class="problematic" id="id1633">:ghissue:`1584`</span></a>: triplot(x, y, simplex) should not modify the simplex array as a side effect.</li>
+<li><a href="#id1634"><span class="problematic" id="id1635">:ghissue:`1576`</span></a>: BUG: tri: prevent Triangulation from modifying specified input</li>
+<li><a href="#id1636"><span class="problematic" id="id1637">:ghissue:`1602`</span></a>: Fixed typos in docs (squashed version of #1600)</li>
+<li><a href="#id1638"><span class="problematic" id="id1639">:ghissue:`1600`</span></a>: Fixed typos in matplotlibrc and docs</li>
+<li><a href="#id1640"><span class="problematic" id="id1641">:ghissue:`1592`</span></a>: Fix a syntax error in examples (movie_demo.py)</li>
+<li><a href="#id1642"><span class="problematic" id="id1643">:ghissue:`1572`</span></a>: axes_grid demo broken</li>
+<li><a href="#id1644"><span class="problematic" id="id1645">:ghissue:`201`</span></a>: Drawing rubberband box outside of view crash backend_macosx</li>
+<li><a href="#id1646"><span class="problematic" id="id1647">:ghissue:`1038`</span></a>: osx backend does not allow font changes</li>
+<li><a href="#id1648"><span class="problematic" id="id1649">:ghissue:`1590`</span></a>: Positional argument specifiers are required by Python 2.6</li>
+<li><a href="#id1650"><span class="problematic" id="id1651">:ghissue:`1579`</span></a>: Updated custom_projection_example.py to work with v1.2 and newer</li>
+<li><a href="#id1652"><span class="problematic" id="id1653">:ghissue:`1578`</span></a>: Fixed blitting in Gtk3Agg backend</li>
+<li><a href="#id1654"><span class="problematic" id="id1655">:ghissue:`1580`</span></a>: lena.png is indecent and needs to be removed</li>
+<li><a href="#id1656"><span class="problematic" id="id1657">:ghissue:`1573`</span></a>: fix issue #1572 caused by PR #1081</li>
+<li><a href="#id1658"><span class="problematic" id="id1659">:ghissue:`1562`</span></a>: Mac OS X Backend: Removing clip that is no longer needed</li>
+<li><a href="#id1660"><span class="problematic" id="id1661">:ghissue:`1506`</span></a>: DOC: make example cursor show up in the docs</li>
+<li><a href="#id1662"><span class="problematic" id="id1663">:ghissue:`1565`</span></a>: new MatplotlibDeprecationWarning class</li>
+<li><a href="#id1664"><span class="problematic" id="id1665">:ghissue:`776`</span></a>: ticks based on number of subplots</li>
+<li><a href="#id1666"><span class="problematic" id="id1667">:ghissue:`1462`</span></a>: use plt.subplots() in examples as much as possible</li>
+<li><a href="#id1668"><span class="problematic" id="id1669">:ghissue:`1407`</span></a>: Sankey5</li>
+<li><a href="#id1670"><span class="problematic" id="id1671">:ghissue:`1574`</span></a>: Improvements to Sankey class</li>
+<li><a href="#id1672"><span class="problematic" id="id1673">:ghissue:`1536`</span></a>: ENH: add AVConv movie writer for animations</li>
+<li><a href="#id1674"><span class="problematic" id="id1675">:ghissue:`1570`</span></a>: PEP8 fixes on the tests of the dates module</li>
+<li><a href="#id1676"><span class="problematic" id="id1677">:ghissue:`1465`</span></a>: Undefined elements in axes module</li>
+<li><a href="#id1678"><span class="problematic" id="id1679">:ghissue:`1569`</span></a>: FIX Removes code that does work from the axes module</li>
+<li><a href="#id1680"><span class="problematic" id="id1681">:ghissue:`1250`</span></a>: Fix Travis tests</li>
+<li><a href="#id1682"><span class="problematic" id="id1683">:ghissue:`1566`</span></a>: pylab overwrites user variable(s)</li>
+<li><a href="#id1684"><span class="problematic" id="id1685">:ghissue:`1531`</span></a>: fix rendering slowdown with big invisible lines (issue #1256)</li>
+<li><a href="#id1686"><span class="problematic" id="id1687">:ghissue:`1398`</span></a>: PEP8 fixes on dates.py</li>
+<li><a href="#id1688"><span class="problematic" id="id1689">:ghissue:`1564`</span></a>: PEP8-compliance on axes.py (patch 4 / 4)</li>
+<li><a href="#id1690"><span class="problematic" id="id1691">:ghissue:`1559`</span></a>: Workaround for QT cursor bug in dock areas</li>
+<li><a href="#id1692"><span class="problematic" id="id1693">:ghissue:`1552`</span></a>: Remove python 2.5 stuff from texmanager.py</li>
+<li><a href="#id1694"><span class="problematic" id="id1695">:ghissue:`1560`</span></a>: Remove python2.5 support from texmanager.py</li>
+<li><a href="#id1696"><span class="problematic" id="id1697">:ghissue:`1555`</span></a>: Geo projections getting clobbered by 2to3 when used when python3</li>
+<li><a href="#id1698"><span class="problematic" id="id1699">:ghissue:`997`</span></a>: Delaunay interpolator: support grid whose width or height is 1</li>
+<li><a href="#id1700"><span class="problematic" id="id1701">:ghissue:`1477`</span></a>: alternate fix for issue #997</li>
+<li><a href="#id1702"><span class="problematic" id="id1703">:ghissue:`1556`</span></a>: Invert axis autoscale fix</li>
+<li><a href="#id1704"><span class="problematic" id="id1705">:ghissue:`1554`</span></a>: Geo projections getting clobbered by 2to3 when used when python3</li>
+<li><a href="#id1706"><span class="problematic" id="id1707">:ghissue:`1522`</span></a>: PEP8-compliance on axes.py (patch 3 / 4)</li>
+<li><a href="#id1708"><span class="problematic" id="id1709">:ghissue:`1548`</span></a>: Broken i386 + Python 3 build</li>
+<li><a href="#id1710"><span class="problematic" id="id1711">:ghissue:`1550`</span></a>: PEP8 fixes on the module texmanager</li>
+<li><a href="#id1712"><span class="problematic" id="id1713">:ghissue:`783`</span></a>: mplot3d: scatter (and others) incorrectly auto-scale axes after set_[xyz]lim()</li>
+<li><a href="#id1714"><span class="problematic" id="id1715">:ghissue:`1289`</span></a>: Autoscaling and limits in mplot3d.</li>
+<li><a href="#id1716"><span class="problematic" id="id1717">:ghissue:`1551`</span></a>: PEP8 fixes on the spines module</li>
+<li><a href="#id1718"><span class="problematic" id="id1719">:ghissue:`1537`</span></a>: Fix savefig.extension == &#8220;auto&#8221;</li>
+<li><a href="#id1720"><span class="problematic" id="id1721">:ghissue:`1297`</span></a>: pyplot.plotfile. gridon option added with default from rcParam.</li>
+<li><a href="#id1722"><span class="problematic" id="id1723">:ghissue:`1526`</span></a>: Remove unnecessary clip cairo</li>
+<li><a href="#id1724"><span class="problematic" id="id1725">:ghissue:`1538`</span></a>: Remove unnecessary clip from Cairo backend; squashed commit</li>
+<li><a href="#id1726"><span class="problematic" id="id1727">:ghissue:`1544`</span></a>: str.format() doesn&#8217;t work on python 2.6</li>
+<li><a href="#id1728"><span class="problematic" id="id1729">:ghissue:`1549`</span></a>: Add citation page to website</li>
+<li><a href="#id1730"><span class="problematic" id="id1731">:ghissue:`1514`</span></a>: Fix streamplot when color argument has NaNs</li>
+<li><a href="#id1732"><span class="problematic" id="id1733">:ghissue:`1487`</span></a>: MaxNLocator for log-scale</li>
+<li><a href="#id1734"><span class="problematic" id="id1735">:ghissue:`1081`</span></a>: Propagate mpl.text.Text instances to the backends and fix documentation</li>
+<li><a href="#id1736"><span class="problematic" id="id1737">:ghissue:`1533`</span></a>: ENH: raise a more informative error</li>
+<li><a href="#id1738"><span class="problematic" id="id1739">:ghissue:`955`</span></a>: Strange resize behaviour with ImageGrid</li>
+<li><a href="#id1740"><span class="problematic" id="id1741">:ghissue:`1003`</span></a>: Fix for issue #955</li>
+<li><a href="#id1742"><span class="problematic" id="id1743">:ghissue:`1546`</span></a>: Quiver crashes if given matrices</li>
+<li><a href="#id1744"><span class="problematic" id="id1745">:ghissue:`1542`</span></a>: Wrong __version__numpy__</li>
+<li><a href="#id1746"><span class="problematic" id="id1747">:ghissue:`1540`</span></a>: Changed mailinglist archive link.</li>
+<li><a href="#id1748"><span class="problematic" id="id1749">:ghissue:`1507`</span></a>: python setup.py build (in parallel)</li>
+<li><a href="#id1750"><span class="problematic" id="id1751">:ghissue:`1492`</span></a>: MacOSX backend blocks in IPython QtConsole</li>
+<li><a href="#id1752"><span class="problematic" id="id1753">:ghissue:`1493`</span></a>: check <tt class="xref py py-obj docutils literal"><span class="pre">ret</span> <span class="pre">==</span> <span class="pre">False</span></tt> in Timer._on_timer</li>
+<li><a href="#id1754"><span class="problematic" id="id1755">:ghissue:`1523`</span></a>: DOC: github ribbon does not cover up index link</li>
+<li><a href="#id1756"><span class="problematic" id="id1757">:ghissue:`1515`</span></a>: set_cmap should not require an active image</li>
+<li><a href="#id1758"><span class="problematic" id="id1759">:ghissue:`1500`</span></a>: comment on <a class="reference external" href="http://matplotlib.org/users/pgf.html#pgf-tutorial">http://matplotlib.org/users/pgf.html#pgf-tutorial</a> - minor issue with xits font</li>
+<li><a href="#id1760"><span class="problematic" id="id1761">:ghissue:`1489`</span></a>: Documentation update for specgram</li>
+<li><a href="#id1762"><span class="problematic" id="id1763">:ghissue:`1527`</span></a>: fix 2 html color names</li>
+<li><a href="#id1764"><span class="problematic" id="id1765">:ghissue:`1524`</span></a>: Make README.txt consistent reStructuredText</li>
+<li><a href="#id1766"><span class="problematic" id="id1767">:ghissue:`1525`</span></a>: pgf: documentation enhancements</li>
+<li><a href="#id1768"><span class="problematic" id="id1769">:ghissue:`1510`</span></a>: pgf: documentation enhancements</li>
+<li><a href="#id1770"><span class="problematic" id="id1771">:ghissue:`1512`</span></a>: Reorganize the developer docs</li>
+<li><a href="#id1772"><span class="problematic" id="id1773">:ghissue:`1518`</span></a>: PEP8 compliance on the delaunay module</li>
+<li><a href="#id1774"><span class="problematic" id="id1775">:ghissue:`1357`</span></a>: PEP8 fixes on text.py</li>
+<li><a href="#id1776"><span class="problematic" id="id1777">:ghissue:`1469`</span></a>: PEP8-compliance on axes.py (patch 2 / 4)</li>
+<li><a href="#id1778"><span class="problematic" id="id1779">:ghissue:`1470`</span></a>: Add <tt class="docutils literal"><span class="pre">test</span></tt> and <tt class="docutils literal"><span class="pre">test-coverage</span></tt> to Makefile</li>
+<li><a href="#id1780"><span class="problematic" id="id1781">:ghissue:`1513`</span></a>: Problems with image sizes</li>
+<li><a href="#id1782"><span class="problematic" id="id1783">:ghissue:`1509`</span></a>: pgf: draw_image() doesn&#8217;t store path to png files in the pgf source</li>
+<li><a href="#id1784"><span class="problematic" id="id1785">:ghissue:`1516`</span></a>: set_xticklabels changes font when text.usetex is enabled</li>
+<li><a href="#id1786"><span class="problematic" id="id1787">:ghissue:`1442`</span></a>: Add savefig_kwargs to Animation.save() method</li>
+<li><a href="#id1788"><span class="problematic" id="id1789">:ghissue:`1511`</span></a>: Reorganize developer docs</li>
+<li><a href="#id1790"><span class="problematic" id="id1791">:ghissue:`1503`</span></a>: DOC: &#8216;inout&#8217; option for tick_params direction</li>
+<li><a href="#id1792"><span class="problematic" id="id1793">:ghissue:`1494`</span></a>: Added sphinx documentation for Triangulation</li>
+<li><a href="#id1794"><span class="problematic" id="id1795">:ghissue:`1480`</span></a>: Remove dead code in patches</li>
+<li><a href="#id1796"><span class="problematic" id="id1797">:ghissue:`1496`</span></a>: Correct scatter docstring</li>
+<li><a href="#id1798"><span class="problematic" id="id1799">:ghissue:`1495`</span></a>: scatter docstring, minor</li>
+<li><a href="#id1800"><span class="problematic" id="id1801">:ghissue:`1472`</span></a>: FIX extra comma in Sankey.add</li>
+<li><a href="#id1802"><span class="problematic" id="id1803">:ghissue:`1471`</span></a>: Improved checking logic of _check_xyz in contour.py</li>
+<li><a href="#id1804"><span class="problematic" id="id1805">:ghissue:`998`</span></a>: fix for issue #997</li>
+<li><a href="#id1806"><span class="problematic" id="id1807">:ghissue:`1479`</span></a>: Reintroduce examples.directory rc parameter</li>
+<li><a href="#id1808"><span class="problematic" id="id1809">:ghissue:`1491`</span></a>: Reintroduce examples.directory rc parameter</li>
+<li><a href="#id1810"><span class="problematic" id="id1811">:ghissue:`1405`</span></a>: Add angle kwarg to patches.Rectangle</li>
+<li><a href="#id1812"><span class="problematic" id="id1813">:ghissue:`1278`</span></a>: Make arrow docstring mention data transform</li>
+<li><a href="#id1814"><span class="problematic" id="id1815">:ghissue:`1475`</span></a>: make plt.subplot() act as plt.subplot(111)</li>
+<li><a href="#id1816"><span class="problematic" id="id1817">:ghissue:`1355`</span></a>: Add sym-log normalization.</li>
+<li><a href="#id1818"><span class="problematic" id="id1819">:ghissue:`1474`</span></a>: use an imagemap for the &#8220;fork me on github&#8221; ribbon</li>
+<li><a href="#id1820"><span class="problematic" id="id1821">:ghissue:`632`</span></a>: ENH: More included norms, especially a symlog like norm</li>
+<li><a href="#id1822"><span class="problematic" id="id1823">:ghissue:`1466`</span></a>: Too many open files</li>
+<li><a href="#id1824"><span class="problematic" id="id1825">:ghissue:`1485`</span></a>: Fix leak of gc&#8217;s in gtkagg backend</li>
+<li><a href="#id1826"><span class="problematic" id="id1827">:ghissue:`1484`</span></a>: V1.2.x Fix leak of gc&#8217;s in gtkagg backend.</li>
+<li><a href="#id1828"><span class="problematic" id="id1829">:ghissue:`1374`</span></a>: PEP8 fixes on widgets.py</li>
+<li><a href="#id1830"><span class="problematic" id="id1831">:ghissue:`1379`</span></a>: PEP8 fixes on quiver.py</li>
+<li><a href="#id1832"><span class="problematic" id="id1833">:ghissue:`1399`</span></a>: PEP8 fixes on patches</li>
+<li><a href="#id1834"><span class="problematic" id="id1835">:ghissue:`1478`</span></a>: Reintroduce examples.directory rcParams to customize cbook.get_sample_data() lookup location</li>
+<li><a href="#id1836"><span class="problematic" id="id1837">:ghissue:`1468`</span></a>: use an imagemap for the &#8220;fork me on github&#8221; ribbon</li>
+<li><a href="#id1838"><span class="problematic" id="id1839">:ghissue:`1395`</span></a>: PEP8 fixes on contour.py</li>
+<li><a href="#id1840"><span class="problematic" id="id1841">:ghissue:`1473`</span></a>: offsets.shape(-1,2)</li>
+<li><a href="#id1842"><span class="problematic" id="id1843">:ghissue:`1467`</span></a>: matplotlib 1.2.0 Binary installer for 32-bit Windows for python 2.7 is missing</li>
+<li><a href="#id1844"><span class="problematic" id="id1845">:ghissue:`1419`</span></a>: bbox_extra_artists doesn&#8217;t work for a table</li>
+<li><a href="#id1846"><span class="problematic" id="id1847">:ghissue:`1432`</span></a>: lengend overlaps graph</li>
+<li><a href="#id1848"><span class="problematic" id="id1849">:ghissue:`1464`</span></a>: PEP8-compliance on axes.py (patch 1 / 4)</li>
+<li><a href="#id1850"><span class="problematic" id="id1851">:ghissue:`1400`</span></a>: PEP8 fixes on offsetbox.py</li>
+<li><a href="#id1852"><span class="problematic" id="id1853">:ghissue:`1463`</span></a>: Document the Gtk3 backends</li>
+<li><a href="#id1854"><span class="problematic" id="id1855">:ghissue:`1417`</span></a>: Pep8 on the axes module</li>
+</ul>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2002 - 2012 John Hunter, Darren Dale, Eric Firing, Michael Droettboom and the matplotlib development team; 2012 - 2013 The matplotlib development team.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

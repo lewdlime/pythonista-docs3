@@ -1,0 +1,76 @@
+
+:mod:`appex` --- Using the Pythonista Sharing Extension
+=======================================================
+
+.. module:: appex
+   :synopsis: Using the Pythonista Sharing Extension
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`appex` module allows you to access the input data of the iOS share sheet when you're using the Pythonista extension from another app.
+
+.. note::
+    When you invoke the *share* sheet in another app, the Pythonista extension will not show up automatically, you have to activate it by tapping the *More* button first. If it doesn't show up at all, this usually means that the type of data being shared is not supported.
+
+Special Considerations
+----------------------
+
+* When you present a :class:`ui.View` (using :meth:`ui.View.present`), the presentation style is ignored. On iPhone, the presentation is always full-screen, on iPad, the view will cover the main view of the app extension, and it's not possible to create full-screen views.
+* Some functions, most importantly :func:`webbrowser.open`, will not work within an extension script. The :mod:`notification` module is also unavailable.
+* The camera is not available to app extensions, so :func:`photos.capture_image` will not work.
+
+Functions in the :mod:`appex` module:
+
+.. function:: is_running_extension()
+
+    Return `True` if the script is running within the app extension, `False` otherwise.
+    
+    In case you want to test your script in the main app, you can e.g. use this to load dummy data to replace the share sheet's input.
+
+.. function:: get_attachments(uti='public.data')
+
+   Return a list of attachments that match the given type identifier. In most cases, it is a lot easier to use the type-specific functions (like :func:`get_image`, :func:`get_url`...) instead.
+
+.. function:: get_images(image_type='pil')
+
+   Return a list of images in the input of the share sheet. `image_type` can be either 'ui' or 'pil'. If the type is 'ui', :class:`ui.Image` instances will be returned, otherwise :mod:`PIL` images. If there are no images in the input, the return value will be an empty list. 
+
+.. function:: get_image(image_type='pil)
+
+   Return the first image in the input of the share sheet. `image_type` can be either 'ui' or 'pil'. If the type is 'ui', a :class:`ui.Image` instance will be returned, otherwise a :mod:`PIL` image. If there are no images in the input, the return value will be an empty list.
+
+.. function:: get_image_data()
+
+    Return raw image data for the first image in the share sheet's input. The data is returned as a byte string. If there is no image in the input, the return value is `None`.
+    
+.. function:: get_images_data()
+
+    Return raw image data for all images in the share sheet's input. The data is returned as a list of byte strings. If there are no images in the input, the return value is an empty list.
+    
+.. function:: get_text()
+
+    Return text input of the share sheet (as a unicode string). If there is no text in the input, the return value is `None`.
+
+.. function:: get_urls()
+
+    Return a list of URLs in the share sheet's input. If there are no URLs in the input, the return value is an empty list.
+
+.. function:: get_url()
+
+    Return the first URL in the share sheet's input. If there is no URL in the input, the return value is `None`.
+
+.. function:: get_file_paths()
+
+    Return a list of file paths in the share sheet's input. If there are no file paths in the input, the return value is an empty list.
+
+.. function:: get_file_path()
+
+    Return the first file path in the share sheet's input. If there is no file path in the input, the return value is `None`.
+
+.. function:: get_vcards()
+
+    Return a list of VCard records in the share sheet's input. Each record is represented as a string. If there are no Vcards in the input, the return value is an empty list.
+
+.. function:: get_vcards()
+
+    Return the first VCard record in the share sheet's input. The record is represented as a string. If there are no Vcards in the input, the return value is `None`.

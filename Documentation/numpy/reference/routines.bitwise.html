@@ -1,0 +1,200 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Binary operations &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Routines" href="routines.html" />
+    <link rel="next" title="numpy.bitwise_and" href="generated/numpy.bitwise_and.html" />
+    <link rel="prev" title="numpy.rot90" href="generated/numpy.rot90.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="generated/numpy.bitwise_and.html" title="numpy.bitwise_and"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/numpy.rot90.html" title="numpy.rot90"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="routines.html" accesskey="U">Routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="binary-operations">
+<h1>Binary operations<a class="headerlink" href="#binary-operations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="elementwise-bit-operations">
+<h2>Elementwise bit operations<a class="headerlink" href="#elementwise-bit-operations" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.bitwise_and.html#numpy.bitwise_and" title="numpy.bitwise_and"><tt class="xref py py-obj docutils literal"><span class="pre">bitwise_and</span></tt></a>(x1,&nbsp;x2[,&nbsp;out])</td>
+<td>Compute the bit-wise AND of two arrays element-wise.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.bitwise_or.html#numpy.bitwise_or" title="numpy.bitwise_or"><tt class="xref py py-obj docutils literal"><span class="pre">bitwise_or</span></tt></a>(x1,&nbsp;x2[,&nbsp;out])</td>
+<td>Compute the bit-wise OR of two arrays element-wise.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.bitwise_xor.html#numpy.bitwise_xor" title="numpy.bitwise_xor"><tt class="xref py py-obj docutils literal"><span class="pre">bitwise_xor</span></tt></a>(x1,&nbsp;x2[,&nbsp;out])</td>
+<td>Compute the bit-wise XOR of two arrays element-wise.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.invert.html#numpy.invert" title="numpy.invert"><tt class="xref py py-obj docutils literal"><span class="pre">invert</span></tt></a>(x[,&nbsp;out])</td>
+<td>Compute bit-wise inversion, or bit-wise NOT, element-wise.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.left_shift.html#numpy.left_shift" title="numpy.left_shift"><tt class="xref py py-obj docutils literal"><span class="pre">left_shift</span></tt></a>(x1,&nbsp;x2[,&nbsp;out])</td>
+<td>Shift the bits of an integer to the left.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.right_shift.html#numpy.right_shift" title="numpy.right_shift"><tt class="xref py py-obj docutils literal"><span class="pre">right_shift</span></tt></a>(x1,&nbsp;x2[,&nbsp;out])</td>
+<td>Shift the bits of an integer to the right.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bit-packing">
+<h2>Bit packing<a class="headerlink" href="#bit-packing" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.packbits.html#numpy.packbits" title="numpy.packbits"><tt class="xref py py-obj docutils literal"><span class="pre">packbits</span></tt></a>(myarray[,&nbsp;axis])</td>
+<td>Packs the elements of a binary-valued array into bits in a uint8 array.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/numpy.unpackbits.html#numpy.unpackbits" title="numpy.unpackbits"><tt class="xref py py-obj docutils literal"><span class="pre">unpackbits</span></tt></a>(myarray[,&nbsp;axis])</td>
+<td>Unpacks elements of a uint8 array into a binary-valued output array.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="output-formatting">
+<h2>Output formatting<a class="headerlink" href="#output-formatting" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/numpy.binary_repr.html#numpy.binary_repr" title="numpy.binary_repr"><tt class="xref py py-obj docutils literal"><span class="pre">binary_repr</span></tt></a>(num[,&nbsp;width])</td>
+<td>Return the binary representation of the input number as a string.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

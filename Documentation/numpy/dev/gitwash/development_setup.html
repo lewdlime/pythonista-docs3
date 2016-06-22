@@ -1,0 +1,242 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting started with Git development &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Git for development" href="git_development.html" />
+    <link rel="next" title="Git configuration" href="configure_git.html" />
+    <link rel="prev" title="Git for development" href="git_development.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="configure_git.html" title="Git configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="git_development.html" title="Git for development"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >Contributing to Numpy</a> &raquo;</li>
+          <li><a href="index.html" >Working with <em>NumPy</em> source code</a> &raquo;</li>
+          <li><a href="git_development.html" accesskey="U">Git for development</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started-with-git-development">
+<h1>Getting started with Git development<a class="headerlink" href="#getting-started-with-git-development" title="Permalink to this headline">¶</a></h1>
+<p>This section and the next describe in detail how to set up git for working
+with the NumPy source code.  If you have git already set up, skip to
+<a class="reference internal" href="development_workflow.html#development-workflow"><em>Development workflow</em></a>.</p>
+<div class="section" id="basic-git-setup">
+<h2>Basic Git setup<a class="headerlink" href="#basic-git-setup" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><a class="reference internal" href="git_intro.html#install-git"><em>Install git</em></a>.</p>
+</li>
+<li><p class="first">Introduce yourself to Git:</p>
+<div class="highlight-python"><div class="highlight"><pre>git config --global user.email you@yourdomain.example.com
+git config --global user.name &quot;Your Name Comes Here&quot;
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="making-your-own-copy-fork-of-numpy">
+<span id="forking"></span><h2>Making your own copy (fork) of NumPy<a class="headerlink" href="#making-your-own-copy-fork-of-numpy" title="Permalink to this headline">¶</a></h2>
+<p>You need to do this only once.  The instructions here are very similar
+to the instructions at <a class="reference external" href="http://help.github.com/forking/">http://help.github.com/forking/</a> - please see that
+page for more detail.  We&#8217;re repeating some of it here just to give the
+specifics for the <a class="reference external" href="http://www.numpy.org">NumPy</a> project, and to suggest some default names.</p>
+<div class="section" id="set-up-and-configure-a-github-account">
+<h3>Set up and configure a <a class="reference external" href="http://github.com">github</a> account<a class="headerlink" href="#set-up-and-configure-a-github-account" title="Permalink to this headline">¶</a></h3>
+<p>If you don&#8217;t have a <a class="reference external" href="http://github.com">github</a> account, go to the <a class="reference external" href="http://github.com">github</a> page, and make one.</p>
+<p>You then need to configure your account to allow write access - see the
+<tt class="docutils literal"><span class="pre">Generating</span> <span class="pre">SSH</span> <span class="pre">keys</span></tt> help on <a class="reference external" href="http://help.github.com">github help</a>.</p>
+</div>
+<div class="section" id="create-your-own-forked-copy-of-numpy">
+<h3>Create your own forked copy of <a class="reference external" href="http://www.numpy.org">NumPy</a><a class="headerlink" href="#create-your-own-forked-copy-of-numpy" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Log into your <a class="reference external" href="http://github.com">github</a> account.</p>
+</li>
+<li><p class="first">Go to the <a class="reference external" href="http://www.numpy.org">NumPy</a> github home at <a class="reference external" href="http://github.com/numpy/numpy">NumPy github</a>.</p>
+</li>
+<li><p class="first">Click on the <em>fork</em> button:</p>
+<img alt="../../_images/forking_button.png" src="../../_images/forking_button.png" />
+<p>After a short pause, you should find yourself at the home page for
+your own forked copy of <a class="reference external" href="http://www.numpy.org">NumPy</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="set-up-your-fork">
+<span id="set-up-fork"></span><h2>Set up your fork<a class="headerlink" href="#set-up-your-fork" title="Permalink to this headline">¶</a></h2>
+<p>First you follow the instructions for <a class="reference internal" href="#forking"><em>Making your own copy (fork) of NumPy</em></a>.</p>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>git clone git@github.com:your-user-name/numpy.git
+cd numpy
+git remote add upstream git://github.com/numpy/numpy.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="in-detail">
+<h3>In detail<a class="headerlink" href="#in-detail" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="clone-your-fork">
+<h4>Clone your fork<a class="headerlink" href="#clone-your-fork" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p class="first">Clone your fork to the local computer with <tt class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span>
+<span class="pre">git&#64;github.com:your-user-name/numpy.git</span></tt></p>
+</li>
+<li><p class="first">Investigate.  Change directory to your new repo: <tt class="docutils literal"><span class="pre">cd</span> <span class="pre">numpy</span></tt>. Then
+<tt class="docutils literal"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-a</span></tt> to show you all branches.  You&#8217;ll get something
+like:</p>
+<div class="highlight-python"><div class="highlight"><pre>* master
+remotes/origin/master
+</pre></div>
+</div>
+<p>This tells you that you are currently on the <tt class="docutils literal"><span class="pre">master</span></tt> branch, and
+that you also have a <tt class="docutils literal"><span class="pre">remote</span></tt> connection to <tt class="docutils literal"><span class="pre">origin/master</span></tt>.
+What remote repository is <tt class="docutils literal"><span class="pre">remote/origin</span></tt>? Try <tt class="docutils literal"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">-v</span></tt> to
+see the URLs for the remote.  They will point to your <a class="reference external" href="http://github.com">github</a> fork.</p>
+<p>Now you want to connect to the upstream <a class="reference external" href="http://github.com/numpy/numpy">NumPy github</a> repository, so
+you can merge in changes from trunk.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="linking-your-repository-to-the-upstream-repo">
+<span id="linking-to-upstream"></span><h4>Linking your repository to the upstream repo<a class="headerlink" href="#linking-your-repository-to-the-upstream-repo" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>cd numpy
+git remote add upstream git://github.com/numpy/numpy.git
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">upstream</span></tt> here is just the arbitrary name we&#8217;re using to refer to the
+main <a class="reference external" href="http://www.numpy.org">NumPy</a> repository at <a class="reference external" href="http://github.com/numpy/numpy">NumPy github</a>.</p>
+<p>Note that we&#8217;ve used <tt class="docutils literal"><span class="pre">git://</span></tt> for the URL rather than <tt class="docutils literal"><span class="pre">git&#64;</span></tt>.  The
+<tt class="docutils literal"><span class="pre">git://</span></tt> URL is read only.  This means we that we can&#8217;t accidentally
+(or deliberately) write to the upstream repo, and we are only going to
+use it to merge into our own code.</p>
+<p>Just for your own satisfaction, show yourself that you now have a new
+&#8216;remote&#8217;, with <tt class="docutils literal"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">-v</span> <span class="pre">show</span></tt>, giving you something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>upstream     git://github.com/numpy/numpy.git (fetch)
+upstream     git://github.com/numpy/numpy.git (push)
+origin       git@github.com:your-user-name/numpy.git (fetch)
+origin       git@github.com:your-user-name/numpy.git (push)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

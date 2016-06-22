@@ -1,0 +1,59 @@
+The ImageEnhance Module
+=======================
+
+.. module:: ImageEnhance
+
+The :mod:`ImageEnhance` module contains a number of classes that can be used for image enhancement.
+
+Example
+-------
+Vary the Sharpness of an Image::
+
+    import ImageEnhance
+
+    enhancer = ImageEnhance.Sharpness(image)
+
+    for i in range(8):
+        factor = i / 4.0
+        enhancer.enhance(factor).show("Sharpness %f" % factor)
+
+Interface
+---------
+All enhancement classes implement a common interface, containing a single method:
+
+.. method:: enhancer.enhance(factor)
+
+    Returns an enhanced image. The factor is a floating point value controlling the enhancement. Factor 1.0 always returns a copy of the original image, lower factors mean less color (brightness, contrast, etc), and higher values more. There are no restrictions on this value.
+
+The Color Class
+---------------
+The color enhancement class is used to adjust the color balance of an image, in a manner similar to the controls on a color TV set. This class implements the enhancement interface as described above.
+
+.. class:: Color(image)
+
+    Creates an enhancement object for adjusting color in an image. A factor of 0.0 gives a black and white image, a factor of 1.0 gives the original image.
+
+The Brightness Class
+--------------------
+The brightness enhancement class is used to control the brightness of an image.
+
+.. class:: Brightness(image)
+
+    Creates an enhancement object for adjusting brightness in an image. A factor of 0.0 gives a black image, factor 1.0 gives the original image.
+
+The Contrast Class
+------------------
+The contrast enhancement class is used to control the contrast of an image, similar to the contrast control on a TV set.
+
+.. class:: Contrast(image)
+
+    Creates an enhancement object for adjusting contrast in an image. A factor of 0.0 gives an solid grey image, factor 1.0 gives the original image.
+
+The Sharpness Class
+-------------------
+
+The sharpness enhancement class is used to control the sharpness of an image.
+
+.. class:: Sharpness(image)
+
+    Creates an enhancement object for adjusting the sharpness of an image. The factor 0.0 gives a blurred image, 1.0 gives the original image, and a factor of 2.0 gives a sharpened image.

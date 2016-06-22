@@ -1,0 +1,229 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.fft.rfft &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Discrete Fourier Transform (numpy.fft)" href="../routines.fft.html" />
+    <link rel="next" title="numpy.fft.irfft" href="numpy.fft.irfft.html" />
+    <link rel="prev" title="numpy.fft.ifftn" href="numpy.fft.ifftn.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.fft.irfft.html" title="numpy.fft.irfft"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.fft.ifftn.html" title="numpy.fft.ifftn"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.fft.html" accesskey="U">Discrete Fourier Transform (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.fft</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-fft-rfft">
+<h1>numpy.fft.rfft<a class="headerlink" href="#numpy-fft-rfft" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.fft.rfft">
+<tt class="descclassname">numpy.fft.</tt><tt class="descname">rfft</tt><big>(</big><em>a</em>, <em>n=None</em>, <em>axis=-1</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/fft/fftpack.py#L250"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.fft.rfft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the one-dimensional discrete Fourier Transform for real input.</p>
+<p>This function computes the one-dimensional <em>n</em>-point discrete Fourier
+Transform (DFT) of a real-valued array by means of an efficient algorithm
+called the Fast Fourier Transform (FFT).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>a</strong> : array_like</p>
+<blockquote>
+<div><p>Input array</p>
+</div></blockquote>
+<p><strong>n</strong> : int, optional</p>
+<blockquote>
+<div><p>Number of points along transformation axis in the input to use.
+If <em class="xref py py-obj">n</em> is smaller than the length of the input, the input is cropped.
+If it is larger, the input is padded with zeros. If <em class="xref py py-obj">n</em> is not given,
+the length of the input (along the axis specified by <em class="xref py py-obj">axis</em>) is used.</p>
+</div></blockquote>
+<p><strong>axis</strong> : int, optional</p>
+<blockquote>
+<div><p>Axis over which to compute the FFT. If not given, the last axis is
+used.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : complex ndarray</p>
+<blockquote>
+<div><p>The truncated or zero-padded input, transformed along the axis
+indicated by <em class="xref py py-obj">axis</em>, or the last one if <em class="xref py py-obj">axis</em> is not specified.
+If <em class="xref py py-obj">n</em> is even, the length of the transformed axis is <tt class="docutils literal"><span class="pre">(n/2)+1</span></tt>.
+If <em class="xref py py-obj">n</em> is odd, the length is <tt class="docutils literal"><span class="pre">(n+1)/2</span></tt>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>IndexError</strong> :</p>
+<blockquote class="last">
+<div><p>If <em class="xref py py-obj">axis</em> is larger than the last axis of <em class="xref py py-obj">a</em>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="../routines.fft.html#module-numpy.fft" title="numpy.fft"><tt class="xref py py-obj docutils literal"><span class="pre">numpy.fft</span></tt></a></dt>
+<dd>For definition of the DFT and conventions used.</dd>
+<dt><a class="reference internal" href="numpy.fft.irfft.html#numpy.fft.irfft" title="numpy.fft.irfft"><tt class="xref py py-obj docutils literal"><span class="pre">irfft</span></tt></a></dt>
+<dd>The inverse of <a class="reference internal" href="#numpy.fft.rfft" title="numpy.fft.rfft"><tt class="xref py py-obj docutils literal"><span class="pre">rfft</span></tt></a>.</dd>
+<dt><a class="reference internal" href="numpy.fft.fft.html#numpy.fft.fft" title="numpy.fft.fft"><tt class="xref py py-obj docutils literal"><span class="pre">fft</span></tt></a></dt>
+<dd>The one-dimensional FFT of general (complex) input.</dd>
+<dt><a class="reference internal" href="numpy.fft.fftn.html#numpy.fft.fftn" title="numpy.fft.fftn"><tt class="xref py py-obj docutils literal"><span class="pre">fftn</span></tt></a></dt>
+<dd>The <em>n</em>-dimensional FFT.</dd>
+<dt><a class="reference internal" href="numpy.fft.rfftn.html#numpy.fft.rfftn" title="numpy.fft.rfftn"><tt class="xref py py-obj docutils literal"><span class="pre">rfftn</span></tt></a></dt>
+<dd>The <em>n</em>-dimensional FFT of real input.</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>When the DFT is computed for purely real input, the output is
+Hermite-symmetric, i.e. the negative frequency terms are just the complex
+conjugates of the corresponding positive-frequency terms, and the
+negative-frequency terms are therefore redundant.  This function does not
+compute the negative frequency terms, and the length of the transformed
+axis of the output is therefore <tt class="docutils literal"><span class="pre">n//2+1</span></tt>.</p>
+<p>When <tt class="docutils literal"><span class="pre">A</span> <span class="pre">=</span> <span class="pre">rfft(a)</span></tt> and fs is the sampling frequency, <tt class="docutils literal"><span class="pre">A[0]</span></tt> contains
+the zero-frequency term 0*fs, which is real due to Hermitian symmetry.</p>
+<p>If <em class="xref py py-obj">n</em> is even, <tt class="docutils literal"><span class="pre">A[-1]</span></tt> contains the term representing both positive
+and negative Nyquist frequency (+fs/2 and -fs/2), and must also be purely
+real. If <em class="xref py py-obj">n</em> is odd, there is no term at fs/2; <tt class="docutils literal"><span class="pre">A[-1]</span></tt> contains
+the largest positive frequency (fs/2*(n-1)/n), and is complex in the
+general case.</p>
+<p>If the input <em class="xref py py-obj">a</em> contains an imaginary part, it is silently discarded.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">array([ 1.+0.j,  0.-1.j, -1.+0.j,  0.+1.j])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">array([ 1.+0.j,  0.-1.j, -1.+0.j])</span>
+</pre></div>
+</div>
+<p>Notice how the final element of the <a class="reference internal" href="numpy.fft.fft.html#numpy.fft.fft" title="numpy.fft.fft"><tt class="xref py py-obj docutils literal"><span class="pre">fft</span></tt></a> output is the complex conjugate
+of the second element, for real input. For <a class="reference internal" href="#numpy.fft.rfft" title="numpy.fft.rfft"><tt class="xref py py-obj docutils literal"><span class="pre">rfft</span></tt></a>, this symmetry is
+exploited to compute only the non-negative frequency terms.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

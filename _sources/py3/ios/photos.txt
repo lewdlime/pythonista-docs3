@@ -1,0 +1,360 @@
+
+:mod:`photos` --- Photo Library Access on iOS
+=============================================
+
+.. module:: photos
+   :synopsis: Provides access to the photo library on iOS
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`photos` module allows you to access media that is stored in the iOS photo library.
+
+You can also add new images to the library, modify existing content in-place, and delete items.
+
+.. note::
+   The first time you use any of the functions that access your photos, a system-provided permission dialog will be shown. If you deny access, most functions will act as if your photo library was empty. If you change your mind later, you can allow access to your photos from the `Privacy` section in the Settings app. The permission dialog in the app will only be shown once.
+
+Getting Started
+---------------
+
+To start working with media in your photo library, you usually need at least one :class:`Asset` object. You can fetch all assets from the library using the :func:`get_assets` function, as shown below::
+
+    # Get the last photo, and show it in the console
+    
+    import photos
+    all_assets = photos.get_assets()
+    last_asset = all_assets[-1]
+    img = last_asset.get_image()
+    img.show()
+
+Assets only contain metadata, so to get an actual image, you'll have to use the :meth:`Asset.get_image` function, as shown in the example above. The image is returned as a :class:`PIL.Image` object. If you want a :class:`ui.Image` instead, use :meth:`Asset.get_ui_image`.
+
+Assets are organized in collections, which are represented as :class:`AssetCollection` objects. Collections can be regular albums or smart albums that automatically contain assets with certain properties.
+
+One of those smart albums is the "screenshots" album, and you can retrieve it easily using the :func:`get_screenshots_album` function. The following snippet shows how to retrieve the oldest screenshot and delete it from the library (after showing a confirmation dialog)::
+
+    # Get the oldest screenshot image, and delete it from the library
+    
+    import photos
+    album = photos.get_screenshots_album()
+    screenshots = album.assets
+    if not screenshots:
+        print('You have no screenshots in your library.')
+    else:
+        oldest = screenshots[0]
+        if oldest.can_delete:
+            # This will automatically show a confirmation dialog:
+            oldest.delete()
+        else:
+            print('Oldest screenshot is not deletable')
+
+You can also modify the content of a photo in the library by replacing it with an edited image.
+
+The following snippet fetches the last asset in the "recently added" album, converts it to grayscale, and then replaces the image. The edit can be reverted in the Photos app, or using the :meth:`Asset.revert` method.::
+
+    # Get the last photo, and convert it to grayscale, saving the edit in-place
+    
+    import photos
+    album = photos.get_recently_added_album()
+    last = album.assets[-1]
+    if last.can_edit_content:
+        img = last.get_image()
+        grayscale_img = img.convert('L')
+        grayscale_img.save('.edit.jpg', quality=90)
+        last.edit_content('.edit.jpg')
+    else:
+        print('The asset is not editable')
+
+The previous examples all fetched assets by index, but you can also just show a dialog to let the user pick an asset from a grid of thumbnails. The :func:`pick_asset` function takes a list of assets (or an :class:`AssetCollection`) and returns the asset that was selected. It also allows multiple selection. If you call it without parameters, the "Recently Added" album is shown.::
+
+    # Show an image picker dialog (allowing multiple selection) and print the result
+    
+    import photos
+    assets = photos.pick_asset(title='Pick some assets', multi=True)
+    print(assets)
+
+
+Functions
+---------
+
+.. function:: capture_image()
+
+    Show a standard camera interface and return the captured image (a :class:`PIL.Image` object).
+   
+    If the device has no camera or if the camera interface is cancelled, `None` is returned.
+
+.. function:: get_assets(media_type='image', include_hidden=False)
+
+    Fetch and return a list of all assets in the library with the given media type (``'image'`` or ``'video'``). By default, assets that are marked as hidden are excluded.
+
+.. function:: get_asset_with_local_id(local_id)
+
+    Fetch and return the asset with the given local identifier (the :attr:`Asset.local_id` attribute) from the library. If no asset with this identifier exists, an `IOError` is raised.
+
+.. function:: get_albums()
+
+    Return a list of all regular albums in the photo library. The return value is a list of :class:`AssetCollection` objects.
+
+.. function:: get_smart_albums()
+
+    Return a list of all smart albums in the photo library. The return value is a list of :class:`AssetCollection` objects.
+
+.. function:: get_moments()
+
+    Return a list of all "moments" in the photo library. Moments are collections of assets that are automatically grouped by date/location. The return value is a list of :class:`AssetCollection` objects.
+
+.. function:: get_favorites_album()
+
+    Return the smart album that contains all assets that are marked as favorites. The return value is an :class:`AssetCollection` object.
+
+.. function:: get_recently_added_album()
+
+    Return the smart album that contains all assets that were recently added to the library. The return value is an :class:`AssetCollection` object.
+
+.. function:: get_selfies_album()
+
+    Return the smart album that contains all assets that were taken with the front camera. The return value is an :class:`AssetCollection` object.
+
+.. function:: get_screenshots_album()
+
+    Return the smart album that contains all assets that were created with the screenshot function. The return value is an :class:`AssetCollection` object.
+
+.. function:: batch_delete(assets)
+
+    Delete multiple assets from the photo library. `assets` must be a sequence of :class:`Asset` objects. If one or more of the assets are not deletable, an `IOError` is raised, and no assets will be deleted. You can check if an asset can be deleted using the :attr:`Asset.can_delete` attribute.
+
+.. function:: batch_revert(assets)
+
+    Revert multiple assets to their original state (removing all edits). If one or more of the assets are not editable, an `IOError` is raised, and no assets are reverted. You can check if an asset is editable using the :attr:`Asset.can_edit_content` attribute.
+
+.. function:: create_album(title)
+
+    Create and return a new album in the photo library, using the given title. The return value is an :class:`AssetCollection` object that represents the new album.
+
+.. function:: create_image_asset(image_path)
+
+    Create and return a new image asset using the given image file (e.g. a JPEG or PNG image). The return value is an :class:`Asset` object that represents the added image.
+
+.. function:: pick_asset(assets=None, title='', multi=False)
+
+    Show dialog with a grid of thumbnails for the given assets. `assets` can either be a sequence/list of :class:`Asset` objects, or a single :class:`AssetCollection`.
+    
+    If `multi` is `True`, the user can select multiple assets. Otherwise, the dialog is dismissed after one asset has been selected. The return value is either a single :class:`Asset` object (if `multi` is `False`), or a list of :class:`Asset` objects (if `multi` is True). If the asset picker is cancelled, `None` is returned.
+    
+Asset Class
+-----------
+
+.. class:: Asset
+
+    The :class:`Asset` class represents a single media item in the photo library, i.e. an image or a video. :class:`Asset` objects cannot be initialized directly -- you have to fetch them from the library using :func:`get_assets` or by accessing the :data:`AssetCollection.assets` property of an album or smart album.
+    
+    An :class:`Asset` object only contains metadata. To get actual image data, use the :meth:`Asset.get_image` and :meth:`get_image_data` methods.
+    
+    To add a new image asset to the photo library, use the :func:`create_image_asset` function, providing the path to an image file that you've saved to disk previously.
+
+Asset Methods
+^^^^^^^^^^^^^
+
+.. method:: Asset.get_image(original=False)
+
+    Fetch the asset's image data, and return it as a :class:`PIL.Image` object.
+    
+    By default, the most recent version of the image is returned; pass `original=True` to get the image without any adjustments/edits.
+
+.. method:: Asset.get_image_data(original=False)
+
+    Fetch the asset's image data, and return it as a :class:`io.BytesIO` object. You can use :meth:`io.BytesIO.getvalue` to get the image data as a byte string.
+    
+    By default, the most recent version of the image is returned; pass `original=True` to get the image without any adjustments/edits.
+    
+    If you only need the image for saving it as a file, this is more efficient than :meth:`Asset.get_image`. The returned :class:`io.BytesIO` has an additional `uti` attribute that can be used to determine the file type of the image data.
+
+.. method:: Asset.get_ui_image(size=None, crop=False)
+
+    Fetch the asset's image data, and return it as a :class:`ui.Image` object, e.g. to display it in a user interface. By passing a `size` (a pair of width/height), a smaller version of the image can be requested (passing `None` requests the largest version available).
+    
+    The `crop` parameter determines the resizing behavior when the aspect ratio of the image doesn't match the `size` parameter. Pass `True` to get an image with the exact size given -- this can be useful for generating thumbnail images, for example.
+
+.. method:: Asset.edit_content(jpeg_path)
+
+    Replace the asset's image content with the given JPEG file.
+    
+    If the asset is not editable, an `IOError` will be raised. You can check if an asset is editable using the :attr:`Asset.can_edit_content` attribute.
+    
+    Note that the image file *must* be in JPEG format. Other image formats are not supported for editing content (though you can create new assets from PNG/GIF files using :func:`create_image_asset`).
+    
+    The system will show a dialog to confirm the edit.
+
+.. method:: Asset.delete()
+
+    Delete the asset from the photo library.
+    
+    If the asset is not deletable, an `IOError` will be raised. You can check if an asset is deletable using the :attr:`Asset.can_delete` attribute.
+    
+    The system will show a dialog to confirm the deletion.
+    
+    If you want to delete multiple assets without showing a confirmation dialog for each one, use the :func:`batch_delete` function.
+
+.. method:: Asset.revert()
+
+    Revert the asset to its original state.
+    
+    If the asset is not editable, an `IOError` will be raised. You can check if an asset is editable using the :attr:`Asset.can_edit_content` attribute.
+    
+    The system will show a dialog to confirm the edit.
+    
+    If you want to revert multiple assets without showing a confirmation dialog for each one, use the :func:`batch_revert` function.
+
+
+Asset Properties
+^^^^^^^^^^^^^^^^
+
+.. attribute:: Asset.local_id
+
+    (read-only, string) A unique identifier of this asset on the current device.
+
+.. attribute:: Asset.pixel_width
+
+    (read-only, number) The width of the asset in pixels.
+
+.. attribute:: Asset.pixel_height
+
+    (read-only, number) The height of the asset in pixels.
+
+.. attribute:: Asset.media_type
+
+    (read-only, string) The asset's media type (``'image'`` or ``'video'``).
+
+.. attribute:: Asset.media_subtypes
+
+    (read-only, list of strings) The asset's media subtypes (e.g. ``'photo_screenshot'``, ``'photo_hdr'``...).
+
+.. attribute:: Asset.creation_date
+
+    (read-write, datetime) The asset's creation date. Only writable if :attr:`Asset.can_edit_properties` is `True`.
+
+.. attribute:: Asset.modification_date
+
+    (read-write, datetime) The asset's modification date.
+
+.. attribute:: Asset.hidden
+
+    (read-write, boolean) Whether the asset is hidden in the library. Only writable if :attr:`can_edit_properties` is `True`.
+
+.. attribute:: Asset.favorite
+
+    (read-write, boolean) Whether the asset is marked as a favorite. Only writable if :attr:`can_edit_properties` is `True`.
+
+.. attribute:: Asset.duration
+
+    (read-only, number) The duration of a video asset in seconds (always zero for still images).
+
+.. attribute:: Asset.location
+
+    (read-write, dict) The geo-location where the photo/video was taken, as a `dict` with at least ``'latitude'`` and ``'longitude'`` keys (and optionally ``'altitude'``). Only writable if :attr:`can_edit_properties` is `True`.
+
+.. attribute:: Asset.can_edit_content
+
+    (read-only, boolean) Whether the asset's content can be modified (e.g. using :meth:`Asset.revert` or :meth:`Asset.edit_content`).
+
+.. attribute:: Asset.can_edit_properties
+
+    (read-only, boolean) Whether the asset's metadata can be modified (:attr:`Asset.favorite`, :attr:`Asset.hidden`, :attr:`Asset.creation_date`, :attr:`Asset.location`).
+
+.. attribute:: Asset.can_delete
+
+    (read-only, boolean) Whether the asset can be deleted using :meth:`Asset.delete`.
+
+
+AssetCollection Class
+---------------------
+
+.. class:: AssetCollection
+
+    :class:`AssetCollection` objects represent a collection in the photo library, i.e. an album or smart album. "Moments" (photos that are automatically grouped by date/location) are also represented as :class:`AssetCollection` objects.
+    
+    You cannot initialize an :class:`AssetCollection` directly. Instead, use the :func:`get_albums`, :func:`get_smart_albums`, and :func:`get_moments` functions to fetch collections from the photo library. You can also access some special smart albums conveniently, for example via :func:`get_screenshots_album`, :func:`get_recently_added_album`, or :func:`get_selfies_album`.
+    
+    To create a new album in the photo library, use the :func:`create_album` function. You can then add assets to it using :meth:`AssetCollection.add_assets` (or remove them using :meth:`AssetCollection.remove_assets`).
+    
+AssetCollection Methods
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. method:: AssetCollection.delete
+
+    Delete the asset collection from the photo library. The contained assets are not deleted.
+    
+    If the asset collection is not deletable, an `IOError` will be raised. You can check if an asset collection is deletable using the :attr:`AssetCollection.can_delete` attribute.
+    
+.. method:: AssetCollection.add_assets(assets)
+
+    Add a list of :class:`Asset` objects to the album represented by this object.
+    
+    Not all asset collections allow adding assets. You can check this using the :attr:`AssetCollection.can_add_assets` attribute.
+
+.. method:: AssetCollection.add_assets(assets)
+
+    Remove a list of :class:`Asset` objects from the album represented by this object.
+    
+    Not all asset collections allow removing assets. You can check this using the :attr:`AssetCollection.can_remove_assets` attribute.
+
+
+AssetCollection Properties
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. attribute:: AssetCollection.assets
+
+    (read-only, list of :class:`Asset` objects) The assets that the collection contains. Note that modifying the list directly has no effect on the collection in the photo library. Use :meth:`AssetCollection.add_assets` and :meth:`AssetCollection.remove_assets` to add or remove assets.
+
+.. attribute:: AssetCollection.local_id
+
+    (read-only, string) A unique identifier of this asset collection on the current device.
+
+.. attribute:: AssetCollection.title
+
+    (read-write, string) The (potentially localized) title of the asset collection. Only writable if :attr:`AssetCollection.can_rename` is `True`.
+
+.. attribute:: AssetCollection.type
+
+    (read-only, string) The type of the asset collection (``'album'``, ``'smart_album'`` or ``'moment'``).
+
+.. attribute:: AssetCollection.subtype
+
+    (read-only, string) The subtype of the asset collection (e.g. ``'favorites'``, ``'recently_added'``...).
+
+.. attribute:: AssetCollection.start_date
+
+    (read-only, datetime) The earliest creation date among all assets in the asset collection.
+
+.. attribute:: AssetCollection.end_date
+
+    (read-only, datetime) The latest creation date among all assets in the asset collection.
+
+.. attribute:: AssetCollection.can_delete
+
+    (read-only, boolean) Whether the asset collection can be deleted.
+
+.. attribute:: AssetCollection.can_add_assets
+
+    (read-only, boolean) Whether the asset collection allows adding assets using :meth:`AssetCollection.add_assets`.
+
+.. attribute:: AssetCollection.can_remove_assets
+
+    (read-only, boolean) Whether the asset collection allows adding assets using :meth:`AssetCollection.remove_assets`.
+
+.. attribute:: AssetCollection.can_rename
+
+    (read-only, boolean) Whether the asset collection's :attr:`title` attribute can be changed.
+
+
+Deprecated Functions
+--------------------
+
+The following functions are still available for backwards compatibility, but using them in new code is not recommended.
+
+* ``get_count()`` -- Return the number of images in the camera roll.
+* ``get_image(image_index=-1, original=True, raw_data=False)`` -- Return one of the images in the camera roll. Use :func:`get_assets` instead.
+* ``get_metadata(image_index=-1)`` -- Return EXIF and other metadata of an image in the camera roll as a dictionary. Use the metadata properties of :class:`Asset` instead.
+* ``get_thumbnail(image_index=-1)`` -- Return a small thumbnail image of an image in the camera roll. The thumbnail will have equal width and height, regardless of the aspect ratio of the original image. Use :meth:`Asset.get_ui_image` instead.
+* ``pick_image(show_albums=False, include_metadata=False, original=True, raw_data=False, multi=False)`` --  Show a standard image picker UI and return the image that was picked. Use :func:`pick_asset` instead.
+* ``save_image(image)`` -- Save a :mod:`PIL` image or :class:`ui.Image` to the camera roll. Use :func:`create_image_asset` instead.

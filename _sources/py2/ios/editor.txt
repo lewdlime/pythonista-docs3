@@ -1,0 +1,176 @@
+
+:mod:`editor` --- Functions for scripting Pythonista's text editor
+==================================================================
+
+.. module:: editor
+   :synopsis: Scripting Pythonista's text editor
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`editor` module provides access to the script you're currently editing.
+You can get and set the selected range and replace text in a given range.
+
+Please note: Invalid input values for the selection and text manipulation functions
+(e.g. ranges that are out of bounds) are silently ignored as of now. This may
+change in a future release.
+
+This module is especially useful in combination with the  customizable actions menu (new in v1.1).
+You can add any script from your library to the menu for quickly running it directly from the editor,
+regardless of which script you're currently editing.
+The menu is editable from the settings (Editor > Actions Menu).
+
+This enables a couple of very interesting possibilities to extend the capabilities of the 
+Pythonista app itself. To give you some inspiration, here are a couple of snippets that you could
+use as actions::
+
+    # Search StackOverflow for selected text
+
+    import editor
+    import webbrowser
+
+    text = editor.get_text()
+    s = editor.get_selection()
+    selection = text[s[0]:s[1]]
+    if len(selection) > 0:
+        from urllib import quote
+        q = quote(selection)
+        search_url = 'http://stackoverflow.com/search?q=' + q
+        webbrowser.open(search_url)
+    else:
+        from console import alert
+        i = alert('No Selection', 'Do you want to open the StackOverflow homepage?', 'StackOverflow')
+        if i == 1:
+            webbrowser.open('http://stackoverflow.com')
+   
+This sample searches the populer Q&A site `StackOverflow <http://stackoverflow.com>`_ for the selected text.
+If no text is selected, it pops up a dialog, asking if the homepage should be opened instead.
+
+As an aside, the :mod:`webbrowser` module also works with custom app URL schemes, so you could, for example,
+open `TweetBot <http://tapbots.com/software/tweetbot/>`_ with ``webbrowser.open('tweetbot:///post?text=Hello)``.
+
+The following sample shows how to comment/uncomment selected lines, using the :func:`get_line_selection`
+convenience function. It doesn't require you to select the entirety of the lines you want to comment out,
+it will work on all lines that your selection is touching.::
+
+    #Comment/Uncomment selected lines
+    
+    import editor
+    
+    text = editor.get_text()
+    selection = editor.get_line_selection()
+    selected_text = text[selection[0]:selection[1]]
+    is_comment = selected_text.strip().startswith('#')
+    replacement = ''
+    for line in selected_text.splitlines():
+        if is_comment:
+            if line.strip().startswith('#'):
+                replacement += line[line.find('#') + 1:] + '\n'
+            else:
+                replacement += line + '\n'
+        else:
+            replacement += '#' + line + '\n'
+    
+    editor.replace_text(selection[0], selection[1], replacement)
+    editor.set_selection(selection[0], selection[0] + len(replacement) - 1)
+
+
+The following functions are provided by the :mod:`editor` module:
+
+.. function:: get_path()
+   
+   Return the absolute file path of the script that is currently open in the editor.
+
+   If no script is currently open, `None` is returned.
+
+
+.. function:: get_text()
+   
+   Return the entire text of the script that is currently being edited.
+
+   Note that this may be different from reading the file returned from :func:`get_path`, as not all
+   changes may have been saved yet.
+
+
+.. function:: get_selection()
+   
+   Return the selected range as a tuple of the form `(start, end)`.
+   
+   If no file is currently open in the editor, `None` is returned.
+
+.. function:: get_line_selection()
+   
+   Return the range of all lines that are part of the current selection as a tuple of the form (start, end)
+   
+   If no file is currently open in the editor, `None` is returned.
+
+
+.. function:: set_selection(start [, end])
+   
+   Set the selected range in the editor.
+
+   `start` and `end` must be integers. If `end` is not given, the caret is positioned at `start` with 
+   no text selected.
+
+
+.. function:: replace_text(start, end, replacement)
+   
+   Replace the text in the given range with `replacement`.
+
+   To insert/append text, a zero-length range can be used.
+
+   All changes can be undone by the user (using the regular undo key). Each 
+   separate call is a single undo step, regardless of how many characters were
+   affected.
+
+
+.. function:: make_new_file([name, content])
+
+   Create a new file and open it in the editor.
+   
+   If a file with the given name already exists, a numeric suffix is
+   automatically appended.
+   `content` should be a string with the content of the new file. If omitted,
+   an empty file is created.
+   
+   The current file is automatically saved before opening the new one.
+   
+
+.. function:: open_file(name, new_tab=False)
+
+   Open the file with the given name in the editor.
+   
+   Name can be a path filename relative to the script library's root directory or an absolute path.
+   
+   The .py extension can be omitted. The file that is currently open 
+   in the editor will automatically be saved.
+
+.. function:: apply_ui_theme(ui_view, theme_name=None)
+
+    Style a :class:`ui.View` (and its descendents) with the given UI theme.
+    
+    If `theme_name` is `None` (the default), the currently selected theme is used. Otherwise, it should be the name of a theme as shown in the settings.
+
+.. function:: present_themed(ui_view, theme_name=None, **kwargs)
+   
+   Style a :class:`ui.View` (and its descendents) with the given UI theme (using :func:`apply_ui_theme`), and present the view.
+   
+   Keyword arguments are passed on to :meth:`ui.View.present`, except for `title_bar_color` and `title_color`, which are set automatically, based on the theme.
+
+.. function:: annotate_line(lineno, text='', style='warning', expanded=True, filename=None, scroll=False)
+
+    Annotate a line of code in the editor with a label.
+    
+    `lineno` should be the 1-based line number in the file.
+    
+    `style` can be `'success'`, `'warning'` or `'error'`.
+    
+    If `expanded` is `False`, only an icon is shown; tapping on the icon shows the text of the annotation. Otherwise, the text is shown immediately.
+    
+    If `filename` is `None`, the line is annotated in the file that is currently open in the editor.
+    
+    Invalid file names and line numbers are silently ignored.
+
+.. function:: clear_annotations(filename=None)
+
+    Remove all annotations that were added via :func:`annotate_line`.
+    

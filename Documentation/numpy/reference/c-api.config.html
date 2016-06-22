@@ -1,0 +1,289 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>System configuration &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../index.html" />
+    <link rel="up" title="Numpy C-API" href="c-api.html" />
+    <link rel="next" title="Data Type API" href="c-api.dtype.html" />
+    <link rel="prev" title="Python Types and C-Structures" href="c-api.types-and-structures.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="c-api.dtype.html" title="Data Type API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="c-api.types-and-structures.html" title="Python Types and C-Structures"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="c-api.html" accesskey="U">Numpy C-API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="system-configuration">
+<h1>System configuration<a class="headerlink" href="#system-configuration" title="Permalink to this headline">¶</a></h1>
+<p>When NumPy is built, information about system configuration is
+recorded, and is made available for extension modules using Numpy&#8217;s C
+API.  These are mostly defined in <tt class="docutils literal"><span class="pre">numpyconfig.h</span></tt> (included in
+<tt class="docutils literal"><span class="pre">ndarrayobject.h</span></tt>). The public symbols are prefixed by <tt class="docutils literal"><span class="pre">NPY_*</span></tt>.
+Numpy also offers some functions for querying information about the
+platform in use.</p>
+<p>For private use, Numpy also constructs a <tt class="docutils literal"><span class="pre">config.h</span></tt> in the NumPy
+include directory, which is not exported by Numpy (that is a python
+extension which use the numpy C API will not see those symbols), to
+avoid namespace pollution.</p>
+<div class="section" id="data-type-sizes">
+<h2>Data type sizes<a class="headerlink" href="#data-type-sizes" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref c c-data docutils literal"><span class="pre">NPY_SIZEOF_{CTYPE}</span></tt> constants are defined so that sizeof
+information is available to the pre-processor.</p>
+<dl class="var">
+<dt id="c.NPY_SIZEOF_SHORT">
+<tt class="descname">NPY_SIZEOF_SHORT</tt><a class="headerlink" href="#c.NPY_SIZEOF_SHORT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_SIZEOF_INT">
+<tt class="descname">NPY_SIZEOF_INT</tt><a class="headerlink" href="#c.NPY_SIZEOF_INT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_SIZEOF_LONG">
+<tt class="descname">NPY_SIZEOF_LONG</tt><a class="headerlink" href="#c.NPY_SIZEOF_LONG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_SIZEOF_LONG_LONG">
+<tt class="descname">NPY_SIZEOF_LONG_LONG</tt><a class="headerlink" href="#c.NPY_SIZEOF_LONG_LONG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_SIZEOF_PY_LONG_LONG">
+<tt class="descname">NPY_SIZEOF_PY_LONG_LONG</tt><a class="headerlink" href="#c.NPY_SIZEOF_PY_LONG_LONG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_SIZEOF_FLOAT">
+<tt class="descname">NPY_SIZEOF_FLOAT</tt><a class="headerlink" href="#c.NPY_SIZEOF_FLOAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_SIZEOF_DOUBLE">
+<tt class="descname">NPY_SIZEOF_DOUBLE</tt><a class="headerlink" href="#c.NPY_SIZEOF_DOUBLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_SIZEOF_LONG_DOUBLE">
+<tt class="descname">NPY_SIZEOF_LONG_DOUBLE</tt><a class="headerlink" href="#c.NPY_SIZEOF_LONG_DOUBLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_SIZEOF_PY_INTPTR_T">
+<tt class="descname">NPY_SIZEOF_PY_INTPTR_T</tt><a class="headerlink" href="#c.NPY_SIZEOF_PY_INTPTR_T" title="Permalink to this definition">¶</a></dt>
+<dd><p>Size of a pointer on this platform (sizeof(void *)) (A macro defines
+NPY_SIZEOF_INTP as well.)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="platform-information">
+<h2>Platform information<a class="headerlink" href="#platform-information" title="Permalink to this headline">¶</a></h2>
+<dl class="var">
+<dt id="c.NPY_CPU_X86">
+<tt class="descname">NPY_CPU_X86</tt><a class="headerlink" href="#c.NPY_CPU_X86" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_CPU_AMD64">
+<tt class="descname">NPY_CPU_AMD64</tt><a class="headerlink" href="#c.NPY_CPU_AMD64" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_CPU_IA64">
+<tt class="descname">NPY_CPU_IA64</tt><a class="headerlink" href="#c.NPY_CPU_IA64" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_CPU_PPC">
+<tt class="descname">NPY_CPU_PPC</tt><a class="headerlink" href="#c.NPY_CPU_PPC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_CPU_PPC64">
+<tt class="descname">NPY_CPU_PPC64</tt><a class="headerlink" href="#c.NPY_CPU_PPC64" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_CPU_SPARC">
+<tt class="descname">NPY_CPU_SPARC</tt><a class="headerlink" href="#c.NPY_CPU_SPARC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_CPU_SPARC64">
+<tt class="descname">NPY_CPU_SPARC64</tt><a class="headerlink" href="#c.NPY_CPU_SPARC64" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_CPU_S390">
+<tt class="descname">NPY_CPU_S390</tt><a class="headerlink" href="#c.NPY_CPU_S390" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_CPU_PARISC">
+<tt class="descname">NPY_CPU_PARISC</tt><a class="headerlink" href="#c.NPY_CPU_PARISC" title="Permalink to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified">New in version 1.3.0.</span></p>
+</div>
+<p>CPU architecture of the platform; only one of the above is
+defined.</p>
+<p>Defined in <tt class="docutils literal"><span class="pre">numpy/npy_cpu.h</span></tt></p>
+</dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_LITTLE_ENDIAN">
+<tt class="descname">NPY_LITTLE_ENDIAN</tt><a class="headerlink" href="#c.NPY_LITTLE_ENDIAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_BIG_ENDIAN">
+<tt class="descname">NPY_BIG_ENDIAN</tt><a class="headerlink" href="#c.NPY_BIG_ENDIAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="c.NPY_BYTE_ORDER">
+<tt class="descname">NPY_BYTE_ORDER</tt><a class="headerlink" href="#c.NPY_BYTE_ORDER" title="Permalink to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified">New in version 1.3.0.</span></p>
+</div>
+<p>Portable alternatives to the <tt class="docutils literal"><span class="pre">endian.h</span></tt> macros of GNU Libc.
+If big endian, <a class="reference internal" href="#c.NPY_BYTE_ORDER" title="NPY_BYTE_ORDER"><tt class="xref c c-data docutils literal"><span class="pre">NPY_BYTE_ORDER</span></tt></a> == <a class="reference internal" href="#c.NPY_BIG_ENDIAN" title="NPY_BIG_ENDIAN"><tt class="xref c c-data docutils literal"><span class="pre">NPY_BIG_ENDIAN</span></tt></a>, and
+similarly for little endian architectures.</p>
+<p>Defined in <tt class="docutils literal"><span class="pre">numpy/npy_endian.h</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.PyArray_GetEndianness">
+<tt class="descname">PyArray_GetEndianness</tt><big>(</big><big>)</big><a class="headerlink" href="#c.PyArray_GetEndianness" title="Permalink to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified">New in version 1.3.0.</span></p>
+</div>
+<p>Returns the endianness of the current platform.
+One of <tt class="xref c c-data docutils literal"><span class="pre">NPY_CPU_BIG</span></tt>, <tt class="xref c c-data docutils literal"><span class="pre">NPY_CPU_LITTLE</span></tt>,
+or <tt class="xref c c-data docutils literal"><span class="pre">NPY_CPU_UNKNOWN_ENDIAN</span></tt>.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

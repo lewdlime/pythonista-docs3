@@ -1,0 +1,53 @@
+
+:mod:`location` --- Geo-Location Services on iOS
+======================================================
+
+.. module:: location
+   :synopsis: Provides geo-location services on iOS
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`location` module allows you to access geo-location data (e.g. GPS) on iOS. Additionally, you can use the :mod:`location` module to convert addresses to coordinates and vice-versa (geocoding and reverse-geocoding).
+
+.. note::
+   The first time this module is used, a system-provided permission alert will be shown. Until you have given the app permission to access your location, most functions won't return meaningful results.
+
+Functions in the :mod:`location` module:
+
+.. function:: get_location()
+
+   Return the most recently obtained location data. The return value is a dictionary containing various numbers that describe the current location (most importantly, 'longitude', 'latitude' and 'timestamp'). This dictionary can be used as a parameter for the :func:`reverse_geocode` function. If no location data has been obtained yet (or you haven't authorized the app), the return value may be `None`.
+
+.. function:: start_updates()
+
+   Start updating location data. This should be called before using :func:`get_location`. To save energy, it is recommended to call :func:`stop_updates` when you no longer need location data.
+
+.. function:: stop_updates()
+
+   Stop updating location data.
+
+.. function:: geocode(address)
+
+   Try to convert an address dictionary to geo-coordinates. The return value is a list of possible coordinates (can be empty if no results are found). Each entry in the list is a dictionary with 'longitude' and 'latitude' keys.
+   
+   Example::
+   
+      import location
+      address_dict = {'Street': 'Infinite Loop', 'City': 'Cupertino', 'Country': 'USA'}
+      results = location.geocode(address_dict)
+      print results
+
+.. function:: reverse_geocode(location)
+
+   Try to convert a location (longitude/latitude) to a human-readable address. The `location` parameter should be a dictionary containing values for 'longitude' and 'latitude'. The return value is a list of possible address dictionaries (usually just one).
+   
+   Example::
+   
+      import location
+      coordinates = {'latitude': 37.331684, 'longitude': -122.030758}
+      results = location.reverse_geocode(coordinates)
+      print results
+
+.. function:: is_authorized()
+
+    Returns `True` if access to location data is currently allowed, `False` otherwise (e.g. if the permission dialog hasn't been shown yet or if access is denied due to parental controls).

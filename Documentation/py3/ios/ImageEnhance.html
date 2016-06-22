@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ImageEnhance Module &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ImageEnhance">
+<span id="the-imageenhance-module"></span><h1>The ImageEnhance Module<a class="headerlink" href="#module-ImageEnhance" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-ImageEnhance" title="ImageEnhance"><tt class="xref py py-mod docutils literal"><span class="pre">ImageEnhance</span></tt></a> module contains a number of classes that can be used for image enhancement.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Vary the Sharpness of an Image:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ImageEnhance</span>
+
+<span class="n">enhancer</span> <span class="o">=</span> <span class="n">ImageEnhance</span><span class="o">.</span><span class="n">Sharpness</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">factor</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="mf">4.0</span>
+    <span class="n">enhancer</span><span class="o">.</span><span class="n">enhance</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s">&quot;Sharpness </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">factor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<p>All enhancement classes implement a common interface, containing a single method:</p>
+<dl class="method">
+<dt id="ImageEnhance.enhancer.enhance">
+<tt class="descclassname">enhancer.</tt><tt class="descname">enhance</tt><big>(</big><em>factor</em><big>)</big><a class="headerlink" href="#ImageEnhance.enhancer.enhance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an enhanced image. The factor is a floating point value controlling the enhancement. Factor 1.0 always returns a copy of the original image, lower factors mean less color (brightness, contrast, etc), and higher values more. There are no restrictions on this value.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="the-color-class">
+<h2>The Color Class<a class="headerlink" href="#the-color-class" title="Permalink to this headline">¶</a></h2>
+<p>The color enhancement class is used to adjust the color balance of an image, in a manner similar to the controls on a color TV set. This class implements the enhancement interface as described above.</p>
+<dl class="class">
+<dt id="ImageEnhance.Color">
+<em class="property">class </em><tt class="descclassname">ImageEnhance.</tt><tt class="descname">Color</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageEnhance.Color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an enhancement object for adjusting color in an image. A factor of 0.0 gives a black and white image, a factor of 1.0 gives the original image.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="the-brightness-class">
+<h2>The Brightness Class<a class="headerlink" href="#the-brightness-class" title="Permalink to this headline">¶</a></h2>
+<p>The brightness enhancement class is used to control the brightness of an image.</p>
+<dl class="class">
+<dt id="ImageEnhance.Brightness">
+<em class="property">class </em><tt class="descclassname">ImageEnhance.</tt><tt class="descname">Brightness</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageEnhance.Brightness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an enhancement object for adjusting brightness in an image. A factor of 0.0 gives a black image, factor 1.0 gives the original image.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="the-contrast-class">
+<h2>The Contrast Class<a class="headerlink" href="#the-contrast-class" title="Permalink to this headline">¶</a></h2>
+<p>The contrast enhancement class is used to control the contrast of an image, similar to the contrast control on a TV set.</p>
+<dl class="class">
+<dt id="ImageEnhance.Contrast">
+<em class="property">class </em><tt class="descclassname">ImageEnhance.</tt><tt class="descname">Contrast</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageEnhance.Contrast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an enhancement object for adjusting contrast in an image. A factor of 0.0 gives an solid grey image, factor 1.0 gives the original image.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="the-sharpness-class">
+<h2>The Sharpness Class<a class="headerlink" href="#the-sharpness-class" title="Permalink to this headline">¶</a></h2>
+<p>The sharpness enhancement class is used to control the sharpness of an image.</p>
+<dl class="class">
+<dt id="ImageEnhance.Sharpness">
+<em class="property">class </em><tt class="descclassname">ImageEnhance.</tt><tt class="descname">Sharpness</tt><big>(</big><em>image</em><big>)</big><a class="headerlink" href="#ImageEnhance.Sharpness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an enhancement object for adjusting the sharpness of an image. The factor 0.0 gives a blurred image, 1.0 gives the original image, and a factor of 2.0 gives a sharpened image.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

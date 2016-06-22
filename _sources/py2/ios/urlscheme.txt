@@ -1,0 +1,75 @@
+.. _pythonista-urlscheme:
+
+The Pythonista URL Scheme
+=========================
+
+Pythonista can be launched from other applications with the custom ``pythonista://`` URL scheme.
+
+Basics
+------
+
+* **Open the app:**
+  
+  Use ``pythonista://`` without any additional parameters
+  to open the app without doing anything else.
+
+* **Open a script for editing:**
+  
+  Use ``pythonista://MyScript`` for opening one of your scripts in the editor.
+  The name of the script can contain the ``.py`` file extension, but it
+  doesn't have to.
+
+* **Run a script from your library:**
+  
+  Use ``pythonista://MyScript?action=run`` for
+  running a script that is in your library. This only works if no script is
+  already running when the app is started.
+
+.. note::
+    You can only open or run scripts that are `already in your library`.
+    It is not possible to run arbitrary code or create new scripts using
+    the URL scheme.
+
+Command-line Arguments
+----------------------
+
+When using the ``action=run`` parameter (see above), you can pass command-line
+arguments to the script in two ways:
+
+* **Method 1: One args parameter**
+  
+  Example: ``pythonista://MyScript?action=run&args=foo%20bar``
+
+  When you pass a single string with the `args` URL parameter, the string is
+  split by spaces (the space is encoded as ``%20`` here) and :data:`sys.argv`
+  would be ``[<script_path>, 'foo', 'bar']`` in this example.
+  
+  If you want to pass arguments that contain spaces, you have to enclose them
+  in double quotes (as you would in a classic shell).
+  
+  This is basically the same as running a script by long-pressing the run
+  button.
+
+* **Method 2: Multiple argv parameters**
+  
+  Example: ``pythonista://MyScript?action=run&argv=foo&argv=bar``
+  
+  Using multiple arguments that are all named `argv`, you don't have to worry
+  about quoting arguments that contain spaces. Each of the parameters
+  corresponds to one element in :data:`sys.argv`.
+   
+  If the URL contains at least one `argv` parameter, `args` is ignored.
+
+Launching Other Apps
+--------------------
+
+If you want to go in the opposite direction, and open an app `from Pythonista`,
+you can do this with the :mod:`webbrowser` module.
+
+For example, to open TweetBot, you could use the following code::
+
+    import webbrowser
+    webbrowser.open('tweetbot://')
+
+For a list of third-party applications that have URL schemes, you can refer
+to `handleopenurl.com <http://handleopenurl.com>`_.

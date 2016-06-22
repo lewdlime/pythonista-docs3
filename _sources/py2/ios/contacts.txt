@@ -1,0 +1,342 @@
+
+:mod:`contacts` --- Access the iOS Contacts Database
+======================================================
+
+.. module:: contacts
+   :synopsis: Access the iOS Contacts Database
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`contacts` module allows you to read and modify the iOS contacts (address book) database.
+
+.. note::
+   The first time the :mod:`contacts` module is imported, a system-provided permission dialog will be shown. If you deny access, :func:`get_all_people` will always return an empty list. If you change your mind later, you can allow access to your contacts from the `Privacy` section in the Settings app.
+
+Quick Start
+------------
+
+As a simple example for reading information in the address book, let's start with a script that prints out all people that have text in the 'Notes' field::
+
+   import contacts
+   print 'Address Book Notes'
+   print '=' * 40
+   people = contacts.get_all_people()
+   for p in people:
+     note = p.note
+     if note:
+       print p.full_name
+       print '-' * 40
+       print note
+       print '=' * 40
+
+The script uses the :func:`get_all_people` function to retrieve a list of all :class:`Person` objects in the address book, iterates over the list, and prints the name and note for each person that has a (non-empty) :attr:`Person.note` field.
+
+As a slightly more complex example, this script prints out a list of upcoming birthdays (as number of days from now)::
+
+   import contacts
+   from datetime import datetime
+   import operator
+
+   days_list = []
+   people = contacts.get_all_people()
+   now = datetime.now()
+   for p in people:
+     b = p.birthday
+     if b:
+       next_birthday = datetime(now.year, b.month, b.day)
+       if next_birthday < now:
+         next_birthday = datetime(now.year + 1, b.month, b.day)
+       days = (next_birthday - now).days
+       days_list.append({'name': p.full_name, 'days': days})
+
+   if not days_list:
+     print 'You don\'t have any birthdays in your address book.'
+   else:
+     days_list.sort(key=operator.itemgetter('days'))
+     print 'Upcoming Birthdays'
+     print '=' * 40
+     for item in days_list:
+       print '* %s in %i days' % (item['name'], item['days'])
+
+The note and birthday fields are very easy to use because there is only one for each person. Many other fields can have multiple values, e.g. a person can have more than one email address. These fields are represented as lists of tuples, with each tuple containing a label (e.g. 'home', 'work'...), and the actual value. An example for the :attr:`Person.email` attribute would be ``[('home', 'me@example.com'), ('work', 'work@example.com')]``.
+
+So far, we've only *read* information from the address book database, but you can also use the :mod:`contacts` module to make changes. Because the previous example used a simple single-value attribute, let's use the more complex :attr:`Person.address` attribute now, which is represented as a list of multiple dictionaries, each wrapped in a tuple that contains a label (e.g. 'home', 'work'...). Let's change the country of all people that live in Berlin to be Germany::
+
+   import contacts
+   people = contacts.get_all_people()
+   for p in people:
+     changed = False
+     addresses = p.address
+     for address_tuple in addresses:
+       address = address_tuple[1]
+       city = address.get(contacts.CITY, None)
+       country = address.get(contacts.COUNTRY, None)
+       if city == 'Berlin' and country != 'Germany':
+         address[contacts.COUNTRY] = 'Germany'
+         address[contacts.COUNTRY_CODE] = 'de'
+         changed = True
+     if changed:
+       p.address = addresses
+       print 'Updated country of', p.full_name
+   contacts.save()
+   print 'Done'
+
+Note that we've used constants for the keys in the address dictionary -- you can find a list of these keys at the end of this document. After making any changes to the address book, you have to call the :func:`save` function to make them persistent.
+
+Note that all multi-value attributes are returned as 'snapshots'. Modifying these lists directly has no effect unless you re-assign the attribute.
+
+Functions
+------------
+
+.. function:: get_group(group_id)
+
+   Return the :class:`Group` with the given id (an integer, c.f. :attr:`Group.id`).
+
+.. function:: get_all_groups()
+
+   Return a list of all :class:`Group` objects in the address book.
+
+.. function:: add_group()
+
+   Add a :class:`Group` to the address book.
+
+.. function:: remove_group(group)
+
+   Remove a :class:`Group` from the address book.
+
+.. function:: add_person(person)
+
+   Add a :class:`Person` to the address book.
+   
+.. function:: remove_person(person)
+
+   Remove a :class:`Person` from the address book.
+
+.. function:: find(name)
+
+   Do a prefix search for the given name and return a list of all matching :class:`Person` records.
+
+.. function:: get_all_people()
+
+   Return a list of all people in the address book. Each list entry is a :class:`Person` object.
+
+.. function:: get_person(person_id)
+   
+   Return the :class:`Person` with the given id (an integer, c.f. :attr:`Person.id`).
+
+.. function:: save()
+
+   Save all pending changes in the contacts database. After changing any attributes of a :class:`Group` or :class:`Person` object, this function has to be called in order to make the changes persistent.
+   
+.. function:: revert()
+
+   Revert all pending changes in the contacts database.
+
+.. function:: localized_label(label)
+
+   Return a localized version of a label that is used in a multi-value property.
+
+.. function:: is_authorized()
+
+    Returns `True` if access to the address book is currently allowed, `False` otherwise (e.g. if the permission dialog hasn't been shown yet or if access is denied due to parental controls).
+    
+
+Group Objects
+^^^^^^^^^^^^^^^^
+
+.. class:: Group()
+
+   A :class:`Group` object represents a group in the address book, e.g. friends, family, or co-workers. After initializing a :class:`Group` object and setting its ``name`` attribute, it can be added to the address book database by calling :func:`add_group`. When a group's name is modified, the :func:`save` function has to be called in order to make the change persistent.
+
+.. attribute:: Group.name
+
+   The group's name, e.g. 'Friends' or 'Family'.
+
+.. attribute:: Group.id
+
+   The persistent identifier of the group record in the address book (int, readonly), or ``-1`` if the group has not been saved yet. The id can be used with the :func:`get_group` function.
+
+Person Objects
+------------------------
+
+.. class:: Person()
+
+   :class:`Person` objects represent people in the address book. After initializing a :class:`Person` and setting its various attributes, it can be added to the address book database by calling :func:`add_person`. After any attributes are modified, the :func:`save` function has to be called in order to make the changes persistent.
+   
+   A lot of attributes can have multiple values, e.g. a person can have multiple email addresses (work, private, ...) or phone numbers (home, mobile, ...). Each of these attributes is represented as a list of 2-tuples, with each tuple containing a label and the actual value. For example, this could be the contents of a person's ``email`` attribute: ``[('home', 'foo@work.com'), ('work', 'foo@work.com')]``. Though it's possible to use any string as a label, it is recommended to use one of the constants at the end of this document. These labels look like ``'_$!<Work>!$'``, but will be localized in the UI. You can get a localized representation of a label constant by using the :func:`localized_label` function.
+
+.. attribute:: Person.address
+
+   Street address(es) (multi-dictionary). Use the constants :data:`contacts.STREET`, :data:`contacts.CITY`, :data:`contacts.STATE` etc. as keys.
+
+.. attribute:: Person.birthday
+
+   Birthday (:mod:`datetime.datetime`).
+
+.. attribute:: Person.creation_date
+
+   When the person was added to the address book (readonly, :mod:`datetime.datetime`).
+
+.. attribute:: Person.department
+
+   Department (string).
+
+.. attribute:: Person.email
+
+   Email address(es) (multi-string)
+
+.. attribute:: Person.first_name
+
+   First name (string)
+
+.. attribute:: Person.first_name_phonetic
+
+   First name phonetic (string)
+
+.. attribute:: Person.full_name
+
+   The person's full name (readonly, string). To modify the name, use the :attr:`Person.first_name`, :attr:`Person.last_name` and :attr:`Person.middle_name` attributes.
+
+.. attribute:: Person.id
+
+   The persistent identifier of the person record in the address book (int, readonly), or ``-1`` if the person has not been saved yet. The id can be used with the :func:`get_person` function.
+
+.. attribute:: Person.instant_message
+
+   Instant message accounts (multi-dictionary).
+
+.. attribute:: Person.job_title
+
+   Job title (string).
+
+.. attribute:: Person.kind
+
+   The kind of address book record (int, ``0`` for a person, ``1`` for an organization).
+
+.. attribute:: Person.last_name
+
+   Last name (string).
+
+.. attribute:: Person.last_name_phonetic
+
+   Last name phonetic (string).
+
+.. attribute:: Person.middle_name
+
+   Middle name (string).
+
+.. attribute:: Person.middle_name_phonetic
+
+   Middle name phonetic (string).
+
+.. attribute:: Person.modification_date
+
+   When the person was last modified (readonly, :mod:`datetime.datetime`).
+
+.. attribute:: Person.nickname
+
+   Nickname (string).
+
+.. attribute:: Person.note
+
+   Note (string).
+   
+.. attribute:: Person.organization
+
+   Organization (string).
+   
+.. attribute:: Person.phone
+
+   Phone number(s) (multi-string).
+
+.. attribute:: Person.prefix
+
+   Prefix, e.g. “Sir,” “Duke,” “General” (string).
+
+.. attribute:: Person.related_names
+
+   Related names (multi-string).
+
+.. attribute:: Person.social_profile
+
+   Social profile(s), e.g. Twitter accounts (multi-dictionary).
+
+.. attribute:: Person.suffix
+
+   Suffix, e.g. “Jr.,” “Sr.,” “III” (string).
+
+.. attribute:: Person.url
+
+   URL(s), e.g. homepage (multi-string).
+
+.. attribute:: Person.vcard
+
+   VCard reprentation of the person's data (readonly, string).
+
+Constants
+------------
+
+Generic labels for multi-value attributes:
+
+.. data:: contacts.HOME
+
+.. data:: contacts.WORK
+
+.. data:: contacts.OTHER
+
+Labels for the :attr:`Person.phone` multi-string attribute:
+
+.. data:: contacts.IPHONE
+
+.. data:: contacts.MAIN_PHONE
+
+.. data:: contacts.HOME_FAX
+
+.. data:: contacts.WORK_FAX
+
+.. data:: contacts.OTHER_FAX
+
+.. data:: contacts.PAGER
+
+Labels for the :attr:`Person.related_names` multi-string attribute:
+
+.. data:: contacts.FATHER
+
+.. data:: contacts.MOTHER
+
+.. data:: contacts.PARENT
+
+.. data:: contacts.BROTHER
+
+.. data:: contacts.SISTER
+
+.. data:: contacts.CHILD
+
+.. data:: contacts.FRIEND
+
+.. data:: contacts.SPOUSE
+
+.. data:: contacts.PARTNER
+
+.. data:: contacts.ASSISTANT
+
+.. data:: contacts.MANAGER
+
+Labels for the :attr:`Person.url` multi-string attribute:
+
+.. data:: contacts.HOMEPAGE
+
+Keys for :attr:`Person.address` dictionaries:
+
+.. data:: contacts.STREET
+
+.. data:: contacts.CITY
+
+.. data:: contacts.STATE
+
+.. data:: contacts.ZIP
+
+.. data:: contacts.COUNTRY
+
+.. data:: contacts.COUNTRY_CODE
+

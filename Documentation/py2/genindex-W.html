@@ -1,0 +1,339 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Index &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="index.html" />
+    <link rel="shortcut icon" type="image/png" href="_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+
+   <h1 id="index">Index &ndash; W</h1>
+
+<table style="width: 100%" class="indextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="ios/scene.html#scene.Rect.w">w (scene.Rect attribute)</a></dt>
+    <dt><a href="library/os.html#os.W_OK">W_OK (in module os)</a></dt>
+    <dt><a href="library/os.html#os.wait">wait() (in module os)</a></dt>
+    <dd><dl>
+      <dt><a href="library/popen2.html#popen2.Popen3.wait">(popen2.Popen3 method)</a></dt>
+      <dt><a href="ios/scene.html#scene.Action.wait">(scene.Action class method)</a></dt>
+      <dt><a href="library/subprocess.html#subprocess.Popen.wait">(subprocess.Popen method)</a></dt>
+      <dt><a href="library/threading.html#threading.Condition.wait">(threading.Condition method)</a></dt>
+      <dt><a href="library/threading.html#threading.Event.wait">(threading.Event method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/os.html#os.wait3">wait3() (in module os)</a></dt>
+    <dt><a href="library/os.html#os.wait4">wait4() (in module os)</a></dt>
+    <dt><a href="ios/ui.html#ui.View.wait_modal">wait_modal() (ui.View method)</a></dt>
+    <dt><a href="library/os.html#os.waitpid">waitpid() (in module os)</a></dt>
+    <dt><a href="library/email.message.html#email.message.Message.walk">walk() (email.message.Message method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/ast.html#ast.walk">(in module ast)</a></dt>
+      <dt><a href="library/compiler.html#compiler.walk">(in module compiler)</a></dt>
+      <dt><a href="library/compiler.html#compiler.visitor.walk">(in module compiler.visitor)</a></dt>
+      <dt><a href="library/os.html#os.walk">(in module os)</a></dt>
+      <dt><a href="library/os.path.html#os.path.walk">(in module os.path)</a></dt>
+  </dl></dd>
+    <dt><a href="library/pkgutil.html#pkgutil.walk_packages">walk_packages() (in module pkgutil)</a></dt>
+    <dt><a href="library/doctest.html#doctest.Example.want">want (doctest.Example attribute)</a></dt>
+    <dt><a href="library/warnings.html#warnings.warn">warn() (in module warnings)</a></dt>
+    <dt><a href="library/warnings.html#warnings.warn_explicit">warn_explicit() (in module warnings)</a></dt>
+    <dt><a href="library/exceptions.html#exceptions.Warning">Warning</a></dt>
+    <dt><a href="library/logging.html#logging.warning">warning() (in module logging)</a></dt>
+    <dd><dl>
+      <dt><a href="library/logging.html#logging.Logger.warning">(logging.Logger method)</a></dt>
+      <dt><a href="library/xml.sax.handler.html#xml.sax.handler.ErrorHandler.warning">(xml.sax.handler.ErrorHandler method)</a></dt>
+  </dl></dd>
+    <dt><a href="ios/paramiko.html#paramiko.WarningPolicy">WarningPolicy (class in paramiko)</a></dt>
+    <dt><a href="library/warnings.html#index-0">warnings</a></dt>
+    <dd><dl>
+      <dt><a href="library/warnings.html#module-warnings">(module)</a></dt>
+  </dl></dd>
+    <dt><a href="library/test.html#test.test_support.WarningsRecorder">WarningsRecorder (class in test.test_support)</a></dt>
+    <dt><a href="library/sys.html#sys.warnoptions">warnoptions (in module sys)</a></dt>
+    <dt><a href="library/warnings.html#warnings.warnpy3k">warnpy3k() (in module warnings)</a></dt>
+    <dt><a href="library/unittest.html#unittest.TestResult.wasSuccessful">wasSuccessful() (unittest.TestResult method)</a></dt>
+    <dt><a href="library/logging.handlers.html#logging.handlers.WatchedFileHandler">WatchedFileHandler (class in logging.handlers)</a></dt>
+    <dt><a href="library/wave.html#module-wave">wave (module)</a></dt>
+    <dt><a href="library/os.html#os.WCONTINUED">WCONTINUED (in module os)</a></dt>
+    <dt><a href="library/os.html#os.WCOREDUMP">WCOREDUMP() (in module os)</a></dt>
+    <dt><a href="library/weakref.html#weakref.WeakKeyDictionary">WeakKeyDictionary (class in weakref)</a></dt>
+    <dt><a href="library/weakref.html#module-weakref">weakref (module)</a></dt>
+    <dt><a href="library/weakref.html#weakref.WeakSet">WeakSet (class in weakref)</a></dt>
+    <dt><a href="library/weakref.html#weakref.WeakValueDictionary">WeakValueDictionary (class in weakref)</a></dt>
+    <dt><a href="library/webbrowser.html#module-webbrowser">webbrowser (module)</a></dt>
+    <dt><a href="ios/ui.html#ui.WebView">WebView (class in ui)</a></dt>
+    <dt><a href="library/datetime.html#datetime.date.weekday">weekday() (datetime.date method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/datetime.html#datetime.datetime.weekday">(datetime.datetime method)</a></dt>
+      <dt><a href="library/calendar.html#calendar.weekday">(in module calendar)</a></dt>
+  </dl></dd>
+    <dt><a href="library/calendar.html#calendar.weekheader">weekheader() (in module calendar)</a></dt>
+    <dt><a href="library/random.html#random.weibullvariate">weibullvariate() (in module random)</a></dt>
+    <dt><a href="library/os.html#os.WEXITSTATUS">WEXITSTATUS() (in module os)</a></dt>
+    <dt><a href="library/basehttpserver.html#BaseHTTPServer.BaseHTTPRequestHandler.wfile">wfile (BaseHTTPServer.BaseHTTPRequestHandler attribute)</a></dt>
+    <dt><a href="library/imghdr.html#imghdr.what">what() (in module imghdr)</a></dt>
+    <dd><dl>
+      <dt><a href="library/sndhdr.html#sndhdr.what">(in module sndhdr)</a></dt>
+  </dl></dd>
+    <dt><a href="library/sndhdr.html#sndhdr.whathdr">whathdr() (in module sndhdr)</a></dt>
+    <dt><a href="library/whichdb.html#module-whichdb">whichdb (module)</a></dt>
+    <dt><a href="library/whichdb.html#whichdb.whichdb">whichdb() (in module whichdb)</a></dt>
+    <dt>while</dt>
+    <dd><dl>
+      <dt><a href="reference/compound_stmts.html#index-4">statement</a>, <a href="reference/simple_stmts.html#index-33">[1]</a>, <a href="reference/simple_stmts.html#index-37">[2]</a>, <a href="library/stdtypes.html#index-2">[3]</a></dt>
+  </dl></dd>
+    <dt><a href="reference/lexical_analysis.html#index-7">whitespace</a></dt>
+    <dd><dl>
+      <dt><a href="library/string.html#string.whitespace">(in module string)</a></dt>
+      <dt><a href="library/shlex.html#shlex.shlex.whitespace">(shlex.shlex attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/shlex.html#shlex.shlex.whitespace_split">whitespace_split (shlex.shlex attribute)</a></dt>
+    <dt><a href="library/random.html#random.whseed">whseed() (in module random)</a></dt>
+    <dt><a href="library/random.html#random.WichmannHill">WichmannHill (class in random)</a></dt>
+    <dt><a href="ios/scene.html#scene.Rect.width">width (scene.Rect attribute)</a></dt>
+    <dd><dl>
+      <dt><a href="library/textwrap.html#textwrap.TextWrapper.width">(textwrap.TextWrapper attribute)</a></dt>
+      <dt><a href="ios/ui.html#ui.View.width">(ui.View attribute)</a></dt>
+  </dl></dd>
+    <dt><a href="library/os.html#os.WIFCONTINUED">WIFCONTINUED() (in module os)</a></dt>
+    <dt><a href="library/os.html#os.WIFEXITED">WIFEXITED() (in module os)</a></dt>
+    <dt><a href="library/os.html#os.WIFSIGNALED">WIFSIGNALED() (in module os)</a></dt>
+    <dt><a href="library/os.html#os.WIFSTOPPED">WIFSTOPPED() (in module os)</a></dt>
+    <dt><a href="library/tempfile.html#index-4">Wimp$ScrapDir</a></dt>
+    <dt><a href="library/platform.html#platform.win32_ver">win32_ver() (in module platform)</a></dt>
+    <dt><a href="library/ctypes.html#ctypes.WinDLL">WinDLL (class in ctypes)</a></dt>
+    <dt><a href="library/configparser.html#index-0">Windows ini file</a></dt>
+    <dt><a href="library/exceptions.html#exceptions.WindowsError">WindowsError</a></dt>
+    <dt><a href="library/ctypes.html#ctypes.WinError">WinError() (in module ctypes)</a></dt>
+</dl></td>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="library/ctypes.html#ctypes.WINFUNCTYPE">WINFUNCTYPE() (in module ctypes)</a></dt>
+    <dt><a href="library/select.html#index-1">WinSock</a></dt>
+    <dt><a href="library/sys.html#sys.winver">winver (in module sys)</a></dt>
+    <dt>with</dt>
+    <dd><dl>
+      <dt><a href="reference/compound_stmts.html#index-15">statement</a>, <a href="reference/datamodel.html#index-96">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="library/dis.html#opcode-WITH_CLEANUP">WITH_CLEANUP (opcode)</a></dt>
+    <dt><a href="ios/ui.html#ui.Image.with_rendering_mode">with_rendering_mode() (ui.Image method)</a></dt>
+    <dt><a href="library/os.html#os.WNOHANG">WNOHANG (in module os)</a></dt>
+    <dt><a href="library/shlex.html#shlex.shlex.wordchars">wordchars (shlex.shlex attribute)</a></dt>
+    <dt><a href="library/urlparse.html#index-0">World Wide Web</a>, <a href="library/robotparser.html#index-0">[1]</a>, <a href="library/internet.html#index-0">[2]</a>, <a href="library/urllib.html#index-0">[3]</a></dt>
+    <dt><a href="library/textwrap.html#textwrap.wrap">wrap() (in module textwrap)</a></dt>
+    <dd><dl>
+      <dt><a href="library/textwrap.html#textwrap.TextWrapper.wrap">(textwrap.TextWrapper method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/ssl.html#ssl.wrap_socket">wrap_socket() (in module ssl)</a></dt>
+    <dt><a href="library/functools.html#functools.wraps">wraps() (in module functools)</a></dt>
+    <dt><a href="library/asyncore.html#asyncore.dispatcher.writable">writable() (asyncore.dispatcher method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/io.html#io.IOBase.writable">(io.IOBase method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/array.html#array.array.write">write() (array.array method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/configparser.html#ConfigParser.RawConfigParser.write">(ConfigParser.RawConfigParser method)</a></dt>
+      <dt><a href="library/bz2.html#bz2.BZ2File.write">(bz2.BZ2File method)</a></dt>
+      <dt><a href="library/code.html#code.InteractiveInterpreter.write">(code.InteractiveInterpreter method)</a></dt>
+      <dt><a href="library/codecs.html#codecs.StreamWriter.write">(codecs.StreamWriter method)</a></dt>
+      <dt><a href="library/email.generator.html#email.generator.Generator.write">(email.generator.Generator method)</a></dt>
+      <dt><a href="library/stdtypes.html#file.write">(file method)</a></dt>
+      <dt><a href="library/mmap.html#mmap.write">(in module mmap)</a></dt>
+      <dt><a href="library/os.html#os.write">(in module os)</a></dt>
+      <dt><a href="library/io.html#io.BufferedIOBase.write">(io.BufferedIOBase method)</a></dt>
+      <dt><a href="library/io.html#io.BufferedWriter.write">(io.BufferedWriter method)</a></dt>
+      <dt><a href="library/io.html#io.RawIOBase.write">(io.RawIOBase method)</a></dt>
+      <dt><a href="library/io.html#io.TextIOBase.write">(io.TextIOBase method)</a></dt>
+      <dt><a href="library/ssl.html#ssl.SSLSocket.write">(ssl.SSLSocket method)</a></dt>
+      <dt><a href="library/telnetlib.html#telnetlib.Telnet.write">(telnetlib.Telnet method)</a></dt>
+      <dt><a href="library/xml.etree.elementtree.html#xml.etree.ElementTree.ElementTree.write">(xml.etree.ElementTree.ElementTree method)</a></dt>
+      <dt><a href="library/zipfile.html#zipfile.ZipFile.write">(zipfile.ZipFile method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/mmap.html#mmap.write_byte">write_byte() (in module mmap)</a></dt>
+    <dt><a href="ios/cb.html#cb.Peripheral.write_characteristic_value">write_characteristic_value() (cb.Peripheral method)</a></dt>
+    <dt><a href="ios/console.html#console.write_link">write_link() (in module console)</a></dt>
+    <dt><a href="library/trace.html#trace.CoverageResults.write_results">write_results() (trace.CoverageResults method)</a></dt>
+    <dt><a href="library/aifc.html#aifc.aifc.writeframes">writeframes() (aifc.aifc method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/sunau.html#sunau.AU_write.writeframes">(sunau.AU_write method)</a></dt>
+      <dt><a href="library/wave.html#wave.Wave_write.writeframes">(wave.Wave_write method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/aifc.html#aifc.aifc.writeframesraw">writeframesraw() (aifc.aifc method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/sunau.html#sunau.AU_write.writeframesraw">(sunau.AU_write method)</a></dt>
+      <dt><a href="library/wave.html#wave.Wave_write.writeframesraw">(wave.Wave_write method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/csv.html#csv.DictWriter.writeheader">writeheader() (csv.DictWriter method)</a></dt>
+    <dt><a href="library/bz2.html#bz2.BZ2File.writelines">writelines() (bz2.BZ2File method)</a></dt>
+    <dd><dl>
+      <dt><a href="library/codecs.html#codecs.StreamWriter.writelines">(codecs.StreamWriter method)</a></dt>
+      <dt><a href="library/stdtypes.html#file.writelines">(file method)</a></dt>
+      <dt><a href="library/io.html#io.IOBase.writelines">(io.IOBase method)</a></dt>
+  </dl></dd>
+    <dt><a href="library/plistlib.html#plistlib.writePlist">writePlist() (in module plistlib)</a></dt>
+    <dt><a href="library/plistlib.html#plistlib.writePlistToResource">writePlistToResource() (in module plistlib)</a></dt>
+    <dt><a href="library/plistlib.html#plistlib.writePlistToString">writePlistToString() (in module plistlib)</a></dt>
+    <dt><a href="library/zipfile.html#zipfile.PyZipFile.writepy">writepy() (zipfile.PyZipFile method)</a></dt>
+    <dt><a href="library/formatter.html#formatter.formatter.writer">writer (formatter.formatter attribute)</a></dt>
+    <dt><a href="library/csv.html#csv.writer">writer() (in module csv)</a></dt>
+    <dt><a href="library/csv.html#csv.csvwriter.writerow">writerow() (csv.csvwriter method)</a></dt>
+    <dt><a href="library/csv.html#csv.csvwriter.writerows">writerows() (csv.csvwriter method)</a></dt>
+    <dt><a href="library/zipfile.html#zipfile.ZipFile.writestr">writestr() (zipfile.ZipFile method)</a></dt>
+    <dt><a href="library/xml.dom.minidom.html#xml.dom.minidom.Node.writexml">writexml() (xml.dom.minidom.Node method)</a></dt>
+    <dt>writing</dt>
+    <dd><dl>
+      <dt><a href="reference/simple_stmts.html#index-2">values</a>, <a href="reference/simple_stmts.html#index-23">[1]</a></dt>
+  </dl></dd>
+    <dt><a href="library/xml.dom.html#xml.dom.WrongDocumentErr">WrongDocumentErr</a></dt>
+    <dt><a href="library/2to3.html#2to3fixer-ws_comma">ws_comma (2to3 fixer)</a></dt>
+    <dt><a href="ios/bottle/api.html#bottle.Bottle.wsgi">wsgi() (bottle.Bottle method)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.handlers.BaseHandler.wsgi_file_wrapper">wsgi_file_wrapper (wsgiref.handlers.BaseHandler attribute)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.handlers.BaseHandler.wsgi_multiprocess">wsgi_multiprocess (wsgiref.handlers.BaseHandler attribute)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.handlers.BaseHandler.wsgi_multithread">wsgi_multithread (wsgiref.handlers.BaseHandler attribute)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.handlers.BaseHandler.wsgi_run_once">wsgi_run_once (wsgiref.handlers.BaseHandler attribute)</a></dt>
+    <dt><a href="ios/bottle/api.html#bottle.WSGIHeaderDict">WSGIHeaderDict (class in bottle)</a></dt>
+    <dt><a href="library/wsgiref.html#module-wsgiref">wsgiref (module)</a></dt>
+    <dt><a href="library/wsgiref.html#module-wsgiref.handlers">wsgiref.handlers (module)</a></dt>
+    <dt><a href="library/wsgiref.html#module-wsgiref.headers">wsgiref.headers (module)</a></dt>
+    <dt><a href="library/wsgiref.html#module-wsgiref.simple_server">wsgiref.simple_server (module)</a></dt>
+    <dt><a href="library/wsgiref.html#module-wsgiref.util">wsgiref.util (module)</a></dt>
+    <dt><a href="library/wsgiref.html#module-wsgiref.validate">wsgiref.validate (module)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.simple_server.WSGIRequestHandler">WSGIRequestHandler (class in wsgiref.simple_server)</a></dt>
+    <dt><a href="library/wsgiref.html#wsgiref.simple_server.WSGIServer">WSGIServer (class in wsgiref.simple_server)</a></dt>
+    <dt><a href="library/subprocess.html#subprocess.STARTUPINFO.wShowWindow">wShowWindow (subprocess.STARTUPINFO attribute)</a></dt>
+    <dt><a href="library/os.html#os.WSTOPSIG">WSTOPSIG() (in module os)</a></dt>
+    <dt><a href="library/ctypes.html#ctypes.wstring_at">wstring_at() (in module ctypes)</a></dt>
+    <dt><a href="library/os.html#os.WTERMSIG">WTERMSIG() (in module os)</a></dt>
+    <dt><a href="library/os.html#os.WUNTRACED">WUNTRACED (in module os)</a></dt>
+    <dt><a href="library/urlparse.html#index-0">WWW</a>, <a href="library/robotparser.html#index-0">[1]</a>, <a href="library/internet.html#index-0">[2]</a>, <a href="library/urllib.html#index-0">[3]</a></dt>
+    <dd><dl>
+      <dt><a href="library/cgi.html#index-0">server</a>, <a href="library/basehttpserver.html#index-0">[1]</a></dt>
+  </dl></dd>
+</dl></td>
+</tr></table>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on Jun 11, 2016.
+    <a href="bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

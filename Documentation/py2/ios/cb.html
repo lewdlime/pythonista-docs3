@@ -1,0 +1,628 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cb — Connecting to Bluetooth LE Peripherals &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="module-cb">
+<span id="cb-connecting-to-bluetooth-le-peripherals"></span><h1><a class="reference internal" href="#module-cb" title="cb"><tt class="xref py py-mod docutils literal"><span class="pre">cb</span></tt></a> &#8212; Connecting to Bluetooth LE Peripherals<a class="headerlink" href="#module-cb" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-cb" title="cb"><tt class="xref py py-mod docutils literal"><span class="pre">cb</span></tt></a> (&#8220;Core Bluetooth&#8221;) module enables you –to connect to Bluetooth LE (&#8220;Low Energy&#8221;) peripherals like the <a class="reference external" href="http://www.ti.com/ww/en/wireless_connectivity/sensortag/index.shtml?DCMP=sensortag&amp;HQS=sensortag-bn">TI SensorTag</a> (a small and affordable BTLE device that contains various sensors like an IR thermometer, accelerometer, etc.).</p>
+<p>The examples in this documentation assume that you either have a standard Bluetooth LE heartrate monitor, or a TI SensorTag, but the module also works with other types of Bluetooth LE peripherals. Note that &#8220;classic&#8221; Bluetooth (used for headsets, keyboards, etc.) is NOT supported.</p>
+<p>The module is based on the CoreBluetooth framework, but doesn&#8217;t expose all of its functionality &#8211; for example, it only implements the <em>central</em> role, i.e. you can connect to peripherals but not have the device act as a peripheral itself.</p>
+<div class="section" id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<p>The basic procedure for connecting to a Bluetooth LE device and reading data from it involves the following steps:</p>
+<ol class="arabic simple">
+<li>Define a delegate object that is responsible for handling notifications/callbacks about discovered devices (peripherals), services, and service characteristics. The callback methods you can implement are described later on.</li>
+<li>Call <a class="reference internal" href="#cb.scan_for_peripherals" title="cb.scan_for_peripherals"><tt class="xref py py-func docutils literal"><span class="pre">scan_for_peripherals()</span></tt></a> to start scanning. In many cases, you will also need to make your device discoverable. For the TI SensorTag you would press the side button.</li>
+<li>When your delegate receives the <tt class="docutils literal"><span class="pre">did_discover_peripheral</span></tt> callback, check its name or uuid, and if you found the peripheral you want to connect to, call <a class="reference internal" href="#cb.connect_peripheral" title="cb.connect_peripheral"><tt class="xref py py-func docutils literal"><span class="pre">connect_peripheral()</span></tt></a>. You should also keep a reference to the discovered peripheral, because if the object is garbage-collected, you will also lose the connection.</li>
+<li>If everything went smoothly, the <tt class="docutils literal"><span class="pre">did_connect_peripheral</span></tt> callback will be called. At this point, you can start discovering the peripheral&#8217;s services by calling <a class="reference internal" href="#cb.Peripheral.discover_services" title="cb.Peripheral.discover_services"><tt class="xref py py-meth docutils literal"><span class="pre">Peripheral.discover_services()</span></tt></a>.</li>
+<li>When the services of the peripheral have been discovered, you will receive a <tt class="docutils literal"><span class="pre">did_discover_services</span></tt> callback. You can now access the peripheral&#8217;s <tt class="docutils literal"><span class="pre">services</span></tt> attribute, and &#8211; for the services you&#8217;re interested in &#8211; call <a class="reference internal" href="#cb.Peripheral.discover_characteristics" title="cb.Peripheral.discover_characteristics"><tt class="xref py py-meth docutils literal"><span class="pre">Peripheral.discover_characteristics()</span></tt></a>.</li>
+<li>As you might have guessed, this will result in a <tt class="docutils literal"><span class="pre">did_discover_characteristics</span></tt> callback. You can now read the value of a characteristic by calling <a class="reference internal" href="#cb.Peripheral.read_characteristic_value" title="cb.Peripheral.read_characteristic_value"><tt class="xref py py-meth docutils literal"><span class="pre">Peripheral.read_characteristic_value()</span></tt></a> (which will result in another callback when the value has been read successfully), or enable notifications for the characteristic by calling <a class="reference internal" href="#cb.Peripheral.set_notify_value" title="cb.Peripheral.set_notify_value"><tt class="xref py py-meth docutils literal"><span class="pre">Peripheral.set_notify_value()</span></tt></a>.</li>
+</ol>
+<p>The following code shows how to connect to a Bluetooth LE heartrate monitor. This particular example assumes that you have a Polar device, but it should be easy to adapt this for a different brand (just change the <tt class="docutils literal"><span class="pre">did_discover_peripheral</span></tt> method accordingly):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cb</span>
+<span class="kn">import</span> <span class="nn">sound</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+
+<span class="k">class</span> <span class="nc">HeartRateManager</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="s">&#39;Polar&#39;</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="n">p</span>
+            <span class="k">print</span> <span class="s">&#39;Connecting to heart rate monitor...&#39;</span>
+            <span class="n">cb</span><span class="o">.</span><span class="n">connect_peripheral</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">did_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Connected:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">print</span> <span class="s">&#39;Discovering services...&#39;</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">discover_services</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">did_fail_to_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Failed to connect: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="nf">did_disconnect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Disconnected, error: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_services</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">services</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span> <span class="o">==</span> <span class="s">&#39;180D&#39;</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;Discovered heart rate service, discovering characteristitcs...&#39;</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">discover_characteristics</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_characteristics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Did discover characteristics...&#39;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">characteristics</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">uuid</span> <span class="o">==</span> <span class="s">&#39;2A37&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="o">.</span><span class="n">set_notify_value</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">did_update_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="n">heart_rate</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;&lt;B&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">heart_rate</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Heart rate: </span><span class="si">%i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">heart_rate</span>
+
+<span class="n">mngr</span> <span class="o">=</span> <span class="n">HeartRateManager</span><span class="p">()</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">set_central_delegate</span><span class="p">(</span><span class="n">mngr</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Scanning for peripherals...&#39;</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">scan_for_peripherals</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span> <span class="k">pass</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="n">cb</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The following example shows how to do similar things with a <a class="reference external" href="http://www.ti.com/ww/en/wireless_connectivity/sensortag/index.shtml?DCMP=sensortag&amp;HQS=sensortag-bn">TI SensorTag</a>. It will log the value of the temperature sensor (about once per second, very similar to the heartrate monitor example above), and play a sound when any of the two buttons on the SensorTag is pressed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cb</span>
+<span class="kn">import</span> <span class="nn">sound</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+
+<span class="k">class</span> <span class="nc">MyCentralManagerDelegate</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;+++ Discovered peripheral: </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="s">&#39;Sensor Tag&#39;</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="p">:</span>
+            <span class="c"># Keep a reference to the peripheral, so it doesn&#39;t get garbage-collected:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="n">p</span>
+            <span class="n">cb</span><span class="o">.</span><span class="n">connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">did_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;*** Connected: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">print</span> <span class="s">&#39;Discovering services...&#39;</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">discover_services</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">did_fail_to_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Failed to connect&#39;</span>
+
+    <span class="k">def</span> <span class="nf">did_disconnect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;Disconnected, error: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_services</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">services</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s">&#39;AA00&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;+++ IR Thermometer found&#39;</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">discover_characteristics</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="s">&#39;FFE0&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;+++ Simple Key Service found&#39;</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">discover_characteristics</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_characteristics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&#39;AA00&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">characteristics</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s">&#39;AA02&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
+                    <span class="k">print</span> <span class="s">&#39;Enabling temperature sensor...&#39;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="o">.</span><span class="n">write_characteristic_value</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">chr</span><span class="p">(</span><span class="mh">0x01</span><span class="p">),</span> <span class="bp">True</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="s">&#39;AA01&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
+                    <span class="c"># Enable notification for the temperature sensor:</span>
+                    <span class="k">print</span> <span class="s">&#39;Enabling temperature sensor notifications...&#39;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="o">.</span><span class="n">set_notify_value</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s">&#39;FFE0&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;Enabling notifications for Simple Key Service...&#39;</span>
+            <span class="n">key_characteristic</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">characteristics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="o">.</span><span class="n">set_notify_value</span><span class="p">(</span><span class="n">key_characteristic</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">did_write_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="c"># The temperature sensor has been activated (see did_discover_characteristic)</span>
+        <span class="k">print</span> <span class="s">&#39;Did enable temperature sensor&#39;</span>
+
+    <span class="k">def</span> <span class="nf">did_update_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&#39;FFE1&#39;</span> <span class="o">==</span> <span class="n">c</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
+            <span class="c"># A button on the SensorTag was pressed (or released):</span>
+            <span class="k">print</span> <span class="s">&#39;Button value: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;hex&#39;</span><span class="p">)</span>
+            <span class="n">sound</span><span class="o">.</span><span class="n">play_effect</span><span class="p">(</span><span class="s">&#39;Beep&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># The temperature sensor has sent an updated value:</span>
+            <span class="n">tobj</span><span class="p">,</span> <span class="n">mtmpamb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_temperature</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&#39;Object temperature: </span><span class="si">%f</span><span class="s"> -- Ambient: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tobj</span><span class="p">,</span> <span class="n">mtmpamb</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">convert_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_data</span><span class="p">):</span>
+        <span class="c"># This will convert the raw sensor data to temperature values in Celsius.</span>
+        <span class="c"># The details of this algorithm aren&#39;t important for this example, you can</span>
+        <span class="c"># find more information about this in the SensorTag user guide:</span>
+        <span class="c"># http://processors.wiki.ti.com/index.php/SensorTag_User_Guide</span>
+        <span class="n">rawT</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;&lt;h&#39;</span><span class="p">,</span> <span class="n">raw_data</span><span class="p">[:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">tmpAmb</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;&lt;H&#39;</span><span class="p">,</span> <span class="n">raw_data</span><span class="p">[</span><span class="mi">2</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">vobj2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rawT</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.00000015625</span>
+        <span class="n">mtmpamb</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tmpAmb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">128.0</span>
+        <span class="n">tdie2</span> <span class="o">=</span> <span class="n">mtmpamb</span> <span class="o">+</span> <span class="mf">273.15</span>
+        <span class="n">s0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span> <span class="o">=</span> <span class="mf">6.4E-14</span><span class="p">,</span> <span class="mf">1.75E-3</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.678E-5</span>
+        <span class="n">b0</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">c2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.94E-5</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.7E-7</span><span class="p">,</span> <span class="mf">4.63E-9</span><span class="p">,</span> <span class="mf">13.4</span>
+        <span class="n">Tref</span> <span class="o">=</span> <span class="mf">298.15</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">s0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">a1</span><span class="o">*</span><span class="p">(</span><span class="n">tdie2</span> <span class="o">-</span> <span class="n">Tref</span><span class="p">)</span> <span class="o">+</span> <span class="n">a2</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">((</span><span class="n">tdie2</span> <span class="o">-</span> <span class="n">Tref</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">vos</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="p">(</span><span class="n">tdie2</span><span class="o">-</span><span class="n">Tref</span><span class="p">)</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="nb">pow</span><span class="p">((</span><span class="n">tdie2</span><span class="o">-</span><span class="n">Tref</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">fobj</span> <span class="o">=</span> <span class="p">(</span><span class="n">vobj2</span> <span class="o">-</span> <span class="n">vos</span><span class="p">)</span> <span class="o">+</span> <span class="n">c2</span> <span class="o">*</span> <span class="nb">pow</span><span class="p">((</span><span class="n">vobj2</span> <span class="o">-</span> <span class="n">vos</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">tobj</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="n">tdie2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">fobj</span><span class="o">/</span><span class="n">S</span><span class="p">),</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">-</span> <span class="mf">273.15</span>
+        <span class="k">return</span> <span class="n">tobj</span><span class="p">,</span> <span class="n">mtmpamb</span>
+
+<span class="n">delegate</span> <span class="o">=</span> <span class="n">MyCentralManagerDelegate</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Scanning for peripherals...&#39;</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">set_central_delegate</span><span class="p">(</span><span class="n">delegate</span><span class="p">)</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">scan_for_peripherals</span><span class="p">()</span>
+
+<span class="c"># Keep the connection alive until the &#39;Stop&#39; button is pressed:</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span> <span class="k">pass</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="c"># Disconnect everything:</span>
+    <span class="n">cb</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="cb.set_central_delegate">
+<tt class="descclassname">cb.</tt><tt class="descname">set_central_delegate</tt><big>(</big><em>delegate</em><big>)</big><a class="headerlink" href="#cb.set_central_delegate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the object that should receive callbacks for events like discovered peripherals, received data, etc.</p>
+<p>The delegate can implement the following methods, all of which are optional:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyDelegate</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">did_update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># State was updated (e.g. Bluetooth powered on/off)</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="c"># You would typically check the peripheral&#39;s name/uuid here,</span>
+        <span class="c"># and connect via cb.connect_peripheral(p).</span>
+        <span class="c"># You should also keep a reference to p (e.g. self.peripheral = p),</span>
+        <span class="c"># so that it doesn&#39;t get garbage-collected.</span>
+        <span class="c"># Note that this may get called multiple times for a single peripheral.</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">did_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="c"># You would typically call p.discover_services() here</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">did_fail_to_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="c"># `error` is a tuple of error code (integer) and description (string)</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">did_disconnect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="c"># error is a tuple of error code (integer) and description (string)</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_services</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="c"># Here you would typically call discover_characteristics</span>
+        <span class="c"># for the services you&#39;re interested in.</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">did_discover_characteristics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="c"># You can now read or write the characteristic&#39;s value</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">did_write_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">did_update_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="c"># You can now access the characteristic value with c.value</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="cb.set_verbose">
+<tt class="descclassname">cb.</tt><tt class="descname">set_verbose</tt><big>(</big><em>flag</em><big>)</big><a class="headerlink" href="#cb.set_verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>When set to <cite>True</cite>, all callback events are logged to the console, regardless of whether the delegate (see <a class="reference internal" href="#cb.set_central_delegate" title="cb.set_central_delegate"><tt class="xref py py-func docutils literal"><span class="pre">set_central_delegate()</span></tt></a>) implements them or not &#8211; this can be useful for debugging.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cb.scan_for_peripherals">
+<tt class="descclassname">cb.</tt><tt class="descname">scan_for_peripherals</tt><big>(</big><big>)</big><a class="headerlink" href="#cb.scan_for_peripherals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start scanning for peripherals that are advertising services.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cb.stop_scan">
+<tt class="descclassname">cb.</tt><tt class="descname">stop_scan</tt><big>(</big><big>)</big><a class="headerlink" href="#cb.stop_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop scanning for peripherals.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cb.connect_peripheral">
+<tt class="descclassname">cb.</tt><tt class="descname">connect_peripheral</tt><big>(</big><em>peripheral</em><big>)</big><a class="headerlink" href="#cb.connect_peripheral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Establish a connection to a peripheral. This will typcially be called from your implementation of the <tt class="docutils literal"><span class="pre">did_discover_peripheral</span></tt> callback.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cb.cancel_peripheral_connection">
+<tt class="descclassname">cb.</tt><tt class="descname">cancel_peripheral_connection</tt><big>(</big><em>peripheral</em><big>)</big><a class="headerlink" href="#cb.cancel_peripheral_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel an active or pending local connection to a peripheral.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cb.get_state">
+<tt class="descclassname">cb.</tt><tt class="descname">get_state</tt><big>(</big><big>)</big><a class="headerlink" href="#cb.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current state of the central manager (see <a class="reference internal" href="#constants">Constants</a> for possible values)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cb.reset">
+<tt class="descclassname">cb.</tt><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#cb.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect all peripherals. This also sets the central delegate to <cite>None</cite>, so you will no longer receive any callbacks.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The classes in this module are not intended to be instantiated directly. Instead, you will get instances of the different classes as parameters to callback functions that your delegate implements (see <a class="reference internal" href="#cb.set_central_delegate" title="cb.set_central_delegate"><tt class="xref py py-func docutils literal"><span class="pre">set_central_delegate()</span></tt></a>).</p>
+</div>
+<div class="section" id="peripheral">
+<h3>Peripheral<a class="headerlink" href="#peripheral" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cb.Peripheral">
+<em class="property">class </em><tt class="descclassname">cb.</tt><tt class="descname">Peripheral</tt><a class="headerlink" href="#cb.Peripheral" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#cb.Peripheral" title="cb.Peripheral"><tt class="xref py py-class docutils literal"><span class="pre">Peripheral</span></tt></a> class represents peripheral devices that have been discovered via <a class="reference internal" href="#cb.scan_for_peripherals" title="cb.scan_for_peripherals"><tt class="xref py py-func docutils literal"><span class="pre">scan_for_peripherals()</span></tt></a>. Peripherals are identified by universally unique identifiers (UUIDs). Peripherals may contain one or more services (represented by <a class="reference internal" href="#cb.Service" title="cb.Service"><tt class="xref py py-class docutils literal"><span class="pre">Service</span></tt></a> objects).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="peripheral-methods">
+<h3>Peripheral Methods<a class="headerlink" href="#peripheral-methods" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="cb.Peripheral.discover_services">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">discover_services</tt><big>(</big><big>)</big><a class="headerlink" href="#cb.Peripheral.discover_services" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discover the services of the peripheral. The central delegate will receive a <tt class="docutils literal"><span class="pre">did_discover_services</span></tt> callback when the discovery has finished.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cb.Peripheral.discover_characteristics">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">discover_characteristics</tt><big>(</big><em>service</em><big>)</big><a class="headerlink" href="#cb.Peripheral.discover_characteristics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discover the characteristics for the given <a class="reference internal" href="#cb.Service" title="cb.Service"><tt class="xref py py-class docutils literal"><span class="pre">Service</span></tt></a>. This will typically be called from the <tt class="docutils literal"><span class="pre">did_discover_services</span></tt> callback. When the characteristics have been discovered, the central delegate will receive a <tt class="docutils literal"><span class="pre">did_discover_characteristics</span></tt> callback.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cb.Peripheral.set_notify_value">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">set_notify_value</tt><big>(</big><em>characteristic</em>, <em>flag=True</em><big>)</big><a class="headerlink" href="#cb.Peripheral.set_notify_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable notifications for the given <a class="reference internal" href="#cb.Characteristic" title="cb.Characteristic"><tt class="xref py py-class docutils literal"><span class="pre">Characteristic</span></tt></a> (note: not all characteristics support notifications). When notifications are enabled, you may receive <tt class="docutils literal"><span class="pre">did_update_value</span></tt> callbacks in your central delegate (see <a class="reference internal" href="#cb.set_central_delegate" title="cb.set_central_delegate"><tt class="xref py py-func docutils literal"><span class="pre">set_central_delegate()</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cb.Peripheral.write_characteristic_value">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">write_characteristic_value</tt><big>(</big><em>characteristic</em>, <em>data</em>, <em>with_response</em><big>)</big><a class="headerlink" href="#cb.Peripheral.write_characteristic_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the value of a <a class="reference internal" href="#cb.Characteristic" title="cb.Characteristic"><tt class="xref py py-class docutils literal"><span class="pre">Characteristic</span></tt></a>. <cite>data</cite> should be a byte string. <cite>with_response</cite> determines whether the <tt class="docutils literal"><span class="pre">did_write_value</span></tt> callback will be called when the write has completed (or failed). Note that not all characteristics support writing values without response.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cb.Peripheral.read_characteristic_value">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">read_characteristic_value</tt><big>(</big><em>characteristic</em><big>)</big><a class="headerlink" href="#cb.Peripheral.read_characteristic_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the value of the given <a class="reference internal" href="#cb.Characteristic" title="cb.Characteristic"><tt class="xref py py-class docutils literal"><span class="pre">Characteristic</span></tt></a>. When the value has been read, your central delegate will receive a <tt class="docutils literal"><span class="pre">did_update_value</span></tt> callback, at which point you can access the value with the characteristics&#8217;s <tt class="docutils literal"><span class="pre">value</span></tt> attribute. Not all characteristics are guaranteed to have a readable value.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="peripheral-attributes">
+<h3>Peripheral Attributes<a class="headerlink" href="#peripheral-attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="cb.Peripheral.name">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">name</tt><a class="headerlink" href="#cb.Peripheral.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The peripheral&#8217;s name (either a string or <cite>None</cite>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cb.Peripheral.uuid">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">uuid</tt><a class="headerlink" href="#cb.Peripheral.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The peripheral&#8217;s unique identifier (a hex string)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cb.Peripheral.state">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">state</tt><a class="headerlink" href="#cb.Peripheral.state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The peripheral connection state (0 = disconnected, 1 = connecting, 2 = connected)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cb.Peripheral.services">
+<tt class="descclassname">Peripheral.</tt><tt class="descname">services</tt><a class="headerlink" href="#cb.Peripheral.services" title="Permalink to this definition">¶</a></dt>
+<dd><p>The peripheral&#8217;s discovered services (a list of <a class="reference internal" href="#cb.Service" title="cb.Service"><tt class="xref py py-class docutils literal"><span class="pre">Service</span></tt></a> objects). Note that this will usually be empty until you have successfully called <a class="reference internal" href="#cb.Peripheral.discover_services" title="cb.Peripheral.discover_services"><tt class="xref py py-meth docutils literal"><span class="pre">Peripheral.discover_services()</span></tt></a> (and received the <tt class="docutils literal"><span class="pre">did_discover_services</span></tt> callback).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="service">
+<h3>Service<a class="headerlink" href="#service" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cb.Service">
+<em class="property">class </em><tt class="descclassname">cb.</tt><tt class="descname">Service</tt><a class="headerlink" href="#cb.Service" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#cb.Service" title="cb.Service"><tt class="xref py py-class docutils literal"><span class="pre">Service</span></tt></a> objects represent a <a class="reference internal" href="#cb.Peripheral" title="cb.Peripheral"><tt class="xref py py-class docutils literal"><span class="pre">Peripheral</span></tt></a>’s service &#8211; a collection of data and associated behaviors for accomplishing a function or feature of a device (or portions of that device). Services are either primary or secondary and may contain a number of :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>Characteristic`s.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="service-attributes">
+<h3>Service Attributes<a class="headerlink" href="#service-attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="cb.Service.characteristics">
+<tt class="descclassname">Service.</tt><tt class="descname">characteristics</tt><a class="headerlink" href="#cb.Service.characteristics" title="Permalink to this definition">¶</a></dt>
+<dd><p>The service&#8217;s characteristics (a list of <a class="reference internal" href="#cb.Characteristic" title="cb.Characteristic"><tt class="xref py py-class docutils literal"><span class="pre">Characteristic</span></tt></a> objects which may be empty if the characteristics haven&#8217;t been discovered yet)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cb.Service.primary">
+<tt class="descclassname">Service.</tt><tt class="descname">primary</tt><a class="headerlink" href="#cb.Service.primary" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean flag that indicates whether the service is primary or secondary</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cb.Service.uuid">
+<tt class="descclassname">Service.</tt><tt class="descname">uuid</tt><a class="headerlink" href="#cb.Service.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The service&#8217;s unique identifier (a hex string)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="characteristic">
+<h3>Characteristic<a class="headerlink" href="#characteristic" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cb.Characteristic">
+<em class="property">class </em><tt class="descclassname">cb.</tt><tt class="descname">Characteristic</tt><a class="headerlink" href="#cb.Characteristic" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#cb.Characteristic" title="cb.Characteristic"><tt class="xref py py-class docutils literal"><span class="pre">Characteristic</span></tt></a> objects represent further information about a peripheral’s service. A characteristic contains a single value. The properties of a characteristic determine how the value of the characteristic can be used.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="characteristic-attributes">
+<h3>Characteristic Attributes<a class="headerlink" href="#characteristic-attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="cb.Characteristic.uuid">
+<tt class="descclassname">Characteristic.</tt><tt class="descname">uuid</tt><a class="headerlink" href="#cb.Characteristic.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The characteristic&#8217;s unique identifier (a hex string).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cb.Characteristic.value">
+<tt class="descclassname">Characteristic.</tt><tt class="descname">value</tt><a class="headerlink" href="#cb.Characteristic.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>The characteristic&#8217;s current value (either a byte string, or <cite>None</cite> if the value hasn&#8217;t been read yet or there is no value)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cb.Characteristic.notifying">
+<tt class="descclassname">Characteristic.</tt><tt class="descname">notifying</tt><a class="headerlink" href="#cb.Characteristic.notifying" title="Permalink to this definition">¶</a></dt>
+<dd><p>A flag that determines whether notifications are enabled for this characteristic (read-only, set via <a class="reference internal" href="#cb.Peripheral.set_notify_value" title="cb.Peripheral.set_notify_value"><tt class="xref py py-meth docutils literal"><span class="pre">Peripheral.set_notify_value()</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cb.Characteristic.properties">
+<tt class="descclassname">Characteristic.</tt><tt class="descname">properties</tt><a class="headerlink" href="#cb.Characteristic.properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>A bitmask of the characteristic&#8217;s properties (see <tt class="docutils literal"><span class="pre">CH_PROP_*</span></tt> constants below)</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<p>Possible return values for <a class="reference internal" href="#cb.get_state" title="cb.get_state"><tt class="xref py py-func docutils literal"><span class="pre">get_state()</span></tt></a>:</p>
+<dl class="data">
+<dt id="cb.CM_STATE_UNKNOWN">
+<tt class="descclassname">cb.</tt><tt class="descname">CM_STATE_UNKNOWN</tt><a class="headerlink" href="#cb.CM_STATE_UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CM_STATE_RESETTING">
+<tt class="descclassname">cb.</tt><tt class="descname">CM_STATE_RESETTING</tt><a class="headerlink" href="#cb.CM_STATE_RESETTING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CM_STATE_UNSUPPORTED">
+<tt class="descclassname">cb.</tt><tt class="descname">CM_STATE_UNSUPPORTED</tt><a class="headerlink" href="#cb.CM_STATE_UNSUPPORTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CM_STATE_UNAUTHORIZED">
+<tt class="descclassname">cb.</tt><tt class="descname">CM_STATE_UNAUTHORIZED</tt><a class="headerlink" href="#cb.CM_STATE_UNAUTHORIZED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CM_STATE_POWERED_OFF">
+<tt class="descclassname">cb.</tt><tt class="descname">CM_STATE_POWERED_OFF</tt><a class="headerlink" href="#cb.CM_STATE_POWERED_OFF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CM_STATE_POWERED_ON">
+<tt class="descclassname">cb.</tt><tt class="descname">CM_STATE_POWERED_ON</tt><a class="headerlink" href="#cb.CM_STATE_POWERED_ON" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p><a class="reference internal" href="#cb.Characteristic" title="cb.Characteristic"><tt class="xref py py-class docutils literal"><span class="pre">Characteristic</span></tt></a> properties (note: these values can be combined as a bitmask):</p>
+<dl class="data">
+<dt id="cb.CH_PROP_BROADCAST">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_BROADCAST</tt><a class="headerlink" href="#cb.CH_PROP_BROADCAST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_READ">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_READ</tt><a class="headerlink" href="#cb.CH_PROP_READ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_WRITE_WITHOUT_RESPONSE">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_WRITE_WITHOUT_RESPONSE</tt><a class="headerlink" href="#cb.CH_PROP_WRITE_WITHOUT_RESPONSE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_WRITE">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_WRITE</tt><a class="headerlink" href="#cb.CH_PROP_WRITE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_NOTIFY">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_NOTIFY</tt><a class="headerlink" href="#cb.CH_PROP_NOTIFY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_INDICATE">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_INDICATE</tt><a class="headerlink" href="#cb.CH_PROP_INDICATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_AUTHENTICATED_SIGNED_WRITES">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_AUTHENTICATED_SIGNED_WRITES</tt><a class="headerlink" href="#cb.CH_PROP_AUTHENTICATED_SIGNED_WRITES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_EXTENDED_PROPERTIES">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_EXTENDED_PROPERTIES</tt><a class="headerlink" href="#cb.CH_PROP_EXTENDED_PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_NOTIFY_ENCRYPTION_REQUIRED">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_NOTIFY_ENCRYPTION_REQUIRED</tt><a class="headerlink" href="#cb.CH_PROP_NOTIFY_ENCRYPTION_REQUIRED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="cb.CH_PROP_INDICATE_ENCRYPTION_REQUIRED">
+<tt class="descclassname">cb.</tt><tt class="descname">CH_PROP_INDICATE_ENCRYPTION_REQUIRED</tt><a class="headerlink" href="#cb.CH_PROP_INDICATE_ENCRYPTION_REQUIRED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>

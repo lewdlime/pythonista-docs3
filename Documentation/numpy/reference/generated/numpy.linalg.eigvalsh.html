@@ -1,0 +1,201 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.linalg.eigvalsh &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Linear algebra (numpy.linalg)" href="../routines.linalg.html" />
+    <link rel="next" title="numpy.linalg.norm" href="numpy.linalg.norm.html" />
+    <link rel="prev" title="numpy.linalg.eigvals" href="numpy.linalg.eigvals.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.linalg.norm.html" title="numpy.linalg.norm"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.linalg.eigvals.html" title="numpy.linalg.eigvals"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.linalg.html" accesskey="U">Linear algebra (<tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">numpy.linalg</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-linalg-eigvalsh">
+<h1>numpy.linalg.eigvalsh<a class="headerlink" href="#numpy-linalg-eigvalsh" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.linalg.eigvalsh">
+<tt class="descclassname">numpy.linalg.</tt><tt class="descname">eigvalsh</tt><big>(</big><em>a</em>, <em>UPLO='L'</em><big>)</big><a class="reference external" href="http://github.com/numpy/numpy/blob/v1.8.0/numpy/linalg/linalg.py#L905"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy.linalg.eigvalsh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the eigenvalues of a Hermitian or real symmetric matrix.</p>
+<p>Main difference from eigh: the eigenvectors are not computed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>a</strong> : (..., M, M) array_like</p>
+<blockquote>
+<div><p>A complex- or real-valued matrix whose eigenvalues are to be
+computed.</p>
+</div></blockquote>
+<p><strong>UPLO</strong> : {&#8216;L&#8217;, &#8216;U&#8217;}, optional</p>
+<blockquote>
+<div><p>Same as <em class="xref py py-obj">lower</em>, with &#8216;L&#8217; for lower and &#8216;U&#8217; for upper triangular.
+Deprecated.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>w</strong> : (..., M,) ndarray</p>
+<blockquote>
+<div><p>The eigenvalues, not necessarily ordered, each repeated according to
+its multiplicity.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>LinAlgError</strong> :</p>
+<blockquote class="last">
+<div><p>If the eigenvalue computation does not converge.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="numpy.linalg.eigh.html#numpy.linalg.eigh" title="numpy.linalg.eigh"><tt class="xref py py-obj docutils literal"><span class="pre">eigh</span></tt></a></dt>
+<dd>eigenvalues and eigenvectors of symmetric/Hermitian arrays.</dd>
+<dt><a class="reference internal" href="numpy.linalg.eigvals.html#numpy.linalg.eigvals" title="numpy.linalg.eigvals"><tt class="xref py py-obj docutils literal"><span class="pre">eigvals</span></tt></a></dt>
+<dd>eigenvalues of general real or complex arrays.</dd>
+<dt><a class="reference internal" href="numpy.linalg.eig.html#numpy.linalg.eig" title="numpy.linalg.eig"><tt class="xref py py-obj docutils literal"><span class="pre">eig</span></tt></a></dt>
+<dd>eigenvalues and right eigenvectors of general real or complex arrays.</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>Broadcasting rules apply, see the <tt class="xref py py-obj docutils literal"><span class="pre">numpy.linalg</span></tt> documentation for
+details.</p>
+<p>The eigenvalues are computed using LAPACK routines _ssyevd, _heevd</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2j</span><span class="p">],</span> <span class="p">[</span><span class="mi">2j</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">LA</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([ 0.17157288+0.j,  5.82842712+0.j])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

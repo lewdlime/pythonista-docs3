@@ -1,0 +1,259 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numpy.can_cast &mdash; NumPy v1.8 Manual</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="NumPy v1.8 Manual" href="../../index.html" />
+    <link rel="up" title="Data type routines" href="../routines.dtype.html" />
+    <link rel="next" title="numpy.promote_types" href="numpy.promote_types.html" />
+    <link rel="prev" title="numpy.mintypecode" href="numpy.mintypecode.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="numpy.promote_types.html" title="numpy.promote_types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="numpy.mintypecode.html" title="numpy.mintypecode"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">NumPy v1.8 Manual</a> &raquo;</li>
+
+          <li><a href="../index.html" >NumPy Reference</a> &raquo;</li>
+          <li><a href="../routines.html" >Routines</a> &raquo;</li>
+          <li><a href="../routines.dtype.html" accesskey="U">Data type routines</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="numpy-can-cast">
+<h1>numpy.can_cast<a class="headerlink" href="#numpy-can-cast" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="numpy.can_cast">
+<tt class="descclassname">numpy.</tt><tt class="descname">can_cast</tt><big>(</big><em>from</em>, <em>totype</em>, <em>casting = 'safe'</em><big>)</big><a class="headerlink" href="#numpy.can_cast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if cast between data types can occur according to the
+casting rule.  If from is a scalar or array scalar, also returns
+True if the scalar value can be cast without overflow or truncation
+to an integer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>from</strong> : dtype, dtype specifier, scalar, or array</p>
+<blockquote>
+<div><p>Data type, scalar, or array to cast from.</p>
+</div></blockquote>
+<p><strong>totype</strong> : dtype or dtype specifier</p>
+<blockquote>
+<div><p>Data type to cast to.</p>
+</div></blockquote>
+<p><strong>casting</strong> : {&#8216;no&#8217;, &#8216;equiv&#8217;, &#8216;safe&#8217;, &#8216;same_kind&#8217;, &#8216;unsafe&#8217;}, optional</p>
+<blockquote>
+<div><p>Controls what kind of data casting may occur.</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8216;no&#8217; means the data types should not be cast at all.</li>
+<li>&#8216;equiv&#8217; means only byte-order changes are allowed.</li>
+<li>&#8216;safe&#8217; means only casts which can preserve values are allowed.</li>
+<li>&#8216;same_kind&#8217; means only safe casts or casts within a kind,
+like float64 to float32, are allowed.</li>
+<li>&#8216;unsafe&#8217; means any data conversions may be done.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : bool</p>
+<blockquote class="last">
+<div><p>True if cast can occur according to the casting rule.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="numpy.dtype.html#numpy.dtype" title="numpy.dtype"><tt class="xref py py-obj docutils literal"><span class="pre">dtype</span></tt></a>, <a class="reference internal" href="numpy.result_type.html#numpy.result_type" title="numpy.result_type"><tt class="xref py py-obj docutils literal"><span class="pre">result_type</span></tt></a></p>
+</div>
+<p class="rubric">Examples</p>
+<p>Basic examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;i8&#39;</span><span class="p">,</span> <span class="s">&#39;f8&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;i8&#39;</span><span class="p">,</span> <span class="s">&#39;f4&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;i4&#39;</span><span class="p">,</span> <span class="s">&#39;S4&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Casting scalars</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&#39;i1&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="s">&#39;i1&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="s">&#39;u1&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="mf">3.5e100</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Array scalar checks the value, array does not</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1000.0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Using the casting rules</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;i8&#39;</span><span class="p">,</span> <span class="s">&#39;i8&#39;</span><span class="p">,</span> <span class="s">&#39;no&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;&lt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;no&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;&lt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;equiv&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;&lt;i4&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;equiv&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;&lt;i4&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;safe&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;&lt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;i4&#39;</span><span class="p">,</span> <span class="s">&#39;safe&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;&lt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;i4&#39;</span><span class="p">,</span> <span class="s">&#39;same_kind&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;&lt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;u4&#39;</span><span class="p">,</span> <span class="s">&#39;same_kind&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">can_cast</span><span class="p">(</span><span class="s">&#39;&lt;i8&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;u4&#39;</span><span class="p">,</span> <span class="s">&#39;unsafe&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 2008-2009, The Scipy community.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,262 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Request Routing &mdash; Pythonista Documentation</title>
+    <link rel="stylesheet" href="../../_static/pythonista.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.7.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Pythonista Documentation"
+          href="../../_static/opensearch.xml"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="Pythonista Documentation" href="../../index.html" />
+    <link rel="shortcut icon" type="image/png" href="../../_static/py.png" />
+    <meta name = "viewport" content = "width=device-width,initial-scale=1.0,user-scalable=no;">
+    
+    <script type="text/javascript">
+        var getTextForSample = function(i) {
+            codeBlock = document.getElementsByClassName('highlight-python')[i];
+            return codeBlock.innerText;
+        }
+        
+        var copySample = function (i) {
+            window.location.href = '/__pythonista_copy__/' + encodeURI(getTextForSample(i));
+        }
+        
+        var openSample = function (i) {
+            window.location.href = '/__pythonista_open__/' + encodeURI(getTextForSample(i));
+        }
+        
+        //Source: http://ejohn.org/blog/partial-functions-in-javascript/
+        Function.prototype.partial = function() {
+        	var fn = this,
+        		args = Array.prototype.slice.call(arguments);
+        	return function() {
+        		var arg = 0;
+        		for (var i = 0; i < args.length && arg < arguments.length; i++)
+        		if (args[i] === undefined) args[i] = arguments[arg++];
+        		return fn.apply(this, args);
+        	};
+        };
+        
+        window.onload=function() {
+            //Add "Copy" and "Open in Editor" buttons for code samples:
+            var inApp = navigator.userAgent.match(/AppleWebKit/i) != null && navigator.userAgent.match(/Safari/i) == null;
+            if (inApp) {
+                codeBlocks = document.getElementsByClassName('highlight-python');
+                for (var i = 0; i < codeBlocks.length; i++) {
+                    codeBlock = codeBlocks[i];
+                    if (codeBlock.innerText.indexOf('>>>') == 0) {
+                        //Don't add header for interactive sessions
+                        continue;
+                    }
+
+                    var codeHeader = document.createElement('div');
+                    codeHeader.className = 'pythonista-code-header';
+
+                    var copyButton = document.createElement('button');
+                    copyButton.className = 'pythonista-button';
+                    copyButton.innerText = 'Copy';
+                    copyButton.addEventListener('click', copySample.partial(i));
+                    codeHeader.appendChild(copyButton);
+
+                    var openButton = document.createElement('button');
+                    openButton.className = 'pythonista-button';
+                    openButton.innerText = 'Open in Editor';
+                    openButton.addEventListener('click', openSample.partial(i));
+                    codeHeader.appendChild(openButton);
+
+                    codeBlock.parentElement.insertBefore(codeHeader, codeBlock);
+                }
+            }
+        }
+    </script>
+    
+ 
+
+  </head>
+  <body ontouchstart="">
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="http://omz-software.com/pythonista"><img src="../../_static/py.png" alt=""
+                 style="vertical-align: middle; margin-top: -4px; margin-right: 4px;"/></a></li>
+        <li><a href="../../index.html">Pythonista Documentation</a> &raquo;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="request-routing">
+<h1>Request Routing<a class="headerlink" href="#request-routing" title="Permalink to this headline">¶</a></h1>
+<p>Bottle uses a powerful routing engine to find the right callback for each request. The <a class="reference internal" href="tutorial.html#tutorial-routing"><em>tutorial</em></a> shows you the basics. This document covers advanced techniques and rule mechanics in detail.</p>
+<div class="section" id="rule-syntax">
+<h2>Rule Syntax<a class="headerlink" href="#rule-syntax" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-class docutils literal"><span class="pre">Router</span></tt> distinguishes between two basic types of routes: <strong>static routes</strong> (e.g. <tt class="docutils literal"><span class="pre">/contact</span></tt>) and <strong>dynamic routes</strong> (e.g. <tt class="docutils literal"><span class="pre">/hello/&lt;name&gt;</span></tt>). A route that contains one or more <em>wildcards</em> it is considered dynamic. All other routes are static.</p>
+<p class="versionchanged">
+<span class="versionmodified">Changed in version 0.10.</span></p>
+<p>The simplest form of a wildcard consists of a name enclosed in angle brackets (e.g. <tt class="docutils literal"><span class="pre">&lt;name&gt;</span></tt>). The name should be unique for a given route and form a valid python identifier (alphanumeric, starting with a letter). This is because wildcards are used as keyword arguments for the request callback later.</p>
+<p>Each wildcard matches one or more characters, but stops at the first slash (<tt class="docutils literal"><span class="pre">/</span></tt>). This equals a regular expression of <tt class="docutils literal"><span class="pre">[^/]+</span></tt> and ensures that only one path segment is matched and routes with more than one wildcard stay unambiguous.</p>
+<p>The rule <tt class="docutils literal"><span class="pre">/&lt;action&gt;/&lt;item&gt;</span></tt> matches as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Path</th>
+<th class="head">Result</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>/save/123</td>
+<td><tt class="docutils literal"><span class="pre">{'action':</span> <span class="pre">'save',</span> <span class="pre">'item':</span> <span class="pre">'123'}</span></tt></td>
+</tr>
+<tr><td>/save/123/</td>
+<td><cite>No Match</cite></td>
+</tr>
+<tr><td>/save/</td>
+<td><cite>No Match</cite></td>
+</tr>
+<tr><td>//123</td>
+<td><cite>No Match</cite></td>
+</tr>
+</tbody>
+</table>
+<p>You can change the exact behaviour in many ways using filters. This is described in the next section.</p>
+</div>
+<div class="section" id="wildcard-filters">
+<h2>Wildcard Filters<a class="headerlink" href="#wildcard-filters" title="Permalink to this headline">¶</a></h2>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.10.</span></p>
+<p>Filters are used to define more specific wildcards, and/or transform the matched part of the URL before it is passed to the callback. A filtered wildcard is declared as <tt class="docutils literal"><span class="pre">&lt;name:filter&gt;</span></tt> or <tt class="docutils literal"><span class="pre">&lt;name:filter:config&gt;</span></tt>. The syntax for the optional config part depends on the filter used.</p>
+<p>The following standard filters are implemented:</p>
+<ul class="simple">
+<li><strong>:int</strong> matches (signed) digits and converts the value to integer.</li>
+<li><strong>:float</strong> similar to :int but for decimal numbers.</li>
+<li><strong>:path</strong> matches all characters including the slash character in a non-greedy way and may be used to match more than one path segment.</li>
+<li><strong>:re[:exp]</strong> allows you to specify a custom regular expression in the config field. The matched value is not modified.</li>
+</ul>
+<p>You can add your own filters to the router. All you need is a function that returns three elements: A regular expression string, a callable to convert the URL fragment to a python value, and a callable that does the opposite. The filter function is called with the configuration string as the only parameter and may parse it as needed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">app</span> <span class="o">=</span> <span class="n">Bottle</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">list_filter</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Matches a comma separated list of numbers. &#39;&#39;&#39;</span>
+    <span class="n">delimiter</span> <span class="o">=</span> <span class="n">config</span> <span class="ow">or</span> <span class="s">&#39;,&#39;</span>
+    <span class="n">regexp</span> <span class="o">=</span> <span class="s">r&#39;\d+(</span><span class="si">%s</span><span class="s">\d)*&#39;</span> <span class="o">%</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">delimiter</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">to_url</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">delimiter</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">numbers</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">regexp</span><span class="p">,</span> <span class="n">to_python</span><span class="p">,</span> <span class="n">to_url</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">add_filter</span><span class="p">(</span><span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="n">list_filter</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/follow/&lt;ids:list&gt;&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">follow_users</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+    <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="legacy-syntax">
+<h2>Legacy Syntax<a class="headerlink" href="#legacy-syntax" title="Permalink to this headline">¶</a></h2>
+<p class="versionchanged">
+<span class="versionmodified">Changed in version 0.10.</span></p>
+<p>The new rule syntax was introduce in <strong>Bottle 0.10</strong> to simplify some common use cases, but the old syntax still works and you can find lot code examples still using it. The differences are best described by example:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Old Syntax</th>
+<th class="head">New Syntax</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">:name</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">&lt;name&gt;</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">:name#regexp#</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">&lt;name:re:regexp&gt;</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">:#regexp#</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">&lt;:re:regexp&gt;</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">:##</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">&lt;:re&gt;</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Try to avoid the old syntax in future projects if you can. It is not currently deprecated, but will be eventually.</p>
+</div>
+<div class="section" id="explicit-routing-configuration">
+<h2>Explicit routing configuration<a class="headerlink" href="#explicit-routing-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Route decorator can also be directly called as method. This way provides flexibility in complex setups, allowing you to directly control, when and how routing configuration done.</p>
+<p>Here is a basic example of explicit routing configuration for default bottle application:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">setup_routing</span><span class="p">():</span>
+    <span class="n">bottle</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+    <span class="n">bottle</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s">&#39;/edit&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">],</span> <span class="n">edit</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In fact, any <tt class="xref py py-class docutils literal"><span class="pre">Bottle</span></tt> instance routing can be configured same way:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">setup_routing</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s">&#39;/new&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">],</span> <span class="n">form_new</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s">&#39;/edit&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">],</span> <span class="n">form_edit</span><span class="p">)</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Bottle</span><span class="p">()</span>
+<span class="n">setup_routing</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+    &copy; <a href="../../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    <br />
+    The Python Software Foundation is a non-profit corporation.  
+    <a href="http://www.python.org/psf/donations/">Please donate.</a>
+    <br />
+    Last updated on May 03, 2016.
+    <a href="../../bugs.html">Found a bug</a>?
+    <br />
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+
+  </body>
+</html>
