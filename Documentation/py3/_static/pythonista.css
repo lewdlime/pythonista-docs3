@@ -1,0 +1,353 @@
+/**
+ * Sphinx stylesheet -- default theme
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
+@import url("basic.css");
+
+/* -- page layout ----------------------------------------------------------- */
+
+img.align-right {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+img.align-left {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+body {
+    font-family: 'Source Sans Pro', helvetica;
+    font-size: 18px;
+    background-color: #ffffff;
+    color: #000;
+    margin: 0;
+    padding: 10px 0 30px 0;
+	-webkit-text-size-adjust: none;
+	
+	word-wrap: break-word;
+}
+
+@media only screen and (max-device-width: 1024px) {
+	body {
+		margin: 0;
+	}
+	div.related {
+		display: none;
+	}
+}
+
+@media only screen and (min-device-width : 1025px) {
+	/*
+    body {
+		margin: auto;
+		width: 900px;
+	}
+	*/
+	/*
+    div.body, div.related {
+        box-shadow: 0px 0px 2px black;
+    }
+	*/
+}
+
+div.document {
+    /*background-color: #e6e6e6;*/
+	background-color: white;
+}
+
+div.documentwrapper {
+    /*float: left;*/
+    width: 100%;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+div.bodywrapper {
+    margin: 0 0 0 230px;
+}
+
+div.body {
+    background-color: #ffffff;
+    color: #333333;
+    /*padding: 30px 40px 30px 40px;*/
+	margin: 15px;
+	/*padding: 10px;*/
+	
+	border-radius: 0 0 5px 5px;
+	margin-bottom: 20px;
+	min-height: 400px;
+}
+
+div.footer {
+	display: none;
+    color: #ffffff;
+    width: 100%;
+    padding: 9px 0 9px 0;
+    text-align: center;
+    font-size: 75%;
+}
+
+div.footer a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+div.related {
+	display: none;
+	/*
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(49%,#e2e2e2), color-stop(50%,#cecece), color-stop(100%,#dfdfdf));
+	background: -moz-linear-gradient(top,  #fdfdfd 0%, #e2e2e2 49%, #cecece 50%, #dfdfdf);
+	background: -o-linear-gradient(top,  #fdfdfd 0%, #e2e2e2 49%, #cecece 50%, #dfdfdf);
+	
+    line-height: 30px;
+    color: #666;
+	
+	margin-top: 20px;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: #666;
+	border-radius: 5px 5px 0 0;
+	*/
+}
+
+div.related a {
+    color: #666;
+	text-shadow: 0px 1px 0px #fff;
+}
+
+div.related a:hover {
+	color: black;
+}
+
+div.sphinxsidebar {
+}
+
+div.sphinxsidebar h3 {
+    font-family: 'SourceSansPro-Bold', 'Helvetica', sans-serif;
+    color: #ffffff;
+    font-size: 1.4em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+div.sphinxsidebar h3 a {
+    color: #ffffff;
+}
+
+div.sphinxsidebar h4 {
+    font-family: 'SourceSansPro-Bold', 'Helvetica', sans-serif;
+    color: #ffffff;
+    font-size: 1.3em;
+    font-weight: normal;
+    margin: 5px 0 0 0;
+    padding: 0;
+}
+
+div.sphinxsidebar p {
+    color: #ffffff;
+}
+
+div.sphinxsidebar p.topless {
+    margin: 5px 10px 10px 10px;
+}
+
+div.sphinxsidebar ul {
+    margin: 10px;
+    padding: 0;
+    color: #ffffff;
+}
+
+div.sphinxsidebar a {
+    color: #98dbcc;
+}
+
+div.sphinxsidebar input {
+    border: 1px solid #98dbcc;
+    font-family: sans-serif;
+    font-size: 1em;
+}
+
+/* -- body styles ----------------------------------------------------------- */
+
+a {
+    color: #157ab0;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+div.body p, div.body dd, div.body li {
+    text-align: justify;
+    line-height: 140%;
+}
+
+div.body h1,
+div.body h2,
+div.body h3,
+div.body h4,
+div.body h5,
+div.body h6 {
+    font-family: 'SourceSansPro-Bold', 'Helvetica', sans-serif;
+    font-weight: normal;
+    color: #333333;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 0 10px 0;
+    padding: 10px 0px 3px 0px;
+}
+
+div.body h1,
+div.body h2 {
+	clear: both;
+	background-color: #ffffff;
+}
+
+div.body h1 { margin-top: 0; font-size: 160%; }
+div.body h2 { font-size: 140%; }
+div.body h3 { font-size: 130%; }
+div.body h4 { font-size: 120%; }
+div.body h5 { font-size: 110%; }
+div.body h6 { font-size: 100%; }
+
+a.headerlink {
+    visibility: hidden;
+}
+
+a.headerlink:hover {
+    background-color: #0a6abf;
+    color: white;
+}
+
+h1:hover > a.headerlink,
+h2:hover > a.headerlink,
+h3:hover > a.headerlink,
+h4:hover > a.headerlink,
+h5:hover > a.headerlink,
+h6:hover > a.headerlink,
+dt:hover > a.headerlink {
+    visibility: hidden;
+}
+
+div.admonition p.admonition-title + p {
+    display: inline;
+}
+
+div.admonition p {
+    margin-bottom: 5px;
+}
+
+div.admonition pre {
+    margin-bottom: 5px;
+}
+
+div.admonition ul, div.admonition ol {
+    margin-bottom: 5px;
+}
+
+div.note, div.tip {
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
+
+div.seealso {
+    background-color: #ffc;
+    border: 1px solid #ff6;
+}
+
+div.topic {
+    background-color: #eee;
+}
+
+div.warning {
+    background-color: #ffe4e4;
+    border: 1px solid #f66;
+}
+
+p.admonition-title {
+    display: inline;
+}
+
+p.admonition-title:after {
+    content: ":";
+}
+
+pre {
+    padding: 5px;
+	font-family: DejaVuSansMono, monospace;
+	font-size: 0.9em;
+    background-color: #ffffff;
+    color: #333333;
+    line-height: 140%;
+    border: 1px solid #ac9;
+    border-left: none;
+    border-right: none;
+}
+
+tt {
+    background-color: #ecf0f3;
+    padding: 0 1px 0 1px;
+	font-family: DejaVuSansMono, monospace;
+    font-size: 0.95em;
+}
+
+tt.xref, a tt {
+    background-color: transparent;
+    font-weight: normal;
+	font-size: 0.95em;
+	font-family: DejaVuSansMono, monospace;
+}
+
+.warning tt {
+    background: #efc2c2;
+}
+
+.note tt {
+    background: #d6d6d6;
+}
+
+@media only screen and (max-device-width : 320px) {
+    .pythonista-ipad-only {
+        display: none;
+    }
+}
+@media only screen and (min-device-width : 321px) {
+    .pythonista-iphone-only {
+        display: none;
+    }
+}
+p, li {
+    -webkit-hyphens: auto;
+}
+.pythonista-code-header {
+    background-color: #f2f2f2;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+    border-color: #cdcdcd;
+    margin-bottom: -16px;
+    padding: 5px;
+    border-radius: 6px 6px 0 0;
+}
+.pythonista-button {
+    background: #f7f7f7;
+    border: 1px solid #959595;
+    margin-right: 10px;
+    font-size: 13px;  
+    padding: 4px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #333;
+    cursor: default;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-user-select: none;
+}
+.pythonista-button:active {
+    background: #e0e0e0;
+}
+
+pre {
+    background-color: #fafafa;
+    border: 1px solid #cdcdcd;
+}
