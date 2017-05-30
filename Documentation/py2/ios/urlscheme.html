@@ -116,6 +116,10 @@
   <div class="section" id="the-pythonista-url-scheme">
 <span id="pythonista-urlscheme"></span><h1>The Pythonista URL Scheme<a class="headerlink" href="#the-pythonista-url-scheme" title="Permalink to this headline">¶</a></h1>
 <p>Pythonista can be launched from other applications with the custom <tt class="docutils literal"><span class="pre">pythonista://</span></tt> URL scheme.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Pythonista 3.x, you can use <tt class="docutils literal"><span class="pre">pythonista3://</span></tt> instead of <tt class="docutils literal"><span class="pre">pythonista://</span></tt>. In Pythonista 2 (starting with 2.1), you can use <tt class="docutils literal"><span class="pre">pythonista2://</span></tt>. Use these schemes if you want to target a specific version of the app. In case both apps are installed, it is undefined which one of them handles a <tt class="docutils literal"><span class="pre">pythonista://</span></tt> URL.</p>
+</div>
 <div class="section" id="basics">
 <h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
 <ul>
@@ -165,6 +169,11 @@ corresponds to one element in <a class="reference internal" href="../library/sys
 </li>
 </ul>
 </div>
+<div class="section" id="python-version">
+<h2>Python Version<a class="headerlink" href="#python-version" title="Permalink to this headline">¶</a></h2>
+<p>Pythonista 3 supports two different Python interpreters: 2.7 and 3.5. If you want to use a specific interpreter for running a script, you can use the <tt class="docutils literal"><span class="pre">version=[2|3]</span></tt> or <tt class="docutils literal"><span class="pre">py=[2|3]</span></tt> parameter. This parameter is ignored in Pythonista 2 (which only supports Python 2.7).</p>
+<p>If the <tt class="docutils literal"><span class="pre">version</span></tt> parameter is used, it overrides both the default interpreter setting and any shebang that might be defined in the script itself.</p>
+</div>
 <div class="section" id="launching-other-apps">
 <h2>Launching Other Apps<a class="headerlink" href="#launching-other-apps" title="Permalink to this headline">¶</a></h2>
 <p>If you want to go in the opposite direction, and open an app <cite>from Pythonista</cite>,
@@ -185,12 +194,12 @@ to <a class="reference external" href="http://handleopenurl.com">handleopenurl.c
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

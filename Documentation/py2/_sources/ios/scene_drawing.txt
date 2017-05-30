@@ -1,0 +1,165 @@
+
+:mod:`scene_drawing` --- Drawing Functions for the scene module
+===============================================================
+
+.. module:: scene_drawing
+   :synopsis: Drawing Functions for the scene module
+.. sectionauthor:: Ole Zorn
+
+The functions in this module can be used within the :meth:`scene.Scene.draw` method when using the classic render loop mode of the :mod:`scene` module.
+
+Setting Global State
+--------------------
+
+.. function:: blend_mode(mode)
+   
+   Set the blend mode for following drawing operations. `mode` can be `BLEND_NORMAL`,
+   `BLEND_ADD` or `BLEND_MULTIPLY`.
+
+.. function:: fill(r=0, g=0, b=0, a=1)
+
+   Set the current stroke color.
+
+.. function:: no_fill()
+
+   Disables filling rectangles and ellipses. Combined with :func:`stroke_weight`
+   and :func:`stroke` (to set the color), this allows you to draw shape
+   outlines. Alternatively, you can set a transparent fill color with
+   ``fill(0, 0, 0, 0)``.
+
+.. function:: no_stroke()
+
+   Disables the drawing of borders around rectangles and ellipses.
+
+.. function:: no_tint()
+
+   Disables tinting images. Equivalent to `tint(1, 1, 1, 1)`.
+
+.. function:: stroke(r, g, b[,a])
+
+   Set the current stroke color.
+
+.. function:: stroke_weight(line_width)
+
+   Sets the current stroke weight (line width) for the :func:`rect` and :func:`ellipse` functions.
+
+.. function:: use_shader(shader)
+
+    Use the given :class:`scene.Shader` for subsequent drawing.
+
+Drawing
+-------
+
+.. function:: background(r=0, g=0, b=0)
+
+   Fill the background of the current scene with a solid color.
+
+.. function:: ellipse(x=0, y=0, w=0, h=0)
+
+   Draw an ellipse in a rectangle with the current settings for
+   fill color, stroke color and stroke width.
+
+.. function:: image(name, x=0, y=0, w=0, h=0 [, from_x, from_y, from_w, from_h])
+    
+   Draw a named image into a rectangle.
+   
+   The `name` parameter can be a built-in image name or an image identifier that is returned from :func:`render_text` or :func:`load_pil_image`.
+   
+   If the w(idth) and h(eight) parameters are omitted, the image is drawn at the full size with the origin at (x, y). Using the optional `from_x`, `from_y`, `from_w`, and `from_h` parameters, you can draw a rectangular portion of the image instead of the whole image.
+   
+.. function:: image_quad(name, x1, y1, x2, y2, x3, y3, x4, y4 [, from_x1, from_y1, from_x2, from_y2, from_x3, from_y3, from_x4, from_y4])
+
+   Draw a named image into a quad.
+   
+   The `name` parameter can be a built-in image name or an image identifier that is returned from :func:`render_text` or :func:`load_pil_image`.
+   
+   The corners of the quad that the image is drawn into is given by the first set of xn/yn values. The `from_xn`/`from_yn` values can optionally be used to draw a quadrangular portion of the image instead of the whole image.
+
+.. function:: line(x1, y1, x2, y2)
+
+    Draw a straight line between two points with the current :func:`stroke` color and :func:`stroke_weight`.
+
+.. function:: rect(x=0, y=0, w=0, h=0)
+
+   Draw a rectangle with the current settings for
+   fill color, stroke color and stroke width.
+
+.. function:: text(txt, font_name='Helvetica', font_size=16.0, x=0.0, y=0.0, alignment=5)
+
+   Draw a string at a given point with a given font.
+   The alignment parameter has 9 possible values that correspond to the positions
+   on a numeric keypad (with 1 in the bottom lefthand corner). The default (5) centers
+   the text on the point.
+   
+   The color of the text can be set by calling the :func:`tint` function.
+
+.. function:: tint(r=1, g=1, b=1, a=1)
+
+   Set the current tint color that is used for drawing images and text. 
+   
+   A white tint color is the default and causes images to be drawn in their
+   natural colors. Setting a white color (`r` = `g` = `b` = 1.0) with an alpha
+   value < 1.0 makes the image translucent.
+
+.. function:: triangle_strip(points, [tex_coords, image_name])
+
+    Draw a triangle strip with the given points (a list of 2-tuples), using the current fill color or an image. If an image is used, the `tex_coords` list should be a list of UV coordinates (of the same length as `points`).
+
+Coordinate Transformation
+-------------------------
+
+.. function:: translate(x, y)
+
+   Translates the current transformation matrix.
+  
+.. function:: pop_matrix()
+
+   Restores the transformation matrix before the last call of :func:`push_matrix`.
+   This is usually used in combination with :func:`rotate`, :func:`translate` and :func:`scale`.
+
+.. function:: push_matrix()
+
+   Pushes the current transformation matrix on the stack.
+   This is usually used in combination with :func:`rotate`, :func:`translate` and :func:`scale`.
+
+.. function:: rotate(deg)
+
+   Rotate the current transformation matrix. The angle is in degrees.
+
+.. function:: scale(x, y)
+
+   Scale the current transformation matrix
+
+
+Loading Images
+--------------
+
+.. function:: load_image(image_name)
+
+   Loads the named image. This can be used to improve performance, e.g. by loading all
+   images that are about to be used in the :meth:`setup` method of your :class:`Scene`.
+
+.. function:: load_image_file(image_path)
+
+    Load the image at the given file path and return a name that can be used with the :func:`image` drawing function.
+
+.. function:: load_pil_image(image)
+
+   Loads a :mod:`PIL` :class:`Image` into a scene and returns a name that can be
+   used with the :func:`image` drawing function.
+   
+   .. note::
+      Only images using the 'RGBA' mode are supported at the moment.
+
+.. function:: render_text(txt, font_name='Helvetica', font_size=16.0)
+
+   Render a string of text as an image name (that can be used with the :func:`image` function).
+   Returns a tuple of the name and a :class:`Size` object.
+
+   This can be used to determine the size of a string before drawing it, or to repeatedly
+   draw the same text slightly more efficiently.
+
+.. function:: unload_image(image_name)
+
+   Remove an image from the scene cache. This is meant to be used with image names returned from :func:`load_pil_image` that are no longer needed.
+

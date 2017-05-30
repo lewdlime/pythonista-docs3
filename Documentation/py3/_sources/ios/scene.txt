@@ -1,0 +1,1178 @@
+
+:mod:`scene` --- 2D Games and Animations
+==========================================
+
+.. module:: scene
+   :synopsis: 2D graphics and animation on iOS
+.. sectionauthor:: Ole Zorn
+
+The :mod:`scene` module provides an easy way to create hardware-accelerated 2D graphics and animations, specifically games.
+
+* `Overview`_
+    * `Introduction`_
+    * `Touches and Simple Animations`_
+    * `Advanced Animation and Motion Control`_
+    * `Geometry`_
+    * `Colors`_
+* `Classic Render Loop`_
+* `Integration with the ui Module`_
+* `Game Controllers`_
+* `Node Classes`_
+    * `Scene`_
+    * `Node`_
+    * `SpriteNode`_
+    * `EffectNode`_
+    * `LabelNode`_
+    * `ShapeNode`_
+* `Other Classes`_
+    * `Action`_
+    * `Shader`_
+    * `Texture`_
+    * `Touch`_
+* `Geometry Types`_
+    * `Vector2`_
+    * `Point`_
+    * `Size`_
+    * `Rect`_
+* `Functions`_
+* `Constants`_
+
+Overview
+--------
+
+Introduction
+^^^^^^^^^^^^
+
+For every :mod:`scene`-based project, you first have to create a subclass of :class:`Scene` that is responsible for drawing your content, responding to touch events etc. To actually get a scene on screen, you instantiate your subclass, and pass it to the :func:`run` function. The :class:`Scene` class provides various methods that you can override to customize its behavior, for example :meth:`Scene.setup`, which is called just before your scene becomes visible on screen::
+
+    from scene import *
+    
+    class MyScene (Scene):
+        def setup(self):
+            self.background_color = 'green'
+    
+    run(MyScene())
+
+In the minimal example above, the :meth:`Scene.setup` method simply sets the background color of the scene to green.
+
+To add actual content to your scene, you typically create :class:`Node` objects -- there are a couple of different subclasses of :class:`Node` corresponding to different content, e.g. a :class:`SpriteNode` renders an image, a :class:`LabelNode` text, etc. A :class:`Scene` is also a subclass of :class:`Node`, and nodes can contain other nodes (forming a tree or "scene graph"). This is often useful to move or rotate a group of objects as a single entity. All nodes have :attr:`position`, :attr:`rotation`, :attr:`scale`, and :attr:`alpha` (opacity) attributes that determine how the node and its children are drawn. The default position is ``(0, 0)`` which corresponds to the lower-left corner of the screen.
+
+In the following example, the :meth:`setup` method is extended to add a space ship at the center of the screen::
+
+    from scene import *
+    
+    class MyScene (Scene):
+        def setup(self):
+            self.background_color = 'midnightblue'
+            self.ship = SpriteNode('spc:PlayerShip1Orange')
+            self.ship.position = self.size / 2
+            self.add_child(self.ship)
+    
+    run(MyScene())
+
+A couple of things to note here:
+
+* The string that was passed to the :class:`SpriteNode` initializer is the name of a built-in image. You can access built-in images in Pythonista using the [+] button at the top of the editor.
+
+* For convenience, the objects representing sizes and positions in the :mod:`scene` module support a couple of standard operators -- in this case, the scene's size (which is set automatically before :meth:`setup` is called) is simply divided by two, resulting in the center of the screen. Sizes and points can be used interchangeably, so assigning a size to the :attr:`position` attribute works. You could also use a simple tuple of two numbers.
+
+* By default, the :attr:`position` attribute of a :class:`SpriteNode` corresponds to its center. In some cases it may be more convenient to set the position of one of the sprite's corners instead -- you can use the :attr:`anchor_point` attribute to change this behavior.
+
+Touches and Simple Animations
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Let's extend this example once more to make it respond to touches. To do this, we simply override the :class:`Scene`'s :meth:`touch_began` method::
+
+    from scene import *
+    
+    class MyScene (Scene):
+        def setup(self):
+            self.background_color = 'midnightblue'
+            self.ship = SpriteNode('spc:PlayerShip1Orange')
+            self.ship.position = self.size / 2
+            self.add_child(self.ship)
+        
+        def touch_began(self, touch):
+            x, y = touch.location
+            move_action = Action.move_to(x, y, 0.7, TIMING_SINODIAL)
+            self.ship.run_action(move_action)
+    
+    run(MyScene())
+
+This last example introduces the :class:`Action` class. Actions allow you to easily animate a :class:`Node`'s attributes, in this case its position. The timing mode (``TIMING_SINODIAL``) specifies the type of interpolation between the start and end values. If you leave out this argument, you get the default (linear) interpolation which results in a more abrupt movement. There are a lot of other :class:`Action` factory methods for rotating or scaling nodes, changing their opacity (alpha), or even removing them from their parent node. You can also combine multiple Actions using :meth:`Action.group` and :meth:`Action.sequence`, or create an action that repeats another action using :meth:`Action.repeat`.
+
+Similar to :meth:`touch_began`, there are methods for detecting when a touch moves or ends -- :meth:`touch_moved` and :meth:`touch_ended`.
+
+Advanced Animation and Motion Control
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+While Actions provide an easy-to-use high-level API for animating a scene's content, you can also animate changes on a frame-by-frame basis by overriding the :class:`Scene`'s :meth:`update` method. The following example demonstrates this by moving the space ship in response to the device's orientation (using the :func:`gravity` function). By default, the :meth:`update` method is called 60 times per second, so the ship's position is set directly, instead of relying on Action-based animations::
+
+    from scene import *
+    import sound
+    
+    class MyScene (Scene):
+        def setup(self):
+            self.background_color = 'midnightblue'
+            self.ship = SpriteNode('spc:PlayerShip1Orange')
+            self.ship.position = self.size / 2
+            self.add_child(self.ship)
+        
+        def update(self):
+            x, y, z = gravity()
+            pos = self.ship.position
+            pos += (x * 15, y * 15)
+            # Don't allow the ship to move beyond the screen bounds:
+            pos.x = max(0, min(self.size.w, pos.x))
+            pos.y = max(0, min(self.size.h, pos.y))
+            self.ship.position = pos
+        
+        def touch_began(self, touch):
+            laser = SpriteNode('spc:LaserBlue9', position=self.ship.position, z_position=-1, parent=self)
+            laser.run_action(Action.sequence(Action.move_by(0, 1000), Action.remove()))
+            sound.play_effect('arcade:Laser_1')
+            
+    run(MyScene(), PORTRAIT)
+
+The :func:`gravity` function used here provides a very easy-to-use method of determining the device's orientation. For more fine-grained control, you may want to use the :mod:`motion` module instead. In motion-controlled games, auto-rotation can be annoying, so this scene is restricted to portrait orientation using an additional argument to the :func:`run` function.
+
+As a bonus, the space ship now shoots a laser when you touch the screen. The :attr:`z_position` attribute that is set when initializing the laser sprite determines the drawing order -- it is set to -1 here so that the laser doesn't appear on top of the ship. After the laser is added to the scene, it runs a sequence of two actions: The first one moves it by 1000 points upwards, and then it's removed from the scene using the special `remove` action (which is not really an animation, but provided as an :class:`Action` so that it can be part of an animation sequence).
+
+This was just a very basic overview -- there's a lot more you can do with the :mod:`scene` module. The included *Examples* folder contains a couple of complete games that you can use to learn more advanced techniques.
+
+Geometry
+--------
+
+The coordinate system of a scene has its origin (0, 0) in the bottom-left corner.
+
+As briefly mentioned in the overview, the :mod:`scene` module provides a couple of convenient classes for representing 2D geometry, primarily :class:`Rect`, :class:`Point` and :class:`Size`. The latter two are basically identical, but used in different contexts.
+
+These geometry objects are used for various :class:`Node` attributes, e.g. :attr:`Node.position`, :attr:`SpriteNode.size`, :attr:`Node.frame` etc. When you assign a new value to these attributes, you don't have to create a :class:`Point` or :class:`Size` object explicitly though -- any sequence of two numbers (e.g. a tuple or list) will do just as well.
+
+All of these classes behave like sequences, so you can e.g. access a :class:`Point`'s x coordinate using ``point[0]`` (though it's typically more convenient to use ``point.x``).
+
+For :class:`Vector2`, :class:`Point` and :class:`Size`, a couple of math operators are supported for convenience:
+
+* Multiplying a vector with a scalar (i.e. a number) multiplies both components with that number. The same goes for division. For example, ``Size(100, 200) * 0.5`` results in ``Size(50, 100)``.
+
+* Multiplying a vector with another vector does component-wise multiplication, e.g. ``Point(100, 100) * (2, 3)`` results in ``Point(200, 300)``.
+
+* Adding a vector to another vector behaves the same way, e.g. ``Point(100, 100) + (20, 50)`` results in ``Point(120, 150)``.
+
+For hit-testing purposes, you can check if a :class:`Point` lies within a :class:`Rect` using the `in` operator. To check if one rectangle intersects with another, you can use the :meth:`Rect.intersects` method (or :meth:`Rect.intersection` if you need to know exactly where the rectangles intersect).
+
+Colors
+------
+
+:class:`Node` attributes that represent a color, e.g. :attr:`SpriteNode.color` or :attr:`Scene.background_color` can be set in a variety of ways:
+
+* As an HTML hex color string, e.g. ``'#ff0000'`` for red.
+* As a CSS color name, e.g. ``'green'``, ``'blue'``, ``'magenta'``...
+* As a tuple of 3 or 4 numbers, corresponding to the red, green, blue, and alpha components in the range 0.0 - 1.0. The alpha component defaults to 1.0, i.e. fully opaque.
+* As a single number between 0.0 and 1.0, representing a grayscale value (0.0 = black, 1.0 = white).
+
+Regardless of how you set a color attribute, reading it back will always result in a 4-tuple (r, g, b, a).
+
+Classic Render Loop
+-------------------
+
+In addition to the node-based approach described above, the :mod:`scene` module also supports a classic rendering loop that was the primary interface in previous versions of Pythonista. In most cases, a node-based scene will result in significantly better performance, but the classic rendering loop may be easier to understand if you already know similar programming environments, e.g. Processing.
+
+To use this mode, you also have to create a subclass of :class:`Scene`, but instead of adding nodes to it, you simply override the :meth:`draw` method. This method is called for every frame (i.e. 60 times per second), and you can use module-level drawing functions to "paint" your content in every frame. Images and shapes that you draw to the screen in this way are not preserved from one frame to the next -- in every call of the :meth:`draw` method, you basically start with a blank screen.
+
+Similar to classic OpenGL, you set up global state variables (like fill color and coordinate transformations) before calling the actual drawing functions. The following example draws a couple of rotated rectangles::
+
+    from scene import *
+    
+    class MyScene (Scene):
+        def draw(self):
+            background('gray')
+            colors = ['red', 'green', 'blue', 'yellow']
+            # Move to the center of the screen:
+            translate(self.size.w/2, self.size.h/2)
+            for color in colors:
+                # Set the current fill color (this affects the drawing commands that follow)
+                fill(color)
+                # Rotate the transformation matrix (this is cumulative):
+                rotate(-20)
+                # Note: The coordinates are relative to the center of the screen because of the previous `translate` command:
+                rect(-50, -50, 100, 100)
+                
+    run(MyScene())
+
+If you've used a previous version of Pythonista, you may also be familiar with the :class:`Layer` and :class:`Animation` classes that were conceptually similar to :class:`Node` and :class:`Action`. These classes are still available for backwards compatibility, but it is strongly recommended to use the new :class:`Node`/:class:`Action` APIs instead because they provide significantly better performance.
+
+.. note::
+    The functions you can use for drawing in this mode are documented in the :mod:`scene_drawing` module, though you don't have to import :mod:`scene_drawing` explicitly if you want to use them.
+
+Integration with the ui Module
+------------------------------
+
+The easiest way to run a scene is to use the :func:`run` function, which presents the scene in full-screen. Sometimes this is not what you want, especially if the scene you're building is not actually a game. For more flexibility, you can also create a :class:`SceneView` explicitly, set its :attr:`scene` attribute to the scene you want to present, and then add it to a view hierarchy that you created using the :mod:`ui` module.
+
+You can also use this approach to add traditional UI elements (e.g. text fields) to your game. For this purpose, you don't have to create a :class:`SceneView` -- you can simply use the view that was created automatically, using your :class:`Scene`'s :attr:`view` attribute (this will only work if a scene is already being presented of course).
+
+The :mod:`ui` module can also be useful for rendering vector images (shapes, text etc.) that you want to use as textures. A :class:`Texture` can be initialized from a :class:`ui.Image` for this purpose, typically one that you create using an :class:`ui.ImageContext`. The :class:`ShapeNode` and :class:`LabelNode` classes use this approach to render their content.
+
+Game Controllers
+----------------
+
+The :mod:`scene` module has support for controlling games using MFi game controllers, like the `Nimbus SteelSeries <https://steelseries.com/gaming-controllers/nimbus>`_ gamepad.
+
+Supporting hardware controller input in your game is quite simple -- you basically just have to override the :meth:`Scene.controller_changed` method in your :class:`Scene` subclass to respond to controller events (e.g. a button being pressed/released). The method gets two parameters: A ``key``, which is a string that represents the element of the controller that changed (for example ``'button_a'``), and the current value of the controller element. The type of the value depends on the type of controller element -- for basic buttons, it's a boolean, for pressure-sensitive triggers a floating-point value between 0.0 and 1.0, and for dpads and thumbsticks, it's a :class:`Point` object (with x and y values in the range -1.0 to +1.0).
+
+In some cases, it can be more convenient to query the current state of the controller(s) in the :meth:`Scene.update` method or elsewhere. To do this, you can use the module-level :func:`get_controllers` function. This will return a list of dictionaries that represent the current state of all buttons, the dpad, thumbsticks, etc. for every controller that is currently connected.
+
+Node Classes
+------------
+
+Scene
+^^^^^
+
+.. class:: Scene
+
+    A scene is the root node in a tree of nodes (:class:`Node` objects). These nodes provide content that the scene animates and renders for display. To display a scene, you typically call the module-level :func:`run` function to present it in full-screen. You can also create a :class:`SceneView` explicitly, if you want to display a scene within other UI content.
+    
+    A scene calculates the contents of a new frame by processing the following actions in order:
+
+    1. The scene calls its :meth:`update` method.
+
+    2. The scene executes actions on its children.
+
+    3. The scene calls its :meth:`did_evaluate_actions` method.
+
+    4. The scene renders all of its nodes and updates the view to display the new contents.
+    
+    You typically create at least one subclass of :class:`Scene` to handle touch events (by overriding :meth:`touch_began`, :meth:`touch_moved`, :meth:`touch_ended`) and any other interaction with your game's content.
+    
+    Note that :class:`Scene` is a subclass of :class:`EffectNode`, so you can use a custom :class:`Shader` for full-scene post-processing effects. Unlike a vanilla :class:`EffectNode` however, a scene's :attr:`effects_enabled` attribute is set to `False` by default.
+
+.. method:: Scene.setup()
+
+    This gets called once, just before the scene is presented on screen. You can use this to set up
+    your scene. The :attr:`size` and :attr:`bounds` attributes are already valid at this point, so you can use them to determine the layout of your content.
+    
+.. method:: Scene.touch_began(touch)
+
+    This method is called when a touch begins on the scene's view. You typically don't call this directly, but implement it as part of your :class:`Scene` subclass.
+    
+    You can inspect the `touch` object's `location` attribute to get the position of the touch in the scene's coordinate system. To distinguish between simultaneous touches, you can use the touch's `touch_id` attribute.
+    
+.. method:: Scene.touch_moved(node, touch)
+    
+    This method is called when a touch moves in the scene's view. You typically don't call this directly, but implement it as part of your :class:`Scene` subclass.
+    
+    You can inspect the `touch` object's `location` attribute to get the position of the touch in the scene's coordinate system. To distinguish between simultaneous touches, you can use the touch's `touch_id` attribute.
+
+.. method:: Scene.touch_ended(node, touch)
+
+    This method is called when a touch ends in the scene's view. You typically don't call this directly, but implement it as part of your :class:`Scene` subclass.
+    
+    You can inspect the `touch` object's `location` attribute to get the position of the touch in the scene's coordinate system. To distinguish between simultaneous touches, you can use the touch's `touch_id` attribute.
+
+.. method:: Scene.did_change_size()
+
+    This method gets called whenever the scene’s size changes, usually when the screen rotates. You typically override this to reposition your content. The :attr:`size` attribute of the scene is already set to the new size when this is called.
+
+.. method:: Scene.did_evaluate_actions()
+
+    This method gets called after a scene has finished processing the actions of its child nodes.
+
+.. method:: Scene.update()
+
+    Performs any scene-specific updates that need to occur before scene actions are evaluated.
+    
+    Do not call this method directly; it is called exactly once per frame, so long as the scene is presented in a view and is not paused. By default, this method does nothing. Your scene subclass should override this method and perform any necessary updates to the scene.
+
+.. method:: Scene.pause()
+   
+    Gets called automatically when the home button is pressed while a scene is running. You can override this to save persistent state for example. The default implementation does nothing.
+
+.. method:: Scene.resume()
+   
+    Gets called automatically when a scene is resumed (after being sent to the background with the home button). The default implementation does nothing.
+
+.. method:: Scene.stop()
+
+    Gets called automatically when a scene is stopped (by tapping the "x" button). You can override this to save persistent state. The default implementation does nothing.
+    
+.. method:: Scene.present_modal_scene(other_scene)
+
+    Present another scene on top of this one. This can be useful for overlay menus etc. While the scene is being presented, it receives all touch events.
+
+.. method:: Scene.dismiss_modal_scene()
+
+    Close a scene that is being presented modally using :meth:`Scene.present_modal_scene`.
+
+.. method:: Scene.controller_changed(key, value)
+
+    This method gets called automatically when the state of any connected game controller changes, for example, when a button is pressed/released, or when the direction of one of the thumbsticks or the dpad changes.
+    
+    The ``key`` parameter is a string that specifies the element of the controller that changed (for example ``'button_a'``, ``'dpad'``, ``'thumbstick_left'``...), ``value`` contains the current value of that element. The type of ``value`` varies with the type of controller element. For directional input elements (dpads, thumbsticks), the value is a :class:`Point` object. For others, it's either a float (when the element is pressure-sensitive) or a boolean.
+
+Scene Attributes
+''''''''''''''''
+
+.. attribute:: bounds
+
+   A :class:`Rect` that has the origin (0, 0) and the size of the drawable area.
+  
+.. attribute:: Scene.dt
+
+    The time (in seconds) that has passed since the last invocation of :meth:`update`. You can use this to calculate the progress of custom animations.
+
+.. attribute:: Scene.size
+
+   The size of the entire drawable area.
+  
+.. attribute:: Scene.t
+
+    The time (in seconds) that has passed since the scene was started. You can use this to calculate the progress of custom animations.
+
+.. attribute:: Scene.touches
+
+    A dictionary of all touches that are currently active. The keys correspond to the :attr:`touch_id` attribute of the :class:`Touch` objects.
+
+.. attribute:: Scene.background_color
+
+    The background color of the scene.
+    
+    The default value is dark gray.
+
+.. attribute:: Scene.size
+
+    The dimensions of the scene in points (read-only). This corresponds to the size of the scene's view.
+    
+.. attribute:: Scene.view
+
+    The :class:`View` that is currently presenting the scene. May be `None` if the scene is not currently being presented. (read-only)
+
+.. attribute:: Scene.presented_scene
+
+    The scene that is currently being presented using :meth:`Scene.present_modal_scene` (if any, `None` otherwise).
+
+.. attribute:: Scene.presenting_scene
+
+    The presenting scene, if this scene is being presented by another scene (using :meth:`present_modal_scene`).
+
+Node
+^^^^
+
+.. class:: Node([position=(0, 0), z_position=0.0, scale=1.0, x_scale=1.0, y_scale=1.0, alpha=1.0, speed=1.0, parent=None])
+
+    The :class:`Node` class is the fundamental building block of a scene. The basic :class:`Node` class doesn’t draw anything by itself -- its primary role is to provide baseline behavior that its subclasses use. Nodes can also contain other nodes to modify them as a group. For drawing actual content, you will typically use one of :class:`Node`'s subclasses:
+    
+    * :class:`SpriteNode` -- A node that draws a textured sprite
+    
+    * :class:`LabelNode` -- A specialized :class:`SpriteNode` that renders a text string.
+
+    * :class:`ShapeNode` -- A specialized :class:`SpriteNode` that renders a shape based on a bezier path (e.g. a circle or rounded rectangle).
+
+    * :class:`EffectNode` -- A node that applies effects to its children using a custom shader.
+
+    Nodes are organized hierarchically into node trees, similar to how views and subviews work. Most commonly, a node tree is defined with a :class:`Scene` node as the root node and other content nodes as descendants. The scene node runs an animation loop that processes actions on the nodes, and then renders the contents of the node tree for display.
+
+    Every node in a node tree provides a coordinate system to its children. After a child is added to the node tree, it is positioned inside its parent’s coordinate system by setting its position attribute. A node’s coordinate system can be scaled and rotated by changing its :attr:`x_scale`, :attr:`y_scale`, and :attr:`rotation` attributes. When a node’s coordinate system is scaled or rotated, this transformation is applied both to the node’s own content and to that of its descendants.
+
+    The :class:`Node` class does not perform any drawing of its own. However, many subclasses render visual content and so the :class:`Node` class understands some visual concepts:
+
+    The :attr:`frame` attribute provides the bounding rectangle for a node’s visual content, modified by the :attr:`scale` and :attr:`rotation` attributes. The frame is non-empty if the node’s class draws content. Each node subclass determines the size of this content differently. In some subclasses, the size of the node’s content is declared explicitly, such as in the :class:`SpriteNode` class. In other subclasses, the content size is calculated implicitly by the class using other object properties. For example, a :class:`LabelNode` object determines its content size using the label’s text and font characteristics.
+
+    A node’s :attr:`bbox` is the largest rectangle that includes the frame of the node and the frames of all its descendants.
+
+    Other attributes, such as the :attr:`alpha` attribute, affect how the node and its descendants are drawn.
+
+    Any node in the tree may run actions (:class:`Action` objects), which are used to animate the properties of a node, e.g. to move it to a new position smoothly.
+
+.. method:: Node.add_child(node)
+
+    Adds a node to the end of the receiver’s list of child nodes.
+
+.. method:: Node.remove_from_parent()
+    
+    Removes the node from its parent node.
+
+.. method:: Node.remove_action(key)
+
+    Ends and removes a specific action, identified by its key, from the node. The key is an arbitrary string that was passed to the :meth:`Node.run_action` method.
+
+.. method:: Node.remove_all_actions()
+
+    Ends and removes all actions from the node.
+    
+    When an action is removed from the node, any remaining animation the action would perform is skipped; however, previous changes are not reverted.
+    
+.. method:: Node.render_to_texture([crop_rect])
+
+    Creates a :class:`Texture` object by rendering a snapshot of this node and its children.
+
+.. method:: Node.point_to_scene(point)
+
+    Convert a point from this node's coordinate system to the coordinate system of its containing scene. If the node is not part of a scene, a :class:`ValueError` is raised.
+
+.. method:: Node.point_from_scene(point)
+
+    Convert a point from the coordinate system of this node's scene to the local coordinate system of the node. If the node is not part of a scene, a :class:`ValueError` is raised.
+
+.. method:: Node.run_action(action[, key])
+
+    Adds an action to the list of actions executed by the node.
+    
+    If an action using the same `key` (an arbitrary string) is already running, it is removed before the new action is added.
+
+Node Attributes
+'''''''''''''''
+
+.. attribute:: Node.bbox
+
+    Calculates a rectangle in the parent’s coordinate system that contains the content of the node and all of its descendants.
+
+.. attribute:: Node.alpha
+
+    The transparency value applied to the node’s contents.
+    
+    The :class:`Node` class does not perform drawing, but many of its subclasses do. When a node or any of its descendants are drawn, the alpha component of each pixel is multiplied by the node’s alpha property and then clamped to the range 0.0-1.0. This modified alpha value is used to blend the pixel into the framebuffer. Subclasses that render content define properties that determine the blending operations used in conjunction with the alpha value to blend pixels into the parent’s framebuffer.
+
+.. attribute:: Node.frame
+
+    A rectangle in the parent’s coordinate system that contains the node’s content, ignoring the node’s children. (read-only)
+
+.. attribute:: Node.children
+
+    A list of this node's child nodes. Note that modifying this list has no effect -- use :meth:`Node.add_child` and :meth:`Node.remove_from_parent` instead.
+
+.. attribute:: Node.parent
+
+    The node’s parent node. (read-only)
+
+.. attribute:: Node.paused
+
+    A Boolean value that determines whether actions on the node and its descendants are processed.
+    
+.. attribute:: Node.position
+
+    The position (x, y) of the node in its parent's coordinate system.
+
+.. attribute:: Node.scene
+
+    The scene node that contains the node. (read-only)
+    
+    If the node is not embedded in a scene, the value is `None`.
+
+.. attribute:: Node.speed
+
+    A speed modifier applied to all actions executed by a node and its descendants.
+
+.. attribute:: Node.x_scale
+
+    A scaling factor that multiplies the width of a node and its children.
+    
+    The :attr:`x_scale` attribute scales the width of the node and all of its descendants. The scale value affects how a node’s frame is calculated, its hit test area, how it is drawn, and other similar characteristics. The default value is 1.0.
+
+.. attribute:: Node.y_scale
+
+    A scaling factor that multiplies the height of a node and its children.
+    
+    The :attr:`y_scale` attribute scales the height of the node and all of its descendants. The scale value affects how a node’s frame is calculated, its hit test area, how it is drawn, and other similar characteristics. The default value is 1.0.
+
+.. attribute:: Node.z_position
+
+    The z position of a node determines the order in which it's drawn, relative to its siblings. The default value is 0.0; nodes with larger values are rendered in front of nodes with smaller values.
+    
+.. attribute:: Node.rotation
+
+    The node's rotation about the z axis (in radians).
+    
+    The default value is 0.0, which indicates no rotation. A positive value indicates a counterclockwise rotation. When the coordinate system is rotated, it affects the node and its descendants.
+
+SpriteNode
+^^^^^^^^^^
+
+.. class:: SpriteNode([texture, position=(0, 0), z_position=0.0, scale=1.0, x_scale=1.0, y_scale=1.0, alpha=1.0, speed=1.0, parent=None, size=None, color='white', blend_mode=0])
+
+    A :class:`SpriteNode` is a node that draws a textured image, a colored square, or a textured image blended with a color. You can also provide a custom shader to create your own rendering effects.
+    
+    When initializing a :class:`SpriteNode`, you can provide the texture as either a :class:`Texture` object, or the name of a built-in image or image file (a string).
+
+SpriteNode Attributes
+'''''''''''''''''''''
+
+.. attribute:: SpriteNode.anchor_point
+
+    Defines the point in the sprite that corresponds to the node’s position.
+    
+    You specify the value for this property in the unit coordinate space. The default value is (0.5, 0.5), which means that the sprite is centered on its position.
+
+.. attribute:: SpriteNode.blend_mode
+
+    The blend mode used to draw the sprite into the parent’s framebuffer.
+    
+    The possible values for this property are listed in `Blend Modes`_. The default value is :data:`BLEND_NORMAL`.
+
+.. attribute:: SpriteNode.color
+
+    The sprite’s color.
+    
+    If the :attr:`texture` attribute is set, the image is tinted with the given color. If the :attr:`texture` attribute is `None`, the color is used to draw a colored rectangle.
+
+.. attribute:: SpriteNode.shader
+
+    A property that determines whether the sprite is rendered using a custom shader.
+    
+    The default value is `None`, which means that the normal behavior for sprite rendering is performed. If a :class:`Shader` is attached to this attribute, the custom shader is used to render the sprite.
+
+.. attribute:: SpriteNode.size
+
+    The dimensions of the sprite, in points (width, height). When setting the :attr:`texture` attribute, the size is automatically set to the dimensions of the texture.
+
+.. attribute:: SpriteNode.texture
+
+    The :class:`Texture` used to draw the sprite.
+    
+    If the value is `None`, the sprite is drawn as a colored rectangle using its :attr:`color` attribute. Otherwise, the texture is used to draw the sprite.
+
+EffectNode
+^^^^^^^^^^
+
+.. class:: EffectNode([position=(0, 0), z_position=0.0, scale=1.0, x_scale=1.0, y_scale=1.0, alpha=1.0, speed=1.0, parent=None])
+
+An :class:`EffectNode` object can be used to apply post-processing effects.
+
+Each time a new frame is rendered using the effect node, the effect node follows these steps:
+
+* The effect node draws its children into a private framebuffer.
+
+* It blends the contents of its private framebuffer into its parent’s framebuffer, using one of the standard blend modes, similar to a :class:`SpriteNode`. You can also use a custom :class:`Shader` to render the result for more advanced post-processing effects.
+
+EffectNode Attributes
+'''''''''''''''''''''
+
+.. attribute:: EffectNode.crop_rect
+
+    A rectangle in the effect node's coordinate system that determines how much of its children the effect node renders.
+    
+    By default, an effect node automatically determines the size and position of its crop rect based on the accumulated frames of its children. In some cases, this may be inefficient, especially if the size of the children changes frequently, or if some of the children are off-screen.
+
+.. attribute:: EffectNode.blend_mode
+
+    The blend mode used to draw the filtered image into the parent’s framebuffer. 
+    
+    The possible values for this property are listed in `Blend Modes`_. The default value is :data:`BLEND_NORMAL`.
+
+.. attribute:: EffectNode.effects_enabled
+
+    When set to `False`, the effect node renders like a regular :class:`Node` (shader, blend mode, and crop rect are ignored). The default is `True`.
+
+.. attribute:: EffectNode.shader
+
+    A custom shader that is called when the effect node is blended into the parent’s framebuffer.
+    
+    The default value is `None`, meaning that default blending behavior executes. If a shader is specified, it is called when the rasterized image is blended into the parent’s framebuffer.
+
+LabelNode
+^^^^^^^^^
+
+.. class:: LabelNode(text, font=('Helvetica', 20), *args, **kwargs)
+
+    A :class:`LabelNode` is a specialized subclass of :class:`SpriteNode` that automatically generates a texture by rendering a string into an image, using the given font. When you set the :attr:`LabelNode.text` or :attr:`LabelNode.font` attributes, the texture is updated automatically.
+    
+    By default, the text is centered on the node's :attr:`position`. You can change this by adjusting the :attr:`Node.anchor_point` attribute.
+
+LabelNode Attributes
+''''''''''''''''''''
+
+.. attribute:: LabelNode.text
+
+    The string value of the label.
+
+.. attribute:: LabelNode.font
+
+    The font of the label, as a 2-tuple of font name and font size (in points).
+
+ShapeNode
+^^^^^^^^^
+
+.. class:: ShapeNode(path=None, fill_color='white', stroke_color='clear', shadow=None, *args, **kwargs)
+
+    A :class:`ShapeNode` is a specialized subclass of :class:`SpriteNode` that renders a :class:`ui.Path` (a vector shape).
+    
+    The shape has customizable fill and stroke colors, and can optionally be rendered with a drop shadow.
+
+ShapeNode Attributes
+''''''''''''''''''''
+
+.. attribute:: ShapeNode.path
+
+    A :class:`ui.Path` object that represents the shape to be rendered. The :attr:`ui.Path.line_width` attribute determines the width of the shape's outline (stroke).
+
+.. attribute:: ShapeNode.fill_color
+
+    The color that is used to fill the shape.
+
+.. attribute:: ShapeNode.stroke_color
+
+    The color that is used for the shape's outline.
+
+.. attribute:: ShapeNode.shadow
+
+    A 4-tuple of (color, x_offset, y_offset, radius) that specifies an optional drop shadow. If set to `None`, no drop shadow is rendered.
+
+Other Classes
+-------------
+
+SceneView
+^^^^^^^^^
+
+.. class:: SceneView()
+
+    :class:`SceneView` is a subclass of :class:`ui.View` that draws a :class:`Scene`'s content and implements a rendering loop.
+    
+    Typically, you will not create a :class:`SceneView` explicitly -- calling the :func:`run` function does this automatically. If you need to modify the view's attributes after running your scene this way, you can access its view using the :attr:`Scene.view` attribute.
+    
+    For debugging purposes, a :class:`SceneView` will show standard output and exceptions in a "status line" at the bottom, so you can use `print` statements during development, even if your scene covers the whole screen.
+
+SceneView Attributes
+''''''''''''''''''''
+
+.. attribute:: SceneView.scene
+
+    The scene that is currently presented in the view. Without setting this attribute, the view will be empty.
+
+.. attribute:: SceneView.paused
+
+    Set this to `True` to pause the rendering loop.
+
+.. attribute:: SceneView.frame_interval
+
+    By default, the rendering loop updates 60 times per second, which corresponds to a frame interval of 1. Setting this to a higher value reduces the update frequency, e.g. a value of 2 corresponds to 30 frames per second. If you don't create a :class:`SceneView` explicitly, you can also pass this value as an argument to the :func:`run` function.
+    
+.. attribute:: SceneView.anti_alias
+
+    Set this to `True` to enable 4x multisampling. This has a (sometimes significant) performance cost, and is disabled by default.
+
+.. attribute:: SceneView.shows_fps
+
+    Set to `True` to enable a debugging overlay that shows the current framerate.
+
+
+Shader
+^^^^^^
+
+.. class:: Shader(shader_src)
+
+    A :class:`Shader` object represents a custom OpenGL fragment shader that can be used to modify the rendering behavior of :class:`SpriteNode` and :class:`EffectNode` objects (via their respective :attr:`shader` attributes).
+    
+    Shader programming is a complex topic, and a complete introduction is beyond the scope of this document, but the basic concept is really quite simple. A fragment shader is essentially a function/program that is executed directly on the GPU, and that is responsible for producing a color value for every pixel. Shaders are written in GLSL (GL Shading Language), which is very similar to C.
+    
+    The default shader of a :class:`SpriteNode` basically just uses its texture coordinate input (which is set automatically) to look up the corresponding color in its associated :class:`Texture`. A simple custom shader might either adjust the resulting color value (for example, converting the colors to grayscale), or modify the texture coordinates to produce morphological effects.
+    
+    Shaders have two kinds of inputs: Varyings and uniforms. Essentially, a uniform has the same value for every pixel/fragment, while a varying is interpolated. An example for a varying would be the texture coordinates, which are obviously different for every pixel. An example for a uniform would be a sprite's size or the current timestamp.
+    
+    A couple of varyings and uniforms are set automatically when a :class:`SpriteNode` or :class:`EffectNode` with a custom shader is rendered:
+    
+    * ``uniform float u_time`` -- the current timestamp of the scene's animation loop
+    * ``uniform vec2 u_sprite_size`` -- The size of the sprite (in points)
+    * ``uniform float u_scale`` -- The scale factor of the screen (typically 2.0 for retina screens) -- this can be used to convert ``u_sprite_size`` to actual screen pixels.
+    * ``uniform sampler2D u_texture`` -- The texture of the sprite (for an :class:`EffectNode`, this texture contains the rendering of its children)
+    * ``uniform vec4 u_tint_color`` -- The premultiplied color of the sprite (corresponding to the :attr:`SpriteNode.color` attribute)
+    * ``uniform vec4 u_fill_color`` -- If the sprite has no texture, this is used instead of ``u_tint_color``.
+    * ``varying vec2 v_tex_coord`` -- The current texture (UV) coordinates
+
+Even though these uniforms and varyings are set automatically, you have to declare them in your shader if you want to use them.
+
+You can also declare and set custom uniforms using the :meth:`Shader.set_uniform` method. Custom uniforms can be textures (``sampler2D``), floats, and 2-/3-/4-component vectors (``vec2``/``vec3``/``vec4``).
+
+The following example produces an interesting 'ripple' effect on the Pythonista icon. It also demonstrates how you can modify shader behavior by setting uniforms -- in this case, the center of the ripple effect is changed in response to touch events.::
+
+    from scene import *
+
+    ripple_shader = '''
+    precision highp float;
+    varying vec2 v_tex_coord;
+    // These uniforms are set automatically:
+    uniform sampler2D u_texture;
+    uniform float u_time;
+    uniform vec2 u_sprite_size;
+    // This uniform is set in response to touch events:
+    uniform vec2 u_offset;
+
+    void main(void) {
+    	vec2 p = -1.0 + 2.0 * v_tex_coord + (u_offset / u_sprite_size * 2.0);
+    	float len = length(p);
+    	vec2 uv = v_tex_coord + (p/len) * 1.5 * cos(len*50.0 - u_time*10.0) * 0.03;
+    	gl_FragColor = texture2D(u_texture,uv);
+    }
+    '''
+
+    class MyScene (Scene):
+    	def setup(self):
+    		self.sprite = SpriteNode('test:Pythonista', parent=self)
+    		self.sprite.shader = Shader(ripple_shader)
+    		self.did_change_size()
+	
+    	def did_change_size(self):
+    		# Center the image:
+    		self.sprite.position = self.size/2
+		
+    	def touch_began(self, touch):
+    		self.set_ripple_center(touch)
+	
+    	def touch_moved(self, touch):
+    		self.set_ripple_center(touch)
+	
+    	def set_ripple_center(self, touch):
+    		# Center the ripple effect on the touch location by setting the `u_offset` shader uniform:
+    		dx, dy = self.sprite.position - touch.location
+    		self.sprite.shader.set_uniform('u_offset', (dx, dy))
+
+    run(MyScene())
+
+.. method:: Shader.get_uniform(name)
+
+    Return the current value of the uniform with the given name. Note that the uniform must be of type ``float``, ``vec2``, ``vec3`` or ``vec4`` (i.e. sampler/texture uniforms are not supported by this method). For invalid uniform names, `None` is returned.
+
+.. method:: Shader.set_uniform(name, value)
+
+    Set the uniform with the given name to a new value. The value may be a single number for ``float`` or ``int`` uniforms, a sequence of numbers for uniforms of type ``vec2``, ``vec3`` or ``vec4``, or a :class:`Texture` object for ``sampler2D`` uniforms. Other types of uniforms are not supported.
+
+Action
+^^^^^^
+
+.. class:: Action
+
+    An :class:`Action` object is an animation that usually changes a :class:`Node`'s attributes over time. It can be added to a node using its :meth:`Node.run_action` method.
+
+    Different types of actions (for different :class:`Node` attributes) are created using different class methods, e.g. :meth:`Action.move_to`, :meth:`Action.rotate_by` etc.
+    
+    Once an action has been added to a :class:`Node`, it cannot be changed anymore, but you can remove it (and stop the animation) using :meth:`Node.remove_action` or :meth:`Node.remove_all_actions`.
+
+    Some actions modify the behavior of other actions:
+
+    An :meth:`Action.sequence` has multiple child actions. Each action in the sequence begins after the previous action ends.
+
+    An :meth:`Action.group` has multiple child actions. All actions stored in the group begin executing at the same time. The entire group finishes after all actions have finished. This is particularly useful in combination with :meth:`Action.sequence`.
+
+    An :meth:`Action.repeat` action stores a single child action. When the child action completes, it is restarted.
+
+    Groups, sequences, and repeating actions can be nested. The ability to combine actions together allows you to add very sophisticated behaviors to a node.
+    
+    The default duration of animated actions is 0.5 seconds.
+
+.. classmethod:: Action.call(func[, duration])
+
+    Creates a custom action that calls a function (or other callable object).
+    
+    If no `duration` parameter is passed, the function is called exactly once and must not take any parameters.
+    
+    If the duration parameter is used, the node that the action is executed on, and the current progress (between 0.0 and 1.0) are passed to the function, and it must have the following signature::
+
+        def custom_action(node, progress):
+            pass # do something with the node here...
+
+.. classmethod:: Action.fade_by(alpha[, duration, timing_mode])
+
+    Creates an action that adjusts the alpha value of a node by a relative value.
+    
+    When the action executes, the :attr:`Node.alpha` attribute animates to its new value.
+
+.. classmethod:: Action.fade_to(alpha[, duration, timing_mode])
+
+    Creates an action that adjusts the alpha value of a node to a new value.
+    
+    When the action executes, the :attr:`Node.alpha` attribute animates to its new value.
+
+.. classmethod:: Action.group(actions...)
+
+    Creates an action that runs a collection of actions in parallel.
+    
+    When the action executes, the actions that comprise the group all start immediately and run in parallel. The duration of the group action is the longest duration among the collection of actions. If an action in the group has a duration less than the group’s duration, the action completes, then idles until the group completes the remaining actions. This matters most when creating a repeating action that repeats a group.
+    
+    You can pass the group's actions as individual arguments or as a single sequence argument (e.g. a list).
+
+.. classmethod:: Action.move_by(dx, dy[, duration, timing_mode])
+    
+    Creates an action that moves a node relative to its current position.
+
+.. classmethod:: Action.move_to(x, y[, duration, timing_mode])
+
+    Creates an action that moves a node to a new position.
+
+.. classmethod:: Action.repeat(action, repeat_count)
+
+    Creates an action that repeats another action a specified number of times. If `repeat_count` is <=0, the action repeats forever (or until it is removed explicitly).
+
+.. classmethod:: Action.rotate_by(radians[, duration, timing_mode])
+
+    Creates an action that rotates the node by a relative value.
+
+.. classmethod:: Action.rotate_to(radians[, duration, timing_mode])
+
+    Creates an action that rotates the node counterclockwise to an absolute angle.
+
+.. classmethod:: Action.scale_by(scale[, duration, timing_mode])
+
+    Creates an action that changes the x and y scale values of a node by a relative value.
+
+.. classmethod:: Action.scale_to(scale[, duration, timing_mode])
+
+    Creates an action that changes the x and y scale values of a node.
+
+.. classmethod:: Action.scale_x_to(scale[, duration, timing_mode])
+
+    Creates an action that changes the x scale value of a node.
+
+.. classmethod:: Action.scale_y_to(scale[, duration, timing_mode])
+
+    Creates an action that changes the y scale value of a node.
+
+.. classmethod:: Action.set_uniform(name, value[, duration, timing_mode])
+
+    Creates an action that animates the given shader uniform to a new value. Note that this action only has an effect on :class:`SpriteNode` and :class:`EffectNode` objects. The value must be either a single number (for ``float`` uniforms) or a sequence of 2-4 numbers (for ``vec2``, ``vec3`` and ``vec4`` uniforms).
+
+.. classmethod:: Action.sequence(actions...)
+
+    Creates an action that runs a collection of actions sequentially.
+    
+    When the action executes, the first action in the sequence starts and runs to completion. Subsequent actions in the sequence run in a similar fashion until all of the actions in the sequence have executed. The duration of the sequence action is the sum of the durations of the actions in the sequence.
+    
+    You can pass the sequence's actions as individual arguments or as a single sequence argument (e.g. a list).
+
+.. classmethod:: Action.wait(wait_duration)
+
+    Creates an action that idles for a specified period of time.
+    
+    When the action executes, the action waits for the specified amount of time, then ends. This is typically used as part of a sequence of actions to insert a delay between two other actions.
+
+Action Attributes
+'''''''''''''''''
+
+.. attribute:: Action.duration
+
+    The duration of the action, in seconds. For some types of actions (e.g. groups, sequences), the duration is ignored. Note that changing the duration (or any other attributes) of an action after it has been added to a :class:`Node` has no effect.
+
+.. attribute:: Action.timing_mode
+
+    The timing mode used to execute an action.
+    
+    The possible values for this property are listed under `Timing Modes`_. The default value is :data:`TIMING_LINEAR`.
+    
+    For some types of actions (e.g. groups, sequences), the timing mode is ignored. Note that changing the timing mode (or any other attributes) of an action after it has been added to a :class:`Node` has no effect.
+
+Texture
+^^^^^^^
+
+.. class:: Texture(image)
+
+    :class:`Texture` objects are used by :class:`SpriteNode` objects to render their content. A texture is an image that has been loaded into the GPU's memory. Textures can be initialized using either the name of a built-in image (a string), or a :class:`ui.Image` object.
+
+.. method:: Texture.subtexture(rect)
+
+    Create a new texture from a rectangular area in an existing texture. The returned texture object shares the same texture data as the original texture object, meaning that only one copy of the texture data is kept in memory.
+    
+    The `rect` parameter describes the portion of the texture in unit coordinates, e.g. ``(0, 0, 0.5, 0.5)`` would create a texture from the bottom-left quadrant of the original texture.
+    
+    This method can be used for sprite sheets / texture atlasses.
+
+.. attribute:: Texture.filtering_mode
+
+    The filtering mode that is used for scaling the texture. Can be one of the constants listed under `Texture Filtering Modes`_ (:data:`FILTERING_LINEAR` by default).
+
+.. attribute:: Texture.size
+
+    The size of the texture in pixels. Note that this does not take the screen's scale factor into account.
+
+Touch
+^^^^^
+
+.. class:: Touch(x, y, prev_x, prev_y, touch_id)
+   
+    Instances of this class are passed to the :meth:`Scene.touch_began`, :meth:`Scene.touch_moved` and :meth:`Scene.touch_ended` methods. :class:`Scene` objects also have a `touches` attribute (a dictionary
+   that maps `touch_id` to :class:`Touch` objects).
+
+.. attribute:: Touch.location
+
+    The current location of the touch as a :class:`Point` object.
+
+.. attribute:: Touch.prev_location
+
+    The previous location of the touch (before it moved) as a :class:`Point` object.
+
+
+Geometry Types
+--------------
+
+Vector2
+^^^^^^^
+
+.. class:: Vector2(x, y)
+
+    The :class:`Vector2` class is the base class for :class:`Point` and :class:`Size`.
+    
+    Vectors (and subsequently points and sizes) support the addition (`+`), subtraction (`-`), multiplication (`*`) and division (`/`) operators. Addition and subtraction are supported for two vectors. Multiplication and division can also be applied to a vector and a scalar (number).
+    
+    Passing a vector to the built-in :func:`abs` function calculates the length of a vector. This can be particularly useful in combination with subtraction, making it very easy to calculate the distance between two points, e.g. ``abs(p2 - p1)``.
+    
+    It is also possible to determine whether a point lies within a :class:`Rect`, using the `in` operator.
+    
+    In most ways, :class:`Vector2` behaves like a sequence, similar to a 2-tuple. For example, you can alternatively access its `x` component using subscript notation (``v[0]``). Vectors also support iteration, argument unpacking, etc.
+    
+    Whenever a :class:`Vector2`, :class:`Point` or :class:`Size` object is used as an attribute in the :mod:`scene` module, you can alternatively provide any sequence of 4 numbers (e.g. a list or tuple).
+
+.. attr:: Vector2.x
+
+    The x component of the vector.
+
+.. attr:: Vector2.x
+
+    The y component of the vector.
+
+Point
+^^^^^
+
+.. class:: Point(x, y)
+
+    Subclass of :class:`Vector2`, used to represent positions. This class doesn't provide any additional methods or attributes.
+
+Size
+^^^^
+
+.. class:: Size(w, h)
+
+    Subclass of :class:`Vector2`, used to represent sizes. The only difference compared to :class:`Vector2` is that the x and y components can alternatively be accessed using :attr:`Size.w` (width), and :attr:`Size.h` (height).
+
+Rect
+^^^^
+
+.. class:: Rect(x, y, w, h)
+
+    The :class:`Rect` class is used for bounding boxes and other rectangle values, e.g. the :attr:`Node.frame` attribute. A rectangle is represented as (x, y, w[idth], h[eight]), with (x, y) being its lower-left corner.
+    
+    In most ways, :class:`Rect` behaves like a sequence, similar to a 4-tuple. For example, you can alternatively access its `x` component using subscript notation (``r[0]``). Rectangles also support iteration, argument unpacking, etc.
+    
+    Whenever a :class:`Rect` object is used as an attribute in the :mod:`scene` module, you can alternatively provide any sequence of 4 numbers (e.g. a list or tuple).
+    
+
+.. attribute:: Rect.x
+
+    The x component of the rectangle's lower-left corner.
+
+.. attribute:: Rect.y
+
+    The y component of the rectangle's lower-left corner.
+
+.. attribute:: Rect.w
+.. attribute:: Rect.width
+
+    The width of the rectangle.
+
+.. attribute:: Rect.h
+.. attribute:: Rect.height
+
+    The height of the rectangle.
+
+.. attribute:: Rect.origin
+
+    Equivalent to ``Point(rect.x, rect.y)``
+
+.. attribute:: Rect.size
+
+    Equivalent to ``Size(rect.w, rect.h)``
+
+.. attribute:: Rect.min_x
+
+    Equivalent to ``min(rect.x, rect.x + rect.w)`` (the x component of the left edge)
+
+.. attribute:: Rect.max_x
+
+    Equivalent to ``max(rect.x, rect.x + rect.w)`` (the x component of the right edge)
+
+.. attribute:: Rect.min_y
+
+    Equivalent to ``min(rect.y, rect.y + rect.h)`` (the y component of the bottom edge)
+
+.. attribute:: Rect.max_y
+
+    Equivalent to ``max(rect.y, rect.y + rect.h)`` (the y component of the top edge)
+
+.. method:: Rect.center([p])
+
+    When called without arguments, return the center of the rectangle. When a :class:`Point` is passed as an argument, the rectangle's x and y values are adjusted, so that the new center of the rectangle is `p`.
+
+.. method:: Rect.contains_point(p)
+
+    Return `True` if the given point lies within the bounds of the rectangle, `False` otherwise.
+
+.. method:: Rect.contains_rect(other_rect)
+
+    Return `True` if the given rectangle lies entirely within the bounds of this rectangle, `False` otherwise.
+
+.. method:: Rect.intersects(other_rect)
+    
+    Return `True` if this rectangle intersects with the other rectangle, `False` otherwise.
+
+.. method:: Rect.intersection(other_rect)
+
+    Return a :class:`Rect` that corresponds to the intersection of this rectangle with the other one.
+
+.. method:: Rect.union(other_rect)
+    
+    Return the smallest :class:`Rect` that encloses both rectangles.
+
+.. method:: Rect.translate(x, y)
+
+    Equivalent to ``Rect(r.x + x, r.y + y, r.w, r.h)``
+
+.. method:: Rect.inset(top, left[, bottom, right])
+
+    Return a rectangle that is adjusted by the given edge insets. `bottom`/`right` are optional and default to the same value as `top`/`left`.
+
+Functions
+---------
+
+.. function:: gravity()
+
+    Return the current gravity vector (x, y, z) -- each component value will be between 0.0 and 1.0. This can be used to determine the current orientation of the device, typically for motion-controlled games.
+
+.. function:: get_screen_size()
+
+    Return the screen size (in points) as a :class:`Size` object. Note that the value is orientation-dependent -- you may want to use ``min(get_screen_size())`` to get the smallest dimension in any orientation.
+
+.. function:: get_screen_scale()
+
+    Return the scale factor of the current device's screen. For retina screens this will usually be 2.0 or 3.0, and 1.0 for non-retina screens.
+
+.. function:: get_image_path(name)
+
+    Return the absolute path of the file that corresponds to a built-in image name.
+
+.. function:: run(scene, orientation=DEFAULT_ORIENTATION, frame_interval=1, anti_alias=False, show_fps=False, multi_touch=True)
+
+    Runs the given :class:`Scene` object.
+    By default, the scene runs in the current device orientation, set the parameter
+    to `PORTRAIT` or `LANDSCAPE` to force a specific orientation (and to disallow auto-rotation).
+   
+    By default, the scene's :meth:`update` method is called 60 times per second.
+    Set the `frame_interval` parameter to 2 for 30fps, 3 for 20, etc.
+    
+.. function:: get_controllers()
+
+    Return the current state of all connected MFi game controllers as a list of dicts (see also `Game Controllers`_).
+
+Constants
+---------
+
+Orientations
+^^^^^^^^^^^^
+
+The following constants are used for the `orientation` parameter of the :func:`run` function.
+
+.. data:: DEFAULT_ORIENTATION
+
+    Start the scene in the current device orientation, allow auto-rotation.
+
+.. data:: PORTRAIT
+
+    Force portrait orientation.
+
+.. data:: LANDSCAPE
+
+    Force landscape orientation.
+
+Blend Modes
+^^^^^^^^^^^
+
+.. data:: BLEND_NORMAL
+
+    The source and destination colors are blended by multiplying the source alpha value.
+
+.. data:: BLEND_ADD
+
+    The source and destination colors are added together.
+
+.. data:: BLEND_MULTIPLY
+
+    The source color is multiplied by the destination color.
+
+
+Texture Filtering Modes
+-----------------------
+
+The following constants can be used for the :attr:`Texture.filtering_mode` attribute.
+
+.. data:: FILTERING_LINEAR
+
+    Linear interpolation, the default filtering mode
+
+.. data:: FILTERING_NEAREST
+
+    Nearest-neighbor interpolation -- this is the recommended mode for pixel art because it results in sharp edges when scaling up low-resolution artwork.
+
+
+Timing Modes
+------------
+
+The following constants can be used for the :attr:`timing_mode` attribute of :class:`Action` objects to determine their interpolation function.
+
+.. data:: TIMING_LINEAR
+
+    Simple linear interpolation (the default).
+
+.. data:: TIMING_EASE_IN
+    
+    Ease-in interpolation
+
+.. data:: TIMING_EASE_IN_2
+
+    Alternative ease-in interpolation (quadratic)
+
+.. data:: TIMING_EASE_OUT
+
+    Ease-out interpolation
+
+.. data:: TIMING_EASE_OUT_2
+
+    Alternative ease-out interpolation (quadratic)
+
+.. data:: TIMING_EASE_IN_OUT
+
+    Ease-in-ease-out interpolation.
+
+.. data:: TIMING_SINODIAL
+
+    Similar to :data:`TIMING_EASE_IN_OUT`, but with slightly less pronounced easing phases.
+
+.. data:: TIMING_ELASTIC_IN
+
+    "Rubberband" effect at the start of the animation.
+
+.. data:: TIMING_ELASTIC_OUT
+
+   "Rubberband" effect at the end of the animation.
+
+.. data:: TIMING_ELASTIC_IN_OUT
+
+    "Rubberband" effect at both ends of the animation.
+
+.. data:: TIMING_BOUNCE_IN
+
+    "Bouncing" effect at the start of the animation.
+
+.. data:: TIMING_BOUNCE_OUT
+
+    "Bouncing" effect at the end of the animation.
+
+.. data:: TIMING_BOUNCE_IN_OUT
+
+    "Bouncing" effect at both ends of the animation.
+
+.. data:: TIMING_EASE_BACK_IN
+
+    Overshooting animation, eased at the start.
+
+.. data:: TIMING_EASE_BACK_OUT
+    
+    Overshooting animation, eased at the end.
+
+.. data:: TIMING_EASE_BACK_IN_OUT
+
+    Overshooting animation, eased at the start and end.

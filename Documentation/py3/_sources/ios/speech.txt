@@ -1,0 +1,94 @@
+
+:mod:`speech` --- Text-to-Speech on iOS
+======================================================
+
+.. module:: speech
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`speech` module provides speech synthesis and recogntion functionality on iOS.
+
+.. note::
+    Speech recognition requires at least iOS 10. Because speech data may be sent to Apple servers for processing, a system-provided privacy alert is automatically shown when you call the :func:`recognize` function for the first time.
+
+Examples
+--------
+
+Speaking text in different languages::
+
+    import speech
+    import time
+    
+    def finish_speaking():
+        # Block until speech synthesis has finished
+        while speech.is_speaking():
+            time.sleep(0.1)
+    
+    # US English:
+    speech.say('Hello World', 'en_US')
+    finish_speaking()
+    # Spanish:
+    speech.say('Hola mundo', 'es_ES')
+    finish_speaking()
+    # German:
+    speech.say('Hallo Welt', 'de_DE')
+    finish_speaking()
+
+Recognizing spoken text recorded from the microphone (using :class:`sound.Recorder`)::
+    
+    import speech
+    import sound
+    import dialogs
+    
+    # Record an audio file using sound.Recorder:
+    recorder = sound.Recorder('speech.m4a')
+    recorder.record()
+    # Continue recording until the 'Finish' button is tapped:
+    dialogs.alert('Recording...', '', 'Finish', hide_cancel_button=True)
+    recorder.stop()
+    try:
+        result = speech.recognize('speech.m4a')
+        print('=== Details ===')
+        print(result)
+        print('=== Transcription ===')
+        print(result[0][0])
+    except RuntimeError as e:
+        print('Speech recognition failed: %s' % (e,))
+
+Functions
+---------
+
+.. function:: get_synthesis_languages()
+
+    Return a list of all language/locale identifiers that are available for speech synthesis. This is useful to determine valid `language` parameters for the :func:`say` function.
+    
+.. function:: get_recognition_languages()
+
+    Return a list of all language/locale identifiers that are available for speech recognition. This is useful to determine valid `language` parameters for the :func:`recognize` function.
+
+.. function:: say(text, [language, rate])
+
+   Speak the given text with one of the system's text-to-speech voices. The language is given as a BCP-47 language and locale code, e.g. 'en-US'. If no language is given, the system's default is used.
+   
+   The ``rate`` parameter specifies how fast the text is spoken. The value is between 0.0 (slowest) and 1.0 (fastest). The default is 0.5.
+
+.. function:: stop()
+   
+   Stop any speech synthesis.
+
+.. function:: is_speaking()
+
+    Return `True` if the synthesizer is currently speaking, `False` otherwise.
+    
+.. function:: recognize(file_path, [language])
+
+    Transcribe spoken text in the given audio file. The audio file should not be longer than approximately one minute. You can use the :class:`sound.Recorder` class to record an audio file from the microphone.
+    
+    The `language` parameter is optional, and should be a valid locale identifier (e.g. ``'de-DE`` or ``en-US``) -- the current system language is used by default.
+    
+    The return value is a list of possible transcriptions, ordered by likelihood (confidence).
+    
+    Each transcription in the result list is a tuple containing two elements: 1. The full text as a unicode string, 2. Detailed information about the individual segments (e.g. timestamps, confidence levels etc.) as a list of dictionaries.
+    
+    This function raises a :class:`RuntimeError` if speech recognition fails. If the `language` parameter is invalid or not supported, a :class:`ValueError` is raised instead, or an :class:`IOError` if the audio file cannot be read.
+    

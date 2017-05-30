@@ -124,16 +124,16 @@
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
 <p>As a simple example for reading information in the address book, let&#8217;s start with a script that prints out all people that have text in the &#8216;Notes&#8217; field:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">contacts</span>
-<span class="k">print</span> <span class="s">&#39;Address Book Notes&#39;</span>
-<span class="k">print</span> <span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;Address Book Notes&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
 <span class="n">people</span> <span class="o">=</span> <span class="n">contacts</span><span class="o">.</span><span class="n">get_all_people</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>
   <span class="n">note</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">note</span>
   <span class="k">if</span> <span class="n">note</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">full_name</span>
-    <span class="k">print</span> <span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">40</span>
-    <span class="k">print</span> <span class="n">note</span>
-    <span class="k">print</span> <span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">full_name</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The script uses the <a class="reference internal" href="#contacts.get_all_people" title="contacts.get_all_people"><tt class="xref py py-func docutils literal"><span class="pre">get_all_people()</span></tt></a> function to retrieve a list of all <a class="reference internal" href="#contacts.Person" title="contacts.Person"><tt class="xref py py-class docutils literal"><span class="pre">Person</span></tt></a> objects in the address book, iterates over the list, and prints the name and note for each person that has a (non-empty) <a class="reference internal" href="#contacts.Person.note" title="contacts.Person.note"><tt class="xref py py-attr docutils literal"><span class="pre">Person.note</span></tt></a> field.</p>
@@ -155,13 +155,13 @@
     <span class="n">days_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span> <span class="s">&#39;days&#39;</span><span class="p">:</span> <span class="n">days</span><span class="p">})</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">days_list</span><span class="p">:</span>
-  <span class="k">print</span> <span class="s">&#39;You don</span><span class="se">\&#39;</span><span class="s">t have any birthdays in your address book.&#39;</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">&#39;You don</span><span class="se">\&#39;</span><span class="s">t have any birthdays in your address book.&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
   <span class="n">days_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="s">&#39;days&#39;</span><span class="p">))</span>
-  <span class="k">print</span> <span class="s">&#39;Upcoming Birthdays&#39;</span>
-  <span class="k">print</span> <span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">&#39;Upcoming Birthdays&#39;</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
   <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">days_list</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&#39;* </span><span class="si">%s</span><span class="s"> in </span><span class="si">%i</span><span class="s"> days&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;days&#39;</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;* </span><span class="si">%s</span><span class="s"> in </span><span class="si">%i</span><span class="s"> days&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;days&#39;</span><span class="p">]))</span>
 </pre></div>
 </div>
 <p>The note and birthday fields are very easy to use because there is only one for each person. Many other fields can have multiple values, e.g. a person can have more than one email address. These fields are represented as lists of tuples, with each tuple containing a label (e.g. &#8216;home&#8217;, &#8216;work&#8217;...), and the actual value. An example for the <a class="reference internal" href="#contacts.Person.email" title="contacts.Person.email"><tt class="xref py py-attr docutils literal"><span class="pre">Person.email</span></tt></a> attribute would be <tt class="docutils literal"><span class="pre">[('home',</span> <span class="pre">'me&#64;example.com'),</span> <span class="pre">('work',</span> <span class="pre">'work&#64;example.com')]</span></tt>.</p>
@@ -181,9 +181,9 @@
       <span class="n">changed</span> <span class="o">=</span> <span class="bp">True</span>
   <span class="k">if</span> <span class="n">changed</span><span class="p">:</span>
     <span class="n">p</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addresses</span>
-    <span class="k">print</span> <span class="s">&#39;Updated country of&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">full_name</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Updated country of&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">full_name</span><span class="p">)</span>
 <span class="n">contacts</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<span class="k">print</span> <span class="s">&#39;Done&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;Done&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Note that we&#8217;ve used constants for the keys in the address dictionary &#8211; you can find a list of these keys at the end of this document. After making any changes to the address book, you have to call the <a class="reference internal" href="#contacts.save" title="contacts.save"><tt class="xref py py-func docutils literal"><span class="pre">save()</span></tt></a> function to make them persistent.</p>
@@ -614,12 +614,12 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

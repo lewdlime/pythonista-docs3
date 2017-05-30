@@ -134,6 +134,7 @@
 <span class="kn">import</span> <span class="nn">sound</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="k">class</span> <span class="nc">HeartRateManager</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -142,29 +143,29 @@
     <span class="k">def</span> <span class="nf">did_discover_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="s">&#39;Polar&#39;</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="n">p</span>
-            <span class="k">print</span> <span class="s">&#39;Connecting to heart rate monitor...&#39;</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Connecting to heart rate monitor...&#39;</span><span class="p">)</span>
             <span class="n">cb</span><span class="o">.</span><span class="n">connect_peripheral</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">did_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;Connected:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
-        <span class="k">print</span> <span class="s">&#39;Discovering services...&#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Connected:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Discovering services...&#39;</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">discover_services</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">did_fail_to_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;Failed to connect: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Failed to connect: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,))</span>
 
     <span class="k">def</span> <span class="nf">did_disconnect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;Disconnected, error: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Disconnected, error: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">did_discover_services</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">services</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span> <span class="o">==</span> <span class="s">&#39;180D&#39;</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;Discovered heart rate service, discovering characteristitcs...&#39;</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;Discovered heart rate service, discovering characteristitcs...&#39;</span><span class="p">)</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">discover_characteristics</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">did_discover_characteristics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;Did discover characteristics...&#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Did discover characteristics...&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">characteristics</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">uuid</span> <span class="o">==</span> <span class="s">&#39;2A37&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="o">.</span><span class="n">set_notify_value</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
@@ -172,11 +173,11 @@
     <span class="k">def</span> <span class="nf">did_update_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
         <span class="n">heart_rate</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;&lt;B&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">heart_rate</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&#39;Heart rate: </span><span class="si">%i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">heart_rate</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Heart rate: </span><span class="si">%i</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">heart_rate</span><span class="p">)</span>
 
 <span class="n">mngr</span> <span class="o">=</span> <span class="n">HeartRateManager</span><span class="p">()</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">set_central_delegate</span><span class="p">(</span><span class="n">mngr</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&#39;Scanning for peripherals...&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;Scanning for peripherals...&#39;</span><span class="p">)</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">scan_for_peripherals</span><span class="p">()</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -195,61 +196,61 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">did_discover_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;+++ Discovered peripheral: </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;+++ Discovered peripheral: </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">uuid</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="s">&#39;Sensor Tag&#39;</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="p">:</span>
             <span class="c"># Keep a reference to the peripheral, so it doesn&#39;t get garbage-collected:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="n">p</span>
             <span class="n">cb</span><span class="o">.</span><span class="n">connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">did_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;*** Connected: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
-        <span class="k">print</span> <span class="s">&#39;Discovering services...&#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;*** Connected: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Discovering services...&#39;</span><span class="p">)</span>
         <span class="n">p</span><span class="o">.</span><span class="n">discover_services</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">did_fail_to_connect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;Failed to connect&#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Failed to connect&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">did_disconnect_peripheral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;Disconnected, error: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Disconnected, error: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error</span><span class="p">,))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">did_discover_services</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">services</span><span class="p">:</span>
             <span class="k">if</span> <span class="s">&#39;AA00&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;+++ IR Thermometer found&#39;</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;+++ IR Thermometer found&#39;</span><span class="p">)</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">discover_characteristics</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
             <span class="k">elif</span> <span class="s">&#39;FFE0&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;+++ Simple Key Service found&#39;</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&#39;+++ Simple Key Service found&#39;</span><span class="p">)</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">discover_characteristics</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">did_discover_characteristics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
         <span class="k">if</span> <span class="s">&#39;AA00&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">characteristics</span><span class="p">:</span>
                 <span class="k">if</span> <span class="s">&#39;AA02&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="s">&#39;Enabling temperature sensor...&#39;</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Enabling temperature sensor...&#39;</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="o">.</span><span class="n">write_characteristic_value</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">chr</span><span class="p">(</span><span class="mh">0x01</span><span class="p">),</span> <span class="bp">True</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="s">&#39;AA01&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
                     <span class="c"># Enable notification for the temperature sensor:</span>
-                    <span class="k">print</span> <span class="s">&#39;Enabling temperature sensor notifications...&#39;</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Enabling temperature sensor notifications...&#39;</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="o">.</span><span class="n">set_notify_value</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
         <span class="k">elif</span> <span class="s">&#39;FFE0&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&#39;Enabling notifications for Simple Key Service...&#39;</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Enabling notifications for Simple Key Service...&#39;</span><span class="p">)</span>
             <span class="n">key_characteristic</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">characteristics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">peripheral</span><span class="o">.</span><span class="n">set_notify_value</span><span class="p">(</span><span class="n">key_characteristic</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">did_write_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
         <span class="c"># The temperature sensor has been activated (see did_discover_characteristic)</span>
-        <span class="k">print</span> <span class="s">&#39;Did enable temperature sensor&#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Did enable temperature sensor&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">did_update_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
         <span class="k">if</span> <span class="s">&#39;FFE1&#39;</span> <span class="o">==</span> <span class="n">c</span><span class="o">.</span><span class="n">uuid</span><span class="p">:</span>
             <span class="c"># A button on the SensorTag was pressed (or released):</span>
-            <span class="k">print</span> <span class="s">&#39;Button value: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;hex&#39;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Button value: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;hex&#39;</span><span class="p">))</span>
             <span class="n">sound</span><span class="o">.</span><span class="n">play_effect</span><span class="p">(</span><span class="s">&#39;Beep&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c"># The temperature sensor has sent an updated value:</span>
             <span class="n">tobj</span><span class="p">,</span> <span class="n">mtmpamb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_temperature</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">print</span> <span class="s">&#39;Object temperature: </span><span class="si">%f</span><span class="s"> -- Ambient: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tobj</span><span class="p">,</span> <span class="n">mtmpamb</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Object temperature: </span><span class="si">%f</span><span class="s"> -- Ambient: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tobj</span><span class="p">,</span> <span class="n">mtmpamb</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">convert_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_data</span><span class="p">):</span>
         <span class="c"># This will convert the raw sensor data to temperature values in Celsius.</span>
@@ -271,7 +272,7 @@
         <span class="k">return</span> <span class="n">tobj</span><span class="p">,</span> <span class="n">mtmpamb</span>
 
 <span class="n">delegate</span> <span class="o">=</span> <span class="n">MyCentralManagerDelegate</span><span class="p">()</span>
-<span class="k">print</span> <span class="s">&#39;Scanning for peripherals...&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;Scanning for peripherals...&#39;</span><span class="p">)</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">set_central_delegate</span><span class="p">(</span><span class="n">delegate</span><span class="p">)</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">scan_for_peripherals</span><span class="p">()</span>
 
@@ -613,12 +614,12 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

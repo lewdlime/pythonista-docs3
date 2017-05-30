@@ -1,0 +1,20 @@
+
+:mod:`pyminizip` --- Create password-protected Zip files
+========================================================
+
+.. module:: pyminizip
+
+The :mod:`pyminizip` module provides simple support for creating password-protected Zip archives. For other things you might want to do with Zip files (e.g. extraction), you can use the :mod:`zipfile` module from the standard library.
+
+Functions
+---------
+
+.. function:: compress(src_file, dest_file, password, level)
+   
+    Create a password-protected zip archive from a single file. The `level` parameter determines the compression level, 0 is the default, other possible values are 1 (fastest) to 9 (most compression).
+
+.. function:: compress_multiple(src_files, dest_file, password, level[, progress])
+
+    Create a password-protected zip archive from a list of file paths. The `level` parameter determines the compression level, 0 is the default, other possible values are 1 (fastest) to 9 (most compression).
+    
+    The optional `progress` parameter is a callback function with one argument that will be called during compression with the number of files that have been compressed so far.

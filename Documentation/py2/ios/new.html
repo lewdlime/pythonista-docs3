@@ -116,6 +116,20 @@
   <div class="section" id="what-s-new-in-pythonista">
 <h1>What&#8217;s New in Pythonista<a class="headerlink" href="#what-s-new-in-pythonista" title="Permalink to this headline">¶</a></h1>
 <p>This page contains detailed information about changes in new versions of the Pythonista app.</p>
+<div class="section" id="version-3-1">
+<h2>Version 3.1<a class="headerlink" href="#version-3-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The console contains a new object inspector panel that allows you to view a list of all global variables and their attributes/members. Tap the (i) button to show or hide it.</li>
+<li>The new Pythonista Today widget allows you to run a script in Notification Center (or on the home/lock screen). You can find more information in the <a class="reference internal" href="appex.html#module-appex" title="appex: Utilities for Pythonista's App Extensions"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module documentation, and various examples of widget scripts are available in the updated <em>Examples</em> folder.</li>
+<li>The Python 2 mode now uses Python 2.7.12 instead of 2.7.5.</li>
+<li>When using the share sheet extension with a file input (e.g. sharing a Mail attachment), an additional &#8220;Import File&#8221; option is shown for non-Python files.</li>
+<li>The <a class="reference internal" href="speech.html#module-speech" title="speech"><tt class="xref py py-mod docutils literal"><span class="pre">speech</span></tt></a> module contains new functions for speech recognition, in addition to speech synthesis (iOS 10 only).</li>
+<li>The <a class="reference internal" href="sound.html#module-sound" title="sound: Sound effects and music playback"><tt class="xref py py-mod docutils literal"><span class="pre">sound</span></tt></a> module contains a new <cite>Recorder</cite> class for recording audio files from the microphone. <cite>sound.play_effect</cite> and <cite>sound.Player</cite> have also been improved to support stereo panning.</li>
+<li>The &#8220;Analyze (pyflakes)&#8221; and &#8220;Check Style&#8221; commands are now accessible from the &#8220;wrench&#8221; menu instead of by tapping and holding the run button.</li>
+<li>Tapping and holding the run button offers a new &#8220;Run Unit Tests&#8221; option. This discovers and runs tests in the current script using <tt class="xref py py-mod docutils literal"><span class="pre">pytest</span></tt> and shows test results directly in the editor.</li>
+<li>&#8220;Wrench&#8221; menu actions have a new &#8220;Reset Environment&#8221; option. When this is enabled, running the action behaves like running the script from the editor, i.e. global variables, imported modules etc. are cleared.</li>
+</ul>
+</div>
 <div class="section" id="version-3-0">
 <h2>Version 3.0<a class="headerlink" href="#version-3-0" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="highlights">
@@ -124,7 +138,7 @@
 <li>Support for both Python 3.5 and 2.7</li>
 <li>Integrated debugger with support for breakpoints and visual stack frame inspection</li>
 <li>Split-screen support on iPad Air 2 and later</li>
-<li>Today widget for running scripts in Notification Center</li>
+<li>Theme editor for custom UI and syntax highlighting themes</li>
 <li>Integrated doctest support</li>
 <li>Integrated PEP-8 style checker</li>
 <li>Improved code completion with fuzzy matching and user-defined snippets</li>
@@ -136,16 +150,15 @@
 <ul class="simple">
 <li>Pythonista now supports Python 3.5, in addition to 2.7. You can select the default interpreter in the settings. It&#8217;s also possible to override the default interpreter for individual scripts, using a &#8220;shebang&#8221; like <tt class="docutils literal"><span class="pre">#!</span> <span class="pre">python3</span></tt> or <tt class="docutils literal"><span class="pre">#!</span> <span class="pre">python2</span></tt> as the first line of a script. Alternatively, you can tap and hold the run button to test a script in the non-default Python version. To help you with migrating your scripts to Python 3, you can use the &#8220;Python 2 to 3&#8221; tool in the &#8220;wrench&#8221; menu.</li>
 <li>To learn more about the differences between Python 2.7 and 3.x, I recommend the following article (external link): <a class="reference external" href="http://sebastianraschka.com/Articles/2014_python_2_3_key_diff.html">The key differences between Python 2.7.x and Python 3.x with examples</a>.</li>
-<li>If you also have Pythonista 2 installed, you can access your existing files through the special &#8220;Pythonista 2&#8221; folder in the script library. It is possible to move files from Pythonista 2 to Pythonista 3, but not vice-versa. You can disable the Pythonista 2 folder entirely from the settings.</li>
+<li>If you also have Pythonista 2 installed, you can access your existing files through the special &#8220;Pythonista 2&#8221; folder in the script library. It is possible to move files from Pythonista 2 to Pythonista 3, but not vice-versa.</li>
 <li>The interactive console uses the default interpreter version, but you can switch to the other interpreter by tapping the <tt class="docutils literal"><span class="pre">[2.7]</span></tt> or <tt class="docutils literal"><span class="pre">[3.5]</span></tt> button (depending on the current setting).</li>
 </ul>
 </div>
 <div class="section" id="general">
 <h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>The URL scheme for launching Pythonista has changed to <tt class="docutils literal"><span class="pre">pythonista3://...</span></tt> to avoid undefined behavior in case you have both versions installed on the same device.</li>
+<li>When using the URL scheme to launch Pythonista, you can now use <tt class="docutils literal"><span class="pre">pythonista3://</span></tt> instead of <tt class="docutils literal"><span class="pre">pythonista://</span></tt>. The old scheme is still supported, but its behavior is undefined if both Pythonista 2.x and 3.x are installed.</li>
 <li>On iPad Air 2 or later (including iPad Pro and iPad mini 4), Pythonista now fully supports the system-wide split-screen feature, so you can run another app next to Pythonista. Unfortunately, this also means that the <tt class="docutils literal"><span class="pre">orientations</span></tt> argument for <a class="reference internal" href="ui.html#ui.View.present" title="ui.View.present"><tt class="xref py py-meth docutils literal"><span class="pre">ui.View.present()</span></tt></a> no longer works on devices that support split-screen, i.e. you can&#8217;t lock the orientation of a view to portrait or landscape. If auto-rotation isn&#8217;t disabled via Control Center, the app <em>always</em> auto-rotates. It is currently not possible to change this due to iOS limitations.</li>
-<li>The new Pythonista Today Widget allows you to run Python scripts in Notification Center. You can select the script that should be run in the settings. Please note that the widget script has to be very efficient in terms of memory use because the amount of RAM that widgets get on iOS (before they are terminated) is <em>very</em> limited. The widget only supports Python 3, and only a limited subset of Pythonista&#8217;s modules is available. In particular, the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module and anything to do with dialogs/alerts are unavailable. The <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a> module is available in general (and essential for making widgets), but some UI classes cannot be used because they are too resource-heavy (e.g. <a class="reference internal" href="ui.html#ui.WebView" title="ui.WebView"><tt class="xref py py-class docutils literal"><span class="pre">ui.WebView</span></tt></a>). A widget&#8217;s UI should ideally consist of buttons, labels, and image views only. For showing a UI in the widget, the <a class="reference internal" href="appex.html#module-appex" title="appex: Using the Pythonista Sharing Extension"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module has a new <a class="reference internal" href="appex.html#appex.set_widget_view" title="appex.set_widget_view"><tt class="xref py py-func docutils literal"><span class="pre">appex.set_widget_view()</span></tt></a> function. For very simple needs, you can also print text in the widget (but advanced console output features, e.g. <a class="reference internal" href="console.html#console.set_color" title="console.set_color"><tt class="xref py py-func docutils literal"><span class="pre">console.set_color()</span></tt></a> etc. are not available).</li>
 <li>Script shortcuts can now be added to the home screen from the <em>editor actions</em> (&#8220;wrench&#8221;) menu. This basically works by setting up a website that redirects to a pythonista3:// URL, so the actual shortcut is added from Safari. The <em>Convert to PDF</em> action has moved into the <em>Share</em> menu.</li>
 <li>Improved support for <a class="reference internal" href="../library/doctest.html#module-doctest" title="doctest: Test pieces of code within docstrings."><tt class="xref py py-mod docutils literal"><span class="pre">doctest</span></tt></a> tests &#8211; a new file template allows you to create a doctest file in Markdown format. There&#8217;s more information about this in the template itself. Doctest results are shown as annotations directly in the editor.</li>
 <li>You can now add your own templates to the &#8220;New File&#8221; menu. Simply add files to the <em>Templates</em> folder (in the <em>Modules &amp; Templates</em> group).</li>
@@ -656,12 +669,12 @@ so that it&#8217;s easier to write files without giving an absolute path.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on Jun 01, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

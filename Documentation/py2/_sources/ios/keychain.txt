@@ -1,0 +1,30 @@
+
+:mod:`keychain` --- Secure Password Storage
+======================================================
+
+The :mod:`keychain` module provides simple access to secure password storage.
+
+Please note that the keychain is not shared between apps, so you (fortunately)
+cannot use this to access passwords that are stored in Safari's keychain, for
+example.
+
+.. module:: keychain
+   :synopsis: Persistent storage for passwords and other sensitive information
+.. sectionauthor:: Ole Zorn
+
+
+.. function:: get_password(service, account)
+
+   Get the password for the given service/account that was previously stored in the keychain.
+
+.. function:: set_password(service, account, password)
+
+   Save a password for the given service/account in the keychain.
+
+.. function:: delete_password(service, account)
+   
+   Delete the password for the given service/account from the keychain.
+
+.. function:: reset_keychain()
+
+   Delete all data from the keychain.

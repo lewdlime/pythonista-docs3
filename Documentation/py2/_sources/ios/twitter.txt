@@ -1,0 +1,109 @@
+
+:mod:`twitter` --- iOS Twitter Accounts and API Access
+======================================================
+
+.. module:: twitter
+.. sectionauthor:: Ole Zorn
+
+The :mod:`twitter` module provides access to the system-wide Twitter accounts that you have added in the iOS settings.
+
+.. note::
+    The first time you use any of the functions that access your Twitter accounts, a system-provided permission dialog will be shown. If you deny access, most functions will return empty data. If you change your mind later, you can allow access to your accounts from the Twitter section in the Settings app.
+
+The central function of this module is :func:`request` -- with it, you can access all of Twitter's REST API which is documented in more detail here: `Twitter API documentation <https://dev.twitter.com/overview/documentation>`_.
+
+If you just want to post a tweet or retrieve your timeline/mentions, you can also use one of the convenience functions (:func:`get_home_timeline`, :func:`get_mentions_timeline` or :func:`post_tweet`), which all use :func:`request` under the hood.
+
+All API request functions require authentication via an `account` parameter. You can get an account by calling :func:`get_all_accounts` or :func:`get_account` (the latter allows you to get a specific account by its username).
+
+Quick Start
+-----------
+
+Retrieving your Timeline
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+This example shows how to retrieve the 20 most recent tweets in the timeline of your first Twitter account::
+
+    import twitter
+    all_accounts = twitter.get_all_accounts()
+    if len(all_accounts) >= 1:
+        account = all_accounts[0]
+        tweets = twitter.get_home_timeline(account)
+        for t in tweets:
+            print(t.get('text'))
+            print('=' * 40)
+    else:
+        print('You don\'t have any Twitter accounts (or haven\'t given permission to access them).')
+
+Using Other APIs
+^^^^^^^^^^^^^^^^
+
+The previous example used a convenience function to access an often-used API without having to know its URL -- but you can also access all other Twitter APIs by using the generic :func:`request` function, for example to download and show your profile image::
+
+    import twitter
+    import json
+    import urllib
+    import Image
+    
+    all_accounts = twitter.get_all_accounts()
+    if len(all_accounts) >= 1:
+        account = all_accounts[0]
+        parameters = {'screen_name': account['username']}
+        status, data = twitter.request(account, 'https://api.twitter.com/1.1/users/show.json', 'GET', parameters)
+        if status == 200:
+            user_info = json.loads(data)
+            avatar_url = user_info['profile_image_url']
+            # Get the URL for the original size:
+            avatar_url = avatar_url.replace('_normal', '')
+            filename, headers = urllib.urlretrieve(avatar_url)
+            img = Image.open(filename)
+            img.show()
+        else:
+            print('Could not retrieve profile image (status: %i)' % (status,))
+    else:
+        print('You don\'t have any Twitter accounts (or haven\'t given permission to access them).')
+
+For more information about valid URLs, methods, and parameters, please refer to the `Twitter API documentation <https://dev.twitter.com/overview/documentation>`_.
+
+Functions
+---------
+
+.. function:: get_all_accounts()
+   
+    Return a list of all Twitter accounts. Each account is represented as a dictionary that contains the internal account ID, and your username.
+
+.. function:: get_account(username)
+
+    Return the account with the given username if it exists, `None` otherwise.
+
+.. function:: request(account, url, method='GET', parameters=None)
+
+    Perform a Twitter API request on behalf of the given account. The return value is a tuple of the HTTP status code and the data that was returned (usually in JSON format).
+    
+    See the `Twitter API documentation <https://dev.twitter.com/overview/documentation>`_ for details about possible URLs, methods, and parameters.
+    
+    If you want more control over the networking part, consider using :func:`get_request_headers` instead.
+
+.. function:: get_request_headers(account, url, method='GET', parameters=None)
+
+    Return appropriate authorization headers for performing a Twitter API request. The parameters are the same as for the :func:`request` function, but this function does not actually perform the request. You can use the returned dictionary to authorize a Twitter API request with your favorite HTTP library (e.g. :mod:`requests` or :mod:`urllib`).
+
+.. function:: get_favorites(account, username=None, count=20, parameters=None)
+
+    Return the favorites of the given user. If `username` is `None`, it will return the favorites of the given `account` (i.e. your own).
+
+.. function:: get_home_timeline(account, count=20, parameters=None)
+
+    Return a list of tweets in the timeline of the given account. In case of an error, `None` is returned. Each tweet in the list is represented as a dictionary.
+
+.. function:: get_mentions_timeline(account, count=20, parameters=None)
+
+    Return a list of mentions for the given account. In case of an error, `None` is returned. Each tweet in the list is represented as a dictionary.
+
+.. function:: post_tweet(account, text, parameters=None)
+
+    Post a tweet on behalf of the given account/user. If successful, information about the created tweet is returned as a dictionary. Note that the Twitter API doesn't allow to post the same tweet multiple times.
+
+.. function:: search(account, query, count=20, parameters=None)
+
+    Perform a search for public tweets that contain the query, and return the list of results. Each tweet in the list is represented as a dictionary. In case of an error, `None` is returned.

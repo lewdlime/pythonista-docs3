@@ -121,7 +121,7 @@
 <span class="kn">import</span> <span class="nn">clipboard</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">clipboard</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&#39;No text in clipboard&#39;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;No text in clipboard&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">uppercase</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">uppercase</span> <span class="o">!=</span> <span class="n">text</span><span class="p">:</span>
@@ -130,7 +130,7 @@
         <span class="c">#already uppercase, convert to lowercase</span>
         <span class="n">new_clip</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="n">clipboard</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">new_clip</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">new_clip</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">new_clip</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Functions in the <a class="reference internal" href="#module-clipboard" title="clipboard: Provides copy and paste integration on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">clipboard</span></tt></a> module:</p>
@@ -172,12 +172,12 @@ a float between 0.0 and 1.0.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

@@ -1,0 +1,560 @@
+========================
+What's New in Pythonista
+========================
+
+This page contains detailed information about changes in new versions of the Pythonista app.
+
+Version 2.1
+===========
+
+General
+-------
+
+* Improved support for :mod:`doctest` tests -- a new file template allows you to create a doctest file in Markdown format. There's more information about this in the template itself. Doctest results are shown as annotations directly in the editor.
+
+* The view options for the script library (thumbnails, sort order) are now accesible directly in the library view ("..." button).
+
+* Added a *Sound Effects* setting to disable keyboard clicks etc.
+
+* Some "special" folders (standard library, site-packages) are now grouped under "Modules" in the script library. Note that this doesn't change the location of these folders on disk, so the site-packages folder still appears directly under "Documents" in the "Move Files" dialog.
+
+Editor
+------
+
+* The *Convert Tabs* action is now undoable, and the confirmation dialog has a new option to open the indentation settings.
+
+* Code completions can now be suggested based on fuzzy matching, e.g. typing "rage" also suggests "range()" (fuzzy-matched completions are always shown after precise matches).
+
+* When using an external (Bluetooth) keyboard, code completions can now be selected with the up/down arrow keys.
+
+* A new Cmd+L (or Ctrl+6) keyboard shortcut shows the current file's outline (while editing) -- The up/down arrow keys and return can be used to navigate to a different function without touching the screen.
+
+* When text is selected, pressing the tab key will now indent the selected line(s) instead of replacing the selected text with a tab. Shift-tab can be used to unindent on an external keyboard. On the on-screen keyboard, you can tap and hold the tab key for an unindent option. Indentation options are no longer shown in the copy/paste menu by default, but you can re-enable them in the settings (under "Keyboard & Typing").
+
+* The color picker (in the UI editor and asset picker) now allows entering arbitrary hex values by tapping on the color swatch.
+
+* When running a script with arguments (by tapping and holding the run button), the arguments are now saved for each script individually.
+
+* Line numbers can optionally be shown on iPhone as well (line numbers were previously iPad-only).
+
+* On iPhone, the "show tabs" button is now at the bottom of the screen (or above the keyboard), so that the *editor actions* ("wrench") menu is more easily accessible in the main toolbar.
+
+* The search bar in the editor now uses the same extra keyboard row as the editor itself.
+
+Console
+-------
+
+* Improved console prompt: The text input area now expands automatically for multi-line statements (e.g. function definitions, loops). The code completion behavior is also more consistent between the editor and console now (e.g. the tab key inserts the first suggestion).
+
+* Showing images in the console has been improved substantially. A single tap on an image now opens it in a zoomable full-screen view. The sizing of image containers also matches the aspect ratio of the shown images more closely, especially when the console is in the more compact "docked" mode.
+
+Modules
+-------
+
+:mod:`photos`
+^^^^^^^^^^^^^
+
+* The :mod:`photos` module has been completely revamped, and allows far more advanced access to the iOS photo library, including editable metadata, album creation, and content editing. Please see the :mod:`photos` module docs for details.
+
+:mod:`editor`
+^^^^^^^^^^^^^
+
+* :func:`editor.open_file` now accepts both relative and absolute paths (relative paths are always resolved against ~/Documents though, not the current working directory).
+
+* New :func:`editor.annotate_line` function to annotate lines of code in the editor, similar to the integrated style checker and static analyzer.
+
+* New :func:`editor.apply_ui_theme` and :func:`editor.present_themed` functions for styling a :class:`ui.View` with a theme.
+
+
+:mod:`ui`
+^^^^^^^^^
+
+* Views that are presented in 'panel' style can be closed programmatically now (the :meth:`ui.View.close` method was previously ignored for this presentation style).
+
+* The :class:`ui.TableView` initializer supports keyword arguments now (same as other :class:`ui.View` subclasses)
+
+* :class:`ui.WebView` can now load non-https pages in the app extension.
+
+* :class:`ui.WebView.load_url` now treats absolute file paths like file URLs (so you don't have to construct a ``file://`` URL for loading local files).
+
+* :func:`copy.copy` now works correctly for geometry types (:class:`ui.Point`, :class:`ui.Size`, :class:`ui.Rect`).
+
+:mod:`scene`
+^^^^^^^^^^^^
+
+* Added support for MFi game controllers (see the module docs for details).
+
+* ``anchor_point`` can now be passed as a keyword argument to the :class:`SpriteNode` initializer.
+
+* :class:`scene.Texture` has a new :meth:`scene.Texture.subtexture` method that can be used for sprite sheets etc.
+
+* :class:`LabelNode` rendering quality is improved.
+
+* Initializing :class:`scene.ShapeNode` with ``path=None`` no longer throws an exception.
+
+* Initializing :class:`scene.SpriteNode` with ``texture=None`` no longer throws an exception.
+
+* :func:`copy.copy` now works correctly for geometry types (:class:`scene.Point`, :class:`scene.Size`, :class:`scene.Rect`).
+
+Misc
+----
+
+* The behavior of :func:`sys.exit` has changed: Registered :mod:`atexit` handlers are called, but nothing else happens (previous versions printed the exit code to the console). If you *really* want to exit the app, use :func:`os._exit`.
+
+* The editor no longer strips trailing blank lines when saving.
+
+* The console has (limited) support for the ``\b`` and ``\r`` control characters now. The most common use case would be simple progress displays that overwrite the last line that was printed. Note that (unlike in a real terminal) these control characters only have an effect within a single string. Printing should also be a bit faster, and a couple of issues with :func:`console.set_color` and :func:`console.write_link` are fixed.
+
+* It's now possible to open folders in the library using the URL scheme. The syntax is the same as for opening files (pythonista3://some/path?action=open).
+
+
+Version 2.0
+===========
+
+General
+-------
+
+* Pythonista is now compatible with all iOS screen sizes -- from iPhone 4 to iPad Pro, and everything in-between.
+
+* For larger projects, you can now use multiple editor tabs to switch between related files more quickly.
+
+* The Pythonista app extension allows you to run Python scripts directly within other apps, using the standard iOS share sheet. Depending on the context, you can use the new `appex` module to access data that was passed to the share sheet, e.g. images in the Photos app, URLs in Safari, text in Notes, etc. The app extension also provides an interactive console and a basic code editor for small tweaks.
+
+* New and refined color themes are available in the settings; selecting a different theme now changes the entire app's UI instead of just syntax highlighting.
+
+* The file browser and editor have much better support for non-Python files. HTML, CSS, JavaScript, and Markdown files are syntax-highlighted in the editor, Zip archives can be extracted, and a QuickLook preview is available for most common file types, e.g. images, PDFs, and audio/video.
+
+* Additional templates are available in the improved "new file" menu. You can also import photos from your camera roll as image files there.
+
+* The console's interactive prompt is now syntax-highlighted, and provides better support for Bluetooth keyboards (you can use the up/down keys to navigate the command history).
+
+* You can now read the (pure Python) source code of the included standard library (and third-party modules) directly in the app. Simply enable the "Show Standard Library" setting if you're interested in looking "under the hood".
+
+* The UI editor contains a much improved inspector panel, undo/redo support, the possibility to set custom attributes, and a lot of other refinements.
+
+Code Editor
+-----------
+
+* The new traceback navigator allows you to get a lot more information about errors in your programs. When an exception occurs, a brief summary is shown at the top of the screen, and the line where the exception occurred is highlighted in the editor. By tapping on the exception summary, you can navigate the entire traceback, even if the source of the exception is in a different file. You can also tap the ``<...`` marker in the editor to inspect variable values in the selected stack frame.
+
+* The editor actions ("wrench") menu has been improved significantly. You can now assign custom icons and colors to your script shortcuts. It's also possible to invoke the standard iOS share sheet from the actions menu. If you have an iPhone 6s or 6s Plus (with 3D Touch), you can launch shortcuts directly from the homescreen by pressing the Pythonista icon.
+
+* The improved asset picker (``[+]`` button) contains more free image and sound effect collections that can be used with the :mod:`scene`, :mod:`ui`, and :mod:`sound` modules. The UI for opening the asset picker is also consistent between iPad and iPhone now.
+
+* When the cursor is inside a color string (e.g. '#ff0000' or 'red') or built-in image name, a preview overlay is shown automatically. You can also tap the preview overlay to select a different color or image.
+
+* The new *Highlight All* option in the copy/paste menu allows you to quickly find all occurrences of a word (e.g. variable name), without typing anything in the search bar.
+
+* You can adjust the indentation of a selected block of code more easily with the new ``⇥ Indent`` menu items (in the copy/paste menu).
+
+* iPad only: The extended keyboard has a more compact layout by default. If you prefer a larger keyboard with an additional number row, you can enable this in the settings.
+
+Python / Modules
+----------------
+
+* The completely revamped :mod:`scene` module gives you a lot more possibilities for building 2D games and animations in Pythonista. You can even use custom OpenGL fragment shaders. Lots of new sample code and a tutorial for building a simple game are available in the included *Examples* folder.
+
+* The :mod:`ctypes` module from the standard library is finally available in Pythonista, and the custom :mod:`objc_util` module uses this as the foundation for an Objective-C bridge that makes it possible to call native APIs using familiar Python syntax. A few sample scripts are included in the *Examples* folder.
+
+* You can customize the startup process of the Python interpreter by creating a file named "pythonista_startup.py" in the site-packages folder. When the app is launched, the interpreter will execute this module, so that all variables/functions/classes in the script become available globally. A common use case might be ``from math import *`` (if you want to use the console as a calculator). Note: If Pythonista becomes unusable due to a misbehaving startup script, you can launch the app in a "clean" state by entering ``pythonista://`` in Safari's address field.
+
+
+Version 1.5
+=============
+
+General
+-------
+
+* You can no longer use the "Open in..." menu from other apps to open files in Pythonista. This change was made in order to comply with Apple's app review guidelines.
+
+* Xcode export is currently not available from within the app. I'm working on a way to create Xcode projects from Pythonista scripts on a Mac instead; details will be available on the `Pythonista website <http://omz-software.com/pythonista>`_ soon.
+
+* Smarter code completion -- in situations that the old completion system couldn't handle, Pythonista is now using the `jedi <http://jedi.jedidjah.ch>`_ library. This applies to things like instance members, where the type of the object can be inferred. The extended code completion can be somewhat slow, depending on your device generation and the size of modules you're working with. It should get faster over time, as caches are built, and the old completion system continues to work while you're waiting for jedi results, but in case you find this impacting the overall performance of the app and your scripts, you can disable extended completion separately in the settings.
+
+* The documentation is now shown in the same panel as the console (this also applies to the built-in web browser used by the :mod:`webbrowser` module).
+
+* The keyboard shortcut for switching between editor and console is now Cmd+J instead of Cmd+<Space> (the previous shortcut conflicted with switching the keyboard language).
+
+* The integrated documentation has a new look.
+
+* User-created modules are now reloaded automatically when running a script.
+
+* New `site-packages` folder that is included in the default ``sys.path`` (this is a good location for shared modules that you want to import in scripts across different folders). Please note that the aforementioned automatic reloading doesn't apply to modules in this folder (in order to improve performance).
+
+Python / Modules
+----------------
+
+* Integrated `numpy <../numpy/reference/index.html>`_ and `matplotlib <../matplotlib/index.html>`_.
+
+* New :mod:`ui` module for creating native user interfaces on iOS, including an integrated UI editor.
+
+* New :mod:`motion` module for accessing the device's motion sensors (accelerometer, gyroscope, magnetometer).
+
+* The :mod:`notification` module has a new :meth:`notification.set_badge` method.
+
+* Various improvements in the :mod:`photos` module, especially the :func:`photos.pick_image` function (new keyword arguments for multiple selection, including metadata, and returning raw data instead of decoded images)
+
+* Updated various modules to the latest PyPI versions (:mod:`bottle`: 0.11.4 → 0.12.5, :mod:`bs4`: 4.1.3 → 4.3.2, :mod:`feedparser`: 5.1.2 → 5.1.3, :mod:`html5lib`: 0.95-dev → 0.999, :mod:`markdown2`: 2.1.0 → 2.2.1, :mod:`paramiko`: 1.7.7.1 → 1.13.0, :mod:`pygments`: 1.5 → 1.6, :mod:`pyparsing`: 1.5.7 → 2.0.1, :mod:`requests`: 1.2.2 → 2.2.1)
+
+Bug Fixes
+---------
+
+* Fixed incorrect behavior of up/down arrow keys (on hardware keyboards) after changing the selection via tap.
+
+* Fixed a bug that caused indentation errors to be silently ignored (the script failed to run, but no error message was shown).
+
+* Fixed a potential crash with photos.get_metadata on Chinese iPhones.
+
+* Fixed a potential crash when the recursion limit was exceeded.
+
+* The :mod:`contacts` module can now retrieve the birthday of a person if the year isn't set (the year component will be in the distant past in this case); this previously raised an internal exception.
+
+Version 1.4
+=============
+
+General
+-------
+
+* Complete UI overhaul for iOS 7.
+
+* The interpreter is now based on Python 2.7.5.
+
+* There's a new setting to use spaces ("soft tabs") instead of tab characters for indentation. The new "Convert Indentation..." action can be used to change the indentation of an existing script to the current setting.
+
+* The action menu is now directly editable, without having to open the settings. It is also  possible to add scripts in folders as actions, and actions can have custom command-line arguments.
+
+* Non-Python files are now visible in the script library. Plain text files can be edited, for other files, a QuickLook preview is shown.
+
+* All scripts are now run in the same interpreter that is also used for the interactive prompt. This makes the console a lot more useful because you can now define functions, classes, etc. in a script and experiment with them directly, without having to use :func:`execfile`. It also makes starting scripts a lot faster in most cases because imports are cached. By default, all global variables are cleared before running a script, but there's a new setting to control that behavior in the "Interpreter Options" section. If you want to completely reset the interpreter, you can do that by tapping and holding the "Clear" button in the console.
+
+* There's a new option to always clear the console before running a script (in the "Interpreter Options" section of the settings).
+
+* Tapping and holding an auto-completion suggestion now shows a help popover (iPad only).
+
+* Improved support for (external) keyboard shortcuts -- Shortcuts now use the Command key instead of Option/Alt, and there's a new shortcut to clear the console output (Command + K).
+
+* Scripts are auto-saved more often.
+
+Bug Fixes
+---------
+
+* Fixed: Using an action URL with the :mod:`notification` module did not work correctly if Pythonista was not already running in the background when the notification was activated.
+
+* Fixed: Certain types of syntax errors (e.g. "'break' outside loop") weren't shown.
+
+* Fixed: Exporting the entire script library also exports subfolders now.
+
+* Fixed: CJK string encodings should work properly now.
+
+* Fixed: After using the :mod:`canvas` module, the console sometimes showed up, even though there was no output.
+
+Python / Modules
+----------------
+
+* New :mod:`contacts` module to access the iOS address book database.
+
+* New :mod:`location` module (access to GPS data and geocoding services)
+
+* New :mod:`speech` module (text-to-speech synthesis).
+
+* Most standard library modules have been updated as part of the transition to Python 2.7.5.
+
+* The :mod:`console` module has a new :func:`console.quicklook` function for previewing many types of files (e.g. PDF and Office documents, but also images and media files).
+
+* The :func:`sound.play_effect` function now supports local files (in addition to the built-in effects). It also has two new optional parameters for volume and pitch, and it's possible to stop individual sound effects with the :func:`sound.stop_effect` function.
+
+* New :func:`webbrowser.add_to_reading_list` function to add URLs to Safari's `Reading List`.
+
+* The standard library is now included as compiled bytecode (.pyc), in addition to the source code. This should improve performance in a lot of cases.
+
+* The :mod:`requests` module has been updated to the latest version.
+
+* There's a new `anti_alias` option in the :func:`scene.run` function (the equivalent setting is gone).
+
+Added Modules from the Standard Library
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* :mod:`compileall`
+* :mod:`compiler`
+* :mod:`imputil`
+* :mod:`MimeWriter`
+* :mod:`mimify`
+* :mod:`modulefinder`
+* :mod:`py_compile`
+* :mod:`sha`
+* :mod:`SimpleXMLRPCServer`
+
+Other New Modules
+^^^^^^^^^^^^^^^^^
+
+* :mod:`evernote`
+* :mod:`xmltodict`
+
+Version 1.3
+===========
+
+General
+-------
+
+* Redesigned library view.
+
+* It's now possible to organize your scripts in folders.
+
+* Triple-quoted strings are now highlighted correctly in the editor.
+
+* Wrapped lines are indented and marked with a triangle symbol in the editor.
+
+* Scripts can now continue to run for up to 10 minutes in the background. This is particularly useful for things like local web servers because it's now possible to access them from Safari. Please note that sound effects will not be played while the app is in the background (but you can use the new :mod:`notification` module for that).
+
+* New sample code: `Image Warp` and `Markdown Conversion`
+
+Python / Modules
+----------------
+
+New Modules
+^^^^^^^^^^^
+
+* The new :mod:`photos` module allows you to access images in your camera roll and manipulate them using the :mod:`PIL` (Python Imaging Library) module.
+
+* The new :mod:`notification` module allows you to schedule notifications that are shown in Notification Center.
+
+* :mod:`markdown2` provides an alternative to the :mod:`markdown` module that was added in 1.2.
+
+* :mod:`paramiko`
+
+Changes in Existing Modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* :mod:`console` module:
+
+   * New :func:`console.write_link` function to create tappable links in the console output area.
+
+* :mod:`scene` module:
+   
+   * New :func:`scene.unload_image` function that can be used to remove dynamically generated images (loaded via :func:`scene.load_pil_image`) from the cache.
+   
+   * Additional parameters in the :func:`scene.image` function allow to draw partial images (e.g. for things like sliding puzzles).
+   
+   * New :func:`image_quad` function to draw quadrangular portions of an image. It is also possible to use this to distort images. See the new `Image Warp` sample script for an example.
+   
+* :mod:`webbrowser` module:
+
+   * It's now possible to use :func:`webbrowser.open` to open ``http`` or ``https`` URLs in Safari instead of the built-in browser. Simply replace ``http://`` with ``safari-http://`` in the URL (``safari-https://`` for ``https`` URLs).
+
+Added Modules from the Standard Library
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Added :mod:`pyexpat` (this also fixes issues with some other modules, like :mod:`plistlib`)
+
+* Added :mod:`xmlrpclib`
+
+Bug Fixes
+---------
+
+* Fixed issues in the :mod:`scene` module with auto-rotation on iOS 6.
+
+Version 1.2
+=============
+
+General / UI
+------------
+
+* Support for the larger screen of the iPhone 5.
+
+* We now have a community forum, `come say hello <http://omz-software.com/pythonista/forums>`_!
+
+* There is a new line spacing setting for the editor.
+
+* iPad: Some keys on the extended keyboard can be used to enter different characters by touching and holding them. These keys are marked with a gray corner. You can also swipe up on such a key to enter the first alternate key (e.g. swipe up on the forward-slash key to insert a backslash).
+
+* You can now run scripts with command-line arguments. Just touch and hold the run button.
+
+* Pythonista now has a URL scheme for opening and running scripts that are in your library. See :ref:`pythonista-urlscheme` for details.
+
+* The prompt history no longer adds the same command multiple times if you repeat it.
+
+* Added a new image collection of test images from the `USC-SIPI Image Database <http://sipi.usc.edu/database>`_.
+
+* New font option for the editor: Adobe Source Code Pro
+
+* The "High Resolution" setting for retina screens is gone (it is now always enabled).
+
+* The color picker now has an option to insert HTML-style colors. This is primarily meant for the new :mod:`PIL` module, but it has other uses as well.
+
+* The gesture recognition on the extended keyboard is a bit less sensitive, so that it doesn't interpret very small movements as gestures (which could sometimes interfere with tapping keys).
+
+* Error markers in the editor now include the type of the exception.
+
+* Some additional shortcuts are available to use with external hardware keyboards (see :ref:`using-external-keyboards` for details)
+
+Python / Modules
+----------------
+
+New Modules
+^^^^^^^^^^^
+
+* :mod:`bs4` (BeautifulSoup 4)
+* :mod:`dropbox`
+* :mod:`feedparser`
+* :mod:`markdown`
+* :mod:`PIL` (Python Imaging Library) -- Have a look at the new "Image Effects" sample code to see how :mod:`PIL` is integrated with Pythonista.
+
+Changes in Existing Modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* :mod:`console` module
+    * There is a new :func:`console.show_image` function to
+      display images in the text output area. This is used internally
+      by the :meth:`Image.show` method in the :mod:`PIL` (Python Imaging
+      Library) module that was also added in this release.
+    
+    * There are two new functions for controlling the network activity indicator
+      ("spinner") in the status bar -- :func:`console.show_activity` and
+      :func:`console.hide_activity`.
+
+* :mod:`scene` module
+    * You can now load images from regular image files with the
+      :func:`scene.load_image_file` function. It's also possible to load images
+      created with :mod:`PIL` (Python Imaging Library), using the
+      :func:`scene.load_pil_image` function.
+
+    * You can now get at the underlying image files of built-in images using
+      the :func:`scene.get_image_path` function.
+
+    * The new :func:`scene.line` function can be used to draw simple lines
+      between two points.
+      
+    * The new :func:`scene.get_screen_scale` function allows you to detect
+      programmatically if your script is running on a device with a retina
+      screen.
+
+* :mod:`webbrowser` module
+    * The :func:`webbrowser.open` function has a new, optional `modal` parameter
+      that blocks the script until the `Done` button is tapped in the browser.
+      Additionally, there is an optional `stop_when_done` parameter that can
+      be used to stop a script automatically when the `Done` button is tapped
+      in the browser.
+
+Added Modules from the Standard Library
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* :mod:`argparse`
+* :mod:`profile`
+* :mod:`runpy`
+
+Documentation
+-------------
+
+* On the iPad you can now view the current documentation page's table of contents to make navigating in long documents easier.
+
+* The documentation now uses DejaVuSansMono instead of Courier for code.
+
+* Basic documentation for the :mod:`requests` module is now included. The module itself was already available in version 1.1, but there was no documentation.
+
+Bug Fixes
+---------
+
+* Fixed an issue with big numbers not automatically being converted to long integers (something like ``2 ** 100`` should now work correctly without having to append ``L`` explicitly).
+
+* The ``__file__`` variable is now correctly set when you run a script.
+
+* Fixed issues with pasted text that contains unicode space characters.
+
+* Fixed a bug in :func:`console.password_alert` that caused it to always return ``None``.
+
+* Some images in the Typicons library weren't centered properly, this has been fixed.
+
+* Fixed an issue on iOS 6 that caused the documentation viewer to start with a blank page.
+
+* The :mod:`clipboard` module can handle unicode now.
+
+* :func:`time.strptime` works correctly now.
+
+* :func:`editor.make_new_file` no longer appends a numeric suffix when it's not needed (i.e. when no file with the given name exists).
+
+* Fixed a crash that occurred when canceling the console's "Copy Text Output" dialog.
+
+Version 1.1
+===========
+
+General / UI
+------------
+
+* Pythonista is now a universal app that runs on all iOS devices!
+
+* The editor has a new search feature.
+
+* The editor itself is now scriptable (via the new :mod:`editor` module) and custom scripts can be added to the new actions menu for quick access.
+
+* Scripts can now be exported from the editor, optionally as Xcode projects that build standalone iOS apps (please note that in order to run standalone apps on an actual device you need to be a paying member of Apple's iOS developer program).
+
+* The script library has a new list mode (in the iPhone version, the thumbnail view is not present and this is the only view mode).
+
+* The script library can be sorted by date instead of by name.
+
+* The top toolbar that was shown for scenes created with the :mod:`scene` module is gone, so that there is more room for drawing. Instead, there is only a small overlay button in the top-right corner to close a scene.
+
+* The `Typicons <http://www.typicons.com>`_ set of monochrome icons is now available to use in the :mod:`scene` and :mod:`canvas` modules.
+
+Python / Modules
+----------------
+
+* The :class:`scene.Scene` class has additional callbacks for when the home button is pressed (:meth:`scene.Scene.pause`) or the app resumes from the background (:meth:`scene.Scene.resume`).
+
+* Scenes can now optionally auto-rotate to different device orientations (see :meth:`scene.Scene.should_rotate` for more information).
+
+* The :mod:`console` module provides some new functions:
+   * :func:`console.secure_input` – A drop-in replacement for the built-in `raw_input` that is suitable for entering passwords (the text being entered is hidden).
+   * :func:`console.alert` – Allows you to show simple message boxes with up to three custom buttons, e.g. to ask the user for confirmation without requiring keyboard input.
+   * There are several other alert types that allow you to present alerts with text and/or password fields.
+
+* The new :mod:`keychain` module provides simple functions for securely storing passwords.
+
+* The new :mod:`editor` module allows you to script Pythonista's text editor itself, have a look at its documentation for some interesting examples.
+
+* More modules from the Standard Library are included:
+    * :mod:`gzip`, :mod:`zipfile`
+    * :mod:`ssl`
+    * :mod:`sqlite3`
+    * :mod:`email`, :mod:`smtplib`, :mod:`imaplib`, :mod:`poplib`
+    * :mod:`unicodedata`
+    * A custom version of :mod:`getpass` that uses the new :func:`console.secure_input` function.
+
+* The Documents directory (where scripts are stored) is now the default directory in the interactive prompt, 
+  so that it's easier to write files without giving an absolute path.
+
+* The console output and text drawing functions in the :mod:`scene` module support unicode now.
+
+* The :mod:`webbrowser` now opens web pages in an in-app browser view instead of Safari.
+
+* The :mod:`canvas` module has new functions for drawing text.
+
+Documentation
+-------------
+
+* All code samples now have "Copy" and "Open in Editor" buttons attached to them for quickly trying out things you read about.
+
+* There is a new "Using Pythonista" page that provides an illustrated overview of the UI.
+
+* Text in the documentation is now hyphenated for better readability, especially on the iPhone.
+
+* The :mod:`canvas` documentation contains more details and examples.
+
+* The search suggestions in the documentation now show modules first.
+
+* The chapter "Using the Python Interpreter" in the Python language tutorial is no longer included. Most of it only applies to other platforms and it seems to have caused some confusion. If you're interested in this chapter, you can read it `here <http://docs.python.org/tutorial/interpreter.html>`_. The same applies to "Interactive Input Editing and History Substitution" which can be found `here <http://docs.python.org/tutorial/interactive.html>`_.
+
+
+Bug Fixes
+---------
+
+* A crash that could occur when holding down the backspace key has been fixed.
+* Switching from the quick help popover to the full documentation should be more reliable.
+* ``os.getcwd()`` should now work correctly.
+* Entering a blank line when using ``raw_input`` no longer raises an ``EOFError``.
+* Drawing images with the :mod:`canvas` module now works correctly if no other drawing functions were used before.
+
+Version 1.0
+===========
+
+This is the initial release of Pythonista on the App Store.

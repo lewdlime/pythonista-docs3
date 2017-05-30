@@ -1,0 +1,65 @@
+
+.. _ios:
+
+******************************
+Pythonista Modules
+******************************
+
+The following modules have been created for Pythonista and provide iOS-specific functionality.
+
+.. toctree::
+   :maxdepth: 1
+   
+   appex.rst
+   canvas.rst
+   cb.rst
+   clipboard.rst
+   console.rst
+   dialogs.rst
+   contacts.rst
+   editor.rst
+   keychain.rst
+   linguistictagger.rst
+   location.rst
+   motion.rst
+   notification.rst
+   objc_util.rst
+   photos.rst
+   reminders.rst
+   scene.rst
+   sound.rst
+   speech.rst
+   twitter.rst
+   ui.rst
+
+Other Information
+=================
+
+.. toctree::
+
+   urlscheme.rst
+ 
+Extras
+======
+
+The following popular third-party modules are also included with Pythonista.
+They are not part of the Python Standard Library, but they are not specific to iOS.
+   
+.. toctree::
+   :maxdepth: 1
+
+   beautifulsoup.rst
+   bottle/index.rst
+   dropbox.rst
+   evernote.rst
+   faker.rst
+   feedparser.rst
+   markdown.rst
+   markdown2.rst
+   paramiko.rst
+   PIL.rst
+   pyminizip.rst
+   qrcode.rst
+   requests.rst
+   xmltodict.rst
+   

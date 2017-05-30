@@ -1,0 +1,199 @@
+
+:mod:`sound` --- Sound effects and music playback
+======================================================
+
+.. module:: sound
+   :synopsis: Sound effects and music playback
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`sound` module contains functions for playing sound effects and audio files on iOS.
+
+It also enables recording audio files from the microphone using the :class:`Recorder` class.
+
+.. note::
+    In order to use the :class:`Recorder` class, you have to allow access to the microphone. A system-provided dialog is shown automatically when you use the :meth:`Recorder.record` method for the first time. If you do not authorize access to the microphone then, you can also enable it in the Privacy section of the Settings app.
+
+Functions
+---------
+
+.. function:: play_effect(name[, volume, pitch=1.0, pan=0.0, looping=False])
+   
+    Play the sound effect with the given name. You can access a list of built-in sound effect names using the asset picker ([+] button in the toolbar), but `name` can also be a file path if you want to use your own sound effects.
+   
+    Playback is asynchronous, i.e. the function returns before the sound has finished playing.
+    
+    The return value is a :class:`sound.Effect` object that can be used to adjust playback settings later, or to stop the sound effect before it has finished playing.
+    
+    If too many sound effects are already playing (the limit is usually about 32), `None` may be returned.
+
+.. function:: stop_all_effects()
+
+    Stop all sound effects that are currently playing (via :func:`play_effect`).
+
+.. function:: stop_effect(effect)
+
+    Stop playback of the given sound effect. `effect` should be a return value of :func:`play_effect`.
+
+.. function:: set_volume(vol)
+
+    Sets the default volume for all sound effects (between 0.0 and 1.0, the default is 0.5). This has no effect on sound effects that are already playing.
+
+.. function:: set_honors_silent_switch(flag)
+
+    Determines whether the silent (mute) switch is honored when playing sounds (`True` by default).
+
+Effect Class
+------------
+
+.. class:: Effect
+
+    The :class:`Effect` class represents sound effects that are currently playing. You cannot create :class:`Effect` objects directly, but they are returned from the :func:`play_effect` function. For simple one-off effects, you can ignore the return value of :func:`play_effect`, but it can be useful for adjusting playback attributes like volume or pitch while the effect is playing, or to stop a looping effect.
+    
+Effect Methods
+^^^^^^^^^^^^^^
+
+.. method:: Effect.stop()
+
+    Stop playback of the sound effect.
+
+Effect Attributes
+^^^^^^^^^^^^^^^^^
+
+.. attribute:: Effect.looping
+
+    When set to `True`, the sound effect loops indefinitely, until playback is stopped with the :meth:`Effect.stop` method.
+
+.. attribute:: Effect.pan
+
+    The stereo position of the sound effect (-1 = left, +1 = right, 0 = center).
+    
+.. attribute:: Effect.pitch
+
+    The pitch (playback speed) of the sound effect. The default is 1.0.
+    
+.. attribute:: Effect.position
+
+    The spatial (3D) position of the sound effect. The value is a 3-tuple (x, y, z). Note that this overrides the (stereo) :attr:`Sound.pan` attribute.
+
+.. attribute:: Effect.volume
+
+    The current volume of the sound effect.
+
+Player Class
+------------
+
+.. class:: Player(file_path)
+
+    The :class:`Player` class provides an easy-to-use interface for playing audio files from disk. Using this class is recommended for music and other audio that doesn't require very low latency. For sound effects in games, :func:`play_effect` is more suitable.
+    
+Player Methods
+^^^^^^^^^^^^^^
+
+.. method:: Player.play()
+
+    Start playing audio.
+
+.. method:: Player.stop()
+
+    Stop playing audio and reset the playback position.
+
+.. method:: Player.pause()
+
+    Stop playing audio, but keep the current playback position.
+
+Player Attributes
+^^^^^^^^^^^^^^^^^
+
+.. attribute:: Player.duration
+
+    The duration of the loaded audio track in seconds (read-only).
+
+.. attribute:: Player.current_time
+    
+    The current playback position in seconds.
+
+.. attribute:: Player.duration
+
+    The duration of the audio track (read-only).
+
+.. attribute:: Player.number_of_loops
+
+    The number of times the audio track should be repeated. Set to -1 to repeat forever.
+
+.. attribute:: Player.pan
+
+    The stereo positioning of the played sound (-1 = left, +1 = right, 0 = centered).
+
+Recorder Class
+--------------
+
+.. class:: Recorder(file_path)
+
+    The :class:`Recorder` class provides high-level methods for recording audio files from the device's microphone.
+    
+    The `file_path` argument specifies the audio file that is created on disk. The audio file format is determined automatically from the file extension. It should be either `.m4a` (MPEG4 AAC) or `.wav` (Linear PCM). MPEG4 audio files are much smaller than Wav files, but you may want to use Wav if you intend to process raw audio data using the :mod:`wave` module.
+
+Recorder Methods
+^^^^^^^^^^^^^^^^
+
+.. method:: Recorder.record([duration])
+
+    Start recording audio from the microphone. If the optional `duration` argument is provided, recording stops automatically after the specified number of seconds has elapsed. Otherwise, recording has to be stopped explicitly, using the :meth:`Recorder.stop` method.
+    
+.. method:: Recorder.stop()
+
+    Stop recording audio.
+
+.. method:: Recorder.pause()
+
+    Pause recording audio. Recording can be resumed using the :meth:`Recorder.record` method.
+
+Recorder Attributes
+^^^^^^^^^^^^^^^^^^^
+
+.. attribute:: Recorder.current_time
+
+    The current duration of the active recording.
+
+.. attribute:: Recorder.recording
+
+    Whether the recorder is currently recording (boolean).
+
+.. attribute:: Recorder.meters
+
+    The current average and peak power (read-only). Accessing this attribute automatically enables metering for this :class:`Recorder` instance, which may consume additional processing recources. The value is a ``dict`` with ``'average'`` and ``'peak'`` keys, each containing a tuple of two numbers for the left and right channel. Example: ``{'average': (-35.3, -30.1), 'peak': (-5.2, -8.2)}``.
+
+
+MIDIPlayer Class
+----------------
+
+.. class:: MIDIPlayer(file_path[, sound_bank_path])
+
+    A :class:`MIDIPlayer` provides simple playback functions for MIDI (.mid) files, using either the built-in "Merlin Silver" sound bank or one that you provide. If you provide a custom sound bank, it must be in sf2 format.
+
+MIDIPlayer Methods
+^^^^^^^^^^^^^^^^^^
+
+.. method:: MIDIPlayer.play()
+
+    Start playback.
+
+.. method:: MIDIPlayer.stop()
+
+    Stop playback.
+
+MIDIPlayer Attributes
+^^^^^^^^^^^^^^^^^^^^^
+
+.. attribute:: MIDIPlayer.current_time
+
+    The current playback position.
+
+.. attribute:: MIDIPlayer.duration
+
+    The duration of the loaded MIDI file.
+
+.. attribute:: MIDIPlayer.rate
+
+    The playback rate (1.0 for normal speed).

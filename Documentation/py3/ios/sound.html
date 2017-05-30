@@ -115,28 +115,39 @@
             
   <div class="section" id="module-sound">
 <span id="sound-sound-effects-and-music-playback"></span><h1><a class="reference internal" href="#module-sound" title="sound: Sound effects and music playback"><tt class="xref py py-mod docutils literal"><span class="pre">sound</span></tt></a> &#8212; Sound effects and music playback<a class="headerlink" href="#module-sound" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference internal" href="#module-sound" title="sound: Sound effects and music playback"><tt class="xref py py-mod docutils literal"><span class="pre">sound</span></tt></a> module contains functions for playing simple sound effects on iOS.</p>
+<p>The <a class="reference internal" href="#module-sound" title="sound: Sound effects and music playback"><tt class="xref py py-mod docutils literal"><span class="pre">sound</span></tt></a> module contains functions for playing sound effects and audio files on iOS.</p>
+<p>It also enables recording audio files from the microphone using the <a class="reference internal" href="#sound.Recorder" title="sound.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> class.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In order to use the <a class="reference internal" href="#sound.Recorder" title="sound.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> class, you have to allow access to the microphone. A system-provided dialog is shown automatically when you use the <a class="reference internal" href="#sound.Recorder.record" title="sound.Recorder.record"><tt class="xref py py-meth docutils literal"><span class="pre">Recorder.record()</span></tt></a> method for the first time. If you do not authorize access to the microphone then, you can also enable it in the Privacy section of the Settings app.</p>
+</div>
 <div class="section" id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="sound.play_effect">
-<tt class="descclassname">sound.</tt><tt class="descname">play_effect</tt><big>(</big><em>name</em><span class="optional">[</span>, <em>volume</em>, <em>pitch</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#sound.play_effect" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">sound.</tt><tt class="descname">play_effect</tt><big>(</big><em>name</em><span class="optional">[</span>, <em>volume</em>, <em>pitch=1.0</em>, <em>pan=0.0</em>, <em>looping=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#sound.play_effect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Play the sound effect with the given name. You can access a list of built-in sound effect names using the asset picker ([+] button in the toolbar), but <cite>name</cite> can also be a file path if you want to use your own sound effects.</p>
-<p>Playback is asynchronous, i.e. the function returns before the sound has finished playing.
-The return value is an opaque identifier that can be used with the <a class="reference internal" href="#sound.stop_effect" title="sound.stop_effect"><tt class="xref py py-func docutils literal"><span class="pre">stop_effect()</span></tt></a> function.
-The <cite>volume</cite> and <cite>pitch</cite> arguments are optional, by default, the effect is played with the global volume, as set by <a class="reference internal" href="#sound.set_volume" title="sound.set_volume"><tt class="xref py py-func docutils literal"><span class="pre">set_volume()</span></tt></a>.</p>
+<p>Playback is asynchronous, i.e. the function returns before the sound has finished playing.</p>
+<p>The return value is a <a class="reference internal" href="#sound.Effect" title="sound.Effect"><tt class="xref py py-class docutils literal"><span class="pre">sound.Effect</span></tt></a> object that can be used to adjust playback settings later, or to stop the sound effect before it has finished playing.</p>
+<p>If too many sound effects are already playing (the limit is usually about 32), <cite>None</cite> may be returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sound.stop_all_effects">
+<tt class="descclassname">sound.</tt><tt class="descname">stop_all_effects</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.stop_all_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop all sound effects that are currently playing (via <a class="reference internal" href="#sound.play_effect" title="sound.play_effect"><tt class="xref py py-func docutils literal"><span class="pre">play_effect()</span></tt></a>).</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="sound.stop_effect">
-<tt class="descclassname">sound.</tt><tt class="descname">stop_effect</tt><big>(</big><em>effect_id</em><big>)</big><a class="headerlink" href="#sound.stop_effect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stops playback of a sound effect. The <cite>effect_id</cite> is the return value of <a class="reference internal" href="#sound.play_effect" title="sound.play_effect"><tt class="xref py py-func docutils literal"><span class="pre">play_effect()</span></tt></a>.</p>
+<tt class="descclassname">sound.</tt><tt class="descname">stop_effect</tt><big>(</big><em>effect</em><big>)</big><a class="headerlink" href="#sound.stop_effect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop playback of the given sound effect. <cite>effect</cite> should be a return value of <a class="reference internal" href="#sound.play_effect" title="sound.play_effect"><tt class="xref py py-func docutils literal"><span class="pre">play_effect()</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="sound.set_volume">
 <tt class="descclassname">sound.</tt><tt class="descname">set_volume</tt><big>(</big><em>vol</em><big>)</big><a class="headerlink" href="#sound.set_volume" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the default volume for all sound effects (between 0.0 and 1.0, the default is 0.5).</p>
+<dd><p>Sets the default volume for all sound effects (between 0.0 and 1.0, the default is 0.5). This has no effect on sound effects that are already playing.</p>
 </dd></dl>
 
 <dl class="function">
@@ -145,6 +156,57 @@ The <cite>volume</cite> and <cite>pitch</cite> arguments are optional, by defaul
 <dd><p>Determines whether the silent (mute) switch is honored when playing sounds (<cite>True</cite> by default).</p>
 </dd></dl>
 
+</div>
+<div class="section" id="effect-class">
+<h2>Effect Class<a class="headerlink" href="#effect-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sound.Effect">
+<em class="property">class </em><tt class="descclassname">sound.</tt><tt class="descname">Effect</tt><a class="headerlink" href="#sound.Effect" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#sound.Effect" title="sound.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> class represents sound effects that are currently playing. You cannot create <a class="reference internal" href="#sound.Effect" title="sound.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> objects directly, but they are returned from the <a class="reference internal" href="#sound.play_effect" title="sound.play_effect"><tt class="xref py py-func docutils literal"><span class="pre">play_effect()</span></tt></a> function. For simple one-off effects, you can ignore the return value of <a class="reference internal" href="#sound.play_effect" title="sound.play_effect"><tt class="xref py py-func docutils literal"><span class="pre">play_effect()</span></tt></a>, but it can be useful for adjusting playback attributes like volume or pitch while the effect is playing, or to stop a looping effect.</p>
+</dd></dl>
+
+<div class="section" id="effect-methods">
+<h3>Effect Methods<a class="headerlink" href="#effect-methods" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="sound.Effect.stop">
+<tt class="descclassname">Effect.</tt><tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.Effect.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop playback of the sound effect.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="effect-attributes">
+<h3>Effect Attributes<a class="headerlink" href="#effect-attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="sound.Effect.looping">
+<tt class="descclassname">Effect.</tt><tt class="descname">looping</tt><a class="headerlink" href="#sound.Effect.looping" title="Permalink to this definition">¶</a></dt>
+<dd><p>When set to <cite>True</cite>, the sound effect loops indefinitely, until playback is stopped with the <a class="reference internal" href="#sound.Effect.stop" title="sound.Effect.stop"><tt class="xref py py-meth docutils literal"><span class="pre">Effect.stop()</span></tt></a> method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Effect.pan">
+<tt class="descclassname">Effect.</tt><tt class="descname">pan</tt><a class="headerlink" href="#sound.Effect.pan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The stereo position of the sound effect (-1 = left, +1 = right, 0 = center).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Effect.pitch">
+<tt class="descclassname">Effect.</tt><tt class="descname">pitch</tt><a class="headerlink" href="#sound.Effect.pitch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pitch (playback speed) of the sound effect. The default is 1.0.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Effect.position">
+<tt class="descclassname">Effect.</tt><tt class="descname">position</tt><a class="headerlink" href="#sound.Effect.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The spatial (3D) position of the sound effect. The value is a 3-tuple (x, y, z). Note that this overrides the (stereo) <tt class="xref py py-attr docutils literal"><span class="pre">Sound.pan</span></tt> attribute.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Effect.volume">
+<tt class="descclassname">Effect.</tt><tt class="descname">volume</tt><a class="headerlink" href="#sound.Effect.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current volume of the sound effect.</p>
+</dd></dl>
+
+</div>
 </div>
 <div class="section" id="player-class">
 <h2>Player Class<a class="headerlink" href="#player-class" title="Permalink to this headline">¶</a></h2>
@@ -199,6 +261,64 @@ The <cite>volume</cite> and <cite>pitch</cite> arguments are optional, by defaul
 <dt id="sound.Player.number_of_loops">
 <tt class="descclassname">Player.</tt><tt class="descname">number_of_loops</tt><a class="headerlink" href="#sound.Player.number_of_loops" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of times the audio track should be repeated. Set to -1 to repeat forever.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Player.pan">
+<tt class="descclassname">Player.</tt><tt class="descname">pan</tt><a class="headerlink" href="#sound.Player.pan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The stereo positioning of the played sound (-1 = left, +1 = right, 0 = centered).</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="recorder-class">
+<h2>Recorder Class<a class="headerlink" href="#recorder-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sound.Recorder">
+<em class="property">class </em><tt class="descclassname">sound.</tt><tt class="descname">Recorder</tt><big>(</big><em>file_path</em><big>)</big><a class="headerlink" href="#sound.Recorder" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#sound.Recorder" title="sound.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> class provides high-level methods for recording audio files from the device&#8217;s microphone.</p>
+<p>The <cite>file_path</cite> argument specifies the audio file that is created on disk. The audio file format is determined automatically from the file extension. It should be either <cite>.m4a</cite> (MPEG4 AAC) or <cite>.wav</cite> (Linear PCM). MPEG4 audio files are much smaller than Wav files, but you may want to use Wav if you intend to process raw audio data using the <a class="reference internal" href="../library/wave.html#module-wave" title="wave: Provide an interface to the WAV sound format."><tt class="xref py py-mod docutils literal"><span class="pre">wave</span></tt></a> module.</p>
+</dd></dl>
+
+<div class="section" id="recorder-methods">
+<h3>Recorder Methods<a class="headerlink" href="#recorder-methods" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="sound.Recorder.record">
+<tt class="descclassname">Recorder.</tt><tt class="descname">record</tt><big>(</big><span class="optional">[</span><em>duration</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#sound.Recorder.record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start recording audio from the microphone. If the optional <cite>duration</cite> argument is provided, recording stops automatically after the specified number of seconds has elapsed. Otherwise, recording has to be stopped explicitly, using the <a class="reference internal" href="#sound.Recorder.stop" title="sound.Recorder.stop"><tt class="xref py py-meth docutils literal"><span class="pre">Recorder.stop()</span></tt></a> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sound.Recorder.stop">
+<tt class="descclassname">Recorder.</tt><tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.Recorder.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop recording audio.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sound.Recorder.pause">
+<tt class="descclassname">Recorder.</tt><tt class="descname">pause</tt><big>(</big><big>)</big><a class="headerlink" href="#sound.Recorder.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pause recording audio. Recording can be resumed using the <a class="reference internal" href="#sound.Recorder.record" title="sound.Recorder.record"><tt class="xref py py-meth docutils literal"><span class="pre">Recorder.record()</span></tt></a> method.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="recorder-attributes">
+<h3>Recorder Attributes<a class="headerlink" href="#recorder-attributes" title="Permalink to this headline">¶</a></h3>
+<dl class="attribute">
+<dt id="sound.Recorder.current_time">
+<tt class="descclassname">Recorder.</tt><tt class="descname">current_time</tt><a class="headerlink" href="#sound.Recorder.current_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current duration of the active recording.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Recorder.recording">
+<tt class="descclassname">Recorder.</tt><tt class="descname">recording</tt><a class="headerlink" href="#sound.Recorder.recording" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the recorder is currently recording (boolean).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sound.Recorder.meters">
+<tt class="descclassname">Recorder.</tt><tt class="descname">meters</tt><a class="headerlink" href="#sound.Recorder.meters" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current average and peak power (read-only). Accessing this attribute automatically enables metering for this <a class="reference internal" href="#sound.Recorder" title="sound.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">Recorder</span></tt></a> instance, which may consume additional processing recources. The value is a <tt class="docutils literal"><span class="pre">dict</span></tt> with <tt class="docutils literal"><span class="pre">'average'</span></tt> and <tt class="docutils literal"><span class="pre">'peak'</span></tt> keys, each containing a tuple of two numbers for the left and right channel. Example: <tt class="docutils literal"><span class="pre">{'average':</span> <span class="pre">(-35.3,</span> <span class="pre">-30.1),</span> <span class="pre">'peak':</span> <span class="pre">(-5.2,</span> <span class="pre">-8.2)}</span></tt>.</p>
 </dd></dl>
 
 </div>
@@ -256,12 +376,12 @@ The <cite>volume</cite> and <cite>pitch</cite> arguments are optional, by defaul
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

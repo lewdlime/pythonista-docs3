@@ -208,7 +208,7 @@
 <div class="section" id="using-the-ui-designer">
 <h3>Using the UI Designer<a class="headerlink" href="#using-the-ui-designer" title="Permalink to this headline">¶</a></h3>
 <p>If you went through the example above, you might have thought that this is a lot of code to do very basic things. You can significantly reduce the amount of boilerplate code by using the included visual UI editor.</p>
-<img align="right" alt="../_images/ui_designer12.png" class="align-right" src="../_images/ui_designer12.png" style="width: 405px;" />
+<img align="right" alt="../_images/ui_designer13.png" class="align-right" src="../_images/ui_designer13.png" style="width: 405px;" />
 <p>Start by creating a new &#8216;User Interface&#8217; file in your library. You can then add widgets to the canvas, drag them around, resize them, and configure other parameters with the &#8216;Attributes...&#8217; inspector.</p>
 <p>You can recreate the example above like this:</p>
 <ol class="arabic simple">
@@ -975,7 +975,7 @@
 </div>
 <div class="section" id="segmentedcontrol">
 <h2>SegmentedControl<a class="headerlink" href="#segmentedcontrol" title="Permalink to this headline">¶</a></h2>
-<img align="right" alt="../_images/ui_segmentedcontrol2.png" class="align-right" src="../_images/ui_segmentedcontrol2.png" style="width: 126px;" />
+<img align="right" alt="../_images/ui_segmentedcontrol3.png" class="align-right" src="../_images/ui_segmentedcontrol3.png" style="width: 126px;" />
 <dl class="class">
 <dt id="ui.SegmentedControl">
 <em class="property">class </em><tt class="descclassname">ui.</tt><tt class="descname">SegmentedControl</tt><a class="headerlink" href="#ui.SegmentedControl" title="Permalink to this definition">¶</a></dt>
@@ -1019,7 +1019,7 @@
 <dd><p>A <a class="reference internal" href="#ui.Slider" title="ui.Slider"><tt class="xref py py-class docutils literal"><span class="pre">Slider</span></tt></a> is horizontal bar with a &#8220;thumb&#8221; control that allows the user to select a value within 0.0 and 1.0.</p>
 </dd></dl>
 
-<img align="right" alt="../_images/ui_slider2.png" class="align-right" src="../_images/ui_slider2.png" style="width: 208px;" />
+<img align="right" alt="../_images/ui_slider3.png" class="align-right" src="../_images/ui_slider3.png" style="width: 208px;" />
 <div class="section" id="slider-attributes">
 <h3>Slider Attributes<a class="headerlink" href="#slider-attributes" title="Permalink to this headline">¶</a></h3>
 <dl class="attribute">
@@ -1053,7 +1053,7 @@
 
 <div class="section" id="switch-attributes">
 <h3>Switch Attributes<a class="headerlink" href="#switch-attributes" title="Permalink to this headline">¶</a></h3>
-<img align="right" alt="../_images/ui_switch2.png" class="align-right" src="../_images/ui_switch2.png" style="width: 59px;" />
+<img align="right" alt="../_images/ui_switch3.png" class="align-right" src="../_images/ui_switch3.png" style="width: 59px;" />
 <dl class="attribute">
 <dt id="ui.Switch.action">
 <tt class="descclassname">Switch.</tt><tt class="descname">action</tt><a class="headerlink" href="#ui.Switch.action" title="Permalink to this definition">¶</a></dt>
@@ -1077,7 +1077,7 @@
 </div>
 <div class="section" id="tableview">
 <h2>TableView<a class="headerlink" href="#tableview" title="Permalink to this headline">¶</a></h2>
-<img align="right" alt="../_images/ui_tableview2.png" class="align-right" src="../_images/ui_tableview2.png" style="width: 314px;" />
+<img align="right" alt="../_images/ui_tableview3.png" class="align-right" src="../_images/ui_tableview3.png" style="width: 314px;" />
 <dl class="class">
 <dt id="ui.TableView">
 <em class="property">class </em><tt class="descclassname">ui.</tt><tt class="descname">TableView</tt><a class="headerlink" href="#ui.TableView" title="Permalink to this definition">¶</a></dt>
@@ -1204,6 +1204,13 @@
 <dd><p>A sequence of selected rows, each as a 2-tuple <tt class="docutils literal"><span class="pre">(section,</span> <span class="pre">row)</span></tt>.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="ui.TableView.separator_color">
+<tt class="descclassname">TableView.</tt><tt class="descname">separator_color</tt><a class="headerlink" href="#ui.TableView.separator_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of cell separator lines.</p>
+<p>When setting this attribute, you can pass a string (CSS color name or hex, e.g. <tt class="docutils literal"><span class="pre">'red'</span></tt> or <tt class="docutils literal"><span class="pre">'#ff0000'</span></tt>), a tuple (e.g. <tt class="docutils literal"><span class="pre">(1.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.5)</span></tt> for half-transparent red), or a number (e.g. <tt class="docutils literal"><span class="pre">0.5</span></tt> for 50% gray). Internally, all colors are converted to RGBA tuples, so when you access the color later, you&#8217;ll get <tt class="docutils literal"><span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0)</span></tt>, no matter if you set the color to <tt class="docutils literal"><span class="pre">'white'</span></tt>, <tt class="docutils literal"><span class="pre">'#ffffff'</span></tt> or just <tt class="docutils literal"><span class="pre">1.0</span></tt>.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="tableview-methods">
 <h3>TableView Methods<a class="headerlink" href="#tableview-methods" title="Permalink to this headline">¶</a></h3>
@@ -1303,7 +1310,7 @@
 </div>
 <div class="section" id="textfield">
 <h2>TextField<a class="headerlink" href="#textfield" title="Permalink to this headline">¶</a></h2>
-<img align="right" alt="../_images/ui_textfield2.png" class="align-right" src="../_images/ui_textfield2.png" style="width: 210px;" />
+<img align="right" alt="../_images/ui_textfield3.png" class="align-right" src="../_images/ui_textfield3.png" style="width: 210px;" />
 <dl class="class">
 <dt id="ui.TextField">
 <em class="property">class </em><tt class="descclassname">ui.</tt><tt class="descname">TextField</tt><a class="headerlink" href="#ui.TextField" title="Permalink to this definition">¶</a></dt>
@@ -1425,7 +1432,7 @@
 </div>
 <div class="section" id="textview">
 <h2>TextView<a class="headerlink" href="#textview" title="Permalink to this headline">¶</a></h2>
-<img align="right" alt="../_images/ui_textview2.png" class="align-right" src="../_images/ui_textview2.png" style="width: 170px;" />
+<img align="right" alt="../_images/ui_textview3.png" class="align-right" src="../_images/ui_textview3.png" style="width: 170px;" />
 <dl class="class">
 <dt id="ui.TextView">
 <em class="property">class </em><tt class="descclassname">ui.</tt><tt class="descname">TextView</tt><a class="headerlink" href="#ui.TextView" title="Permalink to this definition">¶</a></dt>
@@ -1629,7 +1636,7 @@
 </div>
 <div class="section" id="datepicker">
 <h2>DatePicker<a class="headerlink" href="#datepicker" title="Permalink to this headline">¶</a></h2>
-<img align="right" alt="../_images/ui_datepicker2.png" class="align-right" src="../_images/ui_datepicker2.png" style="width: 330px;" />
+<img align="right" alt="../_images/ui_datepicker3.png" class="align-right" src="../_images/ui_datepicker3.png" style="width: 330px;" />
 <dl class="class">
 <dt id="ui.DatePicker">
 <em class="property">class </em><tt class="descclassname">ui.</tt><tt class="descname">DatePicker</tt><a class="headerlink" href="#ui.DatePicker" title="Permalink to this definition">¶</a></dt>
@@ -2490,19 +2497,19 @@
 <tt class="descclassname">ui.</tt><tt class="descname">LINE_CAP_BUTT</tt><a class="headerlink" href="#ui.LINE_CAP_BUTT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<img alt="../_images/ui_linecap_butt2.png" src="../_images/ui_linecap_butt2.png" style="width: 115px;" />
+<img alt="../_images/ui_linecap_butt3.png" src="../_images/ui_linecap_butt3.png" style="width: 115px;" />
 <dl class="data">
 <dt id="ui.LINE_CAP_ROUND">
 <tt class="descclassname">ui.</tt><tt class="descname">LINE_CAP_ROUND</tt><a class="headerlink" href="#ui.LINE_CAP_ROUND" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<img alt="../_images/ui_linecap_round2.png" src="../_images/ui_linecap_round2.png" style="width: 115px;" />
+<img alt="../_images/ui_linecap_round3.png" src="../_images/ui_linecap_round3.png" style="width: 115px;" />
 <dl class="data">
 <dt id="ui.LINE_CAP_SQUARE">
 <tt class="descclassname">ui.</tt><tt class="descname">LINE_CAP_SQUARE</tt><a class="headerlink" href="#ui.LINE_CAP_SQUARE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<img alt="../_images/ui_linecap_square2.png" src="../_images/ui_linecap_square2.png" style="width: 115px;" />
+<img alt="../_images/ui_linecap_square3.png" src="../_images/ui_linecap_square3.png" style="width: 115px;" />
 </div>
 <div class="section" id="line-join-style">
 <h3>Line Join Style<a class="headerlink" href="#line-join-style" title="Permalink to this headline">¶</a></h3>
@@ -2512,19 +2519,19 @@
 <tt class="descclassname">ui.</tt><tt class="descname">LINE_JOIN_BEVEL</tt><a class="headerlink" href="#ui.LINE_JOIN_BEVEL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<img alt="../_images/ui_linejoin_bevel2.png" src="../_images/ui_linejoin_bevel2.png" style="width: 96px;" />
+<img alt="../_images/ui_linejoin_bevel3.png" src="../_images/ui_linejoin_bevel3.png" style="width: 96px;" />
 <dl class="data">
 <dt id="ui.LINE_JOIN_MITER">
 <tt class="descclassname">ui.</tt><tt class="descname">LINE_JOIN_MITER</tt><a class="headerlink" href="#ui.LINE_JOIN_MITER" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<img alt="../_images/ui_linejoin_miter2.png" src="../_images/ui_linejoin_miter2.png" style="width: 96px;" />
+<img alt="../_images/ui_linejoin_miter3.png" src="../_images/ui_linejoin_miter3.png" style="width: 96px;" />
 <dl class="data">
 <dt id="ui.LINE_JOIN_ROUND">
 <tt class="descclassname">ui.</tt><tt class="descname">LINE_JOIN_ROUND</tt><a class="headerlink" href="#ui.LINE_JOIN_ROUND" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<img alt="../_images/ui_linejoin_round2.png" src="../_images/ui_linejoin_round2.png" style="width: 96px;" />
+<img alt="../_images/ui_linejoin_round3.png" src="../_images/ui_linejoin_round3.png" style="width: 96px;" />
 </div>
 <div class="section" id="keyboard-type">
 <h3>Keyboard Type<a class="headerlink" href="#keyboard-type" title="Permalink to this headline">¶</a></h3>
@@ -2843,12 +2850,12 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on Jun 05, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

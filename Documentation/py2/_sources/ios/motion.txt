@@ -1,0 +1,36 @@
+
+:mod:`motion` --- Motion Sensor Data on iOS
+======================================================
+
+.. module:: motion
+   :synopsis: Provides motion sensor data on iOS
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`motion` module allows you to access your iOS device's motion sensor data (accelerometer, gyroscope, magnetometer).
+
+Functions in the :mod:`motion` module:
+
+.. function:: start_updates()
+
+    Start monitoring the device's motion sensors. You should balance this with a :func:`stop_updates` call to improve battery life. All the `get...` functions require that you call :func:`start_updates` first, otherwise, no meaningful data will be returned.
+
+.. function:: stop_updates()
+
+    Stop monitoring the device's motion sensors.
+
+.. function:: get_gravity()
+
+    Return the gravity vector `(x, y, z)`.
+    
+.. function:: get_user_acceleration()
+    
+    Return the acceleration the user is giving to the device. The total acceleration is equal to the gravity vector returned from :func:`get_gravity` plus the user acceleration.
+    
+.. function:: get_attitude()
+
+    Return the attitude of the device `(roll, pitch, yaw)`.
+
+.. function:: get_magnetic_field()
+
+    Return the magnetic field vector with respect to the device `(x, y, z, accuracy)`.

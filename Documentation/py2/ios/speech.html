@@ -115,12 +115,67 @@
             
   <div class="section" id="module-speech">
 <span id="speech-text-to-speech-on-ios"></span><h1><a class="reference internal" href="#module-speech" title="speech"><tt class="xref py py-mod docutils literal"><span class="pre">speech</span></tt></a> &#8212; Text-to-Speech on iOS<a class="headerlink" href="#module-speech" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference internal" href="#module-speech" title="speech"><tt class="xref py py-mod docutils literal"><span class="pre">speech</span></tt></a> module provides simple text-to-speech functionality on iOS.</p>
-<p>Functions in the <a class="reference internal" href="#module-speech" title="speech"><tt class="xref py py-mod docutils literal"><span class="pre">speech</span></tt></a> module:</p>
+<p>The <a class="reference internal" href="#module-speech" title="speech"><tt class="xref py py-mod docutils literal"><span class="pre">speech</span></tt></a> module provides speech synthesis and recogntion functionality on iOS.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Speech recognition requires at least iOS 10. Because speech data may be sent to Apple servers for processing, a system-provided privacy alert is automatically shown when you call the <a class="reference internal" href="#speech.recognize" title="speech.recognize"><tt class="xref py py-func docutils literal"><span class="pre">recognize()</span></tt></a> function for the first time.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Speaking text in different languages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">speech</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">finish_speaking</span><span class="p">():</span>
+    <span class="c"># Block until speech synthesis has finished</span>
+    <span class="k">while</span> <span class="n">speech</span><span class="o">.</span><span class="n">is_speaking</span><span class="p">():</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c"># US English:</span>
+<span class="n">speech</span><span class="o">.</span><span class="n">say</span><span class="p">(</span><span class="s">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s">&#39;en_US&#39;</span><span class="p">)</span>
+<span class="n">finish_speaking</span><span class="p">()</span>
+<span class="c"># Spanish:</span>
+<span class="n">speech</span><span class="o">.</span><span class="n">say</span><span class="p">(</span><span class="s">&#39;Hola mundo&#39;</span><span class="p">,</span> <span class="s">&#39;es_ES&#39;</span><span class="p">)</span>
+<span class="n">finish_speaking</span><span class="p">()</span>
+<span class="c"># German:</span>
+<span class="n">speech</span><span class="o">.</span><span class="n">say</span><span class="p">(</span><span class="s">&#39;Hallo Welt&#39;</span><span class="p">,</span> <span class="s">&#39;de_DE&#39;</span><span class="p">)</span>
+<span class="n">finish_speaking</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Recognizing spoken text recorded from the microphone (using <a class="reference internal" href="sound.html#sound.Recorder" title="sound.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">sound.Recorder</span></tt></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">speech</span>
+<span class="kn">import</span> <span class="nn">sound</span>
+<span class="kn">import</span> <span class="nn">dialogs</span>
+
+<span class="c"># Record an audio file using sound.Recorder:</span>
+<span class="n">recorder</span> <span class="o">=</span> <span class="n">sound</span><span class="o">.</span><span class="n">Recorder</span><span class="p">(</span><span class="s">&#39;speech.m4a&#39;</span><span class="p">)</span>
+<span class="n">recorder</span><span class="o">.</span><span class="n">record</span><span class="p">()</span>
+<span class="c"># Continue recording until the &#39;Finish&#39; button is tapped:</span>
+<span class="n">dialogs</span><span class="o">.</span><span class="n">alert</span><span class="p">(</span><span class="s">&#39;Recording...&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;Finish&#39;</span><span class="p">,</span> <span class="n">hide_cancel_button</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">recorder</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">speech</span><span class="o">.</span><span class="n">recognize</span><span class="p">(</span><span class="s">&#39;speech.m4a&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;=== Details ===&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;=== Transcription ===&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Speech recognition failed: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">,))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="speech.get_languages">
-<tt class="descclassname">speech.</tt><tt class="descname">get_languages</tt><big>(</big><big>)</big><a class="headerlink" href="#speech.get_languages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of all language codes that are available for speech synthesis. This is useful to determine valid <cite>language</cite> parameters for the <a class="reference internal" href="#speech.say" title="speech.say"><tt class="xref py py-func docutils literal"><span class="pre">say()</span></tt></a> function.</p>
+<dt id="speech.get_synthesis_languages">
+<tt class="descclassname">speech.</tt><tt class="descname">get_synthesis_languages</tt><big>(</big><big>)</big><a class="headerlink" href="#speech.get_synthesis_languages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all language/locale identifiers that are available for speech synthesis. This is useful to determine valid <cite>language</cite> parameters for the <a class="reference internal" href="#speech.say" title="speech.say"><tt class="xref py py-func docutils literal"><span class="pre">say()</span></tt></a> function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="speech.get_recognition_languages">
+<tt class="descclassname">speech.</tt><tt class="descname">get_recognition_languages</tt><big>(</big><big>)</big><a class="headerlink" href="#speech.get_recognition_languages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of all language/locale identifiers that are available for speech recognition. This is useful to determine valid <cite>language</cite> parameters for the <a class="reference internal" href="#speech.recognize" title="speech.recognize"><tt class="xref py py-func docutils literal"><span class="pre">recognize()</span></tt></a> function.</p>
 </dd></dl>
 
 <dl class="function">
@@ -142,6 +197,17 @@
 <dd><p>Return <cite>True</cite> if the synthesizer is currently speaking, <cite>False</cite> otherwise.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="speech.recognize">
+<tt class="descclassname">speech.</tt><tt class="descname">recognize</tt><big>(</big><em>file_path</em><span class="optional">[</span>, <em>language</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#speech.recognize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcribe spoken text in the given audio file. The audio file should not be longer than approximately one minute. You can use the <a class="reference internal" href="sound.html#sound.Recorder" title="sound.Recorder"><tt class="xref py py-class docutils literal"><span class="pre">sound.Recorder</span></tt></a> class to record an audio file from the microphone.</p>
+<p>The <cite>language</cite> parameter is optional, and should be a valid locale identifier (e.g. <tt class="docutils literal"><span class="pre">'de-DE</span></tt> or <tt class="docutils literal"><span class="pre">en-US</span></tt>) &#8211; the current system language is used by default.</p>
+<p>The return value is a list of possible transcriptions, ordered by likelihood (confidence).</p>
+<p>Each transcription in the result list is a tuple containing two elements: 1. The full text as a unicode string, 2. Detailed information about the individual segments (e.g. timestamps, confidence levels etc.) as a list of dictionaries.</p>
+<p>This function raises a <tt class="xref py py-class docutils literal"><span class="pre">RuntimeError</span></tt> if speech recognition fails. If the <cite>language</cite> parameter is invalid or not supported, a <tt class="xref py py-class docutils literal"><span class="pre">ValueError</span></tt> is raised instead, or an <tt class="xref py py-class docutils literal"><span class="pre">IOError</span></tt> if the audio file cannot be read.</p>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -150,12 +216,12 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

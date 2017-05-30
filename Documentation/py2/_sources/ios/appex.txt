@@ -1,0 +1,129 @@
+
+:mod:`appex` --- Utilities for Pythonista's App Extensions
+==========================================================
+
+.. module:: appex
+   :synopsis: Utilities for Pythonista's App Extensions
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`appex` module provides functions for interacting with Pythonista's app extensions that allow you to use Python scripting within other apps on iOS.
+
+Pythonista 3 provides two different app extensions: the *share* extension and the *Today widget*.
+
+The Share Extension
+-------------------
+
+Pythonista's *share* extension allows you to process data from other apps through the standard iOS share sheet.
+
+To use it for the first time, you have to invoke the share sheet in some other app, e.g. Safari, tap the "More" button in the second (grayscale) row of icons, and turn on the "Run Pythonista Script" action. You only need to do this once -- after you've activated the action, it will show up automatically.
+
+After it's activated, you can invoke a "Mini Pythonista" from almost any app that uses the share sheet. The *share* extension includes an interactive console, a basic script editor, and you can add shortcut icons for running your favorite scripts quickly.
+
+When an app uses the share sheet, it typically passes some data to it -- e.g. the current page's URL in Safari, text in Notes, or an image in Photos. You can access (and process) that data using the functions in this module, e.g. :func:`appex.get_url`, :func:`appex.get_text` etc.
+
+Special considerations for running scripts in the share extension:
+
+* When you present a :class:`ui.View` (using :meth:`ui.View.present`), the presentation style is ignored. On iPhone, the presentation is always full-screen, on iPad, the view will cover the main view of the app extension, and it's not possible to create full-screen views.
+
+* Some functions, most importantly :func:`webbrowser.open`, will not work within a share extension script. The :mod:`notification` module is also unavailable.
+
+* The camera is not available to app extensions, so :func:`photos.capture_image` will not work.
+
+The Today Widget
+----------------
+
+The *Today widget* allows you to run a single script within a widget that is quickly accessible from anywhere on iOS, by pulling down Notification Center (and showing the "Today" tab), on the first page of the home screen, or even from the lock screen (by swiping right).
+
+To activate the Today widget, you have to tap the *Edit* button in the Today view, and select the Pythonista widget. You also have to select a script that the widget should run -- you can do this in Pythonista's settings. To get started, you may want to try one of the scripts in the included *Examples/Widget* folder.
+
+.. note::
+    The Today widget requires iOS 10 or later, and only supports Python 3.
+
+The selected script will run every time the widget is shown. Typically, it will use the :func:`set_widget_view` function to show a simple user interface (created with the :mod:`ui` module) in the widget.
+
+Compared to the share extension, the capabilities of the Today widget are more limited. Only a subset of Pythonista's APIs are available, and it gets a significantly smaller amount of RAM from the system than both the main app and the share extension.
+
+Special considerations for running scripts in the Today widget:
+
+* Dialogs (everything in the :mod:`dialogs`, :func:`console.alert` etc.) are *not* available in the widget.
+
+* The :func:`ui.View.present` method is not available. To show a user interface in the widget, you have to use the :func:`set_widget_view` function.
+
+* RAM is very limited in the widget -- if your script runs well in the main app, but you see a "Could not load" message in the widget (or the widget is empty), it is likely that your script used too much memory and was terminated by the system.
+
+* If you find the widget getting stuck, you can terminate the process manually by tapping and holding it with two fingers for about 3 seconds.
+
+Functions
+---------
+
+.. function:: is_running_extension()
+
+    Return `True` if the script is running within an app extension (share extension or widget), `False` otherwise.
+    
+    In case you want to test your script in the main app, you can e.g. use this to load dummy data to replace the share sheet's input.
+
+.. function:: is_widget()
+
+    Return `True` if the script is running within the Today widget, `False` otherwise.
+
+.. function:: get_attachments(uti='public.data')
+
+   Return a list of attachments that match the given type identifier. In most cases, it is a lot easier to use the type-specific functions (like :func:`get_image`, :func:`get_url`...) instead.
+
+.. function:: get_images(image_type='pil')
+
+   Return a list of images in the input of the share sheet. `image_type` can be either 'ui' or 'pil'. If the type is 'ui', :class:`ui.Image` instances will be returned, otherwise :mod:`PIL` images. If there are no images in the input, the return value will be an empty list. 
+
+.. function:: get_image(image_type='pil)
+
+   Return the first image in the input of the share sheet. `image_type` can be either 'ui' or 'pil'. If the type is 'ui', a :class:`ui.Image` instance will be returned, otherwise a :mod:`PIL` image. If there are no images in the input, the return value will be an empty list.
+
+.. function:: get_image_data()
+
+    Return raw image data for the first image in the share sheet's input. The data is returned as a byte string. If there is no image in the input, the return value is `None`.
+    
+.. function:: get_images_data()
+
+    Return raw image data for all images in the share sheet's input. The data is returned as a list of byte strings. If there are no images in the input, the return value is an empty list.
+    
+.. function:: get_text()
+
+    Return text input of the share sheet (as a unicode string). If there is no text in the input, the return value is `None`.
+
+.. function:: get_urls()
+
+    Return a list of URLs in the share sheet's input. If there are no URLs in the input, the return value is an empty list.
+
+.. function:: get_url()
+
+    Return the first URL in the share sheet's input. If there is no URL in the input, the return value is `None`.
+
+.. function:: get_file_paths()
+
+    Return a list of file paths in the share sheet's input. If there are no file paths in the input, the return value is an empty list.
+
+.. function:: get_file_path()
+
+    Return the first file path in the share sheet's input. If there is no file path in the input, the return value is `None`.
+
+.. function:: get_vcards()
+
+    Return a list of VCard records in the share sheet's input. Each record is represented as a string. If there are no Vcards in the input, the return value is an empty list.
+
+.. function:: get_vcards()
+
+    Return the first VCard record in the share sheet's input. The record is represented as a string. If there are no Vcards in the input, the return value is `None`.
+
+.. function:: get_widget_view()
+
+    Return the view that is currently shown in the Today widget (or `None` if no view was set via :func:`set_widget_view`).
+
+.. function:: set_widget_view(view)
+
+    Set the widget's view to a :class:`ui.View` object. The view is automatically resized to fill the widget, and the view's current height is used as the expanded height of the widget (when the "Show More" button is tapped). If the view's height is <= 120, the widget does not show a "Shore More" button, and only the compact widget display mode is used.
+    
+    To remove the current view from the widget, pass `None` instead of a view object.
+    
+    If the script is running in the main app, a simulated widget view is shown.
+    

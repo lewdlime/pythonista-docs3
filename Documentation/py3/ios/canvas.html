@@ -174,6 +174,12 @@ all graphics state (e.g. transformations, fill color, etc.).</p>
 <p>(see also <a class="reference internal" href="#canvas.begin_updates" title="canvas.begin_updates"><tt class="xref py py-func docutils literal"><span class="pre">begin_updates()</span></tt></a>)</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="canvas.save_png">
+<tt class="descclassname">canvas.</tt><tt class="descname">save_png</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#canvas.save_png" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current content of the canvas to a PNG file.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="setting-drawing-parameters">
 <h2>Setting Drawing Parameters<a class="headerlink" href="#setting-drawing-parameters" title="Permalink to this headline">¶</a></h2>
@@ -238,7 +244,7 @@ you might want to close it first with <a class="reference internal" href="#canva
 
 <span class="k">def</span> <span class="nf">draw_star</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">inner_r</span><span class="p">,</span> <span class="n">outer_r</span><span class="p">,</span> <span class="n">jags</span><span class="p">):</span>
     <span class="n">canvas</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">inner_r</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">jags</span> <span class="o">*</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jags</span> <span class="o">*</span> <span class="mi">2</span><span class="p">):</span>
         <span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">jags</span><span class="p">)</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="mi">2</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">inner_r</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">outer_r</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
@@ -399,7 +405,7 @@ the graphics state, you can use the <a class="reference internal" href="#canvas.
 <span class="n">canvas</span><span class="o">.</span><span class="n">set_fill_color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">canvas</span><span class="o">.</span><span class="n">fill_ellipse</span><span class="p">(</span><span class="mi">290</span><span class="p">,</span> <span class="mi">290</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
     <span class="n">canvas</span><span class="o">.</span><span class="n">save_gstate</span><span class="p">()</span>
     <span class="n">canvas</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
     <span class="n">canvas</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mf">12.0</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
@@ -574,12 +580,12 @@ function as a tuple of (width, height).</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

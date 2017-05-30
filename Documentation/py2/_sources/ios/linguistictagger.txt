@@ -1,0 +1,59 @@
+
+:mod:`linguistictagger` --- Linguistic analysis
+===============================================
+
+.. module:: linguistictagger
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`linguistictagger` module can be used to segment natural-language text and tag it with information, such as parts of speech.
+
+The module provides a single function:
+
+.. function:: tag_string(string, scheme)
+
+   Tag a given string according to the scheme. See below for valid scheme constants.
+   
+   The return value is a list of 3-tuples, each consisting of the tag, the tagged substring, and the substring's range in the original string.
+   
+   Example::
+   
+      import linguistictagger as lt
+      text = 'Python is pretty awesome.'
+      results = lt.tag_string(text, lt.SCHEME_LEXICAL_CLASS)
+      for tag, substring, range in results:
+          if tag != 'Whitespace':
+              print substring + ": " + tag
+
+
+Constants
+---------
+
+.. data:: SCHEME_TOKEN_TYPE
+
+    Classifies tokens according to their broad type: word, punctuation, whitespace, etc.
+
+.. data:: SCHEME_LEXICAL_CLASS
+
+    Classifies tokens according to class: part of speech for words, type of punctuation or whitespace, etc.
+
+.. data:: SCHEME_NAME_TYPE
+
+    Classifies tokens as to whether they are part of named entities of various types or not.
+
+.. data:: SCHEME_NAME_TYPE_OR_LEXICAL_CLASS
+
+    This tag scheme follows `SCHEME_NAME_TYPE` for names and `SCHEME_LEXICAL_CLASS` for all other tokens.
+
+.. data:: SCHEME_LEMMA
+
+    Supplies a stem forms of the words, if known.
+
+.. data:: SCHEME_LANGUAGE
+
+    This tag scheme tags tokens according to their language. The tag values will be standard language abbreviations such as "en", "fr", "de", etc. Note that the tagger generally attempts to determine the language of text at the level of an entire sentence or paragraph, rather than word by word.
+
+.. data:: SCHEME_SCRIPT
+
+    This tag scheme tags tokens according to their script. The tag values will be standard script abbreviations such as “Latn”, “Cyrl”, “Jpan”, “Hans”, “Hant”, etc.
+    

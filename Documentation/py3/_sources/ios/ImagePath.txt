@@ -1,0 +1,51 @@
+The ImagePath Module
+====================
+
+.. module:: ImagePath
+
+The :mod:`ImagePath` module is used to store and manipulate 2-dimensional vector data. Path objects can be passed to the methods in the :mod:`ImageDraw` module.
+
+Functions
+---------
+.. function:: Path(coordinates)
+
+    Creates a path object. The coordinate list can be any sequence object containing either 2-tuples [ (x, y), … ] or numeric values [ x, y, … ].
+
+    You can also create a path object from another path object.
+
+    In 1.1.6 and later, you can also pass in any object that implements Python’s buffer API. The buffer should provide read access, and contain C floats in machine byte order.
+
+    The path object implements most parts of the Python sequence interface, and behaves like a list of (x, y) pairs. You can use len(), item access, and slicing as usual. However, the current version does not support slice assignment, or item and slice deletion.
+
+Path Methods
+------------
+
+.. method:: path.compact(distance=2)
+
+    Compacts the path, by removing points that are close to each other. This method modifies the path in place, and returns the number of points left in the path.
+
+    The distance is measured as “city-block distance,” and defaults to two pixels.
+
+.. method:: path.getbbox()
+
+    Gets the bounding box of the path.
+
+.. method:: path.map(function)
+    
+    Maps the path through a function.
+
+.. method:: path.tolist()
+    
+    Converts the path to a Python list ``[(x, y), ...]``.
+
+.. method:: path.tolist(flat=0)
+
+    (New in 1.1.5) Converts the path to a Python list. If the flat flag is zero or omitted, the resulting list contains 2-tuples ``[ (x, y), … ]``. If flat is 1, the list is flattened ``[ x, y, … ]``.
+
+.. method:: path.transform(matrix)
+
+    Transforms the path in place, using an affine transform. The matrix is a 6-tuple (a, b, c, d, e, f), and each point is mapped as follows:
+
+    ``xOut = xIn * a + yIn * b + c``
+    
+    ``yOut = xIn * d + yIn * e + f``

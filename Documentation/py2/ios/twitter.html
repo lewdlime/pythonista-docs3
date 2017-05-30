@@ -134,10 +134,10 @@
     <span class="n">account</span> <span class="o">=</span> <span class="n">all_accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">tweets</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">get_home_timeline</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
-        <span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;text&#39;</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;text&#39;</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&#39;You don</span><span class="se">\&#39;</span><span class="s">t have any Twitter accounts (or haven</span><span class="se">\&#39;</span><span class="s">t given permission to access them).&#39;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;You don</span><span class="se">\&#39;</span><span class="s">t have any Twitter accounts (or haven</span><span class="se">\&#39;</span><span class="s">t given permission to access them).&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -163,9 +163,9 @@
         <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">img</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&#39;Could not retrieve profile image (status: </span><span class="si">%i</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">status</span><span class="p">,)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Could not retrieve profile image (status: </span><span class="si">%i</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">status</span><span class="p">,))</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&#39;You don</span><span class="se">\&#39;</span><span class="s">t have any Twitter accounts (or haven</span><span class="se">\&#39;</span><span class="s">t given permission to access them).&#39;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;You don</span><span class="se">\&#39;</span><span class="s">t have any Twitter accounts (or haven</span><span class="se">\&#39;</span><span class="s">t given permission to access them).&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For more information about valid URLs, methods, and parameters, please refer to the <a class="reference external" href="https://dev.twitter.com/overview/documentation">Twitter API documentation</a>.</p>
@@ -238,12 +238,12 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

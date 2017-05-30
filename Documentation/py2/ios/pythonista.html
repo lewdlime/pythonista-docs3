@@ -210,7 +210,7 @@ Note that some shortcuts only work when the editor has keyboard focus.</p>
 <p>Pythonista includes an app extension that allows you to run Python scripts from within other apps. The extension is invoked from the iOS share sheet that is available in many apps.</p>
 <img align="right" alt="../_images/app_extension1.png" class="align-right" src="../_images/app_extension1.png" style="width: 250px;" />
 <p>Before using the extension for the first time, you need to enable it. To do this, tap the &#8220;More&#8221; button at the bottom of the share sheet, then turn on the switch for &#8220;Run Pythonista Script&#8221;.</p>
-<p>The extension contains an editable collection of shortcut icons (similar to the &#8220;wrench&#8221; menu in the editor) to run your favorite scripts quickly, but there&#8217;s also a basic code editor, and an interactive console to enable tweaking your code directly in the extension. Apps that support the share sheet typically pass some kind of data to it, e.g. the current page&#8217;s URL in <cite>Safari</cite>, text in <cite>Notes</cite>, location data in <cite>Maps</cite>, or images in <cite>Photos</cite>. You can use the <a class="reference internal" href="appex.html#module-appex" title="appex: Using the Pythonista Sharing Extension"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module to access this data.</p>
+<p>The extension contains an editable collection of shortcut icons (similar to the &#8220;wrench&#8221; menu in the editor) to run your favorite scripts quickly, but there&#8217;s also a basic code editor, and an interactive console to enable tweaking your code directly in the extension. Apps that support the share sheet typically pass some kind of data to it, e.g. the current page&#8217;s URL in <cite>Safari</cite>, text in <cite>Notes</cite>, location data in <cite>Maps</cite>, or images in <cite>Photos</cite>. You can use the <a class="reference internal" href="appex.html#module-appex" title="appex: Utilities for Pythonista's App Extensions"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module to access this data.</p>
 </div>
 <div class="section" id="the-pythonista-url-scheme">
 <h2>The Pythonista URL Scheme<a class="headerlink" href="#the-pythonista-url-scheme" title="Permalink to this headline">¶</a></h2>
@@ -221,7 +221,7 @@ Note that some shortcuts only work when the editor has keyboard focus.</p>
 <p>Pythonista includes a Today widget for running scripts directly in Notification Center. You can configure the widget script in the settings. It will then be run whenever Notification Center is opened.</p>
 <p>Please note that the widget script has to be very efficient in terms of memory use because the amount of RAM that widgets get on iOS (before they are terminated) is <em>very</em> limited. If you see a &#8220;could not load&#8221; message in the widget, or if the widget remains empty, try something simpler.</p>
 <p>The widget only supports Python 3, and only a limited subset of Pythonista&#8217;s modules is available. In particular, the <a class="reference internal" href="scene.html#module-scene" title="scene: 2D graphics and animation on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">scene</span></tt></a> module and anything to do with dialogs/alerts and keyboard input are unavailable. The <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a> module is available in general (and essential for making widgets), but some UI classes cannot be used because they are too resource-heavy (e.g. <a class="reference internal" href="ui.html#ui.WebView" title="ui.WebView"><tt class="xref py py-class docutils literal"><span class="pre">ui.WebView</span></tt></a>).</p>
-<p>A widget&#8217;s UI should ideally consist of buttons, labels, and image views only. For showing a UI in the widget, the <a class="reference internal" href="appex.html#module-appex" title="appex: Using the Pythonista Sharing Extension"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module has a <a class="reference internal" href="appex.html#appex.set_widget_view" title="appex.set_widget_view"><tt class="xref py py-func docutils literal"><span class="pre">appex.set_widget_view()</span></tt></a> function. For very simple needs, you can also print text in the widget (but advanced console output features, e.g. <a class="reference internal" href="console.html#console.set_color" title="console.set_color"><tt class="xref py py-func docutils literal"><span class="pre">console.set_color()</span></tt></a> etc. are not available).</p>
+<p>A widget&#8217;s UI should ideally consist of buttons, labels, and image views only. For showing a UI in the widget, the <a class="reference internal" href="appex.html#module-appex" title="appex: Utilities for Pythonista's App Extensions"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module has a <a class="reference internal" href="appex.html#appex.set_widget_view" title="appex.set_widget_view"><tt class="xref py py-func docutils literal"><span class="pre">appex.set_widget_view()</span></tt></a> function. For very simple needs, you can also print text in the widget (but advanced console output features, e.g. <a class="reference internal" href="console.html#console.set_color" title="console.set_color"><tt class="xref py py-func docutils literal"><span class="pre">console.set_color()</span></tt></a> etc. are not available).</p>
 </div>
 </div>
 
@@ -231,12 +231,12 @@ Note that some shortcuts only work when the editor has keyboard focus.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on Jun 01, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

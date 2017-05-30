@@ -1,0 +1,251 @@
+
+:mod:`reminders` --- Access to the iOS Reminders Database
+=========================================================
+
+.. module:: reminders
+.. sectionauthor:: Ole Zorn
+
+
+The :mod:`reminders` module provides read/write access to the iOS Reminders database. Reminders are represented by the :class:`Reminder` class, and lists of reminders by the :class:`Calendar` class.
+
+.. note::
+    The first time you use any of the functions that access your reminders, a system-provided permission dialog will be shown. If you deny access, most functions will return empty data. If you change your mind later, you can allow access to your reminders from the Privacy section in the Settings app.
+
+Quick Start
+-----------
+
+Retrieving Existing Reminders
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To retrieve all reminders that are in the database, simply call :func:`get_reminders`. With the `completed` parameter, you can filter the list by their completion status (whether the reminder is checked off).::
+
+    import reminders
+    todo = reminders.get_reminders(completed=False)
+    print('TODO List')
+    print('=========')
+    for r in todo:
+        print('[ ] ' + r.title)
+    done = reminders.get_reminders(completed=True)
+    print('DONE')
+    print('====')
+    for r in done:
+        print('[x] ' + r.title)
+
+
+Adding New Reminders
+^^^^^^^^^^^^^^^^^^^^
+
+To add a new reminder, simply create a :class:`Reminder` object, set its title, due date, etc., and then call its :meth:`Reminder.save` method.::
+
+    import reminders
+    r = reminders.Reminder()
+    r.title = 'Added from Pythonista'
+    r.save()
+    print('Reminder added')
+
+You can have multiple lists of reminders in the Reminders app. Those lists are represented by :class:`Calendar` objects in this module. If you don't specify otherwise, reminders are added to the default list/calendar. To add a reminder to a different list, simply pass the corresponding :class:`Calendar` object when creating the reminder.
+
+The following example looks for a calendar with the title "Pythonista", and adds a new reminder to it, if it exists.::
+
+    import reminders
+    all_calendars = reminders.get_all_calendars()
+    for calendar in all_calendars:
+        if calendar.title == 'Pythonista':
+            r = reminders.Reminder(calendar)
+            r.title = 'New Reminder in Pythonista List'
+            r.save()
+            break
+    else:
+        print('Could not find calendar named "Pythonista"')
+
+Adding Calendars
+^^^^^^^^^^^^^^^^
+
+You can also create new calendars programmatically. This example adds a calendar with the title *Pythonista* if it doesn't exist already::
+
+    import reminders
+    all_calendars = reminders.get_all_calendars()
+    for calendar in all_calendars:
+        if calendar.title == 'Pythonista':
+            print('Calendar "Pythonista" already exists')
+            break
+    else:
+        new_calendar = reminders.Calendar()
+        new_calendar.title = 'Pythonista'
+        new_calendar.save()
+        print('New calendar added')
+
+Adding Alarms
+^^^^^^^^^^^^^
+
+Reminders are much more useful when they actually *remind* you of something, i.e. show a notification. To do that, you have to add one or more :class:`Alarm`s to a reminder. :class:`Alarm`s can be triggered at a specific time, or when entering/leaving a geographic location. 
+
+Let's look at date/time-based alarms first. This example adds a new reminder that triggers a notification 25 minutes from now::
+
+    import reminders
+    import datetime
+    r = reminders.Reminder()
+    r.title = 'Take a break!'
+    minutes = 25
+    due = datetime.datetime.now() + datetime.timedelta(minutes=minutes)
+    # Note: We're setting the due date to the same time as the alarm here,
+    # but they can also be different.
+    r.due_date = due
+    a = reminders.Alarm()
+    a.date = due
+    r.alarms = [a]
+    r.save()
+    print('You will be reminded in %i minutes.' % minutes)
+
+To add a geolocation-based alarm, you have to specify a title, latitude, and longitude. You can also specify a radius, and whether the alarm should be triggered when *entering* or *leaving* that radius::
+
+    import reminders
+    
+    r = reminders.Reminder()
+    r.title = 'Take a selfie'
+    
+    a = reminders.Alarm()
+    lat, lng = 37.332224, -122.030780
+    radius = 500 # metres
+    title = '1 Infinite Loop'
+    a.location = (title, lat, lng, radius)
+    a.proximity = 'enter'
+    r.alarms = [a]
+    r.save()
+
+Functions
+---------
+
+.. function:: get_reminders(calendar=None, completed=None)
+   
+    Return all reminders in the given :class:`Calendar` (or all calendars).
+    
+    If the `calendar` parameter is omitted or `None`, all reminders in all calendars are returned.
+    
+    The `completed` parameter can be used to filter reminders by completion status:
+    
+    * ``None`` (the default): return all reminders
+    * ``True``: return only completed (checked off) reminders
+    * ``False`` return only reminders that haven't been completed yet
+
+.. function:: get_all_calendars()
+
+    Return a list of all available calendars (:class:`Calendar` objects). Calendars represent lists of reminders.
+
+.. function:: get_default_calendar()
+
+    Return the :class:`Calendar` that is used for new reminders by default.
+
+.. function:: get_calendar(calendar_id)
+
+    Return a specific :class:`Calendar` by its unique identifier. If no calendar with the given id can be found, `None` is returned.
+
+.. function:: delete_reminder(reminder)
+
+    Remove a :class:`Reminder` from the database.
+    
+    If the removal is successful, `True` is returned, otherwise `False`.
+
+.. function:: delete_calendar(calendar)
+
+    Remove a :class:`Calendar` from the database.
+    
+    If the removal is successful, `True` is returned, otherwise `False`.
+
+
+Calendar Objects
+----------------
+
+.. class:: Calendar()
+
+    :class:`Calendar` objects represent lists of reminders. Every reminder belongs to a single calendar, and you can retrieve the reminders of a specific calendar using the :func:`get_reminders` function. To get the default calendar for new reminders, use :func:`get_default_calendar`. Each calendar has a unique identifier that allows you to retrieve it reliably (using the :func:`get_calendar` function), regardless of whether its title has changed.
+
+Calendar Attributes
+^^^^^^^^^^^^^^^^^^^
+
+.. attribute:: Calendar.title
+
+    The title of the list of reminders (string/unicode).
+
+.. attribute:: Calendar.identifier
+
+    The unique identifier of the calendar (readonly, string).
+    
+    This can be used to retrieve this specific calendar later, even if its title may have changed.
+
+Calendar Methods
+^^^^^^^^^^^^^^^^
+
+.. method:: Calendar.save()
+
+    Save changes to the database (only the calendar's metadata is saved, reminders within the calendar have to be saved with their own :meth:`Reminder.save` method).
+
+Reminder Objects
+----------------
+
+.. class:: Reminder([calendar])
+
+    :class:`Reminder` objects represent a single reminder in a list. Reminders can have multiple attached :class:`Alarm` objects, which determine when/where/if the system shows a notification for the reminder.
+    
+    A reminder is always contained in a :class:`Calendar` representing a list of reminders. If you don't pass a specific :class:`Calendar` when initializing the :class:`Reminder`, the default calendar is used.
+
+Reminder Attributes
+^^^^^^^^^^^^^^^^^^^
+
+.. attribute:: Reminder.title
+
+    The title of the reminder (string/unicode).
+    
+.. attribute:: Reminder.notes
+
+    Additional notes for the reminder (string/unicode).
+
+.. attribute:: Reminder.completed
+
+    Whether the reminder has been completed (checked off) yet (boolean).
+
+.. attribute:: Reminder.completion_date
+
+    The date when the reminder was completed (checked off) or `None` if it hasn't been completed yet.
+
+.. attribute:: Reminder.due_date
+
+    The due date of the reminder.
+    
+    Note: Setting a due date is not the same as setting an alarm. While the due date is shown in the Reminders app, you won't get a notification unless you also add an :class:`Alarm` (by setting the :attr:`alarms` attribute of the reminder).
+
+.. attribute:: Reminder.alarms
+
+    A list of :class:`Alarm` objects that are associated with this reminder.
+    
+    Note: The value represents a copy/snapshot; changing the list in-place won't change the alarms unless you re-assign the attribute.
+
+Reminder Methods
+^^^^^^^^^^^^^^^^
+
+.. method:: Reminder.save()
+
+    Save changes you've made to the database (e.g. after you've changed the :attr:`title` or :attr:`completed` attributes) .
+
+Alarm Objects
+-------------
+
+.. class:: Alarm()
+    
+    :class:`Alarm` objects represents an alarm that is associated with a reminder. Alarms can be triggered at a specific time, or when entering/leaving a geographic location. You can associate an :class:`Alarm` with a reminder by setting its :data:`Reminder.alarms` attribute.
+
+Alarm Attributes
+^^^^^^^^^^^^^^^^
+
+.. attribute:: Alarm.date
+
+    The absolute date when the alarm is triggered (datetime object).
+
+.. attribute:: Alarm.location
+
+    The title, coordinates and radius for geo-location-based alarms. The location is represented as a 3- or 4-tuple (title, latitude, longitude[, radius]). The radius is set to 100m by default.
+
+.. attribute:: Alarm.proximity
+
+    Determines if a location-based alarm is triggered when entering or leaving the specified area. Possible values are ``'enter'``, ``'leave'`` and ``'none'``.
+

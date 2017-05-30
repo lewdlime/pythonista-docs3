@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>appex — Using the Pythonista Sharing Extension &mdash; Pythonista Documentation</title>
+    <title>appex — Utilities for Pythonista’s App Extensions &mdash; Pythonista Documentation</title>
     <link rel="stylesheet" href="../_static/pythonista.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -114,25 +114,53 @@
           <div class="body">
             
   <div class="section" id="module-appex">
-<span id="appex-using-the-pythonista-sharing-extension"></span><h1><a class="reference internal" href="#module-appex" title="appex: Using the Pythonista Sharing Extension"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> &#8212; Using the Pythonista Sharing Extension<a class="headerlink" href="#module-appex" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference internal" href="#module-appex" title="appex: Using the Pythonista Sharing Extension"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module allows you to access the input data of the iOS share sheet when you&#8217;re using the Pythonista extension from another app.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When you invoke the <em>share</em> sheet in another app, the Pythonista extension will not show up automatically, you have to activate it by tapping the <em>More</em> button first. If it doesn&#8217;t show up at all, this usually means that the type of data being shared is not supported.</p>
-</div>
-<div class="section" id="special-considerations">
-<h2>Special Considerations<a class="headerlink" href="#special-considerations" title="Permalink to this headline">¶</a></h2>
+<span id="appex-utilities-for-pythonista-s-app-extensions"></span><h1><a class="reference internal" href="#module-appex" title="appex: Utilities for Pythonista's App Extensions"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> &#8212; Utilities for Pythonista&#8217;s App Extensions<a class="headerlink" href="#module-appex" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-appex" title="appex: Utilities for Pythonista's App Extensions"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module provides functions for interacting with Pythonista&#8217;s app extensions that allow you to use Python scripting within other apps on iOS.</p>
+<p>Pythonista 3 provides two different app extensions: the <em>share</em> extension and the <em>Today widget</em>.</p>
+<div class="section" id="the-share-extension">
+<h2>The Share Extension<a class="headerlink" href="#the-share-extension" title="Permalink to this headline">¶</a></h2>
+<p>Pythonista&#8217;s <em>share</em> extension allows you to process data from other apps through the standard iOS share sheet.</p>
+<p>To use it for the first time, you have to invoke the share sheet in some other app, e.g. Safari, tap the &#8220;More&#8221; button in the second (grayscale) row of icons, and turn on the &#8220;Run Pythonista Script&#8221; action. You only need to do this once &#8211; after you&#8217;ve activated the action, it will show up automatically.</p>
+<p>After it&#8217;s activated, you can invoke a &#8220;Mini Pythonista&#8221; from almost any app that uses the share sheet. The <em>share</em> extension includes an interactive console, a basic script editor, and you can add shortcut icons for running your favorite scripts quickly.</p>
+<p>When an app uses the share sheet, it typically passes some data to it &#8211; e.g. the current page&#8217;s URL in Safari, text in Notes, or an image in Photos. You can access (and process) that data using the functions in this module, e.g. <a class="reference internal" href="#appex.get_url" title="appex.get_url"><tt class="xref py py-func docutils literal"><span class="pre">appex.get_url()</span></tt></a>, <a class="reference internal" href="#appex.get_text" title="appex.get_text"><tt class="xref py py-func docutils literal"><span class="pre">appex.get_text()</span></tt></a> etc.</p>
+<p>Special considerations for running scripts in the share extension:</p>
 <ul class="simple">
 <li>When you present a <a class="reference internal" href="ui.html#ui.View" title="ui.View"><tt class="xref py py-class docutils literal"><span class="pre">ui.View</span></tt></a> (using <a class="reference internal" href="ui.html#ui.View.present" title="ui.View.present"><tt class="xref py py-meth docutils literal"><span class="pre">ui.View.present()</span></tt></a>), the presentation style is ignored. On iPhone, the presentation is always full-screen, on iPad, the view will cover the main view of the app extension, and it&#8217;s not possible to create full-screen views.</li>
-<li>Some functions, most importantly <a class="reference internal" href="../library/webbrowser.html#webbrowser.open" title="webbrowser.open"><tt class="xref py py-func docutils literal"><span class="pre">webbrowser.open()</span></tt></a>, will not work within an extension script. The <a class="reference internal" href="notification.html#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> module is also unavailable.</li>
+<li>Some functions, most importantly <a class="reference internal" href="../library/webbrowser.html#webbrowser.open" title="webbrowser.open"><tt class="xref py py-func docutils literal"><span class="pre">webbrowser.open()</span></tt></a>, will not work within a share extension script. The <a class="reference internal" href="notification.html#module-notification" title="notification: Integration with Notification Center on iOS"><tt class="xref py py-mod docutils literal"><span class="pre">notification</span></tt></a> module is also unavailable.</li>
 <li>The camera is not available to app extensions, so <a class="reference internal" href="photos.html#photos.capture_image" title="photos.capture_image"><tt class="xref py py-func docutils literal"><span class="pre">photos.capture_image()</span></tt></a> will not work.</li>
 </ul>
-<p>Functions in the <a class="reference internal" href="#module-appex" title="appex: Using the Pythonista Sharing Extension"><tt class="xref py py-mod docutils literal"><span class="pre">appex</span></tt></a> module:</p>
+</div>
+<div class="section" id="the-today-widget">
+<h2>The Today Widget<a class="headerlink" href="#the-today-widget" title="Permalink to this headline">¶</a></h2>
+<p>The <em>Today widget</em> allows you to run a single script within a widget that is quickly accessible from anywhere on iOS, by pulling down Notification Center (and showing the &#8220;Today&#8221; tab), on the first page of the home screen, or even from the lock screen (by swiping right).</p>
+<p>To activate the Today widget, you have to tap the <em>Edit</em> button in the Today view, and select the Pythonista widget. You also have to select a script that the widget should run &#8211; you can do this in Pythonista&#8217;s settings. To get started, you may want to try one of the scripts in the included <em>Examples/Widget</em> folder.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Today widget requires iOS 10 or later, and only supports Python 3.</p>
+</div>
+<p>The selected script will run every time the widget is shown. Typically, it will use the <a class="reference internal" href="#appex.set_widget_view" title="appex.set_widget_view"><tt class="xref py py-func docutils literal"><span class="pre">set_widget_view()</span></tt></a> function to show a simple user interface (created with the <a class="reference internal" href="ui.html#module-ui" title="ui: Native GUI for iOS"><tt class="xref py py-mod docutils literal"><span class="pre">ui</span></tt></a> module) in the widget.</p>
+<p>Compared to the share extension, the capabilities of the Today widget are more limited. Only a subset of Pythonista&#8217;s APIs are available, and it gets a significantly smaller amount of RAM from the system than both the main app and the share extension.</p>
+<p>Special considerations for running scripts in the Today widget:</p>
+<ul class="simple">
+<li>Dialogs (everything in the <a class="reference internal" href="dialogs.html#module-dialogs" title="dialogs"><tt class="xref py py-mod docutils literal"><span class="pre">dialogs</span></tt></a>, <a class="reference internal" href="console.html#console.alert" title="console.alert"><tt class="xref py py-func docutils literal"><span class="pre">console.alert()</span></tt></a> etc.) are <em>not</em> available in the widget.</li>
+<li>The <a class="reference internal" href="ui.html#ui.View.present" title="ui.View.present"><tt class="xref py py-func docutils literal"><span class="pre">ui.View.present()</span></tt></a> method is not available. To show a user interface in the widget, you have to use the <a class="reference internal" href="#appex.set_widget_view" title="appex.set_widget_view"><tt class="xref py py-func docutils literal"><span class="pre">set_widget_view()</span></tt></a> function.</li>
+<li>RAM is very limited in the widget &#8211; if your script runs well in the main app, but you see a &#8220;Could not load&#8221; message in the widget (or the widget is empty), it is likely that your script used too much memory and was terminated by the system.</li>
+<li>If you find the widget getting stuck, you can terminate the process manually by tapping and holding it with two fingers for about 3 seconds.</li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="appex.is_running_extension">
 <tt class="descclassname">appex.</tt><tt class="descname">is_running_extension</tt><big>(</big><big>)</big><a class="headerlink" href="#appex.is_running_extension" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return <cite>True</cite> if the script is running within the app extension, <cite>False</cite> otherwise.</p>
+<dd><p>Return <cite>True</cite> if the script is running within an app extension (share extension or widget), <cite>False</cite> otherwise.</p>
 <p>In case you want to test your script in the main app, you can e.g. use this to load dummy data to replace the share sheet&#8217;s input.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="appex.is_widget">
+<tt class="descclassname">appex.</tt><tt class="descname">is_widget</tt><big>(</big><big>)</big><a class="headerlink" href="#appex.is_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <cite>True</cite> if the script is running within the Today widget, <cite>False</cite> otherwise.</p>
 </dd></dl>
 
 <dl class="function">
@@ -207,6 +235,20 @@
 <dd><p>Return the first VCard record in the share sheet&#8217;s input. The record is represented as a string. If there are no Vcards in the input, the return value is <cite>None</cite>.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="appex.get_widget_view">
+<tt class="descclassname">appex.</tt><tt class="descname">get_widget_view</tt><big>(</big><big>)</big><a class="headerlink" href="#appex.get_widget_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the view that is currently shown in the Today widget (or <cite>None</cite> if no view was set via <a class="reference internal" href="#appex.set_widget_view" title="appex.set_widget_view"><tt class="xref py py-func docutils literal"><span class="pre">set_widget_view()</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="appex.set_widget_view">
+<tt class="descclassname">appex.</tt><tt class="descname">set_widget_view</tt><big>(</big><em>view</em><big>)</big><a class="headerlink" href="#appex.set_widget_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the widget&#8217;s view to a <a class="reference internal" href="ui.html#ui.View" title="ui.View"><tt class="xref py py-class docutils literal"><span class="pre">ui.View</span></tt></a> object. The view is automatically resized to fill the widget, and the view&#8217;s current height is used as the expanded height of the widget (when the &#8220;Show More&#8221; button is tapped). If the view&#8217;s height is &lt;= 120, the widget does not show a &#8220;Shore More&#8221; button, and only the compact widget display mode is used.</p>
+<p>To remove the current view from the widget, pass <cite>None</cite> instead of a view object.</p>
+<p>If the script is running in the main app, a simulated widget view is shown.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -216,12 +258,12 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on Jun 11, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.

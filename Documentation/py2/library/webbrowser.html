@@ -129,15 +129,14 @@
 <p>The <a class="reference internal" href="#module-webbrowser" title="webbrowser: Easy-to-use controller for Web browsers."><tt class="xref py py-mod docutils literal"><span class="pre">webbrowser</span></tt></a> module provides a high-level interface to allow displaying
 Web-based documents to users. Under most circumstances, simply calling the
 <a class="reference internal" href="#webbrowser.open" title="webbrowser.open"><tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt></a> function from this module will do the right thing.</p>
-<p><strong>Please note:</strong> Pythonista uses a custom version of this module that only
-supports the <a class="reference internal" href="functions.html#open" title="open"><tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt></a> function. The behavior is different from other
+<p><strong>Please note:</strong> Pythonista uses a custom version of this module, specifically adapted for iOS. The behavior is different from other
 platforms in that web pages are opened in an embedded browser view within
 the app for <cite>http(s)</cite> and <cite>file</cite> URLs. For custom URL schemes that are
 registered by an app (e.g. <cite>mailto:</cite>), the registered app is opened. This also
-works for third-party apps.</p>
+works for third-party apps. If you want to open Safari for http(s) URLs, you can replace http with safari-http in the URL.</p>
 <dl class="function">
 <dt id="webbrowser.open">
-<tt class="descclassname">webbrowser.</tt><tt class="descname">open</tt><big>(</big><em>url</em><span class="optional">[</span>, <em>modal=False</em>, <em>stop_when_done=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#webbrowser.open" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">webbrowser.</tt><tt class="descname">open</tt><big>(</big><em>url</em><span class="optional">[</span>, <em>modal=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#webbrowser.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display <em>url</em> in an in-app browser, if the scheme of the URL is <cite>http</cite>,
 <cite>https</cite> or <cite>file</cite>. Using other URL schemes can be used to open native
 apps that are registered for these schemes.</p>
@@ -146,11 +145,7 @@ browser, you can replace http(s) with safari-http(s) in your URL, e.g.
 &#8216;safari-http://google.com&#8217;.</p>
 <p>If the URL is valid (regardless of if it could actually be loaded by the
 browser) <cite>True</cite> is returned, otherwise <cite>False</cite>.</p>
-<p>The <cite>modal</cite> parameter controls whether the function should block until
-the <cite>Done</cite> button is tapped in the browser. It defaults to <cite>False</cite>.
-When this function is used to open an external app, the parameter is ignored.</p>
-<p>If the <cite>stop_when_done</cite> parameter is set to <cite>True</cite>, tapping the <cite>Done</cite> button
-automatically stops the script.</p>
+<p>When <cite>modal</cite> is <cite>True</cite>, the page is opened in a modal dialog instead of a web browser tab. In this case, the function returns when the modal sheet is dismissed (by default, the function returns immediately).</p>
 </dd></dl>
 
 <dl class="function">
@@ -177,12 +172,12 @@ automatically stops the script.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-    &copy; <a href="../copyright.html">Copyright</a> 1990-2016, Python Software Foundation.
+    &copy; <a href="../copyright.html">Copyright</a> 1990-2017, Python Software Foundation.
     <br />
     The Python Software Foundation is a non-profit corporation.  
     <a href="http://www.python.org/psf/donations/">Please donate.</a>
     <br />
-    Last updated on May 03, 2016.
+    Last updated on Jan 17, 2017.
     <a href="../bugs.html">Found a bug</a>?
     <br />
     Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
