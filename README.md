@@ -45,6 +45,7 @@ mkdir _build
 doc2dash -n Pythonista\ 3 -d _build -f -i icon.png -I index.html -j -u http://omz-software.com/pythonista/docs/ Documentation/py3
 cp 'icon@2x.png' _build/Pythonista\ 3.docset/
 # If updating the Dash-User-Contributions docset:
+# Copy matplotlib, numpy, py2, & sympy documentation into Pythonista 3.docset/Contents/Resources
 cd _build && tar --exclude='.DS_Store' -cvzf Pythonista.tgz Pythonista\ 3.docset
 ```
 
